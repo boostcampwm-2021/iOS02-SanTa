@@ -8,7 +8,8 @@
 import UIKit
 
 class MapViewController: UIViewController {
-
+    weak var coordinator: MapViewCoordinator?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .red
