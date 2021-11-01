@@ -27,6 +27,7 @@
 		5485128E272A6AD600407F28 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5485128D272A6AD600407F28 /* Assets.xcassets */; };
 		54851291272A6AD600407F28 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5485128F272A6AD600407F28 /* LaunchScreen.storyboard */; };
 		54851299272A6D0900407F28 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54851298272A6D0900407F28 /* TabBarController.swift */; };
+		985EEF63272FDA98002413D9 /* MountainCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985EEF62272FDA98002413D9 /* MountainCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		54851290272A6AD600407F28 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		54851292272A6AD600407F28 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		54851298272A6D0900407F28 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		985EEF62272FDA98002413D9 /* MountainCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,8 +95,9 @@
 		5428FDB9272F8BD9002F9D40 /* MountainListScene */ = {
 			isa = PBXGroup;
 			children = (
-				54296950272FC3290070B362 /* MountainListViewController.swift */,
 				54296952272FC3530070B362 /* MountainListViewCoordinator.swift */,
+				54296950272FC3290070B362 /* MountainListViewController.swift */,
+				985EEF62272FDA98002413D9 /* MountainCell.swift */,
 			);
 			path = MountainListScene;
 			sourceTree = "<group>";
@@ -270,6 +273,7 @@
 				54296957272FC4380070B362 /* SettingsViewCoordinator.swift in Sources */,
 				5429694D272FC1390070B362 /* ResultViewController.swift in Sources */,
 				54851286272A6AD500407F28 /* MapViewController.swift in Sources */,
+				985EEF63272FDA98002413D9 /* MountainCell.swift in Sources */,
 				5428FDBD272F8C5B002F9D40 /* MapViewUseCase.swift in Sources */,
 				5428FDB4272F894D002F9D40 /* MapViewRepository.swift in Sources */,
 				5485128C272A6AD500407F28 /* SanTa.xcdatamodeld in Sources */,
