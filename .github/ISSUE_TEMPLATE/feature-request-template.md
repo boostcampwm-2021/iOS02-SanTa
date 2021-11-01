@@ -7,14 +7,15 @@ assignees: ''
 
 ---
 
-# story를 적어주세요
+# story를 적어 주세요
+## Task를 적어 주세요
 
 - 필요시 추가 설명 작성
 
 ## 🤔 완료 조건 
 
-- [ ] task1
-- [ ] task2
+- [ ] CheckPoint1
+- [ ] CheckPoint2
 
 ## 👀 관련 이슈
 
