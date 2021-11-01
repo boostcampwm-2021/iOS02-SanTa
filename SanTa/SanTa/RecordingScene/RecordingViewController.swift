@@ -12,7 +12,10 @@ class RecordingViewController: UIViewController {
     
     let kilometerLabel: UILabel = {
         let label = UILabel()
-        label.font = .preferredFont(forTextStyle: .headline)
+        label.font = .boldSystemFont(ofSize: 110)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.adjustsFontSizeToFitWidth = true
+        label.textAlignment = .center
         label.text = "0.00"
         label.textColor = .white
         return label
@@ -21,55 +24,69 @@ class RecordingViewController: UIViewController {
     let kilometerTextLabel: UILabel = {
         let label = UILabel()
         label.font = .preferredFont(forTextStyle: .title3)
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "킬로미터"
+        label.textAlignment = .center
         label.textColor = .white
         return label
     }()
     
     let timeLabel: UILabel = {
         let label = UILabel()
-        label.font = .preferredFont(forTextStyle: .body)
+        label.font = .preferredFont(forTextStyle: .title2)
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "00:00 00\""
+        label.textAlignment = .center
         label.textColor = .white
         return label
     }()
     
     let altitudeLabel: UILabel = {
         let label = UILabel()
-        label.font = .preferredFont(forTextStyle: .body)
+        label.font = .preferredFont(forTextStyle: .title2)
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "0"
+        label.textAlignment = .center
         label.textColor = .white
         return label
     }()
     
     let walkLabel: UILabel = {
         let label = UILabel()
-        label.font = .preferredFont(forTextStyle: .body)
+        label.font = .preferredFont(forTextStyle: .title2)
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "0"
+        label.textAlignment = .center
         label.textColor = .white
         return label
     }()
     
     let timeTextLabel: UILabel = {
         let label = UILabel()
-        label.font = .preferredFont(forTextStyle: .body)
+        label.font = .preferredFont(forTextStyle: .title3)
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "시간"
+        label.textAlignment = .center
         label.textColor = .white
         return label
     }()
     
     let altitudeTextLabel: UILabel = {
         let label = UILabel()
-        label.font = .preferredFont(forTextStyle: .body)
+        label.font = .preferredFont(forTextStyle: .title3)
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "고도"
+        label.textAlignment = .center
         label.textColor = .white
         return label
     }()
     
     let walkTextLabel: UILabel = {
         let label = UILabel()
-        label.font = .preferredFont(forTextStyle: .body)
+        label.font = .preferredFont(forTextStyle: .title3)
+        label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "걸음"
+        label.textAlignment = .center
         label.textColor = .white
         return label
     }()
