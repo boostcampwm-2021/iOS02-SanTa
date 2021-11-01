@@ -4,6 +4,8 @@
 //
 //  Created by shin jae ung on 2021/10/28.
 //
+// 삭제 대상
+
 
 import UIKit
 
