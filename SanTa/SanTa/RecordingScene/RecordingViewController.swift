@@ -112,9 +112,26 @@ class RecordingViewController: UIViewController {
 
         return stackView
     }()
+    
+    let pauseButton = UIButton()
+    let stopButton = UIButton()
+    let locationButton = UIButton()
+    
+    let buttonStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.spacing = 18
+        stackView.distribution = .fill
+        stackView.alignment = .center
 
+        return stackView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.configureViews()
+        
+        self.configureConstraints()
+        self.configureButton()
     }
 }
