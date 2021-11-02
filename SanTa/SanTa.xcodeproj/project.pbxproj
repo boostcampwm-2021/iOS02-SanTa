@@ -31,6 +31,7 @@
 		54851299272A6D0900407F28 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54851298272A6D0900407F28 /* TabBarController.swift */; };
 		985EEF63272FDA98002413D9 /* MountainCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985EEF62272FDA98002413D9 /* MountainCell.swift */; };
 		DAAF2716272FF73700F8A115 /* RecordingViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAF2715272FF73700F8A115 /* RecordingViewController+Extension.swift */; };
+		985EEF65273010BD002413D9 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985EEF64273010BD002413D9 /* SettingsCell.swift */; };
 
 /* End PBXBuildFile section */
 
@@ -61,6 +62,7 @@
 		54851298272A6D0900407F28 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		985EEF62272FDA98002413D9 /* MountainCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainCell.swift; sourceTree = "<group>"; };
 		DAAF2715272FF73700F8A115 /* RecordingViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecordingViewController+Extension.swift"; sourceTree = "<group>"; };
+		985EEF64273010BD002413D9 /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 
 /* End PBXFileReference section */
 
@@ -121,8 +123,9 @@
 		5428FDBB272F8C32002F9D40 /* SettingsScene */ = {
 			isa = PBXGroup;
 			children = (
-				54296954272FC3EC0070B362 /* SettingsViewController.swift */,
 				54296956272FC4380070B362 /* SettingsViewCoordinator.swift */,
+				54296954272FC3EC0070B362 /* SettingsViewController.swift */,
+				985EEF64273010BD002413D9 /* SettingsCell.swift */,
 			);
 			path = SettingsScene;
 			sourceTree = "<group>";
@@ -297,6 +300,7 @@
 				54296949272FBFAB0070B362 /* RecordingViewController.swift in Sources */,
 				54296945272FBC6E0070B362 /* AppCoordinator.swift in Sources */,
 				5429694B272FBFCA0070B362 /* RecordingViewCoordinator.swift in Sources */,
+				985EEF65273010BD002413D9 /* SettingsCell.swift in Sources */,
 				54296955272FC3EC0070B362 /* SettingsViewController.swift in Sources */,
 				5429695B273026B10070B362 /* MountainAnnotationView.swift in Sources */,
 				54296951272FC3290070B362 /* MountainListViewController.swift in Sources */,

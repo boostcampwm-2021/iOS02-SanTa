@@ -53,7 +53,6 @@ extension MountainListViewController: UITableViewDelegate, UITableViewDataSource
             return UITableViewCell()
         }
         cell.update(mountain: dummy[indexPath.row])
-        
         return cell
     }
     
