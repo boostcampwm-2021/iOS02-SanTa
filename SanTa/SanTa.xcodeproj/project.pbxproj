@@ -19,6 +19,8 @@
 		54296953272FC3530070B362 /* MountainListViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54296952272FC3530070B362 /* MountainListViewCoordinator.swift */; };
 		54296955272FC3EC0070B362 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54296954272FC3EC0070B362 /* SettingsViewController.swift */; };
 		54296957272FC4380070B362 /* SettingsViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54296956272FC4380070B362 /* SettingsViewCoordinator.swift */; };
+		5429695B273026B10070B362 /* MountainAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5429695A273026B10070B362 /* MountainAnnotationView.swift */; };
+		5429695D27302B1D0070B362 /* ClusterAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5429695C27302B1D0070B362 /* ClusterAnnotationView.swift */; };
 		54731B65272F84D300534097 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54731B64272F84D300534097 /* MapViewModel.swift */; };
 		54851282272A6AD500407F28 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54851281272A6AD500407F28 /* AppDelegate.swift */; };
 		54851284272A6AD500407F28 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54851283272A6AD500407F28 /* SceneDelegate.swift */; };
@@ -42,6 +44,8 @@
 		54296952272FC3530070B362 /* MountainListViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainListViewCoordinator.swift; sourceTree = "<group>"; };
 		54296954272FC3EC0070B362 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		54296956272FC4380070B362 /* SettingsViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewCoordinator.swift; sourceTree = "<group>"; };
+		5429695A273026B10070B362 /* MountainAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainAnnotationView.swift; sourceTree = "<group>"; };
+		5429695C27302B1D0070B362 /* ClusterAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClusterAnnotationView.swift; sourceTree = "<group>"; };
 		54731B64272F84D300534097 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		5485127E272A6AD500407F28 /* SanTa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SanTa.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		54851281272A6AD500407F28 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -137,6 +141,8 @@
 				5428FDBC272F8C5B002F9D40 /* MapViewUseCase.swift */,
 				5428FDB3272F894D002F9D40 /* MapViewRepository.swift */,
 				54296946272FBD4B0070B362 /* MapViewCoordinator.swift */,
+				5429695A273026B10070B362 /* MountainAnnotationView.swift */,
+				5429695C27302B1D0070B362 /* ClusterAnnotationView.swift */,
 			);
 			path = MapScene;
 			sourceTree = "<group>";
@@ -269,6 +275,7 @@
 			files = (
 				54296957272FC4380070B362 /* SettingsViewCoordinator.swift in Sources */,
 				5429694D272FC1390070B362 /* ResultViewController.swift in Sources */,
+				5429695D27302B1D0070B362 /* ClusterAnnotationView.swift in Sources */,
 				54851286272A6AD500407F28 /* MapViewController.swift in Sources */,
 				5428FDBD272F8C5B002F9D40 /* MapViewUseCase.swift in Sources */,
 				5428FDB4272F894D002F9D40 /* MapViewRepository.swift in Sources */,
@@ -281,6 +288,7 @@
 				54296945272FBC6E0070B362 /* AppCoordinator.swift in Sources */,
 				5429694B272FBFCA0070B362 /* RecordingViewCoordinator.swift in Sources */,
 				54296955272FC3EC0070B362 /* SettingsViewController.swift in Sources */,
+				5429695B273026B10070B362 /* MountainAnnotationView.swift in Sources */,
 				54296951272FC3290070B362 /* MountainListViewController.swift in Sources */,
 				54851284272A6AD500407F28 /* SceneDelegate.swift in Sources */,
 				5429694F272FC1740070B362 /* ResultViewCoordinator.swift in Sources */,
