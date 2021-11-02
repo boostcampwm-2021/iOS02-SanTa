@@ -22,7 +22,8 @@ class MountainListViewCoordinator: Coordinator {
     func startPush() -> UINavigationController {
         let mountainListViewController = MountainListViewController()
         mountainListViewController.coordinator = self
-        navigationController.setViewControllers([mountainListViewController], animated: true)
+        self.navigationController.setViewControllers([mountainListViewController], animated: true)
+        self.navigationController.navigationBar.topItem?.title = "산 목록"
 
         return navigationController
     }
