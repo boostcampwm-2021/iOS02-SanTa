@@ -7,20 +7,25 @@
 
 import Foundation
 import CoreLocation
+import CoreMotion
 import Combine
 
 class RecordingViewModel: NSObject {
+    private let pedoMeter = CMPedometer()
     private var locationManager = CLLocationManager()
     private var timer: DispatchSourceTimer?
+    private var date: Date?
     
     private var currentTime = 0 {
         didSet {
             self.timeConverter()
+            self.checkPedoMeter()
         }
     }
     
     override init() {
         super.init()
+        self.date = Date()
         self.configureTimer()
         self.configureLocationManager()
     }
@@ -36,9 +41,9 @@ class RecordingViewModel: NSObject {
     }
     
     private func configureLocationManager() {
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
-        locationManager.delegate = self
+        self.locationManager.requestWhenInUseAuthorization()
+        self.locationManager.startUpdatingLocation()
+        self.locationManager.delegate = self
     }
     
     private func timeConverter() {
@@ -47,6 +52,18 @@ class RecordingViewModel: NSObject {
         let hours = (currentTime / 3600)
         
         print(NSString(format: "%0.2d:%0.2d %0.2d\"", hours, minutes, seconds))
+    }
+    
+    private func checkPedoMeter() {
+        guard let date = self.date else { return }
+        
+        pedoMeter.queryPedometerData(from: date, to: Date()) { data, error in
+            guard let activityData = data,
+                  error == nil else { return }
+            
+            print("Steps: \(activityData.numberOfSteps)")
+            print("Distance \(activityData.distance)")
+        }
     }
     
     func suspend() {
