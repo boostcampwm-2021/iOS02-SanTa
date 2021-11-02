@@ -28,7 +28,8 @@ class SettingsViewController: UIViewController {
     private var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.register(SettingsCell.self, forCellReuseIdentifier: SettingsCell.identifier)
+        tableView.register(ToggleOptionCell.self, forCellReuseIdentifier: ToggleOptionCell.identifier)
+        tableView.register(MapOptionCell.self, forCellReuseIdentifier: MapOptionCell.identifier)
         return tableView
     }()
     
@@ -71,6 +72,17 @@ class SettingsViewController: UIViewController {
         ]
         NSLayoutConstraint.activate(tableViewConstrain)
     }
+    
+    private func showMapActionSheet(cellTitle: String) {
+        let alert = UIAlertController(title: "지도형식", message: nil, preferredStyle: .actionSheet)
+        Map.allCases.forEach {
+            alert.addAction(UIAlertAction(title: $0.description, style: .default, handler: { action in
+                print(cellTitle, action.title!)
+            }))
+        }
+        alert.addAction(UIAlertAction(title: "닫기", style: .cancel, handler: nil))
+        self.present(alert, animated: true, completion: nil)
+    }
 }
 
 extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
@@ -88,97 +100,85 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return settings.photoSettings.count
-        } else if section == 1 {
-            return settings.autoSettins.count
-        } else if section == 2 {
-            return settings.voiceSettings.count
-        } else {
-            return settings.mapSettings.count
-        }
+        return settings[section].count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = self.tableView.dequeueReusableCell(withIdentifier: SettingsCell.identifier, for: indexPath)
-                as? SettingsCell
-        else {
+        switch settings[indexPath.section][indexPath.item] {
+        case let option as ToggleOption:
+            guard let cell = self.tableView.dequeueReusableCell(withIdentifier: ToggleOptionCell.identifier,
+                                                                for: indexPath) as? ToggleOptionCell
+            else {
+                return UITableViewCell()
+            }
+            cell.update(option: option)
+            cell.delegate = self
+            return cell
+        case let option as MapOption:
+            guard let cell = self.tableView.dequeueReusableCell(withIdentifier: MapOptionCell.identifier,
+                                                                for: indexPath) as? MapOptionCell
+            else {
+                return UITableViewCell()
+            }
+            cell.update(option: option)
+            return cell
+        default:
             return UITableViewCell()
         }
-        if indexPath.section == 0 {
-            cell.update(option: settings.photoSettings[indexPath.row])
-        } else if indexPath.section == 1 {
-            cell.update(option: settings.autoSettins[indexPath.row])
-        } else if indexPath.section == 2 {
-            cell.update(option: settings.voiceSettings[indexPath.row])
-        } else {
-            cell.update(option: settings.mapSettings[indexPath.row])
-        }
-        return cell
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let cell = tableView.cellForRow(at: indexPath) as? MapOptionCell else { return }
+        guard let title = cell.title.text else { return }
+        self.showMapActionSheet(cellTitle: title)
+        self.tableView.deselectRow(at: indexPath, animated: true)
     }
 }
 
-struct Option {
+extension SettingsViewController: ToggleOptionCellDelegate {
+    func toggleOptionCellSwitchChanged(_ cell: ToggleOptionCell, title: String, switchOn: Bool) {
+        print(title, switchOn)
+    }
+}
+
+//MARK: - dummy data
+
+enum Map: String, CustomStringConvertible, CaseIterable {
+    case infomation = "정보지도"
+    case normal = "일반지도"
+    case satellite = "위성지도"
+    
+    var description: String {
+        return self.rawValue
+    }
+}
+
+protocol Option {
+    var text: String { get }
+}
+
+struct ToggleOption: Option {
     let text: String
-    let check: Bool
+    let toggle: Bool
 }
 
-struct Settings {
-    let photoSettings: [Option]
-    let autoSettins: [Option]
-    let voiceSettings: [Option]
-    let mapSettings: [Option]
+struct MapOption: Option {
+    let text: String
+    let map: Map
 }
 
-let photoSettings1 = Option(text: "사진 기록하기", check: true)
-let photoSettings2 = Option(text: "지도에 사진표시", check: true)
+let photoSettings1 = ToggleOption(text: "사진 기록하기", toggle: true)
+let photoSettings2 = ToggleOption(text: "지도에 사진표시", toggle: true)
 
-let autoSettins1 = Option(text: "자동 일시정지/재시작", check: false)
-let autoSettins2 = Option(text: "자동 일시정지/재시작 음성 안내", check: false)
+let autoSettins1 = ToggleOption(text: "자동 일시정지/재시작", toggle: false)
+let autoSettins2 = ToggleOption(text: "자동 일시정지/재시작 음성 안내", toggle: false)
 
-let voiceSettings1 = Option(text: "1킬로미터 마다 음성 안내", check: true)
+let voiceSettings1 = ToggleOption(text: "1킬로미터 마다 음성 안내", toggle: true)
 
-let mapSetting1 = Option(text: "지도 형식", check: true)
-let mapSetting2 = Option(text: "지도에 등산로 표시", check: true)
+let mapSetting1 = MapOption(text: "지도 형식", map: .infomation)
+let mapSetting2 = ToggleOption(text: "지도에 등산로 표시", toggle: true)
 
-let settings = Settings(photoSettings: [photoSettings1, photoSettings2],
-                        autoSettins: [autoSettins1, autoSettins2],
-                        voiceSettings: [voiceSettings1],
-                        mapSettings: [mapSetting1, mapSetting2])
-
-//protocol OptionKey {
-//    var text: String { get }
-//}
-//
-//struct ToggleOption: OptionKey {
-//    let text: String
-//    let check: Bool
-//}
-
-//struct ListOption: OptionKey {
-//    let text: String
-//    let list: [String]
-//}
-//
-//struct Settings {
-//    let photoSettings: [OptionKey]
-//    let autoSettins: [OptionKey]
-//    let voiceSettings: [OptionKey]
-//    let mapSettings: [OptionKey]
-//}
-//
-//let photoSettings1 = ToggleOption(text: "사진 기록하기", check: true)
-//let photoSettings2 = ToggleOption(text: "지도에 사진표시", check: true)
-//
-//let autoSettins1 = ToggleOption(text: "자동 일시정지/재시작", check: false)
-//let autoSettins2 = ToggleOption(text: "자동 일시정지/재시작 음성 안내", check: false)
-//
-//let voiceSettings1 = ToggleOption(text: "1킬로미터 마다 음성 안내", check: true)
-//
-//let mapSetting1 = ListOption(text: "지도 형식", list: ["정보지도, 일반지도, 위성지도"])
-//let mapSetting2 = ToggleOption(text: "지도에 등산로 표시", check: true)
-//
-//let settings = Settings(photoSettings: [photoSettings1, photoSettings2],
-//                        autoSettins: [autoSettins1, autoSettins2],
-//                        voiceSettings: [voiceSettings1],
-//                        mapSettings: [mapSetting1, mapSetting2])
+let settings: [[Option]] = [[photoSettings1, photoSettings2],
+                            [autoSettins1, autoSettins2],
+                            [voiceSettings1],
+                            [mapSetting1, mapSetting2]]

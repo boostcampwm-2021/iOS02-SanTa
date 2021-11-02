@@ -7,9 +7,15 @@
 
 import UIKit
 
+protocol ToggleOptionCellDelegate: AnyObject {
+    func toggleOptionCellSwitchChanged(_ cell: ToggleOptionCell, title: String, switchOn: Bool)
+}
+
 class ToggleOptionCell: UITableViewCell {
     
     static let identifier = "ToggleOptionCell"
+    
+    weak var delegate: ToggleOptionCellDelegate?
     
     private var title: UILabel = {
         let label = UILabel()
@@ -29,7 +35,6 @@ class ToggleOptionCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.selectionStyle = .none
         self.configureView()
-
     }
     
     required init?(coder: NSCoder) {
@@ -37,10 +42,13 @@ class ToggleOptionCell: UITableViewCell {
     }
     
     @objc func onClickSwitch(sender: UISwitch) {
-        
+        guard let title = self.title.text else { return }
+        self.delegate?.toggleOptionCellSwitchChanged(self,
+                                                     title: title,
+                                                     switchOn: self.controlSwitch.isOn)
     }
     
-    func configureView() {
+    private func configureView() {
         self.contentView.addSubview(self.title)
         let locationConstrain = [
             self.title.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
