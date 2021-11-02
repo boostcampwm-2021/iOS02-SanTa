@@ -75,7 +75,7 @@ class RecordingViewController: UIViewController {
     let calculateTextStackView = UIStackView()
     let buttonStackView = UIStackView()
     
-    var timer: RecordingTimer?
+    var timer: RecordingViewModel?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -88,6 +88,6 @@ class RecordingViewController: UIViewController {
     }
     
     private func configure() {
-        timer = RecordingTimer()
+        timer = RecordingViewModel()
     }
 }
