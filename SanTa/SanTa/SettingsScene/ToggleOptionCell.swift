@@ -7,9 +7,9 @@
 
 import UIKit
 
-class SettingsCell: UITableViewCell {
+class ToggleOptionCell: UITableViewCell {
     
-    static let identifier = "SettingsCell"
+    static let identifier = "ToggleOptionCell"
     
     private var title: UILabel = {
         let label = UILabel()
@@ -37,28 +37,28 @@ class SettingsCell: UITableViewCell {
     }
     
     @objc func onClickSwitch(sender: UISwitch) {
-        print(title.text!, controlSwitch.isOn)
+        
     }
     
     func configureView() {
         self.contentView.addSubview(self.title)
         let locationConstrain = [
-            self.title.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 10),
+            self.title.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
             self.title.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 30),
         ]
         NSLayoutConstraint.activate(locationConstrain)
         
         self.contentView.addSubview(self.controlSwitch)
         let switchConstrain = [
-            self.controlSwitch.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 10),
+            self.controlSwitch.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
             self.controlSwitch.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -30),
         ]
         NSLayoutConstraint.activate(switchConstrain)
     }
     
-    func update(option: Option) {
+    func update(option: ToggleOption) {
         self.title.text = option.text
-        self.controlSwitch.isOn = option.check
+        self.controlSwitch.isOn = option.toggle
     }
 }
 
