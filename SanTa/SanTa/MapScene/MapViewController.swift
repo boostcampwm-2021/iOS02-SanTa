@@ -9,7 +9,9 @@ import MapKit
 class MapViewController: UIViewController {
     weak var coordinator: MapViewCoordinator?
     private var mapView = MKMapView()
+    private var startButton = UIButton()
     private var manager = CLLocationManager()
+    private var userTrackingButton = MKUserTrackingButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,9 +23,49 @@ class MapViewController: UIViewController {
     
     private func configureViews() {
         self.mapView = MKMapView(frame: view.bounds)
-        self.mapView.showsUserLocation = true
-        self.mapView.delegate = self
         self.view.addSubview(self.mapView)
+        self.mapView.showsUserLocation = true
+        self.mapView.showsScale = true
+        self.mapView.showsCompass = true
+        self.mapView.delegate = self
+        
+        self.view.addSubview(self.startButton)
+        self.startButton.backgroundColor = .blue
+        self.startButton.translatesAutoresizingMaskIntoConstraints = false
+        self.startButton.setTitle("시작", for: .normal)
+        self.startButton.setTitleColor(.white, for: .normal)
+        self.startButton.titleLabel?.font = .boldSystemFont(ofSize: 25)
+        self.startButton.layer.cornerRadius = 50
+        self.startButton.layer.shadowColor = UIColor.gray.cgColor
+        self.startButton.layer.shadowOpacity = 1
+        self.startButton.layer.shadowRadius = 3
+        self.startButton.layer.shadowOffset = CGSize(width: 0, height: 3)
+    
+        let startButtonConstraints = [
+            self.startButton.widthAnchor.constraint(equalToConstant: 100),
+            self.startButton.heightAnchor.constraint(equalToConstant: 100),
+            self.startButton.bottomAnchor.constraint(equalTo: self.mapView.bottomAnchor, constant: -150),
+            self.startButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
+        ]
+        NSLayoutConstraint.activate(startButtonConstraints)
+        
+        self.userTrackingButton = .init(mapView: mapView)
+        self.view.addSubview(self.userTrackingButton)
+        self.userTrackingButton.isHidden = true
+        self.userTrackingButton.backgroundColor = .white
+        self.userTrackingButton.translatesAutoresizingMaskIntoConstraints = false
+        self.userTrackingButton.layer.cornerRadius = 10
+        self.userTrackingButton.clipsToBounds = true
+        let userTrackingButtonConstraints = [
+            self.userTrackingButton.widthAnchor.constraint(equalToConstant: 50),
+            self.userTrackingButton.heightAnchor.constraint(equalToConstant: 50),
+            self.userTrackingButton.leftAnchor.constraint(
+                equalTo: self.mapView.rightAnchor,
+                constant: -100
+            ),
+            self.userTrackingButton.centerYAnchor.constraint(equalTo: self.startButton.centerYAnchor)
+        ]
+        NSLayoutConstraint.activate(userTrackingButtonConstraints)
     }
     
     private func registerAnnotationView() {
@@ -86,6 +128,13 @@ extension MapViewController: CLLocationManagerDelegate {
         if let location = locations.first {
             manager.stopUpdatingLocation()
             self.render(location)
+        }
+    }
+    
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        if manager.authorizationStatus == .authorizedWhenInUse ||
+           manager.authorizationStatus == .authorizedAlways {
+            userTrackingButton.isHidden = false
         }
     }
 }
