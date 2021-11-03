@@ -9,7 +9,7 @@ import MapKit
 class MapViewController: UIViewController {
     weak var coordinator: MapViewCoordinator?
     private var mapView = MKMapView()
-    private var manager: CLLocationManager?
+    private var manager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +22,7 @@ class MapViewController: UIViewController {
     private func configureViews() {
         self.mapView = MKMapView(frame: view.bounds)
         self.mapView.showsUserLocation = true
+        self.mapView.delegate = self
         self.view.addSubview(self.mapView)
     }
     
@@ -37,12 +38,11 @@ class MapViewController: UIViewController {
     }
     
     private func configureCoreLocationManager() {
-        self.manager = CLLocationManager()
-        self.manager?.requestWhenInUseAuthorization()
-        self.manager?.requestAlwaysAuthorization()
-        self.manager?.delegate = self
-        self.manager?.desiredAccuracy = kCLLocationAccuracyBest
-        self.manager?.startUpdatingLocation()
+        self.manager.requestWhenInUseAuthorization()
+        self.manager.requestAlwaysAuthorization()
+        self.manager.delegate = self
+        self.manager.desiredAccuracy = kCLLocationAccuracyBest
+        self.manager.startUpdatingLocation()
     }
     
     private func render(_ location: CLLocation) {
@@ -59,22 +59,25 @@ class MapViewController: UIViewController {
     }
     
     private func testCoordinates() {
-        for _ in 0...200 {
+        for _ in 0..<200 {
             let latitude = Double.random(in: 36.0..<37.0)
             let longitude = -Double.random(in: 121.0..<122.0)
-            let pin = MKPointAnnotation()
-            pin.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-            mapView.addAnnotation(pin)
+            let mountainAnnotaion = MountainAnnotaion()
+            mountainAnnotaion.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+            self.mapView.addAnnotation(mountainAnnotaion)
         }
     }
 }
 
 extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        return MountainAnnotationView(
-            annotation: annotation,
-            reuseIdentifier: MountainAnnotationView.ReuseID
-        )
+        if let _ = annotation as? MountainAnnotaion {
+            return MountainAnnotationView(
+                annotation: annotation,
+                reuseIdentifier: MountainAnnotationView.ReuseID
+            )
+        }
+        return nil
     }
 }
 
@@ -85,4 +88,8 @@ extension MapViewController: CLLocationManagerDelegate {
             self.render(location)
         }
     }
+}
+
+class MountainAnnotaion: NSObject, MKAnnotation {
+    var coordinate = CLLocationCoordinate2D(latitude: 0, longitude: 0)
 }
