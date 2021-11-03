@@ -70,7 +70,10 @@ class RecordingModel: NSObject, ObservableObject {
             self?.walk = "\(activityData.numberOfSteps)"
             
             guard let distance = activityData.distance else { return }
-            self?.kilometer = "\(distance)"
+            let transformatKilometer = Double(truncating: distance) / 1000
+            let distanceString = String(format: "%.2f", transformatKilometer)
+            
+            self?.kilometer = "\(distanceString)"
         }
     }
     
