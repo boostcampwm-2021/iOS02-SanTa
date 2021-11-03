@@ -6,3 +6,24 @@
 //
 
 import Foundation
+import OSLog
+
+class MapViewUseCase {
+    private let repository: MapViewRepository
+    
+    init(repository: MapViewRepository) {
+        self.repository = repository
+    }
+    
+    func prepareMountainMarkers(completion: @escaping ([MountainEntity]?) -> Void) {
+        self.repository.fetchMountains { result in
+            switch result {
+            case .failure(let error):
+                os_log(.error, log: .default, "\(error.localizedDescription)")
+                completion(nil)
+            case .success(let mountains):
+                completion(mountains)
+            }
+        }
+    }
+}

@@ -15,9 +15,13 @@ class MapViewCoordinator: Coordinator {
     }
 
     func startPush() -> MapViewController {
-        let mapViewController = MapViewController()
+        let mapViewController = MapViewController(viewModel: injectDependencies())
         mapViewController.coordinator = self
 
         return mapViewController
+    }
+    
+    private func injectDependencies() -> MapViewModel {
+        return MapViewModel(useCase: MapViewUseCase(repository: DefaultMapViewRespository(mountainExtractor: MountainExtractor())))
     }
 }
