@@ -130,6 +130,15 @@ class RecordingViewController: UIViewController {
     }
     
     @objc private func stopButtonAction(_ sender: UIResponder) {
-        
+        let stopAlert = UIAlertController(title: "기록 종료", message: "기록을 종료합니다.", preferredStyle: UIAlertController.Style.alert)
+        let noneAction = UIAlertAction(title: "아니요", style: .default) { (action) in
+            g
+        }
+        let terminationAction = UIAlertAction(title: "종료", style: .default) { (action) in
+            
+        }
+        stopAlert.addAction(noneAction)
+        stopAlert.addAction(terminationAction)
+        present(stopAlert, animated: true, completion: nil)
     }
 }
