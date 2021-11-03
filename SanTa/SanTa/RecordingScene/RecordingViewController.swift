@@ -87,6 +87,7 @@ class RecordingViewController: UIViewController {
         self.configureConstraints()
         self.configureButton()
         self.configureBindings()
+        self.configureTarget()
     }
     
     private func configureBindings() {
@@ -121,5 +122,13 @@ class RecordingViewController: UIViewController {
                 self?.walkLabel.text = walk
             })
             .store(in: &subscriptions)
+    }
+    
+    private func configureTarget() {
+        self.pauseButton.addTarget(self, action: #selector(pauseButtonAction), for: .touchUpInside)
+    }
+    
+    @objc func pauseButtonAction(_ sender: UIResponder) {
+        
     }
 }
