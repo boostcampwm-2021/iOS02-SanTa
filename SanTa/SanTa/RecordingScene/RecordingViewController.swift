@@ -122,9 +122,14 @@ class RecordingViewController: UIViewController {
     
     private func configureTarget() {
         self.pauseButton.addTarget(self, action: #selector(pauseButtonAction), for: .touchUpInside)
+        self.stopButton.addTarget(self, action: #selector(stopButtonAction), for: .touchUpInside)
     }
     
-    @objc func pauseButtonAction(_ sender: UIResponder) {
+    @objc private func pauseButtonAction(_ sender: UIResponder) {
+        
+    }
+    
+    @objc private func stopButtonAction(_ sender: UIResponder) {
         
     }
 }
