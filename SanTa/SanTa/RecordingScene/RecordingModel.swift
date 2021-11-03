@@ -97,7 +97,7 @@ extension RecordingModel: CLLocationManagerDelegate {
             location.append(Location(latitude: Double(lastLocation.coordinate.latitude),
                                      longitude: Double(lastLocation.coordinate.longitude),
                                      altitude: Double(lastLocation.altitude)))
-            altitude = "\(lastLocation.altitude)"
+            altitude = "\(Int(lastLocation.altitude))"
         }
     }
     
