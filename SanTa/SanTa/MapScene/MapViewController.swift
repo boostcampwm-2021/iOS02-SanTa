@@ -51,6 +51,8 @@ class MapViewController: UIViewController {
         ]
         NSLayoutConstraint.activate(startButtonConstraints)
         
+        self.startButton.addTarget(self, action: #selector(presentRecordingViewController), for: .touchUpInside)
+        
         self.userTrackingButton = .init(mapView: mapView)
         self.view.addSubview(self.userTrackingButton)
         self.userTrackingButton.isHidden = true
@@ -110,6 +112,10 @@ class MapViewController: UIViewController {
             mountainAnnotaion.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
             self.mapView.addAnnotation(mountainAnnotaion)
         }
+    }
+    
+    @objc private func presentRecordingViewController() {
+        coordinator?.presentRecordingViewController()
     }
 }
 

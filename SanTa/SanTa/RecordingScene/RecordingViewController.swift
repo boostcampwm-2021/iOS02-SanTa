@@ -90,4 +90,8 @@ class RecordingViewController: UIViewController {
     private func configure() {
         timer = RecordingViewModel()
     }
+    
+//    override func viewDidAppear(_ animated: Bool) {
+//        self.coordinator?.dismiss()
+//    }
 }

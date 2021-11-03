@@ -9,15 +9,26 @@ import UIKit
 
 class MapViewCoordinator: Coordinator {
     weak var parentCoordinator: Coordinator?
+    var navigationController: UINavigationController = UINavigationController()
     var childCoordinator: [Coordinator] = []
-
+    
     func start() {
     }
 
-    func startPush() -> MapViewController {
+    func startPush() -> UINavigationController {
         let mapViewController = MapViewController()
         mapViewController.coordinator = self
+        self.navigationController.setViewControllers([mapViewController], animated: false)
 
-        return mapViewController
+        return navigationController
+    }
+}
+
+extension MapViewCoordinator {
+    func presentRecordingViewController() {
+        let recordingViewCoordinator = RecordingViewCoordinator(navigationController: self.navigationController)
+        recordingViewCoordinator.parentCoordinator = self
+        self.childCoordinator.append(recordingViewCoordinator)
+        recordingViewCoordinator.start()
     }
 }
