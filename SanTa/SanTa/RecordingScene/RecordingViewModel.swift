@@ -22,33 +22,36 @@ class RecordingViewModel: ObservableObject {
     }
     
     private func configureBindings() {
-        recording.$time
+        self.recording.$time
             .receive(on: DispatchQueue.main)
             .sink (receiveValue: { [weak self] time in
                 self?.currentTime = time
             })
-            .store(in: &subscriptions)
+            .store(in: &self.subscriptions)
         
-        recording.$kilometer
+        self.recording.$kilometer
             .receive(on: DispatchQueue.main)
             .sink (receiveValue: { [weak self] kilometer in
                 self?.kilometer = kilometer
             })
-            .store(in: &subscriptions)
+            .store(in: &self.subscriptions)
         
-        recording.$altitude
+        self.recording.$altitude
             .receive(on: DispatchQueue.main)
             .sink (receiveValue: { [weak self] altitude in
                 self?.altitude = altitude
             })
-            .store(in: &subscriptions)
+            .store(in: &self.subscriptions)
         
-        recording.$walk
+        self.recording.$walk
             .receive(on: DispatchQueue.main)
             .sink (receiveValue: { [weak self] walk in
                 self?.walk = walk
             })
-            .store(in: &subscriptions)
+            .store(in: &self.subscriptions)
     }
     
+    func stopRecording() {
+        self.recording.cancel()
+    }
 }

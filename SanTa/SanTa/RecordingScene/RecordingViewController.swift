@@ -91,33 +91,33 @@ class RecordingViewController: UIViewController {
     }
     
     private func configureBindings() {
-        recordingViewModel.$currentTime
+        self.recordingViewModel.$currentTime
             .receive(on: DispatchQueue.main)
             .sink (receiveValue: { [weak self] time in
                 self?.timeLabel.text = time
             })
-            .store(in: &subscriptions)
+            .store(in: &self.subscriptions)
         
-        recordingViewModel.$kilometer
+        self.recordingViewModel.$kilometer
             .receive(on: DispatchQueue.main)
             .sink (receiveValue: { [weak self] kilometer in
                 self?.kilometerLabel.text = kilometer
             })
-            .store(in: &subscriptions)
+            .store(in: &self.subscriptions)
         
-        recordingViewModel.$altitude
+        self.recordingViewModel.$altitude
             .receive(on: DispatchQueue.main)
             .sink (receiveValue: { [weak self] altitude in
                 self?.altitudeLabel.text = altitude
             })
-            .store(in: &subscriptions)
+            .store(in: &self.subscriptions)
         
-        recordingViewModel.$walk
+        self.recordingViewModel.$walk
             .receive(on: DispatchQueue.main)
             .sink (receiveValue: { [weak self] walk in
                 self?.walkLabel.text = walk
             })
-            .store(in: &subscriptions)
+            .store(in: &self.subscriptions)
     }
     
     private func configureTarget() {
@@ -131,11 +131,9 @@ class RecordingViewController: UIViewController {
     
     @objc private func stopButtonAction(_ sender: UIResponder) {
         let stopAlert = UIAlertController(title: "기록 종료", message: "기록을 종료합니다.", preferredStyle: UIAlertController.Style.alert)
-        let noneAction = UIAlertAction(title: "아니요", style: .default) { (action) in
-            g
-        }
-        let terminationAction = UIAlertAction(title: "종료", style: .default) { (action) in
-            
+        let noneAction = UIAlertAction(title: "아니요", style: .default)
+        let terminationAction = UIAlertAction(title: "종료", style: .default) { [weak self] (action) in
+            self?.recordingViewModel.stopRecording()
         }
         stopAlert.addAction(noneAction)
         stopAlert.addAction(terminationAction)
