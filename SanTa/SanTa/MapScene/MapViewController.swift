@@ -12,7 +12,6 @@ class MapViewController: UIViewController {
     private var startButton = UIButton()
     private var manager = CLLocationManager()
     private var userTrackingButton = MKUserTrackingButton()
-    private var manager = CLLocationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -140,10 +139,6 @@ extension MapViewController: CLLocationManagerDelegate {
             userTrackingButton.isHidden = false
         }
     }
-}
-
-class MountainAnnotaion: NSObject, MKAnnotation {
-    var coordinate = CLLocationCoordinate2D(latitude: 0, longitude: 0)
 }
 
 class MountainAnnotaion: NSObject, MKAnnotation {
