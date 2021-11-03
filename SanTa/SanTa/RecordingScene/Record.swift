@@ -8,9 +8,9 @@
 import Foundation
 
 struct Record {
-    let time: String
-    let step: String
-    let distance: String?
+    let time: Int
+    let step: Int
+    let distance: Double
     
     let locations: [Location]
 }

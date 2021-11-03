@@ -10,7 +10,7 @@ import CoreLocation
 import CoreMotion
 import Combine
 
-class RecordingModel: NSObject, ObservableObject {
+final class RecordingModel: NSObject, ObservableObject {
     @Published private(set) var time = ""
     @Published private(set) var kilometer = ""
     @Published private(set) var altitude = ""
@@ -20,6 +20,8 @@ class RecordingModel: NSObject, ObservableObject {
     private var locationManager = CLLocationManager()
     private var timer: DispatchSourceTimer?
     private var date: Date?
+    private var currentWalk = 0
+    private var currentKilo: Double = 0
     private var location = [Location]()
     
     private var currentTime = 0 {
@@ -69,8 +71,14 @@ class RecordingModel: NSObject, ObservableObject {
             
             self?.walk = "\(activityData.numberOfSteps)"
             
+            guard let walk = self?.walk,
+                let walkNumber = Int(walk) else { return }
+            
+            self?.currentWalk = walkNumber
+            
             guard let distance = activityData.distance else { return }
             let transformatKilometer = Double(truncating: distance) / 1000
+            self?.currentKilo = transformatKilometer
             let distanceString = String(format: "%.2f", transformatKilometer)
             
             self?.kilometer = "\(distanceString)"
@@ -86,12 +94,10 @@ class RecordingModel: NSObject, ObservableObject {
     }
     
     func cancel() -> Record {
-        let timeString = time.split(separator: " ")
-        
-        let resultRecord = Record(time: String(timeString[0]),
-                                  step: walk,
-                                  distance: kilometer,
-                                  locations: location)
+        let resultRecord = Record(time: self.currentTime,
+                                  step: self.currentWalk,
+                                  distance: self.currentKilo,
+                                  locations: self.location)
         timer?.cancel()
         timer = nil
         

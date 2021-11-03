@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class RecordingViewModel: ObservableObject {
+final class RecordingViewModel: ObservableObject {
     @Published private(set) var currentTime = ""
     @Published private(set) var kilometer = ""
     @Published private(set) var altitude = ""
