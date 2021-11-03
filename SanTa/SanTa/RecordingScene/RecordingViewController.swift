@@ -133,7 +133,8 @@ class RecordingViewController: UIViewController {
         let stopAlert = UIAlertController(title: "기록 종료", message: "기록을 종료합니다.", preferredStyle: UIAlertController.Style.alert)
         let noneAction = UIAlertAction(title: "아니요", style: .default)
         let terminationAction = UIAlertAction(title: "종료", style: .default) { [weak self] (action) in
-            self?.recordingViewModel.stopRecording()
+            let resultRecord = self?.recordingViewModel.stopRecording()
+            print(resultRecord)
         }
         stopAlert.addAction(noneAction)
         stopAlert.addAction(terminationAction)

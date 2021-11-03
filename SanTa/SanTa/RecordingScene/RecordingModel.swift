@@ -85,9 +85,17 @@ class RecordingModel: NSObject, ObservableObject {
         timer?.resume()
     }
     
-    func cancel() {
+    func cancel() -> Record {
+        let timeString = time.split(separator: " ")
+        
+        let resultRecord = Record(time: String(timeString[0]),
+                                  step: walk,
+                                  distance: kilometer,
+                                  locations: location)
         timer?.cancel()
         timer = nil
+        
+        return resultRecord
     }
 }
 

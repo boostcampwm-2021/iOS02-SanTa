@@ -51,7 +51,7 @@ class RecordingViewModel: ObservableObject {
             .store(in: &self.subscriptions)
     }
     
-    func stopRecording() {
-        self.recording.cancel()
+    func stopRecording() -> Record {
+        return self.recording.cancel()
     }
 }
