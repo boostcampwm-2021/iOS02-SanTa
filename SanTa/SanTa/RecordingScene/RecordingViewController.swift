@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 class RecordingViewController: UIViewController {
     weak var coordinator: RecordingViewCoordinator?
@@ -75,7 +76,8 @@ class RecordingViewController: UIViewController {
     let calculateTextStackView = UIStackView()
     let buttonStackView = UIStackView()
     
-    var timer: RecordingViewModel?
+    private var recordingViewModel = RecordingViewModel()
+    private var subscriptions = Set<AnyCancellable>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,10 +86,40 @@ class RecordingViewController: UIViewController {
         self.configureStackView()
         self.configureConstraints()
         self.configureButton()
-        self.configure()
+        self.configureBindings()
     }
     
-    private func configure() {
-        timer = RecordingViewModel()
+    private func configureBindings() {
+        recordingViewModel.$currentTime
+            .receive(on: DispatchQueue.main)
+            .sink (receiveCompletion: { print ("completion: \($0)") },
+                   receiveValue: { [weak self] time in
+                self?.timeLabel.text = time
+            })
+            .store(in: &subscriptions)
+        
+        recordingViewModel.$kilometer
+            .receive(on: DispatchQueue.main)
+            .sink (receiveCompletion: { print ("completion: \($0)") },
+                   receiveValue: { [weak self] kilometer in
+                self?.kilometerLabel.text = kilometer
+            })
+            .store(in: &subscriptions)
+        
+        recordingViewModel.$altitude
+            .receive(on: DispatchQueue.main)
+            .sink (receiveCompletion: { print ("completion: \($0)") },
+                   receiveValue: { [weak self] altitude in
+                self?.altitudeLabel.text = altitude
+            })
+            .store(in: &subscriptions)
+        
+        recordingViewModel.$walk
+            .receive(on: DispatchQueue.main)
+            .sink (receiveCompletion: { print ("completion: \($0)") },
+                   receiveValue: { [weak self] walk in
+                self?.walkLabel.text = walk
+            })
+            .store(in: &subscriptions)
     }
 }
