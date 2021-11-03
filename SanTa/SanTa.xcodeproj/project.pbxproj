@@ -31,6 +31,11 @@
 		54851299272A6D0900407F28 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54851298272A6D0900407F28 /* TabBarController.swift */; };
 		985EEF63272FDA98002413D9 /* MountainCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985EEF62272FDA98002413D9 /* MountainCell.swift */; };
 		DAAF2716272FF73700F8A115 /* RecordingViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAF2715272FF73700F8A115 /* RecordingViewController+Extension.swift */; };
+		985EEF65273010BD002413D9 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985EEF64273010BD002413D9 /* SettingsCell.swift */; };
+		985EEF65273010BD002413D9 /* ToggleOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985EEF64273010BD002413D9 /* ToggleOptionCell.swift */; };
+		9889DA512730FFCD00F3C772 /* MapOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9889DA502730FFCD00F3C772 /* MapOptionCell.swift */; };
+		98AEF1D727310759002E9C9A /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AEF1D627310759002E9C9A /* PaddingLabel.swift */; };
+		DAB37D4C2731166B00EC523F /* RecordingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB37D4B2731166B00EC523F /* RecordingViewModel.swift */; };
 
 /* End PBXBuildFile section */
 
@@ -61,6 +66,11 @@
 		54851298272A6D0900407F28 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		985EEF62272FDA98002413D9 /* MountainCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainCell.swift; sourceTree = "<group>"; };
 		DAAF2715272FF73700F8A115 /* RecordingViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecordingViewController+Extension.swift"; sourceTree = "<group>"; };
+		985EEF64273010BD002413D9 /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
+		985EEF64273010BD002413D9 /* ToggleOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleOptionCell.swift; sourceTree = "<group>"; };
+		9889DA502730FFCD00F3C772 /* MapOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapOptionCell.swift; sourceTree = "<group>"; };
+		98AEF1D627310759002E9C9A /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
+		DAB37D4B2731166B00EC523F /* RecordingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingViewModel.swift; sourceTree = "<group>"; };
 
 /* End PBXFileReference section */
 
@@ -81,6 +91,7 @@
 				54296948272FBFAB0070B362 /* RecordingViewController.swift */,
 				DAAF2715272FF73700F8A115 /* RecordingViewController+Extension.swift */,
 				5429694A272FBFCA0070B362 /* RecordingViewCoordinator.swift */,
+				DAB37D4B2731166B00EC523F /* RecordingViewModel.swift */,
 			);
 			path = RecordingScene;
 			sourceTree = "<group>";
@@ -121,8 +132,11 @@
 		5428FDBB272F8C32002F9D40 /* SettingsScene */ = {
 			isa = PBXGroup;
 			children = (
-				54296954272FC3EC0070B362 /* SettingsViewController.swift */,
 				54296956272FC4380070B362 /* SettingsViewCoordinator.swift */,
+				54296954272FC3EC0070B362 /* SettingsViewController.swift */,
+				985EEF64273010BD002413D9 /* ToggleOptionCell.swift */,
+				9889DA502730FFCD00F3C772 /* MapOptionCell.swift */,
+				98AEF1D627310759002E9C9A /* PaddingLabel.swift */,
 			);
 			path = SettingsScene;
 			sourceTree = "<group>";
@@ -282,6 +296,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				54296957272FC4380070B362 /* SettingsViewCoordinator.swift in Sources */,
+				9889DA512730FFCD00F3C772 /* MapOptionCell.swift in Sources */,
 				5429694D272FC1390070B362 /* ResultViewController.swift in Sources */,
 				5429695D27302B1D0070B362 /* ClusterAnnotationView.swift in Sources */,
 				54851286272A6AD500407F28 /* MapViewController.swift in Sources */,
@@ -292,13 +307,16 @@
 				54296947272FBD4B0070B362 /* MapViewCoordinator.swift in Sources */,
 				54296953272FC3530070B362 /* MountainListViewCoordinator.swift in Sources */,
 				DAAF2716272FF73700F8A115 /* RecordingViewController+Extension.swift in Sources */,
+				98AEF1D727310759002E9C9A /* PaddingLabel.swift in Sources */,
 				54851282272A6AD500407F28 /* AppDelegate.swift in Sources */,
 				54851299272A6D0900407F28 /* TabBarController.swift in Sources */,
 				54296949272FBFAB0070B362 /* RecordingViewController.swift in Sources */,
 				54296945272FBC6E0070B362 /* AppCoordinator.swift in Sources */,
 				5429694B272FBFCA0070B362 /* RecordingViewCoordinator.swift in Sources */,
+				985EEF65273010BD002413D9 /* ToggleOptionCell.swift in Sources */,
 				54296955272FC3EC0070B362 /* SettingsViewController.swift in Sources */,
 				5429695B273026B10070B362 /* MountainAnnotationView.swift in Sources */,
+				DAB37D4C2731166B00EC523F /* RecordingViewModel.swift in Sources */,
 				54296951272FC3290070B362 /* MountainListViewController.swift in Sources */,
 				54851284272A6AD500407F28 /* SceneDelegate.swift in Sources */,
 				5429694F272FC1740070B362 /* ResultViewCoordinator.swift in Sources */,
