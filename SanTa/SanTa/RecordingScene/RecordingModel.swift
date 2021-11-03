@@ -10,11 +10,17 @@ import CoreLocation
 import CoreMotion
 import Combine
 
-class RecordingModel: NSObject {
+class RecordingModel: NSObject, ObservableObject {
+    @Published private(set) var time = ""
+    @Published private(set) var kilometer = ""
+    @Published private(set) var altitude = ""
+    @Published private(set) var walk = ""
+    
     private let pedoMeter = CMPedometer()
     private var locationManager = CLLocationManager()
     private var timer: DispatchSourceTimer?
     private var date: Date?
+    private var location = [Location]()
     
     private var currentTime = 0 {
         didSet {
@@ -51,18 +57,20 @@ class RecordingModel: NSObject {
         let minutes = (currentTime / 60) % 60
         let hours = (currentTime / 3600)
         
-        print(NSString(format: "%0.2d:%0.2d %0.2d\"", hours, minutes, seconds))
+        time = String(format: "%0.2d:%0.2d %0.2d\"", hours, minutes, seconds)
     }
     
     private func checkPedoMeter() {
         guard let date = self.date else { return }
         
-        pedoMeter.queryPedometerData(from: date, to: Date()) { data, error in
+        pedoMeter.queryPedometerData(from: date, to: Date()) { [weak self] data, error in
             guard let activityData = data,
                   error == nil else { return }
             
-            print("Steps: \(activityData.numberOfSteps)")
-            print("Distance \(activityData.distance)")
+            self?.walk = "\(activityData.numberOfSteps)"
+            
+            guard let distance = activityData.distance else { return }
+            self?.kilometer = "\(distance)"
         }
     }
     
@@ -83,9 +91,10 @@ class RecordingModel: NSObject {
 extension RecordingModel: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let lastLocation = locations.last {
-            print("위도: \(lastLocation.coordinate.latitude)")
-            print("경도: \(lastLocation.coordinate.longitude)")
-            print("고도: \(lastLocation.altitude)")
+            location.append(Location(latitude: Double(lastLocation.coordinate.latitude),
+                                     longitude: Double(lastLocation.coordinate.longitude),
+                                     altitude: Double(lastLocation.altitude)))
+            altitude = "\(lastLocation.altitude)"
         }
     }
     
