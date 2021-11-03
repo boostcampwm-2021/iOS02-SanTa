@@ -93,32 +93,28 @@ class RecordingViewController: UIViewController {
     private func configureBindings() {
         recordingViewModel.$currentTime
             .receive(on: DispatchQueue.main)
-            .sink (receiveCompletion: { print ("completion: \($0)") },
-                   receiveValue: { [weak self] time in
+            .sink (receiveValue: { [weak self] time in
                 self?.timeLabel.text = time
             })
             .store(in: &subscriptions)
         
         recordingViewModel.$kilometer
             .receive(on: DispatchQueue.main)
-            .sink (receiveCompletion: { print ("completion: \($0)") },
-                   receiveValue: { [weak self] kilometer in
+            .sink (receiveValue: { [weak self] kilometer in
                 self?.kilometerLabel.text = kilometer
             })
             .store(in: &subscriptions)
         
         recordingViewModel.$altitude
             .receive(on: DispatchQueue.main)
-            .sink (receiveCompletion: { print ("completion: \($0)") },
-                   receiveValue: { [weak self] altitude in
+            .sink (receiveValue: { [weak self] altitude in
                 self?.altitudeLabel.text = altitude
             })
             .store(in: &subscriptions)
         
         recordingViewModel.$walk
             .receive(on: DispatchQueue.main)
-            .sink (receiveCompletion: { print ("completion: \($0)") },
-                   receiveValue: { [weak self] walk in
+            .sink (receiveValue: { [weak self] walk in
                 self?.walkLabel.text = walk
             })
             .store(in: &subscriptions)

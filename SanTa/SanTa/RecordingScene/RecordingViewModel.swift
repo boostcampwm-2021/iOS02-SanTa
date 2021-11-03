@@ -24,32 +24,28 @@ class RecordingViewModel: ObservableObject {
     private func configureBindings() {
         recording.$time
             .receive(on: DispatchQueue.main)
-            .sink (receiveCompletion: { print ("completion: \($0)") },
-                   receiveValue: { [weak self] time in
+            .sink (receiveValue: { [weak self] time in
                 self?.currentTime = time
             })
             .store(in: &subscriptions)
         
         recording.$kilometer
             .receive(on: DispatchQueue.main)
-            .sink (receiveCompletion: { print ("completion: \($0)") },
-                   receiveValue: { [weak self] kilometer in
+            .sink (receiveValue: { [weak self] kilometer in
                 self?.kilometer = kilometer
             })
             .store(in: &subscriptions)
         
         recording.$altitude
             .receive(on: DispatchQueue.main)
-            .sink (receiveCompletion: { print ("completion: \($0)") },
-                   receiveValue: { [weak self] altitude in
+            .sink (receiveValue: { [weak self] altitude in
                 self?.altitude = altitude
             })
             .store(in: &subscriptions)
         
         recording.$walk
             .receive(on: DispatchQueue.main)
-            .sink (receiveCompletion: { print ("completion: \($0)") },
-                   receiveValue: { [weak self] walk in
+            .sink (receiveValue: { [weak self] walk in
                 self?.walk = walk
             })
             .store(in: &subscriptions)
