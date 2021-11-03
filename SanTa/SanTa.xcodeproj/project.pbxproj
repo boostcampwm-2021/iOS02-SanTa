@@ -31,7 +31,7 @@
 		54851299272A6D0900407F28 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54851298272A6D0900407F28 /* TabBarController.swift */; };
 		985EEF63272FDA98002413D9 /* MountainCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985EEF62272FDA98002413D9 /* MountainCell.swift */; };
 		DAAF2716272FF73700F8A115 /* RecordingViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAF2715272FF73700F8A115 /* RecordingViewController+Extension.swift */; };
-
+		DAB37D4C2731166B00EC523F /* RecordingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB37D4B2731166B00EC523F /* RecordingViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -61,7 +61,7 @@
 		54851298272A6D0900407F28 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		985EEF62272FDA98002413D9 /* MountainCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainCell.swift; sourceTree = "<group>"; };
 		DAAF2715272FF73700F8A115 /* RecordingViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecordingViewController+Extension.swift"; sourceTree = "<group>"; };
-
+		DAB37D4B2731166B00EC523F /* RecordingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +81,7 @@
 				54296948272FBFAB0070B362 /* RecordingViewController.swift */,
 				DAAF2715272FF73700F8A115 /* RecordingViewController+Extension.swift */,
 				5429694A272FBFCA0070B362 /* RecordingViewCoordinator.swift */,
+				DAB37D4B2731166B00EC523F /* RecordingViewModel.swift */,
 			);
 			path = RecordingScene;
 			sourceTree = "<group>";
@@ -299,6 +300,7 @@
 				5429694B272FBFCA0070B362 /* RecordingViewCoordinator.swift in Sources */,
 				54296955272FC3EC0070B362 /* SettingsViewController.swift in Sources */,
 				5429695B273026B10070B362 /* MountainAnnotationView.swift in Sources */,
+				DAB37D4C2731166B00EC523F /* RecordingViewModel.swift in Sources */,
 				54296951272FC3290070B362 /* MountainListViewController.swift in Sources */,
 				54851284272A6AD500407F28 /* SceneDelegate.swift in Sources */,
 				5429694F272FC1740070B362 /* ResultViewCoordinator.swift in Sources */,

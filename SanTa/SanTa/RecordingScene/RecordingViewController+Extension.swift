@@ -28,6 +28,31 @@ extension RecordingViewController {
         self.locationButton.setImage(UIImage(systemName: "location.fill"), for: .normal)
     }
     
+    func configureLabel() {
+        [self.kilometerLabel, self.kilometerTextLabel, self.timeLabel, self.timeLabel, self.altitudeLabel, self.walkLabel, self.timeTextLabel, self.altitudeTextLabel, self.walkTextLabel].forEach {
+            $0.textAlignment = .center
+            $0.textColor = .white
+            $0.translatesAutoresizingMaskIntoConstraints = false
+        }
+    }
+    
+    func configureStackView() {
+        [self.calculateStackView, self.calculateTextStackView, self.buttonStackView].forEach {
+            $0.translatesAutoresizingMaskIntoConstraints = false
+            $0.axis = .horizontal
+        }
+        
+        self.calculateStackView.spacing = 10
+        self.calculateStackView.distribution = .fillEqually
+        
+        self.calculateTextStackView.spacing = 10
+        self.calculateTextStackView.distribution = .fillEqually
+        
+        self.buttonStackView.spacing = 18
+        self.buttonStackView.distribution = .fill
+        self.buttonStackView.alignment = .center
+    }
+    
     
     func configureConstraints() {
         self.view.backgroundColor = .systemBlue
