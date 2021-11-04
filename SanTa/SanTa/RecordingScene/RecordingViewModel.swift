@@ -52,7 +52,7 @@ final class RecordingViewModel: ObservableObject {
             .store(in: &self.subscriptions)
     }
     
-    func save() {
-        self.recordingUseCase?.save(completion: { _ in })
+    func save(completion: @escaping (Result<Record, Error>) -> Void) {
+        self.recordingUseCase?.save(completion: completion)
     }
 }
