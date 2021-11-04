@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 class RecordingViewController: UIViewController {
     weak var coordinator: RecordingViewCoordinator?
@@ -75,7 +76,8 @@ class RecordingViewController: UIViewController {
     let calculateTextStackView = UIStackView()
     let buttonStackView = UIStackView()
     
-    var timer: RecordingViewModel?
+    private var recordingViewModel = RecordingViewModel()
+    private var subscriptions = Set<AnyCancellable>()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,10 +86,62 @@ class RecordingViewController: UIViewController {
         self.configureStackView()
         self.configureConstraints()
         self.configureButton()
-        self.configure()
+        self.configureBindings()
+        self.configureTarget()
     }
     
-    private func configure() {
-        timer = RecordingViewModel()
+    private func configureBindings() {
+        self.recordingViewModel.$currentTime
+            .receive(on: DispatchQueue.main)
+            .sink (receiveValue: { [weak self] time in
+                self?.timeLabel.text = time
+            })
+            .store(in: &self.subscriptions)
+        
+        self.recordingViewModel.$kilometer
+            .receive(on: DispatchQueue.main)
+            .sink (receiveValue: { [weak self] kilometer in
+                self?.kilometerLabel.text = kilometer
+            })
+            .store(in: &self.subscriptions)
+        
+        self.recordingViewModel.$altitude
+            .receive(on: DispatchQueue.main)
+            .sink (receiveValue: { [weak self] altitude in
+                self?.altitudeLabel.text = altitude
+            })
+            .store(in: &self.subscriptions)
+        
+        self.recordingViewModel.$walk
+            .receive(on: DispatchQueue.main)
+            .sink (receiveValue: { [weak self] walk in
+                self?.walkLabel.text = walk
+            })
+            .store(in: &self.subscriptions)
     }
+    
+    private func configureTarget() {
+        self.pauseButton.addTarget(self, action: #selector(pauseButtonAction), for: .touchUpInside)
+        self.stopButton.addTarget(self, action: #selector(stopButtonAction), for: .touchUpInside)
+    }
+    
+    @objc private func pauseButtonAction(_ sender: UIResponder) {
+        
+    }
+    
+    @objc private func stopButtonAction(_ sender: UIResponder) {
+        let stopAlert = UIAlertController(title: "기록 종료", message: "기록을 종료합니다.", preferredStyle: UIAlertController.Style.alert)
+        let noneAction = UIAlertAction(title: "아니요", style: .default)
+        let terminationAction = UIAlertAction(title: "종료", style: .default) { [weak self] (action) in
+            let resultRecord = self?.recordingViewModel.stopRecording()
+            print(resultRecord)
+        }
+        stopAlert.addAction(noneAction)
+        stopAlert.addAction(terminationAction)
+        present(stopAlert, animated: true, completion: nil)
+    }
+    
+//    override func viewDidAppear(_ animated: Bool) {
+//        self.coordinator?.dismiss()
+//    }
 }

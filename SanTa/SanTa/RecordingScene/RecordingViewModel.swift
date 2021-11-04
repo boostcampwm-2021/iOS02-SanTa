@@ -6,91 +6,52 @@
 //
 
 import Foundation
-import CoreLocation
-import CoreMotion
 import Combine
 
-class RecordingViewModel: NSObject {
-    private let pedoMeter = CMPedometer()
-    private var locationManager = CLLocationManager()
-    private var timer: DispatchSourceTimer?
-    private var date: Date?
+final class RecordingViewModel: ObservableObject {
+    @Published private(set) var currentTime = ""
+    @Published private(set) var kilometer = ""
+    @Published private(set) var altitude = ""
+    @Published private(set) var walk = ""
     
-    private var currentTime = 0 {
-        didSet {
-            self.timeConverter()
-            self.checkPedoMeter()
-        }
+    private var recording = RecordingModel()
+    private var subscriptions = Set<AnyCancellable>()
+    
+    init() {
+        configureBindings()
     }
     
-    override init() {
-        super.init()
-        self.date = Date()
-        self.configureTimer()
-        self.configureLocationManager()
-    }
-    
-    private func configureTimer() {
-        self.timer = DispatchSource.makeTimerSource(flags: [], queue: DispatchQueue.main)
-        self.timer?.schedule(deadline: .now(), repeating: 1)
-        self.timer?.setEventHandler(handler: { [weak self] in
-            self?.currentTime += 1
-        })
+    private func configureBindings() {
+        self.recording.$time
+            .receive(on: DispatchQueue.main)
+            .sink (receiveValue: { [weak self] time in
+                self?.currentTime = time
+            })
+            .store(in: &self.subscriptions)
         
-        self.resume()
-    }
-    
-    private func configureLocationManager() {
-        self.locationManager.requestWhenInUseAuthorization()
-        self.locationManager.startUpdatingLocation()
-        self.locationManager.delegate = self
-    }
-    
-    private func timeConverter() {
-        let seconds = currentTime % 60
-        let minutes = (currentTime / 60) % 60
-        let hours = (currentTime / 3600)
+        self.recording.$kilometer
+            .receive(on: DispatchQueue.main)
+            .sink (receiveValue: { [weak self] kilometer in
+                self?.kilometer = kilometer
+            })
+            .store(in: &self.subscriptions)
         
-        print(NSString(format: "%0.2d:%0.2d %0.2d\"", hours, minutes, seconds))
-    }
-    
-    private func checkPedoMeter() {
-        guard let date = self.date else { return }
+        self.recording.$altitude
+            .receive(on: DispatchQueue.main)
+            .sink (receiveValue: { [weak self] altitude in
+                self?.altitude = altitude
+            })
+            .store(in: &self.subscriptions)
         
-        pedoMeter.queryPedometerData(from: date, to: Date()) { data, error in
-            guard let activityData = data,
-                  error == nil else { return }
-            
-            print("Steps: \(activityData.numberOfSteps)")
-            print("Distance \(activityData.distance)")
-        }
+        self.recording.$walk
+            .receive(on: DispatchQueue.main)
+            .sink (receiveValue: { [weak self] walk in
+                self?.walk = walk
+            })
+            .store(in: &self.subscriptions)
     }
     
-    func suspend() {
-        timer?.suspend()
-    }
-    
-    func resume() {
-        timer?.resume()
-    }
-    
-    func cancel() {
-        timer?.cancel()
-        timer = nil
-    }
-}
-
-extension RecordingViewModel: CLLocationManagerDelegate {
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let lastLocation = locations.last {
-            print("위도: \(lastLocation.coordinate.latitude)")
-            print("경도: \(lastLocation.coordinate.longitude)")
-            print("고도: \(lastLocation.altitude)")
-        }
-    }
-    
-    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        // GPS를 켜지 않았을 경우
-        print(error)
+    func stopRecording() -> Record {
+        return self.recording.cancel()
     }
 }
