@@ -26,8 +26,13 @@ class RecordingViewCoordinator: Coordinator {
         self.navigationController.present(recordingViewController, animated: true)
     }
     
+    func hide() {
+        self.navigationController.dismiss(animated: true)
+    }
+    
     func dismiss() {
         self.navigationController.dismiss(animated: true)
+        self.parentCoordinator?.childCoordinator.removeAll()
     }
 }
 
