@@ -135,13 +135,10 @@ class RecordingViewController: UIViewController {
         let terminationAction = UIAlertAction(title: "종료", style: .default) { [weak self] (action) in
             let resultRecord = self?.recordingViewModel.stopRecording()
             print(resultRecord)
+            self.coordinator?.dismiss()
         }
         stopAlert.addAction(noneAction)
         stopAlert.addAction(terminationAction)
         present(stopAlert, animated: true, completion: nil)
     }
-    
-//    override func viewDidAppear(_ animated: Bool) {
-//        self.coordinator?.dismiss()
-//    }
 }
