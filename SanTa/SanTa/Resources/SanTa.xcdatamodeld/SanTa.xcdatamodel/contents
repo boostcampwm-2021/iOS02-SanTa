@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19206" systemVersion="20F71" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19206" systemVersion="21A559" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="LocationEntity" representedClassName=".LocationEntityMO" syncable="YES" codeGenerationType="class">
         <attribute name="altitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <relationship name="record" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="RecordEntity"/>
+        <relationship name="record" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="RecordEntity" inverseName="locations" inverseEntity="RecordEntity"/>
     </entity>
     <entity name="RecordEntity" representedClassName=".RecordEntityMO" syncable="YES" codeGenerationType="class">
         <attribute name="distance" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="step" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="time" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <relationship name="locations" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="LocationEntity"/>
+        <relationship name="locations" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="LocationEntity" inverseName="record" inverseEntity="LocationEntity"/>
     </entity>
     <elements>
-        <element name="LocationEntity" positionX="-50352.171875" positionY="-6612.625" width="128" height="103"/>
-        <element name="RecordEntity" positionX="-50547.484375" positionY="-6731.9609375" width="128" height="103"/>
+        <element name="LocationEntity" positionX="-50352.171875" positionY="-6612.625" width="128" height="89"/>
+        <element name="RecordEntity" positionX="-50547.484375" positionY="-6731.9609375" width="128" height="89"/>
     </elements>
 </model>
