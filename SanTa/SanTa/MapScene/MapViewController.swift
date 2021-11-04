@@ -12,13 +12,36 @@ class MapViewController: UIViewController {
     private var startButton = UIButton()
     private var manager = CLLocationManager()
     private var userTrackingButton = MKUserTrackingButton()
+    private var viewModel: MapViewModel?
+    
+    convenience init(viewModel: MapViewModel) {
+        self.init()
+        self.viewModel = viewModel
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureViews()
         self.registerAnnotationView()
         self.configureCoreLocationManager()
-        self.testCoordinates()
+        self.configureViewModel()
+    }
+    
+    private func configureViewModel() {
+        self.viewModel?.markersShouldUpdate = { self.configureMarkers() }
+        self.viewModel?.viewDidLoad()
+    }
+    
+    private func configureMarkers() {
+        self.viewModel?.mountains?.forEach{ mountainEntity in
+            let mountainAnnotation = MountainAnnotation(
+                title: mountainEntity.mountain.mountainName,
+                subtitle: mountainEntity.mountain.mountainHeight,
+                latitude: mountainEntity.latitude,
+                longitude: mountainEntity.longitude
+            )
+            self.mapView.addAnnotation(mountainAnnotation)
+        }
     }
     
     private func configureViews() {
@@ -42,7 +65,7 @@ class MapViewController: UIViewController {
         self.startButton.layer.shadowOpacity = 1
         self.startButton.layer.shadowRadius = 3
         self.startButton.layer.shadowOffset = CGSize(width: 0, height: 3)
-    
+        
         let startButtonConstraints = [
             self.startButton.widthAnchor.constraint(equalToConstant: 100),
             self.startButton.heightAnchor.constraint(equalToConstant: 100),
@@ -103,17 +126,7 @@ class MapViewController: UIViewController {
         let region = MKCoordinateRegion(center: coordinate, span: span)
         self.mapView.setRegion(region, animated: true)
     }
-    
-    private func testCoordinates() {
-        for _ in 0..<200 {
-            let latitude = Double.random(in: 36.0..<37.0)
-            let longitude = -Double.random(in: 121.0..<122.0)
-            let mountainAnnotaion = MountainAnnotaion()
-            mountainAnnotaion.coordinate = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-            self.mapView.addAnnotation(mountainAnnotaion)
-        }
-    }
-    
+
     @objc private func presentRecordingViewController() {
         coordinator?.presentRecordingViewController()
     }
@@ -121,7 +134,7 @@ class MapViewController: UIViewController {
 
 extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        if let _ = annotation as? MountainAnnotaion {
+        if let _ = annotation as? MountainAnnotation {
             return MountainAnnotationView(
                 annotation: annotation,
                 reuseIdentifier: MountainAnnotationView.ReuseID
@@ -141,12 +154,8 @@ extension MapViewController: CLLocationManagerDelegate {
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         if manager.authorizationStatus == .authorizedWhenInUse ||
-           manager.authorizationStatus == .authorizedAlways {
+            manager.authorizationStatus == .authorizedAlways {
             userTrackingButton.isHidden = false
         }
     }
-}
-
-class MountainAnnotaion: NSObject, MKAnnotation {
-    var coordinate = CLLocationCoordinate2D(latitude: 0, longitude: 0)
 }

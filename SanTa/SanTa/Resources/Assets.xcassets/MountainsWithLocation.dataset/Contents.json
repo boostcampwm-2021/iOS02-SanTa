@@ -1,0 +1,12 @@
+{
+  "data" : [
+    {
+      "filename" : "MountainsWithLocation.json",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

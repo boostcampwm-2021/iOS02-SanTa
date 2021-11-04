@@ -15,8 +15,8 @@ class MapViewCoordinator: Coordinator {
     func start() {
     }
 
-    func startPush() -> UINavigationController {
-        let mapViewController = MapViewController()
+    func startPush() -> MapViewController {
+        let mapViewController = MapViewController(viewModel: injectDependencies())
         mapViewController.coordinator = self
         self.navigationController.setViewControllers([mapViewController], animated: false)
 
@@ -30,5 +30,9 @@ extension MapViewCoordinator {
         recordingViewCoordinator.parentCoordinator = self
         self.childCoordinator.append(recordingViewCoordinator)
         recordingViewCoordinator.start()
+    }
+    
+    private func injectDependencies() -> MapViewModel {
+        return MapViewModel(useCase: MapViewUseCase(repository: DefaultMapViewRespository(mountainExtractor: MountainExtractor())))
     }
 }
