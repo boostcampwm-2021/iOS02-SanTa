@@ -128,6 +128,7 @@ class RecordingViewController: UIViewController {
     private func configureTarget() {
         self.pauseButton.addTarget(self, action: #selector(pauseButtonAction), for: .touchUpInside)
         self.stopButton.addTarget(self, action: #selector(stopButtonAction), for: .touchUpInside)
+        self.locationButton.addTarget(self, action: #selector(locationButtonAction), for: .touchUpInside)
     }
     
     @objc private func pauseButtonAction(_ sender: UIResponder) {
@@ -139,14 +140,17 @@ class RecordingViewController: UIViewController {
         let noneAction = UIAlertAction(title: "아니요", style: .default)
         let terminationAction = UIAlertAction(title: "종료", style: .default) { [weak self] (action) in
             self?.recordingViewModel?.save() { [weak self] completion in
-                print(completion)
                 DispatchQueue.main.async {
                     self?.coordinator?.dismiss()
-                } 
+                }
             }
         }
         stopAlert.addAction(noneAction)
         stopAlert.addAction(terminationAction)
         present(stopAlert, animated: true, completion: nil)
+    }
+    
+    @objc private func locationButtonAction(_ sender: UIResponder) {
+    
     }
 }
