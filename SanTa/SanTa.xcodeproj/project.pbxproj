@@ -32,13 +32,17 @@
 		5485128E272A6AD600407F28 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5485128D272A6AD600407F28 /* Assets.xcassets */; };
 		54851291272A6AD600407F28 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5485128F272A6AD600407F28 /* LaunchScreen.storyboard */; };
 		54851299272A6D0900407F28 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54851298272A6D0900407F28 /* TabBarController.swift */; };
+		984DDEC127325D67003BE56B /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984DDEC027325D67003BE56B /* Record.swift */; };
+		984DDEC327325DFC003BE56B /* RecordingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984DDEC227325DFC003BE56B /* RecordingUseCase.swift */; };
+		984DDEC527325FB9003BE56B /* RecordRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984DDEC427325FB9003BE56B /* RecordRepository.swift */; };
+		984DDEC727327064003BE56B /* CoreDataRecordStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984DDEC627327064003BE56B /* CoreDataRecordStorage.swift */; };
+		984DDEC9273271EC003BE56B /* CoreDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984DDEC8273271EC003BE56B /* CoreDataStorage.swift */; };
 		985EEF63272FDA98002413D9 /* MountainCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985EEF62272FDA98002413D9 /* MountainCell.swift */; };
 		985EEF65273010BD002413D9 /* ToggleOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985EEF64273010BD002413D9 /* ToggleOptionCell.swift */; };
 		9889DA512730FFCD00F3C772 /* MapOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9889DA502730FFCD00F3C772 /* MapOptionCell.swift */; };
 		98AEF1D727310759002E9C9A /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AEF1D627310759002E9C9A /* PaddingLabel.swift */; };
 		DAAF2716272FF73700F8A115 /* RecordingViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAF2715272FF73700F8A115 /* RecordingViewController+Extension.swift */; };
 		DAB37D4C2731166B00EC523F /* RecordingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB37D4B2731166B00EC523F /* RecordingViewModel.swift */; };
-		DAB37D4E2732557100EC523F /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB37D4D2732557100EC523F /* Record.swift */; };
 		DAB37D50273256B900EC523F /* RecordingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB37D4F273256B900EC523F /* RecordingModel.swift */; };
 
 /* End PBXBuildFile section */
@@ -71,13 +75,17 @@
 		54851290272A6AD600407F28 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		54851292272A6AD600407F28 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		54851298272A6D0900407F28 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		984DDEC027325D67003BE56B /* Record.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
+		984DDEC227325DFC003BE56B /* RecordingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingUseCase.swift; sourceTree = "<group>"; };
+		984DDEC427325FB9003BE56B /* RecordRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordRepository.swift; sourceTree = "<group>"; };
+		984DDEC627327064003BE56B /* CoreDataRecordStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataRecordStorage.swift; sourceTree = "<group>"; };
+		984DDEC8273271EC003BE56B /* CoreDataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CoreDataStorage.swift; path = SanTa/Persistences/CoreDataStorage.swift; sourceTree = SOURCE_ROOT; };
 		985EEF62272FDA98002413D9 /* MountainCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainCell.swift; sourceTree = "<group>"; };
 		985EEF64273010BD002413D9 /* ToggleOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleOptionCell.swift; sourceTree = "<group>"; };
 		9889DA502730FFCD00F3C772 /* MapOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapOptionCell.swift; sourceTree = "<group>"; };
 		98AEF1D627310759002E9C9A /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		DAAF2715272FF73700F8A115 /* RecordingViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecordingViewController+Extension.swift"; sourceTree = "<group>"; };
 		DAB37D4B2731166B00EC523F /* RecordingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingViewModel.swift; sourceTree = "<group>"; };
-		DAB37D4D2732557100EC523F /* Record.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
 		DAB37D4F273256B900EC523F /* RecordingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingModel.swift; sourceTree = "<group>"; };
 
 /* End PBXFileReference section */
@@ -100,8 +108,12 @@
 				DAAF2715272FF73700F8A115 /* RecordingViewController+Extension.swift */,
 				5429694A272FBFCA0070B362 /* RecordingViewCoordinator.swift */,
 				DAB37D4B2731166B00EC523F /* RecordingViewModel.swift */,
+				984DDEC227325DFC003BE56B /* RecordingUseCase.swift */,
+				984DDEC427325FB9003BE56B /* RecordRepository.swift */,
+				984DDEC627327064003BE56B /* CoreDataRecordStorage.swift */,
+				984DDEC027325D67003BE56B /* Record.swift */,
 				DAB37D4F273256B900EC523F /* RecordingModel.swift */,
-				DAB37D4D2732557100EC523F /* Record.swift */,
+
 			);
 			path = RecordingScene;
 			sourceTree = "<group>";
@@ -162,6 +174,7 @@
 		54296943272FB8410070B362 /* Persistences */ = {
 			isa = PBXGroup;
 			children = (
+				984DDEC8273271EC003BE56B /* CoreDataStorage.swift */,
 				49FEEDB6273255DD00D37CCA /* MountainExtractor.swift */,
 			);
 			path = Persistences;
@@ -312,7 +325,9 @@
 				9889DA512730FFCD00F3C772 /* MapOptionCell.swift in Sources */,
 				5429694D272FC1390070B362 /* ResultViewController.swift in Sources */,
 				5429695D27302B1D0070B362 /* ClusterAnnotationView.swift in Sources */,
+				984DDEC127325D67003BE56B /* Record.swift in Sources */,
 				54851286272A6AD500407F28 /* MapViewController.swift in Sources */,
+				984DDEC9273271EC003BE56B /* CoreDataStorage.swift in Sources */,
 				985EEF63272FDA98002413D9 /* MountainCell.swift in Sources */,
 				5428FDBD272F8C5B002F9D40 /* MapViewUseCase.swift in Sources */,
 				5428FDB4272F894D002F9D40 /* MapViewRepository.swift in Sources */,
@@ -326,6 +341,9 @@
 				54851299272A6D0900407F28 /* TabBarController.swift in Sources */,
 				49FEEDB92732584000D37CCA /* MountainEntity.swift in Sources */,
 				54296949272FBFAB0070B362 /* RecordingViewController.swift in Sources */,
+				984DDEC527325FB9003BE56B /* RecordRepository.swift in Sources */,
+				984DDEC327325DFC003BE56B /* RecordingUseCase.swift in Sources */,
+				984DDEC727327064003BE56B /* CoreDataRecordStorage.swift in Sources */,
 				DAB37D50273256B900EC523F /* RecordingModel.swift in Sources */,
 				54296945272FBC6E0070B362 /* AppCoordinator.swift in Sources */,
 				5429694B272FBFCA0070B362 /* RecordingViewCoordinator.swift in Sources */,

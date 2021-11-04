@@ -1,8 +1,8 @@
 //
-//  Record.swift
+//  Recording.swift
 //  SanTa
 //
-//  Created by 김민창 on 2021/11/03.
+//  Created by CHANGMIN OH on 2021/11/03.
 //
 
 import Foundation
