@@ -146,13 +146,13 @@ class MapViewController: UIViewController {
 
 extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        if annotation is MountainAnnotation {
-            return MountainAnnotationView(
-                annotation: annotation,
-                reuseIdentifier: MountainAnnotationView.ReuseID
-            )
+        guard let annotation = annotation as? MountainAnnotation else { return nil }
+        
+        guard let dequeuedView = mapView.dequeueReusableAnnotationView(withIdentifier: MountainAnnotationView.ReuseID) as? MountainAnnotationView else {
+            return MountainAnnotationView(annotation: annotation, reuseIdentifier: MountainAnnotationView.ReuseID)
         }
-        return nil
+        dequeuedView.annotation = annotation
+        return dequeuedView
     }
 }
 
