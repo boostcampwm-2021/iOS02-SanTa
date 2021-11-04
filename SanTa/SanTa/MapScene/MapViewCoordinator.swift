@@ -15,7 +15,7 @@ class MapViewCoordinator: Coordinator {
     func start() {
     }
 
-    func startPush() -> MapViewController {
+    func startPush() -> UINavigationController {
         let mapViewController = MapViewController(viewModel: injectDependencies())
         mapViewController.coordinator = self
         self.navigationController.setViewControllers([mapViewController], animated: false)
