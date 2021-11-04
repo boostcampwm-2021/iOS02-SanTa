@@ -26,7 +26,7 @@ final class DefaultRecordingUseCase: RecordingUseCase, ObservableObject {
     
     var recording: RecordingModel
     
-    private let recgordRepository: RecordRepository
+    private let recordRepository: RecordRepository
     private var subscriptions = Set<AnyCancellable>()
     
     init(recordRepository: RecordRepository, recordingModel: RecordingModel) {
