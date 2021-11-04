@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		49A3E61D2732756C0020CAC1 /* MountainAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A3E61C2732756C0020CAC1 /* MountainAnnotation.swift */; };
+		49FEEDB7273255DD00D37CCA /* MountainExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FEEDB6273255DD00D37CCA /* MountainExtractor.swift */; };
+		49FEEDB92732584000D37CCA /* MountainEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FEEDB82732584000D37CCA /* MountainEntity.swift */; };
 		5428FDB4272F894D002F9D40 /* MapViewRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5428FDB3272F894D002F9D40 /* MapViewRepository.swift */; };
 		5428FDBD272F8C5B002F9D40 /* MapViewUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5428FDBC272F8C5B002F9D40 /* MapViewUseCase.swift */; };
 		54296945272FBC6E0070B362 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54296944272FBC6E0070B362 /* AppCoordinator.swift */; };
@@ -37,9 +40,13 @@
 		DAB37D4C2731166B00EC523F /* RecordingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB37D4B2731166B00EC523F /* RecordingViewModel.swift */; };
 		DAB37D4E2732557100EC523F /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB37D4D2732557100EC523F /* Record.swift */; };
 		DAB37D50273256B900EC523F /* RecordingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB37D4F273256B900EC523F /* RecordingModel.swift */; };
+
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		49A3E61C2732756C0020CAC1 /* MountainAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainAnnotation.swift; sourceTree = "<group>"; };
+		49FEEDB6273255DD00D37CCA /* MountainExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainExtractor.swift; sourceTree = "<group>"; };
+		49FEEDB82732584000D37CCA /* MountainEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainEntity.swift; sourceTree = "<group>"; };
 		5428FDB3272F894D002F9D40 /* MapViewRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewRepository.swift; sourceTree = "<group>"; };
 		5428FDBC272F8C5B002F9D40 /* MapViewUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewUseCase.swift; sourceTree = "<group>"; };
 		54296944272FBC6E0070B362 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
@@ -72,6 +79,7 @@
 		DAB37D4B2731166B00EC523F /* RecordingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingViewModel.swift; sourceTree = "<group>"; };
 		DAB37D4D2732557100EC523F /* Record.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
 		DAB37D4F273256B900EC523F /* RecordingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingModel.swift; sourceTree = "<group>"; };
+
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,6 +154,7 @@
 		5428FDBE272F8D43002F9D40 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				49FEEDB82732584000D37CCA /* MountainEntity.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -153,6 +162,7 @@
 		54296943272FB8410070B362 /* Persistences */ = {
 			isa = PBXGroup;
 			children = (
+				49FEEDB6273255DD00D37CCA /* MountainExtractor.swift */,
 			);
 			path = Persistences;
 			sourceTree = "<group>";
@@ -167,6 +177,7 @@
 				54296946272FBD4B0070B362 /* MapViewCoordinator.swift */,
 				5429695A273026B10070B362 /* MountainAnnotationView.swift */,
 				5429695C27302B1D0070B362 /* ClusterAnnotationView.swift */,
+				49A3E61C2732756C0020CAC1 /* MountainAnnotation.swift */,
 			);
 			path = MapScene;
 			sourceTree = "<group>";
@@ -217,8 +228,8 @@
 				5428FDBE272F8D43002F9D40 /* Entities */,
 				54731B62272F808300534097 /* Application */,
 				54731B61272F7F7600534097 /* MapScene */,
-				5428FDB5272F89F0002F9D40 /* RecordingScene */,
 				5428FDB6272F8B2B002F9D40 /* ResultScene */,
+				5428FDB5272F89F0002F9D40 /* RecordingScene */,
 				5428FDB7272F8B34002F9D40 /* ResultDetailScene */,
 				5428FDB9272F8BD9002F9D40 /* MountainListScene */,
 				5428FDBA272F8BF6002F9D40 /* MountainDetailScene */,
@@ -313,15 +324,18 @@
 				98AEF1D727310759002E9C9A /* PaddingLabel.swift in Sources */,
 				54851282272A6AD500407F28 /* AppDelegate.swift in Sources */,
 				54851299272A6D0900407F28 /* TabBarController.swift in Sources */,
+				49FEEDB92732584000D37CCA /* MountainEntity.swift in Sources */,
 				54296949272FBFAB0070B362 /* RecordingViewController.swift in Sources */,
 				DAB37D50273256B900EC523F /* RecordingModel.swift in Sources */,
 				54296945272FBC6E0070B362 /* AppCoordinator.swift in Sources */,
 				5429694B272FBFCA0070B362 /* RecordingViewCoordinator.swift in Sources */,
 				985EEF65273010BD002413D9 /* ToggleOptionCell.swift in Sources */,
+				49A3E61D2732756C0020CAC1 /* MountainAnnotation.swift in Sources */,
 				54296955272FC3EC0070B362 /* SettingsViewController.swift in Sources */,
 				5429695B273026B10070B362 /* MountainAnnotationView.swift in Sources */,
 				DAB37D4C2731166B00EC523F /* RecordingViewModel.swift in Sources */,
 				54296951272FC3290070B362 /* MountainListViewController.swift in Sources */,
+				49FEEDB7273255DD00D37CCA /* MountainExtractor.swift in Sources */,
 				54851284272A6AD500407F28 /* SceneDelegate.swift in Sources */,
 				5429694F272FC1740070B362 /* ResultViewCoordinator.swift in Sources */,
 				54731B65272F84D300534097 /* MapViewModel.swift in Sources */,
