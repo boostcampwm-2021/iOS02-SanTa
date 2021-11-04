@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import MapKit
 
 protocol Coordinator: AnyObject {
     var childCoordinator: [Coordinator] { get set }
