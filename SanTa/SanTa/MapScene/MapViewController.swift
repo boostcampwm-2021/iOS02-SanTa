@@ -27,6 +27,15 @@ class MapViewController: UIViewController {
         self.configureViewModel()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        if manager.authorizationStatus == .authorizedAlways ||
+            manager.authorizationStatus == .authorizedWhenInUse {
+            userTrackingButton.isHidden = false
+        } else {
+            userTrackingButton.isHidden = true
+        }
+    }
+    
     private func configureViewModel() {
         self.viewModel?.markersShouldUpdate = { self.configureMarkers() }
         self.viewModel?.viewDidLoad()
