@@ -74,6 +74,8 @@ class MapViewController: UIViewController {
         ]
         NSLayoutConstraint.activate(startButtonConstraints)
         
+        self.startButton.addTarget(self, action: #selector(presentRecordingViewController), for: .touchUpInside)
+        
         self.userTrackingButton = .init(mapView: mapView)
         self.view.addSubview(self.userTrackingButton)
         self.userTrackingButton.isHidden = true
@@ -123,6 +125,10 @@ class MapViewController: UIViewController {
         )
         let region = MKCoordinateRegion(center: coordinate, span: span)
         self.mapView.setRegion(region, animated: true)
+    }
+
+    @objc private func presentRecordingViewController() {
+        coordinator?.presentRecordingViewController()
     }
 }
 

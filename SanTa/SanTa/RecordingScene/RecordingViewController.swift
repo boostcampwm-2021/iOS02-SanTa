@@ -140,4 +140,8 @@ class RecordingViewController: UIViewController {
         stopAlert.addAction(terminationAction)
         present(stopAlert, animated: true, completion: nil)
     }
+    
+//    override func viewDidAppear(_ animated: Bool) {
+//        self.coordinator?.dismiss()
+//    }
 }
