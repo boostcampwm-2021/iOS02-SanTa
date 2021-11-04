@@ -151,6 +151,6 @@ class RecordingViewController: UIViewController {
     }
     
     @objc private func locationButtonAction(_ sender: UIResponder) {
-    
+        self.coordinator?.dismiss()
     }
 }
