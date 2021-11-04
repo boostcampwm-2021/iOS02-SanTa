@@ -8,7 +8,7 @@ import MapKit
 
 class MapViewController: UIViewController {
     weak var coordinator: MapViewCoordinator?
-    private var mapView = MKMapView()
+    private var mapView: MKMapView?
     private var startButton = UIButton()
     private var manager = CLLocationManager()
     private var userTrackingButton = MKUserTrackingButton()
@@ -27,6 +27,15 @@ class MapViewController: UIViewController {
         self.configureViewModel()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        if manager.authorizationStatus == .authorizedAlways ||
+            manager.authorizationStatus == .authorizedWhenInUse {
+            userTrackingButton.isHidden = false
+        } else {
+            userTrackingButton.isHidden = true
+        }
+    }
+    
     private func configureViewModel() {
         self.viewModel?.markersShouldUpdate = { self.configureMarkers() }
         self.viewModel?.viewDidLoad()
@@ -40,19 +49,20 @@ class MapViewController: UIViewController {
                 latitude: mountainEntity.latitude,
                 longitude: mountainEntity.longitude
             )
-            self.mapView.addAnnotation(mountainAnnotation)
+            mapView?.addAnnotation(mountainAnnotation)
         }
     }
     
     private func configureViews() {
         self.mapView = MKMapView(frame: view.bounds)
-        self.mapView.showsUserLocation = true
-        self.mapView.delegate = self
-        self.view.addSubview(self.mapView)
-        self.mapView.showsUserLocation = true
-        self.mapView.showsScale = true
-        self.mapView.showsCompass = true
-        self.mapView.delegate = self
+        guard let mapView = mapView else { return }
+        mapView.showsUserLocation = true
+        mapView.delegate = self
+        self.view.addSubview(mapView)
+        mapView.showsUserLocation = true
+        mapView.showsScale = true
+        mapView.showsCompass = true
+        mapView.delegate = self
         
         self.view.addSubview(self.startButton)
         self.startButton.backgroundColor = .blue
@@ -69,7 +79,7 @@ class MapViewController: UIViewController {
         let startButtonConstraints = [
             self.startButton.widthAnchor.constraint(equalToConstant: 100),
             self.startButton.heightAnchor.constraint(equalToConstant: 100),
-            self.startButton.bottomAnchor.constraint(equalTo: self.mapView.bottomAnchor, constant: -150),
+            self.startButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -150),
             self.startButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
         ]
         NSLayoutConstraint.activate(startButtonConstraints)
@@ -87,7 +97,7 @@ class MapViewController: UIViewController {
             self.userTrackingButton.widthAnchor.constraint(equalToConstant: 50),
             self.userTrackingButton.heightAnchor.constraint(equalToConstant: 50),
             self.userTrackingButton.leftAnchor.constraint(
-                equalTo: self.mapView.rightAnchor,
+                equalTo: mapView.rightAnchor,
                 constant: -100
             ),
             self.userTrackingButton.centerYAnchor.constraint(equalTo: self.startButton.centerYAnchor)
@@ -96,11 +106,12 @@ class MapViewController: UIViewController {
     }
     
     private func registerAnnotationView() {
-        self.mapView.register(
+        guard let mapView = mapView else { return }
+        mapView.register(
             MountainAnnotationView.self,
             forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier
         )
-        self.mapView.register(
+        mapView.register(
             ClusterAnnotationView.self,
             forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier
         )
@@ -115,6 +126,7 @@ class MapViewController: UIViewController {
     }
     
     private func render(_ location: CLLocation) {
+        guard let mapView = mapView else { return }
         let coordinate = CLLocationCoordinate2D(
             latitude: location.coordinate.latitude,
             longitude: location.coordinate.longitude
@@ -124,7 +136,7 @@ class MapViewController: UIViewController {
             longitudeDelta: 0.01
         )
         let region = MKCoordinateRegion(center: coordinate, span: span)
-        self.mapView.setRegion(region, animated: true)
+        mapView.setRegion(region, animated: true)
     }
 
     @objc private func presentRecordingViewController() {
