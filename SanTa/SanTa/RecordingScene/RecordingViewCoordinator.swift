@@ -16,7 +16,8 @@ class RecordingViewCoordinator: Coordinator {
     
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
-        self.recordingViewController = RecordingViewController()
+        let viewModel = RecordingViewModel(recordingUseCase: DefaultRecordingUseCase(recordRepository: DefaultRecordRepository(recordStorage: CoreDataRecordStorage(coreDataStorage: CoreDataStorage())), recordingModel: RecordingModel()))
+        self.recordingViewController = RecordingViewController(viewModel: viewModel)
         self.recordingViewController.coordinator = self
     }
 

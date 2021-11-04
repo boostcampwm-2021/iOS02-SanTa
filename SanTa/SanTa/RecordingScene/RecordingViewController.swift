@@ -76,8 +76,13 @@ class RecordingViewController: UIViewController {
     let calculateTextStackView = UIStackView()
     let buttonStackView = UIStackView()
     
-    private var recordingViewModel = RecordingViewModel()
+    private var recordingViewModel: RecordingViewModel?
     private var subscriptions = Set<AnyCancellable>()
+    
+    convenience init(viewModel: RecordingViewModel) {
+        self.init()
+        self.recordingViewModel = viewModel
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -91,28 +96,28 @@ class RecordingViewController: UIViewController {
     }
     
     private func configureBindings() {
-        self.recordingViewModel.$currentTime
+        self.recordingViewModel?.$currentTime
             .receive(on: DispatchQueue.main)
             .sink (receiveValue: { [weak self] time in
                 self?.timeLabel.text = time
             })
             .store(in: &self.subscriptions)
         
-        self.recordingViewModel.$kilometer
+        self.recordingViewModel?.$kilometer
             .receive(on: DispatchQueue.main)
             .sink (receiveValue: { [weak self] kilometer in
                 self?.kilometerLabel.text = kilometer
             })
             .store(in: &self.subscriptions)
         
-        self.recordingViewModel.$altitude
+        self.recordingViewModel?.$altitude
             .receive(on: DispatchQueue.main)
             .sink (receiveValue: { [weak self] altitude in
                 self?.altitudeLabel.text = altitude
             })
             .store(in: &self.subscriptions)
         
-        self.recordingViewModel.$walk
+        self.recordingViewModel?.$walk
             .receive(on: DispatchQueue.main)
             .sink (receiveValue: { [weak self] walk in
                 self?.walkLabel.text = walk
@@ -123,6 +128,7 @@ class RecordingViewController: UIViewController {
     private func configureTarget() {
         self.pauseButton.addTarget(self, action: #selector(pauseButtonAction), for: .touchUpInside)
         self.stopButton.addTarget(self, action: #selector(stopButtonAction), for: .touchUpInside)
+        self.locationButton.addTarget(self, action: #selector(locationButtonAction), for: .touchUpInside)
     }
     
     @objc private func pauseButtonAction(_ sender: UIResponder) {
@@ -133,15 +139,18 @@ class RecordingViewController: UIViewController {
         let stopAlert = UIAlertController(title: "기록 종료", message: "기록을 종료합니다.", preferredStyle: UIAlertController.Style.alert)
         let noneAction = UIAlertAction(title: "아니요", style: .default)
         let terminationAction = UIAlertAction(title: "종료", style: .default) { [weak self] (action) in
-            let resultRecord = self?.recordingViewModel.stopRecording()
-            print(resultRecord)
+            self?.recordingViewModel?.save() { [weak self] completion in
+                DispatchQueue.main.async {
+                    self?.coordinator?.dismiss()
+                }
+            }
         }
         stopAlert.addAction(noneAction)
         stopAlert.addAction(terminationAction)
         present(stopAlert, animated: true, completion: nil)
     }
     
-//    override func viewDidAppear(_ animated: Bool) {
-//        self.coordinator?.dismiss()
-//    }
+    @objc private func locationButtonAction(_ sender: UIResponder) {
+        self.coordinator?.dismiss()
+    }
 }

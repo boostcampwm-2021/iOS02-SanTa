@@ -11,6 +11,12 @@ class MapViewCoordinator: Coordinator {
     weak var parentCoordinator: Coordinator?
     var navigationController: UINavigationController = UINavigationController()
     var childCoordinator: [Coordinator] = []
+    var recordingViewCoordinator: RecordingViewCoordinator?
+    
+    init() {
+        self.recordingViewCoordinator = RecordingViewCoordinator(navigationController: self.navigationController)
+        self.recordingViewCoordinator?.parentCoordinator = self
+    }
     
     func start() {
     }
@@ -26,8 +32,7 @@ class MapViewCoordinator: Coordinator {
 
 extension MapViewCoordinator {
     func presentRecordingViewController() {
-        let recordingViewCoordinator = RecordingViewCoordinator(navigationController: self.navigationController)
-        recordingViewCoordinator.parentCoordinator = self
+        guard let recordingViewCoordinator = self.recordingViewCoordinator else { return }
         self.childCoordinator.append(recordingViewCoordinator)
         recordingViewCoordinator.start()
     }

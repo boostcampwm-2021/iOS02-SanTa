@@ -6,21 +6,35 @@
 //
 
 import Foundation
+import Combine
 
 protocol RecordingUseCase {
-    func save(record: Record,
-              completion: @escaping (Result<Record, Error>) -> Void)
+    var currentTime: String { get set }
+    var kilometer: String  { get set }
+    var altitude: String  { get set }
+    var walk: String  { get set }
+    var recording: RecordingModel { get set }
+    
+    func save(completion: @escaping (Result<Record, Error>) -> Void)
 }
 
-final class DefaultRecordingUseCase: RecordingUseCase {
+final class DefaultRecordingUseCase: RecordingUseCase, ObservableObject {
+    @Published var currentTime = ""
+    @Published var kilometer = ""
+    @Published var altitude = ""
+    @Published var walk = ""
+    
+    var recording: RecordingModel
     
     private let recordRepository: RecordRepository
+    private var subscriptions = Set<AnyCancellable>()
     
-    init(recordRepository: RecordRepository) {
+    init(recordRepository: RecordRepository, recordingModel: RecordingModel) {
         self.recordRepository = recordRepository
+        self.recording = recordingModel
     }
     
-    func save(record: Record, completion: @escaping (Result<Record, Error>) -> Void) {
-        self.recordRepository.save(record: record, completion: completion)
+    func save(completion: @escaping (Result<Record, Error>) -> Void) {
+        self.recordRepository.save(record: recording.cancel(), completion: completion)
     }
 }
