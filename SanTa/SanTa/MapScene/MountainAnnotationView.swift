@@ -13,7 +13,10 @@ class MountainAnnotationView: MKMarkerAnnotationView {
     
     override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
-        clusteringIdentifier = "mountain"
+        self.clusteringIdentifier = "mountain"
+        self.canShowCallout = true
+        self.calloutOffset = CGPoint(x: 0, y: 5)
+        self.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
     }
     
     required init?(coder aDecoder: NSCoder) {
