@@ -14,7 +14,7 @@ final class RecordingViewModel: ObservableObject {
     @Published private(set) var altitude = ""
     @Published private(set) var walk = ""
     
-    private let recordingUseCase: RecordingUseCase
+    private let recordingUseCase: RecordingUseCase?
     private var subscriptions = Set<AnyCancellable>()
     
     init(recordingUseCase: RecordingUseCase) {
@@ -23,28 +23,28 @@ final class RecordingViewModel: ObservableObject {
     }
     
     private func configureBindings() {
-        self.recordingUseCase.recording.$time
+        self.recordingUseCase?.recording.$time
             .receive(on: DispatchQueue.main)
             .sink (receiveValue: { [weak self] time in
                 self?.currentTime = time
             })
             .store(in: &self.subscriptions)
         
-        self.recordingUseCase.recording.$kilometer
+        self.recordingUseCase?.recording.$kilometer
             .receive(on: DispatchQueue.main)
             .sink (receiveValue: { [weak self] kilometer in
                 self?.kilometer = kilometer
             })
             .store(in: &self.subscriptions)
         
-        self.recordingUseCase.recording.$altitude
+        self.recordingUseCase?.recording.$altitude
             .receive(on: DispatchQueue.main)
             .sink (receiveValue: { [weak self] altitude in
                 self?.altitude = altitude
             })
             .store(in: &self.subscriptions)
         
-        self.recordingUseCase.recording.$walk
+        self.recordingUseCase?.recording.$walk
             .receive(on: DispatchQueue.main)
             .sink (receiveValue: { [weak self] walk in
                 self?.walk = walk
@@ -53,6 +53,6 @@ final class RecordingViewModel: ObservableObject {
     }
     
     func save() {
-        self.recordingUseCase.save(completion: { _ in })
+        self.recordingUseCase?.save(completion: { _ in })
     }
 }
