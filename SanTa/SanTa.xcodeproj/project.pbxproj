@@ -38,6 +38,9 @@
 		98AEF1D727310759002E9C9A /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AEF1D627310759002E9C9A /* PaddingLabel.swift */; };
 		DAAF2716272FF73700F8A115 /* RecordingViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAF2715272FF73700F8A115 /* RecordingViewController+Extension.swift */; };
 		DAB37D4C2731166B00EC523F /* RecordingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB37D4B2731166B00EC523F /* RecordingViewModel.swift */; };
+		DAB37D4E2732557100EC523F /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB37D4D2732557100EC523F /* Record.swift */; };
+		DAB37D50273256B900EC523F /* RecordingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB37D4F273256B900EC523F /* RecordingModel.swift */; };
+
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -74,6 +77,9 @@
 		98AEF1D627310759002E9C9A /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		DAAF2715272FF73700F8A115 /* RecordingViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecordingViewController+Extension.swift"; sourceTree = "<group>"; };
 		DAB37D4B2731166B00EC523F /* RecordingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingViewModel.swift; sourceTree = "<group>"; };
+		DAB37D4D2732557100EC523F /* Record.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
+		DAB37D4F273256B900EC523F /* RecordingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingModel.swift; sourceTree = "<group>"; };
+
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +100,8 @@
 				DAAF2715272FF73700F8A115 /* RecordingViewController+Extension.swift */,
 				5429694A272FBFCA0070B362 /* RecordingViewCoordinator.swift */,
 				DAB37D4B2731166B00EC523F /* RecordingViewModel.swift */,
+				DAB37D4F273256B900EC523F /* RecordingModel.swift */,
+				DAB37D4D2732557100EC523F /* Record.swift */,
 			);
 			path = RecordingScene;
 			sourceTree = "<group>";
@@ -311,12 +319,14 @@
 				5485128C272A6AD500407F28 /* SanTa.xcdatamodeld in Sources */,
 				54296947272FBD4B0070B362 /* MapViewCoordinator.swift in Sources */,
 				54296953272FC3530070B362 /* MountainListViewCoordinator.swift in Sources */,
+				DAB37D4E2732557100EC523F /* Record.swift in Sources */,
 				DAAF2716272FF73700F8A115 /* RecordingViewController+Extension.swift in Sources */,
 				98AEF1D727310759002E9C9A /* PaddingLabel.swift in Sources */,
 				54851282272A6AD500407F28 /* AppDelegate.swift in Sources */,
 				54851299272A6D0900407F28 /* TabBarController.swift in Sources */,
 				49FEEDB92732584000D37CCA /* MountainEntity.swift in Sources */,
 				54296949272FBFAB0070B362 /* RecordingViewController.swift in Sources */,
+				DAB37D50273256B900EC523F /* RecordingModel.swift in Sources */,
 				54296945272FBC6E0070B362 /* AppCoordinator.swift in Sources */,
 				5429694B272FBFCA0070B362 /* RecordingViewCoordinator.swift in Sources */,
 				985EEF65273010BD002413D9 /* ToggleOptionCell.swift in Sources */,
