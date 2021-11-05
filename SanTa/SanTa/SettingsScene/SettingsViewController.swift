@@ -26,10 +26,12 @@ class SettingsViewController: UIViewController {
     }()
 
     private var tableView: UITableView = {
-        let tableView = UITableView()
+        let tableView = UITableView(frame: .zero, style: .insetGrouped)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.register(ToggleOptionCell.self, forCellReuseIdentifier: ToggleOptionCell.identifier)
         tableView.register(MapOptionCell.self, forCellReuseIdentifier: MapOptionCell.identifier)
+        tableView.backgroundColor = .systemGray5
+        tableView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
         return tableView
     }()
     
@@ -42,7 +44,6 @@ class SettingsViewController: UIViewController {
     private func configureTableView() {
         self.tableView.dataSource = self
         self.tableView.delegate = self
-        self.tableView.backgroundColor = .systemGray5
     }
     
     private func configureView() {
