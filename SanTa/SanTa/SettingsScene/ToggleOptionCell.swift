@@ -28,6 +28,7 @@ class ToggleOptionCell: UITableViewCell {
         let controlSwitch = UISwitch()
         controlSwitch.translatesAutoresizingMaskIntoConstraints = false
         controlSwitch.addTarget(self, action: #selector(onClickSwitch(sender:)), for: .valueChanged)
+        controlSwitch.onTintColor = .systemBlue
         return controlSwitch
     }()
     
