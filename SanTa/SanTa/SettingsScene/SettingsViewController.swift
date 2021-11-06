@@ -13,7 +13,7 @@ class SettingsViewController: UIViewController {
     private var headerView: UIView = {
         let headerView = UIView()
         headerView.translatesAutoresizingMaskIntoConstraints = false
-        headerView.backgroundColor = .white
+        headerView.backgroundColor = .systemBackground
         return headerView
     }()
     
@@ -31,7 +31,6 @@ class SettingsViewController: UIViewController {
         tableView.register(ToggleOptionCell.self, forCellReuseIdentifier: ToggleOptionCell.identifier)
         tableView.register(MapOptionCell.self, forCellReuseIdentifier: MapOptionCell.identifier)
         tableView.backgroundColor = .systemGray5
-        tableView.contentInset = UIEdgeInsets(top: 20, left: 0, bottom: 0, right: 0)
         return tableView
     }()
     
@@ -47,7 +46,7 @@ class SettingsViewController: UIViewController {
     }
     
     private func configureView() {
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = .systemBackground
         self.view.addSubview(self.headerView)
         let headerViewConstrain = [
             self.headerView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
@@ -94,10 +93,6 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 10.0
-    }
-    
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return " "
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
