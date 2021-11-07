@@ -76,7 +76,7 @@ class SettingsViewController: UIViewController {
     private func showMapActionSheet(cellTitle: String) {
         let alert = UIAlertController(title: "지도형식", message: nil, preferredStyle: .actionSheet)
         Map.allCases.forEach {
-            alert.addAction(UIAlertAction(title: $0.description, style: .default, handler: { action in
+            alert.addAction(UIAlertAction(title: $0.name, style: .default, handler: { action in
                 print(cellTitle, action.title!)
             }))
         }
@@ -139,12 +139,13 @@ extension SettingsViewController: ToggleOptionCellDelegate {
 
 //MARK: - dummy data
 
-enum Map: String, CustomStringConvertible, CaseIterable {
+enum Map: String, CaseIterable {
+
     case infomation = "정보지도"
     case normal = "일반지도"
     case satellite = "위성지도"
     
-    var description: String {
+    var name: String {
         return self.rawValue
     }
 }

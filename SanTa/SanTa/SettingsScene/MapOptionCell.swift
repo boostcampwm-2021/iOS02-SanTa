@@ -71,6 +71,6 @@ class MapOptionCell: UITableViewCell {
     
     func update(option: MapOption) {
         self.title.text = option.text
-        self.map.text = option.map.description
+        self.map.text = option.map.name
     }
 }
