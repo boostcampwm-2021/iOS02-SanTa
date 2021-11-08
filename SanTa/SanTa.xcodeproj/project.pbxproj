@@ -33,6 +33,14 @@
 		54851291272A6AD600407F28 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5485128F272A6AD600407F28 /* LaunchScreen.storyboard */; };
 		9826F3DD2739035E0064FA85 /* Option.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9826F3DC2739035E0064FA85 /* Option.swift */; };
 		9826F3DF273904010064FA85 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9826F3DE273904010064FA85 /* Settings.swift */; };
+		9826F436273954020064FA85 /* SettingsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9826F425273925BF0064FA85 /* SettingsViewModelTests.swift */; };
+		9826F437273954030064FA85 /* SettingsUsecaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9826F427273926720064FA85 /* SettingsUsecaseTests.swift */; };
+		9826F4382739546E0064FA85 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BCF4F82737A7120073E6FB /* SettingsViewModel.swift */; };
+		9826F4392739546E0064FA85 /* SettingsUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BCF4F62737A66E0073E6FB /* SettingsUsecase.swift */; };
+		9826F43A2739546E0064FA85 /* SettingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BCF4F42737A3480073E6FB /* SettingsRepository.swift */; };
+		9826F43B2739546E0064FA85 /* UserDefaultsSettingsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A913002736844E008AAE39 /* UserDefaultsSettingsStorage.swift */; };
+		9826F43C2739546E0064FA85 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9826F3DE273904010064FA85 /* Settings.swift */; };
+		9826F43D2739546E0064FA85 /* Option.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9826F3DC2739035E0064FA85 /* Option.swift */; };
 		984DDEC127325D67003BE56B /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984DDEC027325D67003BE56B /* Record.swift */; };
 		984DDEC327325DFC003BE56B /* RecordingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984DDEC227325DFC003BE56B /* RecordingUseCase.swift */; };
 		984DDEC527325FB9003BE56B /* RecordRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984DDEC427325FB9003BE56B /* RecordRepository.swift */; };
@@ -50,6 +58,16 @@
 		DAB37D4C2731166B00EC523F /* RecordingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB37D4B2731166B00EC523F /* RecordingViewModel.swift */; };
 		DAB37D50273256B900EC523F /* RecordingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB37D4F273256B900EC523F /* RecordingModel.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		9826F431273953FB0064FA85 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 54851276272A6AD500407F28 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5485127D272A6AD500407F28;
+			remoteInfo = SanTa;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		49A3E61C2732756C0020CAC1 /* MountainAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainAnnotation.swift; sourceTree = "<group>"; };
@@ -80,6 +98,9 @@
 		54851292272A6AD600407F28 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9826F3DC2739035E0064FA85 /* Option.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Option.swift; sourceTree = "<group>"; };
 		9826F3DE273904010064FA85 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
+		9826F425273925BF0064FA85 /* SettingsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModelTests.swift; sourceTree = "<group>"; };
+		9826F427273926720064FA85 /* SettingsUsecaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsUsecaseTests.swift; sourceTree = "<group>"; };
+		9826F42D273953FB0064FA85 /* SettingsSceneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SettingsSceneTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		984DDEC027325D67003BE56B /* Record.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
 		984DDEC227325DFC003BE56B /* RecordingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingUseCase.swift; sourceTree = "<group>"; };
 		984DDEC427325FB9003BE56B /* RecordRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordRepository.swift; sourceTree = "<group>"; };
@@ -100,6 +121,13 @@
 
 /* Begin PBXFrameworksBuildPhase section */
 		5485127B272A6AD500407F28 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9826F42A273953FB0064FA85 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -233,6 +261,7 @@
 			isa = PBXGroup;
 			children = (
 				54851280272A6AD500407F28 /* SanTa */,
+				9826F42E273953FB0064FA85 /* SettingsSceneTests */,
 				5485127F272A6AD500407F28 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -241,6 +270,7 @@
 			isa = PBXGroup;
 			children = (
 				5485127E272A6AD500407F28 /* SanTa.app */,
+				9826F42D273953FB0064FA85 /* SettingsSceneTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -263,6 +293,15 @@
 			path = SanTa;
 			sourceTree = "<group>";
 		};
+		9826F42E273953FB0064FA85 /* SettingsSceneTests */ = {
+			isa = PBXGroup;
+			children = (
+				9826F425273925BF0064FA85 /* SettingsViewModelTests.swift */,
+				9826F427273926720064FA85 /* SettingsUsecaseTests.swift */,
+			);
+			path = SettingsSceneTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -283,6 +322,24 @@
 			productReference = 5485127E272A6AD500407F28 /* SanTa.app */;
 			productType = "com.apple.product-type.application";
 		};
+		9826F42C273953FB0064FA85 /* SettingsSceneTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9826F435273953FB0064FA85 /* Build configuration list for PBXNativeTarget "SettingsSceneTests" */;
+			buildPhases = (
+				9826F429273953FB0064FA85 /* Sources */,
+				9826F42A273953FB0064FA85 /* Frameworks */,
+				9826F42B273953FB0064FA85 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9826F432273953FB0064FA85 /* PBXTargetDependency */,
+			);
+			name = SettingsSceneTests;
+			productName = SettingsSceneTests;
+			productReference = 9826F42D273953FB0064FA85 /* SettingsSceneTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -295,6 +352,10 @@
 				TargetAttributes = {
 					5485127D272A6AD500407F28 = {
 						CreatedOnToolsVersion = 13.0;
+					};
+					9826F42C273953FB0064FA85 = {
+						CreatedOnToolsVersion = 13.0;
+						TestTargetID = 5485127D272A6AD500407F28;
 					};
 				};
 			};
@@ -312,6 +373,7 @@
 			projectRoot = "";
 			targets = (
 				5485127D272A6AD500407F28 /* SanTa */,
+				9826F42C273953FB0064FA85 /* SettingsSceneTests */,
 			);
 		};
 /* End PBXProject section */
@@ -323,6 +385,13 @@
 			files = (
 				54851291272A6AD600407F28 /* LaunchScreen.storyboard in Resources */,
 				5485128E272A6AD600407F28 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9826F42B273953FB0064FA85 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -376,7 +445,30 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		9826F429273953FB0064FA85 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9826F4382739546E0064FA85 /* SettingsViewModel.swift in Sources */,
+				9826F4392739546E0064FA85 /* SettingsUsecase.swift in Sources */,
+				9826F43A2739546E0064FA85 /* SettingsRepository.swift in Sources */,
+				9826F43B2739546E0064FA85 /* UserDefaultsSettingsStorage.swift in Sources */,
+				9826F43C2739546E0064FA85 /* Settings.swift in Sources */,
+				9826F43D2739546E0064FA85 /* Option.swift in Sources */,
+				9826F437273954030064FA85 /* SettingsUsecaseTests.swift in Sources */,
+				9826F436273954020064FA85 /* SettingsViewModelTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		9826F432273953FB0064FA85 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5485127D272A6AD500407F28 /* SanTa */;
+			targetProxy = 9826F431273953FB0064FA85 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		5485128F272A6AD600407F28 /* LaunchScreen.storyboard */ = {
@@ -560,6 +652,52 @@
 			};
 			name = Release;
 		};
+		9826F433273953FB0064FA85 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5X25M942H6;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ohchangmin.SettingsSceneTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SanTa.app/SanTa";
+			};
+			name = Debug;
+		};
+		9826F434273953FB0064FA85 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5X25M942H6;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ohchangmin.SettingsSceneTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SanTa.app/SanTa";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -577,6 +715,15 @@
 			buildConfigurations = (
 				54851296272A6AD600407F28 /* Debug */,
 				54851297272A6AD600407F28 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9826F435273953FB0064FA85 /* Build configuration list for PBXNativeTarget "SettingsSceneTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9826F433273953FB0064FA85 /* Debug */,
+				9826F434273953FB0064FA85 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
