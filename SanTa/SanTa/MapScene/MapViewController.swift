@@ -159,11 +159,12 @@ class MapViewController: UIViewController {
     }
     
     func presentAnimation() {
-        print("1")
+        let image = UIImage.gifImage(named: "walkingManAnimation")
+        self.startButton.setImage(image, for: .normal)
     }
     
     func unpresentAnimation(){
-        print("2")
+        self.startButton.setImage(nil, for: .normal)
     }
 }
 
