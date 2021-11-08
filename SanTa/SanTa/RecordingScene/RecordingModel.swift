@@ -24,7 +24,7 @@ final class RecordingModel: NSObject, ObservableObject {
     private var currentKilo: Double = 0
     private var location = [Location]()
     
-    private var currentTime = 0 {
+    private var currentTime = Date() {
         didSet {
             self.timeConverter()
             self.checkPedoMeter()
@@ -58,9 +58,11 @@ final class RecordingModel: NSObject, ObservableObject {
     }
     
     private func timeConverter() {
-        let seconds = currentTime % 60
-        let minutes = (currentTime / 60) % 60
-        let hours = (currentTime / 3600)
+        let elapsedTimeSeconds = Int(Date().timeIntervalSince(self.currentTime))
+
+        let seconds = elapsedTimeSeconds % 60
+        let minutes = (elapsedTimeSeconds / 60) % 60
+        let hours = (elapsedTimeSeconds / 3600)
         
         time = String(format: "%0.2d:%0.2d %0.2d\"", hours, minutes, seconds)
     }
