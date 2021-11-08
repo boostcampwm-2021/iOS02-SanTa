@@ -53,6 +53,7 @@ final class RecordingModel: NSObject, ObservableObject {
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
         self.locationManager.startUpdatingLocation()
         self.locationManager.allowsBackgroundLocationUpdates = true
+        self.locationManager.pausesLocationUpdatesAutomatically = true
         self.locationManager.delegate = self
     }
     
