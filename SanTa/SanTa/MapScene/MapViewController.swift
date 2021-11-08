@@ -152,6 +152,9 @@ extension MapViewController: MKMapViewDelegate {
             reuseIdentifier: MountainAnnotationView.ReuseID
         )
     }
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        print(view.annotation?.title)
+    }
 }
 
 extension MapViewController: CLLocationManagerDelegate {

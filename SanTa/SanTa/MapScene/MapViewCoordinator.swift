@@ -35,6 +35,12 @@ extension MapViewCoordinator {
         childCoordinator.first?.start()
     }
     
+    func presentMountainDetailViewController() {
+        for coordinator in childCoordinator {
+            if coordinator 
+        }
+    }
+    
     private func injectDependencies() -> MapViewModel {
         return MapViewModel(useCase: MapViewUseCase(repository: DefaultMapViewRespository(mountainExtractor: MountainExtractor())))
     }
