@@ -45,7 +45,7 @@ class MapViewController: UIViewController {
         self.viewModel?.mountains?.forEach{ mountainEntity in
             let mountainAnnotation = MountainAnnotation(
                 title: mountainEntity.mountain.mountainName,
-                subtitle: mountainEntity.mountain.mountainHeight,
+                subtitle: mountainEntity.mountain.mountainHeight + "m",
                 latitude: mountainEntity.latitude,
                 longitude: mountainEntity.longitude,
                 mountainDescription: mountainEntity.mountain.mountainShortDescription,
@@ -144,10 +144,6 @@ class MapViewController: UIViewController {
     @objc private func presentRecordingViewController() {
         coordinator?.presentRecordingViewController()
     }
-    
-//    @objc private func presentMountainDetailViewController() {
-//        coordinator?.presentMountainDetailViewController()
-//    }
 }
 
 extension MapViewController: MKMapViewDelegate {
@@ -161,9 +157,6 @@ extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         guard let annotation = view.annotation as? MountainAnnotation else { return }
         
-        
-        
-        //navigate using annotation
         coordinator?.presentMountainDetailViewController(mountainAnnotation: annotation, locationManager: self.manager)
     }
 }

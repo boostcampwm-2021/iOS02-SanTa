@@ -16,6 +16,7 @@ class MountainDetailViewCoordinator: Coordinator {
     var mountainDetailViewController: MountainDetailViewController
     
     func start() {
+//        if self.parentCoordinator is MountainListViewCoordinator {  }
         self.navigationController.present(mountainDetailViewController, animated: true, completion: nil)
     }
     
