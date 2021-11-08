@@ -8,7 +8,7 @@
 import UIKit
 import MapKit
 
-class MountainAnnotationView: MKMarkerAnnotationView {
+class MountainAnnotationView: MKAnnotationView {
     static let ReuseID = "MountainAnnotation"
     
     override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
@@ -26,7 +26,7 @@ class MountainAnnotationView: MKMarkerAnnotationView {
     override func prepareForDisplay() {
         super.prepareForDisplay()
         displayPriority = .defaultHigh
-        markerTintColor = .blue
-        glyphImage = UIImage(systemName: "play.fill")
+        self.image = UIImage(named: "SantaImage")
+        self.frame = CGRect(x: 30, y: 30, width: 30, height: 30)
     }
 }

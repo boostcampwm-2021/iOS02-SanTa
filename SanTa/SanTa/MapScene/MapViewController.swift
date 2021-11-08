@@ -63,7 +63,7 @@ class MapViewController: UIViewController {
         mapView.delegate = self
         
         self.view.addSubview(self.startButton)
-        self.startButton.backgroundColor = .blue
+        self.startButton.backgroundColor = UIColor(named: "SantaColor")
         self.startButton.translatesAutoresizingMaskIntoConstraints = false
         self.startButton.setTitle("시작", for: .normal)
         self.startButton.setTitleColor(.white, for: .normal)
