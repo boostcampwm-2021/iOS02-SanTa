@@ -28,10 +28,10 @@ class MapViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        if manager.authorizationStatus == .authorizedAlways ||
-            manager.authorizationStatus == .authorizedWhenInUse {
+        switch self.manager.authorizationStatus {
+        case .authorizedAlways, .authorizedWhenInUse:
             userTrackingButton.isHidden = false
-        } else {
+        default:
             userTrackingButton.isHidden = true
         }
     }
@@ -155,15 +155,17 @@ extension MapViewController: MKMapViewDelegate {
 extension MapViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
-            manager.stopUpdatingLocation()
+            self.manager.stopUpdatingLocation()
             self.render(location)
         }
     }
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        if manager.authorizationStatus == .authorizedWhenInUse ||
-            manager.authorizationStatus == .authorizedAlways {
+        switch self.manager.authorizationStatus {
+        case .authorizedAlways, .authorizedWhenInUse:
             userTrackingButton.isHidden = false
+        default:
+            userTrackingButton.isHidden = true
         }
     }
 }
