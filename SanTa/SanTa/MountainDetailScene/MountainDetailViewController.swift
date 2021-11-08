@@ -9,14 +9,27 @@ import UIKit
 
 class MountainDetailViewController: UIViewController {
     weak var mountainDetailViewCoordinator: MountainDetailViewCoordinator?
-    private var mountainAnnotation: MountainAnnotation?
+    private var viewModel: MountainDetailViewModel?
     
-    convenience init(annotation: MountainAnnotation) {
+    convenience init(viewModel: MountainDetailViewModel) {
         self.init()
-        self.mountainAnnotation = annotation
+        self.viewModel = viewModel
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    private func configureViewModel() {
+        self.viewModel?.mountainInfoReceived = { mountainDetail in
+            self.layoutMountainDetailView(mountainDetail: mountainDetail)
+        }
+        viewModel?.setUpViewModel()
+    }
+}
+
+extension MountainDetailViewController {
+    private func layoutMountainDetailView(mountainDetail: MountainDetailModel) {
+        
     }
 }

@@ -7,23 +7,21 @@
 
 import UIKit
 
-class MountainDetailViewCoordinator: Coordinator {
-    weak var parentCoordinator: Coordinator?
-    var navigationController: UINavigationController
-    var childCoordinator: [Coordinator]
-    var mountainDetailViewController: MountainDetailViewController
+//class MountainDetailViewCoordinator: Coordinator {
+//    weak var parentCoordinator: Coordinator?
+//    var navigationController: UINavigationController
+//    var childCoordinator: [Coordinator]
+//    var mountainDetailViewController: MountainDetailViewController
     
-    func start() {
-        <#code#>
-    }
+//    func start() {
+//        <#code#>
+//    }
+//    
+//    
+//    
+//    init(navigationController: UINavigationController) {
+//        self.navigationController = navigationController
+//        let viewModel = MountainDetailViewModel(useCase: MountainDetailUseCase(mountainAnnotation: <#T##MountainAnnotation#>, locationManager: <#T##CLLocationManager#>), mountainInfo: <#T##MountainDetailModel#>)
+//    }
     
-    
-    
-    init(navigationController: UINavigationController) {
-        self.navigationController = navigationController
-        let viewModel = RecordingViewModel(recordingUseCase: DefaultRecordingUseCase(recordRepository: DefaultRecordRepository(recordStorage: CoreDataRecordStorage(coreDataStorage: CoreDataStorage())), recordingModel: RecordingModel()))
-        self.recordingViewController = RecordingViewController(viewModel: viewModel)
-        self.recordingViewController.coordinator = self
-    }
-    
-}
+//}

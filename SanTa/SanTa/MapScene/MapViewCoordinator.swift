@@ -37,7 +37,7 @@ extension MapViewCoordinator {
     
     func presentMountainDetailViewController() {
         for coordinator in childCoordinator {
-            if coordinator 
+            
         }
     }
     

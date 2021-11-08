@@ -12,14 +12,19 @@ class MountainAnnotation: NSObject, MKAnnotation {
     var subtitle: String?
     var latitude: Double
     var longitude: Double
+    var mountainDescription: String
+    var region: String
+    
     var coordinate: CLLocationCoordinate2D {
         CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
     
-    init(title: String, subtitle: String, latitude: Double, longitude: Double) {
+    init(title: String, subtitle: String, latitude: Double, longitude: Double, mountainDescription: String, region: String) {
         self.title = title
         self.subtitle = subtitle
         self.latitude = latitude
         self.longitude = longitude
+        self.mountainDescription = mountainDescription
+        self.region = region
     }
 }

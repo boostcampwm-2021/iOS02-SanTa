@@ -47,7 +47,9 @@ class MapViewController: UIViewController {
                 title: mountainEntity.mountain.mountainName,
                 subtitle: mountainEntity.mountain.mountainHeight,
                 latitude: mountainEntity.latitude,
-                longitude: mountainEntity.longitude
+                longitude: mountainEntity.longitude,
+                mountainDescription: mountainEntity.mountain.mountainShortDescription,
+                region: mountainEntity.mountain.mountainRegion
             )
             mapView?.addAnnotation(mountainAnnotation)
         }
@@ -153,7 +155,11 @@ extension MapViewController: MKMapViewDelegate {
         )
     }
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        print(view.annotation?.title)
+        guard let annotation = view.annotation as? MountainAnnotation else { return }
+        
+        
+        
+        //navigate using annotation
     }
 }
 

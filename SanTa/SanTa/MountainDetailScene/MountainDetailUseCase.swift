@@ -17,14 +17,28 @@ class MountainDetailUseCase {
         self.locationManager = locationManager
     }
     
-    private func calculateDistance(to mountainLocation: CLLocationCoordinate2D) -> Double?  {
+    private func calculateDistance() -> Double?  {
         let canGetCurrentLocation = locationManager.authorizationStatus == .authorizedWhenInUse ||
-                                    locationManager.authorizationStatus == .authorizedAlways
+        locationManager.authorizationStatus == .authorizedAlways
         guard canGetCurrentLocation, let currentLocation = locationManager.location else {
             return nil
         }
-        let distance = currentLocation.distance(from: CLLocation(latitude: mountainLocation.latitude, longitude: mountainLocation.longitude))
+        let mountainLocation = CLLocation(latitude: self.mountainAnnotation.latitude, longitude: self.mountainAnnotation.longitude)
+        let distance = currentLocation.distance(from: CLLocation(latitude: mountainLocation.coordinate.latitude, longitude: mountainLocation.coordinate.longitude))
         
         return distance
+    }
+    
+    private func mountainRegions() -> [String] {
+        return mountainAnnotation.region.components(separatedBy: ", ")
+    }
+}
+
+extension MountainDetailUseCase {
+    func transferMountainInformation(completion: @escaping (MountainDetailModel) -> Void) {
+        guard let name = mountainAnnotation.title,
+              let altitude = mountainAnnotation.subtitle else { return }
+        
+        completion(MountainDetailModel(moutainName: name, distance: calculateDistance(), regions: mountainRegions(), altitude: altitude, latitude: mountainAnnotation.latitude, longitude: mountainAnnotation.longitude, mountainDescription: mountainAnnotation.mountainDescription))
     }
 }

@@ -12,6 +12,7 @@
 		49D5A94B2738C3AB00937821 /* MountainDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D5A94A2738C3AB00937821 /* MountainDetailViewController.swift */; };
 		49D5A94D2738C71700937821 /* MountainDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D5A94C2738C71700937821 /* MountainDetailViewModel.swift */; };
 		49D5A94F2738C72E00937821 /* MountainDetailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D5A94E2738C72E00937821 /* MountainDetailUseCase.swift */; };
+		49D5A9532738FBCD00937821 /* MountainDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D5A9522738FBCD00937821 /* MountainDetailModel.swift */; };
 		49FEEDB7273255DD00D37CCA /* MountainExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FEEDB6273255DD00D37CCA /* MountainExtractor.swift */; };
 		49FEEDB92732584000D37CCA /* MountainEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FEEDB82732584000D37CCA /* MountainEntity.swift */; };
 		5428FDB4272F894D002F9D40 /* MapViewRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5428FDB3272F894D002F9D40 /* MapViewRepository.swift */; };
@@ -55,6 +56,7 @@
 		49D5A94A2738C3AB00937821 /* MountainDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainDetailViewController.swift; sourceTree = "<group>"; };
 		49D5A94C2738C71700937821 /* MountainDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainDetailViewModel.swift; sourceTree = "<group>"; };
 		49D5A94E2738C72E00937821 /* MountainDetailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainDetailUseCase.swift; sourceTree = "<group>"; };
+		49D5A9522738FBCD00937821 /* MountainDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainDetailModel.swift; sourceTree = "<group>"; };
 		49FEEDB6273255DD00D37CCA /* MountainExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainExtractor.swift; sourceTree = "<group>"; };
 		49FEEDB82732584000D37CCA /* MountainEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainEntity.swift; sourceTree = "<group>"; };
 		5428FDB3272F894D002F9D40 /* MapViewRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewRepository.swift; sourceTree = "<group>"; };
@@ -154,6 +156,7 @@
 				49D5A9482738C31600937821 /* MountainDetailViewCoordinator.swift */,
 				49D5A94C2738C71700937821 /* MountainDetailViewModel.swift */,
 				49D5A94E2738C72E00937821 /* MountainDetailUseCase.swift */,
+				49D5A9522738FBCD00937821 /* MountainDetailModel.swift */,
 			);
 			path = MountainDetailScene;
 			sourceTree = "<group>";
@@ -345,6 +348,7 @@
 				DAAF2716272FF73700F8A115 /* RecordingViewController+Extension.swift in Sources */,
 				98AEF1D727310759002E9C9A /* PaddingLabel.swift in Sources */,
 				54851282272A6AD500407F28 /* AppDelegate.swift in Sources */,
+				49D5A9532738FBCD00937821 /* MountainDetailModel.swift in Sources */,
 				49FEEDB92732584000D37CCA /* MountainEntity.swift in Sources */,
 				54296949272FBFAB0070B362 /* RecordingViewController.swift in Sources */,
 				984DDEC527325FB9003BE56B /* RecordRepository.swift in Sources */,
