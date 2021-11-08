@@ -54,6 +54,7 @@ final class RecordingModel: NSObject, ObservableObject {
         self.locationManager.startUpdatingLocation()
         self.locationManager.allowsBackgroundLocationUpdates = true
         self.locationManager.pausesLocationUpdatesAutomatically = true
+        self.locationManager.showsBackgroundLocationIndicator = true
         self.locationManager.delegate = self
     }
     
