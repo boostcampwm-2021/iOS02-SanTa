@@ -100,8 +100,10 @@ final class RecordingModel: NSObject, ObservableObject {
         timer?.resume()
     }
     
-    func cancel() -> Record {
-        let resultRecord = Record(startTime: self.time,
+    func cancel() -> Record? {
+        guard let date = self.date else { return nil }
+        
+        let resultRecord = Record(startTime: date,
                                   endTime: self.currentTime,
                                   step: self.currentWalk,
                                   distance: self.currentKilo,
