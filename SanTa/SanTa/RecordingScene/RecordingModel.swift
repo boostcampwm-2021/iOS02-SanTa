@@ -42,7 +42,7 @@ final class RecordingModel: NSObject, ObservableObject {
         self.timer = DispatchSource.makeTimerSource(flags: [], queue: DispatchQueue.main)
         self.timer?.schedule(deadline: .now(), repeating: 1)
         self.timer?.setEventHandler(handler: { [weak self] in
-            self?.currentTime += 1
+            self?.currentTime = Date()
         })
         
         self.resume()
@@ -58,7 +58,9 @@ final class RecordingModel: NSObject, ObservableObject {
     }
     
     private func timeConverter() {
-        let elapsedTimeSeconds = Int(Date().timeIntervalSince(self.currentTime))
+        guard let startDate = self.date else { return }
+        
+        let elapsedTimeSeconds = Int(self.currentTime.timeIntervalSince(startDate))
 
         let seconds = elapsedTimeSeconds % 60
         let minutes = (elapsedTimeSeconds / 60) % 60

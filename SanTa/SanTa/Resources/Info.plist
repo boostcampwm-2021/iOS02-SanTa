@@ -2,12 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSMotionUsageDescription</key>
-	<string>Allow my app to access motion usage.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Please allow to see current location</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Please allow to use app on background</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -25,5 +19,9 @@
 			</array>
 		</dict>
 	</dict>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
+	</array>
 </dict>
 </plist>
