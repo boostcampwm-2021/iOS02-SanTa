@@ -6,22 +6,31 @@
 //
 
 import UIKit
+import CoreLocation
 
-//class MountainDetailViewCoordinator: Coordinator {
-//    weak var parentCoordinator: Coordinator?
-//    var navigationController: UINavigationController
-//    var childCoordinator: [Coordinator]
-//    var mountainDetailViewController: MountainDetailViewController
+class MountainDetailViewCoordinator: Coordinator {
+    var childCoordinators: [Coordinator] = []
     
-//    func start() {
-//        <#code#>
-//    }
-//    
-//    
-//    
-//    init(navigationController: UINavigationController) {
-//        self.navigationController = navigationController
-//        let viewModel = MountainDetailViewModel(useCase: MountainDetailUseCase(mountainAnnotation: <#T##MountainAnnotation#>, locationManager: <#T##CLLocationManager#>), mountainInfo: <#T##MountainDetailModel#>)
+    weak var parentCoordinator: Coordinator?
+    var navigationController: UINavigationController
+    var mountainDetailViewController: MountainDetailViewController
+    
+    func start() {
+        self.navigationController.present(mountainDetailViewController, animated: true, completion: nil)
+    }
+    
+    
+    //지도화면에서 바로 올때
+    init(navigationController: UINavigationController, mountainAnnotation: MountainAnnotation, locationManager: CLLocationManager) {
+        self.navigationController = navigationController
+        let viewModel = MountainDetailViewModel(useCase: MountainDetailUseCase(mountainAnnotation: mountainAnnotation, locationManager: locationManager))
+        self.mountainDetailViewController = MountainDetailViewController(viewModel: viewModel)
+        self.mountainDetailViewController.coordinator = self
+    }
+    
+    //산 목록에서 올때
+//    init(navigationController: UINavigationController, mountainDetailModel: MountainDetailModel) {
+//
 //    }
     
-//}
+}

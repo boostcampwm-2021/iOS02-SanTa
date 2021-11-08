@@ -8,13 +8,13 @@
 import UIKit
 
 protocol Coordinator: AnyObject {
-    var childCoordinator: [Coordinator] { get set }
+    var childCoordinators: [Coordinator] { get set }
     
     func start ()
 }
 
 class AppCoordinator: Coordinator {
-    var childCoordinator: [Coordinator] = []
+    var childCoordinators: [Coordinator] = []
     let window: UIWindow?
 
     private var firstViewController: UIViewController!
@@ -40,28 +40,28 @@ class AppCoordinator: Coordinator {
         
         let mapViewCoordinator = MapViewCoordinator()
         mapViewCoordinator.parentCoordinator = self
-        childCoordinator.append(mapViewCoordinator)
+        childCoordinators.append(mapViewCoordinator)
         let mapViewController = mapViewCoordinator.startPush()
         mapViewController.tabBarItem = firstItem
         mapViewController.tabBarItem.image = .init(systemName: "play.fill")
         
         let resultViewCoordinator = ResultViewCoordinator()
         resultViewCoordinator.parentCoordinator = self
-        childCoordinator.append(resultViewCoordinator)
+        childCoordinators.append(resultViewCoordinator)
         let resultViewController = resultViewCoordinator.startPush()
         resultViewController.tabBarItem = secondItem
         resultViewController.tabBarItem.image = .init(systemName: "list.dash")
         
         let mountainListViewCoordinator = MountainListViewCoordinator()
         mountainListViewCoordinator.parentCoordinator = self
-        childCoordinator.append(mountainListViewCoordinator)
+        childCoordinators.append(mountainListViewCoordinator)
         let mountainListViewController = mountainListViewCoordinator.startPush()
         mountainListViewController.tabBarItem = thirdItem
         mountainListViewController.tabBarItem.image = .init(systemName: "text.below.photo")
         
         let settingsViewCoordinator = SettingsViewCoordinator()
         settingsViewCoordinator.parentCoordinator = self
-        childCoordinator.append(settingsViewCoordinator)
+        childCoordinators.append(settingsViewCoordinator)
         let settingsViewController = settingsViewCoordinator.startPush()
         settingsViewController.tabBarItem = fourthItem
         settingsViewController.tabBarItem.image = .init(systemName: "gearshape.fill")

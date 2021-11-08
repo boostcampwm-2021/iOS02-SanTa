@@ -6,11 +6,12 @@
 //
 
 import UIKit
+import CoreLocation
 
 class MapViewCoordinator: Coordinator {
     weak var parentCoordinator: Coordinator?
     var navigationController: UINavigationController = UINavigationController()
-    var childCoordinator: [Coordinator] = []
+    var childCoordinators: [Coordinator] = []
     
     func start() {
     }
@@ -26,19 +27,27 @@ class MapViewCoordinator: Coordinator {
 
 extension MapViewCoordinator {
     func presentRecordingViewController() {
-        if self.childCoordinator.isEmpty {
+        if self.childCoordinators.isEmpty {
             let recordingViewCoordinator = RecordingViewCoordinator(navigationController: self.navigationController)
-            self.childCoordinator.append(recordingViewCoordinator)
+            self.childCoordinators.append(recordingViewCoordinator)
             recordingViewCoordinator.parentCoordinator = self
         }
         
-        childCoordinator.first?.start()
+        childCoordinators.first?.start()
     }
     
-    func presentMountainDetailViewController() {
-        for coordinator in childCoordinator {
-            
-        }
+    func presentMountainDetailViewController(mountainAnnotation: MountainAnnotation, locationManager: CLLocationManager) {
+//        for coordinator in childCoordinators {
+//            if coordinator is MountainDetailViewCoordinator {
+//                coordinator.start()
+//                return
+//            }
+//        }
+        let mountainDetailViewCoordinator = MountainDetailViewCoordinator(navigationController: self.navigationController, mountainAnnotation: mountainAnnotation, locationManager: locationManager)
+        mountainDetailViewCoordinator.parentCoordinator = self
+        self.childCoordinators.append(mountainDetailViewCoordinator)
+        
+        mountainDetailViewCoordinator.start()
     }
     
     private func injectDependencies() -> MapViewModel {

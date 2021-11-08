@@ -9,7 +9,7 @@ import UIKit
 import MapKit
 
 class MountainDetailViewController: UIViewController {
-//    weak var mountainDetailViewCoordinator: MountainDetailViewCoordinator?
+    weak var coordinator: MountainDetailViewCoordinator?
     private var viewModel: MountainDetailViewModel?
     
     convenience init(viewModel: MountainDetailViewModel) {
@@ -19,6 +19,7 @@ class MountainDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.configureViewModel()
     }
     
     private func configureViewModel() {
@@ -31,29 +32,48 @@ class MountainDetailViewController: UIViewController {
 
 extension MountainDetailViewController {
     private func layoutMountainDetailView(mountainDetail: MountainDetailModel) {
+        let headerView = UIView()
         let mapSnapShot = upperMapHeaderView(mountainDetail: mountainDetail)
         let titleView = lowerMountainTitleView(mountainDetail: mountainDetail)
         let tableView = configuredTableView(mountainDetail: mountainDetail)
         
+        headerView.translatesAutoresizingMaskIntoConstraints = false
+        mapSnapShot.translatesAutoresizingMaskIntoConstraints = false
+        titleView.translatesAutoresizingMaskIntoConstraints = false
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        
+        headerView.addSubview(mapSnapShot)
+        headerView.addSubview(titleView)
+        view.addSubview(headerView)
+        view.addSubview(tableView)
+        
+        let headerConstraints = [
+            headerView.topAnchor.constraint(equalTo: view.topAnchor),
+            headerView.leftAnchor.constraint(equalTo: view.leftAnchor),
+            headerView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            headerView.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.5)
+        ]
+        NSLayoutConstraint.activate(headerConstraints)
+        
         let mapConstraints = [
-            mapSnapShot.heightAnchor.constraint(equalTo: view.heightAnchor, multiplier: 0.3),
-            mapSnapShot.topAnchor.constraint(equalTo: view.topAnchor),
-            mapSnapShot.leftAnchor.constraint(equalTo: view.leftAnchor),
-            mapSnapShot.rightAnchor.constraint(equalTo: view.rightAnchor)
+            mapSnapShot.topAnchor.constraint(equalTo: headerView.topAnchor),
+            mapSnapShot.leftAnchor.constraint(equalTo: headerView.leftAnchor),
+            mapSnapShot.rightAnchor.constraint(equalTo: headerView.rightAnchor),
+            mapSnapShot.heightAnchor.constraint(equalTo: headerView.heightAnchor, multiplier: 0.85)
             
         ]
         NSLayoutConstraint.activate(mapConstraints)
         
         let titleViewConstraints = [
             titleView.topAnchor.constraint(equalTo: mapSnapShot.bottomAnchor),
-            titleView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            titleView.rightAnchor.constraint(equalTo: view.rightAnchor),
-            titleView.heightAnchor.constraint(equalToConstant: 100)
+            titleView.leftAnchor.constraint(equalTo: headerView.leftAnchor),
+            titleView.rightAnchor.constraint(equalTo: headerView.rightAnchor),
+            titleView.bottomAnchor.constraint(equalTo: headerView.bottomAnchor)
         ]
         NSLayoutConstraint.activate(titleViewConstraints)
         
         let tableViewConstraints = [
-            tableView.topAnchor.constraint(equalTo: titleView.bottomAnchor),
+            tableView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
             tableView.rightAnchor.constraint(equalTo: view.rightAnchor)

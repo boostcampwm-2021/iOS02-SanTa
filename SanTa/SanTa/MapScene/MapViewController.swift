@@ -144,6 +144,10 @@ class MapViewController: UIViewController {
     @objc private func presentRecordingViewController() {
         coordinator?.presentRecordingViewController()
     }
+    
+//    @objc private func presentMountainDetailViewController() {
+//        coordinator?.presentMountainDetailViewController()
+//    }
 }
 
 extension MapViewController: MKMapViewDelegate {
@@ -160,6 +164,7 @@ extension MapViewController: MKMapViewDelegate {
         
         
         //navigate using annotation
+        coordinator?.presentMountainDetailViewController(mountainAnnotation: annotation, locationManager: self.manager)
     }
 }
 
