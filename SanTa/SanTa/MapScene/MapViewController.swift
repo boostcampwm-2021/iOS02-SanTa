@@ -157,6 +157,14 @@ class MapViewController: UIViewController {
             self.present(authAlert(), animated: false)
         }
     }
+    
+    func presentAnimation() {
+        print("1")
+    }
+    
+    func unpresentAnimation(){
+        print("2")
+    }
 }
 
 extension MapViewController: MKMapViewDelegate {
