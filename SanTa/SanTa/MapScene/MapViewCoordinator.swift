@@ -15,34 +15,26 @@ class MapViewCoordinator: Coordinator {
     
     func start() {
     }
-
+    
     func startPush() -> UINavigationController {
         let mapViewController = MapViewController(viewModel: injectDependencies())
         mapViewController.coordinator = self
         self.navigationController.setViewControllers([mapViewController], animated: false)
-
+        
         return navigationController
     }
 }
 
 extension MapViewCoordinator {
     func presentRecordingViewController() {
-        if self.childCoordinators.isEmpty {
-            let recordingViewCoordinator = RecordingViewCoordinator(navigationController: self.navigationController)
-            self.childCoordinators.append(recordingViewCoordinator)
-            recordingViewCoordinator.parentCoordinator = self
-        }
+        let recordingViewCoordinator = RecordingViewCoordinator(navigationController: self.navigationController)
+        self.childCoordinators.append(recordingViewCoordinator)
+        recordingViewCoordinator.parentCoordinator = self
         
-        childCoordinators.first?.start()
+        recordingViewCoordinator.start()
     }
     
     func presentMountainDetailViewController(mountainAnnotation: MountainAnnotation, locationManager: CLLocationManager) {
-//        for coordinator in childCoordinators {
-//            if coordinator is MountainDetailViewCoordinator {
-//                coordinator.start()
-//                return
-//            }
-//        }
         let mountainDetailViewCoordinator = MountainDetailViewCoordinator(navigationController: self.navigationController, mountainAnnotation: mountainAnnotation, locationManager: locationManager)
         mountainDetailViewCoordinator.parentCoordinator = self
         self.childCoordinators.append(mountainDetailViewCoordinator)

@@ -42,6 +42,7 @@ extension MountainDetailViewController {
         titleView.translatesAutoresizingMaskIntoConstraints = false
         tableView.translatesAutoresizingMaskIntoConstraints = false
         
+        
         headerView.addSubview(mapSnapShot)
         headerView.addSubview(titleView)
         view.addSubview(headerView)
@@ -86,16 +87,25 @@ extension MountainDetailViewController {
     }
     
     private func upperMapHeaderView(mountainDetail: MountainDetailModel) -> UIImageView {
-//        let mapOptions = MKMapSnapshotter.Options.init()
-//        mapOptions.region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: mountainDetail.latitude, longitude: mountainDetail.longitude), span: MKCoordinateSpan())
-//        mapOptions.size = CGSize(width: view.bounds.width, height: view.bounds.height / 3)
-//        mapOptions.mapType = .satellite
-//        let mountainAnnotationView = MountainAnnotationView(annotation: MountainAnnotation(title: mountainDetail.moutainName, subtitle: mountainDetail.altitude, latitude: mountainDetail.latitude, longitude: mountainDetail.longitude, mountainDescription: mountainDetail.mountainDescription, region: mountainDetail.regions.join), reuseIdentifier: MountainAnnotationView.ReuseID)
+        let mapOptions = MKMapSnapshotter.Options.init()
+        mapOptions.region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: mountainDetail.latitude, longitude: mountainDetail.longitude), span: MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1))
+        mapOptions.size = CGSize(width: view.bounds.width, height: view.bounds.height / 3)
+        mapOptions.mapType = .satellite
+//        let mountainAnnotationView = MountainAnnotationView(annotation: MountainAnnotation(title: mountainDetail.moutainName, subtitle: mountainDetail.altitude, latitude: mountainDetail.latitude, longitude: mountainDetail.longitude, mountainDescription: mountainDetail.mountainDescription, region: mountainDetail.regions.joined(separator: ", ")), reuseIdentifier: MountainAnnotationView.ReuseID)
+//
 //        mountainAnnotationView.canShowCallout = true
 //        mountainAnnotationView.calloutOffset = CGPoint(x: 0, y: 5)
-        let imgVIew = UIImageView(frame: CGRect(x: 0, y: 0, width: view.bounds.width, height: view.bounds.height / 3))
-        imgVIew.backgroundColor = .yellow
-        return imgVIew
+        
+        let imgView = UIImageView()
+        let snapShotter = MKMapSnapshotter(options: mapOptions)
+        snapShotter.start { snapShot, error in
+            if let snapShot = snapShot {
+                imgView.image = snapShot.image
+            } else if let error = error {
+                print(error.localizedDescription)
+            }
+        }
+        return imgView
     }
     
     private func lowerMountainTitleView(mountainDetail: MountainDetailModel) -> UIView {

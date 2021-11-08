@@ -19,6 +19,13 @@ class MountainDetailViewCoordinator: Coordinator {
         self.navigationController.present(mountainDetailViewController, animated: true, completion: nil)
     }
     
+    func dismiss() {
+        self.navigationController.dismiss(animated: true)
+        self.parentCoordinator?.childCoordinators.removeAll(where: { coordinator in
+            coordinator is Self
+        })
+    }
+    
     
     //지도화면에서 바로 올때
     init(navigationController: UINavigationController, mountainAnnotation: MountainAnnotation, locationManager: CLLocationManager) {
