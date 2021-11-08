@@ -31,6 +31,8 @@
 		5485128C272A6AD500407F28 /* SanTa.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5485128A272A6AD500407F28 /* SanTa.xcdatamodeld */; };
 		5485128E272A6AD600407F28 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5485128D272A6AD600407F28 /* Assets.xcassets */; };
 		54851291272A6AD600407F28 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5485128F272A6AD600407F28 /* LaunchScreen.storyboard */; };
+		9826F3DD2739035E0064FA85 /* Option.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9826F3DC2739035E0064FA85 /* Option.swift */; };
+		9826F3DF273904010064FA85 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9826F3DE273904010064FA85 /* Settings.swift */; };
 		984DDEC127325D67003BE56B /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984DDEC027325D67003BE56B /* Record.swift */; };
 		984DDEC327325DFC003BE56B /* RecordingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984DDEC227325DFC003BE56B /* RecordingUseCase.swift */; };
 		984DDEC527325FB9003BE56B /* RecordRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984DDEC427325FB9003BE56B /* RecordRepository.swift */; };
@@ -41,6 +43,9 @@
 		9889DA512730FFCD00F3C772 /* MapOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9889DA502730FFCD00F3C772 /* MapOptionCell.swift */; };
 		98A913012736844E008AAE39 /* UserDefaultsSettingsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A913002736844E008AAE39 /* UserDefaultsSettingsStorage.swift */; };
 		98AEF1D727310759002E9C9A /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AEF1D627310759002E9C9A /* PaddingLabel.swift */; };
+		98BCF4F52737A3480073E6FB /* SettingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BCF4F42737A3480073E6FB /* SettingsRepository.swift */; };
+		98BCF4F72737A66E0073E6FB /* SettingsUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BCF4F62737A66E0073E6FB /* SettingsUsecase.swift */; };
+		98BCF4F92737A7120073E6FB /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BCF4F82737A7120073E6FB /* SettingsViewModel.swift */; };
 		DAAF2716272FF73700F8A115 /* RecordingViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAF2715272FF73700F8A115 /* RecordingViewController+Extension.swift */; };
 		DAB37D4C2731166B00EC523F /* RecordingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB37D4B2731166B00EC523F /* RecordingViewModel.swift */; };
 		DAB37D50273256B900EC523F /* RecordingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB37D4F273256B900EC523F /* RecordingModel.swift */; };
@@ -73,6 +78,8 @@
 		5485128D272A6AD600407F28 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		54851290272A6AD600407F28 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		54851292272A6AD600407F28 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9826F3DC2739035E0064FA85 /* Option.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Option.swift; sourceTree = "<group>"; };
+		9826F3DE273904010064FA85 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		984DDEC027325D67003BE56B /* Record.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
 		984DDEC227325DFC003BE56B /* RecordingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingUseCase.swift; sourceTree = "<group>"; };
 		984DDEC427325FB9003BE56B /* RecordRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordRepository.swift; sourceTree = "<group>"; };
@@ -83,6 +90,9 @@
 		9889DA502730FFCD00F3C772 /* MapOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapOptionCell.swift; sourceTree = "<group>"; };
 		98A913002736844E008AAE39 /* UserDefaultsSettingsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsSettingsStorage.swift; sourceTree = "<group>"; };
 		98AEF1D627310759002E9C9A /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
+		98BCF4F42737A3480073E6FB /* SettingsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRepository.swift; sourceTree = "<group>"; };
+		98BCF4F62737A66E0073E6FB /* SettingsUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsUsecase.swift; sourceTree = "<group>"; };
+		98BCF4F82737A7120073E6FB /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		DAAF2715272FF73700F8A115 /* RecordingViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecordingViewController+Extension.swift"; sourceTree = "<group>"; };
 		DAB37D4B2731166B00EC523F /* RecordingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingViewModel.swift; sourceTree = "<group>"; };
 		DAB37D4F273256B900EC523F /* RecordingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingModel.swift; sourceTree = "<group>"; };
@@ -151,12 +161,17 @@
 		5428FDBB272F8C32002F9D40 /* SettingsScene */ = {
 			isa = PBXGroup;
 			children = (
-				54296956272FC4380070B362 /* SettingsViewCoordinator.swift */,
-				54296954272FC3EC0070B362 /* SettingsViewController.swift */,
+				98AEF1D627310759002E9C9A /* PaddingLabel.swift */,
 				985EEF64273010BD002413D9 /* ToggleOptionCell.swift */,
 				9889DA502730FFCD00F3C772 /* MapOptionCell.swift */,
-				98AEF1D627310759002E9C9A /* PaddingLabel.swift */,
+				54296956272FC4380070B362 /* SettingsViewCoordinator.swift */,
+				54296954272FC3EC0070B362 /* SettingsViewController.swift */,
+				98BCF4F82737A7120073E6FB /* SettingsViewModel.swift */,
+				98BCF4F62737A66E0073E6FB /* SettingsUsecase.swift */,
+				98BCF4F42737A3480073E6FB /* SettingsRepository.swift */,
 				98A913002736844E008AAE39 /* UserDefaultsSettingsStorage.swift */,
+				9826F3DE273904010064FA85 /* Settings.swift */,
+				9826F3DC2739035E0064FA85 /* Option.swift */,
 			);
 			path = SettingsScene;
 			sourceTree = "<group>";
@@ -325,6 +340,7 @@
 				984DDEC127325D67003BE56B /* Record.swift in Sources */,
 				54851286272A6AD500407F28 /* MapViewController.swift in Sources */,
 				984DDEC9273271EC003BE56B /* CoreDataStorage.swift in Sources */,
+				9826F3DD2739035E0064FA85 /* Option.swift in Sources */,
 				985EEF63272FDA98002413D9 /* MountainCell.swift in Sources */,
 				5428FDBD272F8C5B002F9D40 /* MapViewUseCase.swift in Sources */,
 				5428FDB4272F894D002F9D40 /* MapViewRepository.swift in Sources */,
@@ -335,6 +351,7 @@
 				98AEF1D727310759002E9C9A /* PaddingLabel.swift in Sources */,
 				54851282272A6AD500407F28 /* AppDelegate.swift in Sources */,
 				49FEEDB92732584000D37CCA /* MountainEntity.swift in Sources */,
+				98BCF4F92737A7120073E6FB /* SettingsViewModel.swift in Sources */,
 				54296949272FBFAB0070B362 /* RecordingViewController.swift in Sources */,
 				984DDEC527325FB9003BE56B /* RecordRepository.swift in Sources */,
 				984DDEC327325DFC003BE56B /* RecordingUseCase.swift in Sources */,
@@ -346,12 +363,15 @@
 				985EEF65273010BD002413D9 /* ToggleOptionCell.swift in Sources */,
 				49A3E61D2732756C0020CAC1 /* MountainAnnotation.swift in Sources */,
 				54296955272FC3EC0070B362 /* SettingsViewController.swift in Sources */,
+				98BCF4F52737A3480073E6FB /* SettingsRepository.swift in Sources */,
 				5429695B273026B10070B362 /* MountainAnnotationView.swift in Sources */,
 				DAB37D4C2731166B00EC523F /* RecordingViewModel.swift in Sources */,
 				54296951272FC3290070B362 /* MountainListViewController.swift in Sources */,
+				9826F3DF273904010064FA85 /* Settings.swift in Sources */,
 				49FEEDB7273255DD00D37CCA /* MountainExtractor.swift in Sources */,
 				54851284272A6AD500407F28 /* SceneDelegate.swift in Sources */,
 				5429694F272FC1740070B362 /* ResultViewCoordinator.swift in Sources */,
+				98BCF4F72737A66E0073E6FB /* SettingsUsecase.swift in Sources */,
 				54731B65272F84D300534097 /* MapViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
