@@ -13,9 +13,10 @@ class RecordingTitleViewCoordinator: Coordinator {
     var childCoordinator: [Coordinator] = []
     var recordingTitleViewController: RecordingTitleViewController
     
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController, delegate: RecordingViewDelegate) {
         self.navigationController = navigationController
         self.recordingTitleViewController = RecordingTitleViewController()
+        self.recordingTitleViewController.delegate = delegate
         self.recordingTitleViewController.coordinator = self
     }
 
