@@ -157,7 +157,7 @@ extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         guard let annotation = view.annotation as? MountainAnnotation else { return }
         
-        coordinator?.presentMountainDetailViewController(mountainAnnotation: annotation, locationManager: self.manager)
+        coordinator?.presentMountainDetailViewController(mountainAnnotation: annotation, location: self.manager.location)
     }
 }
 

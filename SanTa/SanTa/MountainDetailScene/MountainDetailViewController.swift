@@ -22,6 +22,11 @@ class MountainDetailViewController: UIViewController {
         self.configureViewModel()
     }
     
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.coordinator?.dismiss()
+    }
+    
     private func configureViewModel() {
         self.viewModel?.mountainInfoReceived = { mountainDetail in
             self.layoutMountainDetailView(mountainDetail: mountainDetail)

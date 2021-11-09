@@ -10,31 +10,24 @@ import CoreLocation
 
 class MountainDetailUseCase {
     private let mountainAnnotation: MountainAnnotation
-    private let locationManager: CLLocationManager
+    private let location: CLLocation?
     
-    init(mountainAnnotation: MountainAnnotation, locationManager: CLLocationManager) {
+    init(mountainAnnotation: MountainAnnotation, location: CLLocation?) {
         self.mountainAnnotation = mountainAnnotation
-        self.locationManager = locationManager
+        self.location = location
     }
     
     private func calculateDistance() -> Double?  {
-        let canGetCurrentLocation = locationManager.authorizationStatus == .authorizedWhenInUse ||
-        locationManager.authorizationStatus == .authorizedAlways
-        guard canGetCurrentLocation, let currentLocation = locationManager.location else {
-            return nil
-        }
         let mountainLocation = CLLocation(latitude: self.mountainAnnotation.latitude, longitude: self.mountainAnnotation.longitude)
-        let distance = currentLocation.distance(from: CLLocation(latitude: mountainLocation.coordinate.latitude, longitude: mountainLocation.coordinate.longitude))
-        
+        let distance = location?.distance(from: mountainLocation)
+        print(distance)
         return distance
     }
     
     private func mountainRegions() -> [String] {
         return mountainAnnotation.region.components(separatedBy: ", ")
     }
-}
-
-extension MountainDetailUseCase {
+    
     func transferMountainInformation(completion: @escaping (MountainDetailModel) -> Void) {
         guard let name = mountainAnnotation.title,
               let altitude = mountainAnnotation.subtitle else { return }
@@ -42,3 +35,4 @@ extension MountainDetailUseCase {
         completion(MountainDetailModel(moutainName: name, distance: calculateDistance(), regions: mountainRegions(), altitude: altitude, latitude: mountainAnnotation.latitude, longitude: mountainAnnotation.longitude, mountainDescription: mountainAnnotation.mountainDescription))
     }
 }
+

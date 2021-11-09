@@ -16,29 +16,22 @@ class MountainDetailViewCoordinator: Coordinator {
     var mountainDetailViewController: MountainDetailViewController
     
     func start() {
-//        if self.parentCoordinator is MountainListViewCoordinator {  }
-        self.navigationController.present(mountainDetailViewController, animated: true, completion: nil)
+        if self.parentCoordinator is MapViewCoordinator {
+            self.navigationController.present(mountainDetailViewController, animated: true, completion: nil)
+        }
     }
     
     func dismiss() {
         self.navigationController.dismiss(animated: true)
-        self.parentCoordinator?.childCoordinators.removeAll(where: { coordinator in
-            coordinator is Self
-        })
+        self.parentCoordinator?.childCoordinators.removeLast()
     }
     
     
-    //지도화면에서 바로 올때
-    init(navigationController: UINavigationController, mountainAnnotation: MountainAnnotation, locationManager: CLLocationManager) {
+    init(navigationController: UINavigationController, mountainAnnotation: MountainAnnotation, location: CLLocation?) {
         self.navigationController = navigationController
-        let viewModel = MountainDetailViewModel(useCase: MountainDetailUseCase(mountainAnnotation: mountainAnnotation, locationManager: locationManager))
+        let viewModel = MountainDetailViewModel(useCase: MountainDetailUseCase(mountainAnnotation: mountainAnnotation, location: location))
         self.mountainDetailViewController = MountainDetailViewController(viewModel: viewModel)
         self.mountainDetailViewController.coordinator = self
     }
-    
-    //산 목록에서 올때
-//    init(navigationController: UINavigationController, mountainDetailModel: MountainDetailModel) {
-//
-//    }
     
 }
