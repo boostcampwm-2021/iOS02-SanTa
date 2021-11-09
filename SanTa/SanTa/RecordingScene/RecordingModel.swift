@@ -19,7 +19,8 @@ final class RecordingModel: NSObject, ObservableObject {
     private let pedoMeter = CMPedometer()
     private var locationManager = CLLocationManager()
     private var timer: DispatchSourceTimer?
-    private var date: Date?
+    private var startDate: [Date]?
+    private var endDate: [Date]?
     private var currentWalk = 0
     private var currentKilo: Double = 0
     private var location = [Location]()
@@ -33,7 +34,7 @@ final class RecordingModel: NSObject, ObservableObject {
     
     override init() {
         super.init()
-        self.date = Date()
+        self.startDate = [Date()]
         self.configureTimer()
         self.configureLocationManager()
     }
@@ -58,9 +59,10 @@ final class RecordingModel: NSObject, ObservableObject {
     }
     
     private func timeConverter() {
-        guard let startDate = self.date else { return }
+        guard let startDate = self.startDate,
+              let date = startDate.last else { return }
         
-        let elapsedTimeSeconds = Int(self.currentTime.timeIntervalSince(startDate))
+        let elapsedTimeSeconds = Int(self.currentTime.timeIntervalSince(date))
 
         let seconds = elapsedTimeSeconds % 60
         let minutes = (elapsedTimeSeconds / 60) % 60
@@ -70,7 +72,8 @@ final class RecordingModel: NSObject, ObservableObject {
     }
     
     private func checkPedoMeter() {
-        guard let date = self.date else { return }
+        guard let startDate = self.startDate,
+              let date = startDate.last else { return }
         
         pedoMeter.queryPedometerData(from: date, to: Date()) { [weak self] data, error in
             guard let activityData = data,
@@ -93,6 +96,12 @@ final class RecordingModel: NSObject, ObservableObject {
     }
     
     func pause() {
+        if self.endDate == nil {
+            self.endDate = [self.currentTime]
+        } else {
+            self.endDate?.append(self.currentTime)
+        }
+        
         self.timer?.suspend()
         self.locationManager.stopUpdatingLocation()
     }
@@ -103,10 +112,11 @@ final class RecordingModel: NSObject, ObservableObject {
     }
     
     func cancel() -> Record? {
-        guard let date = self.date else { return nil }
+        guard let startdate = self.startDate,
+              let endDate = self.endDate else { return nil }
         
-        let resultRecord = Record(startTime: date,
-                                  endTime: self.currentTime,
+        let resultRecord = Record(startTime: startdate,
+                                  endTime: endDate,
                                   step: self.currentWalk,
                                   distance: self.currentKilo,
                                   locations: self.location)

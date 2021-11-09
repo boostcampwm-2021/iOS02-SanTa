@@ -8,8 +8,8 @@
 import Foundation
 
 struct Record {
-    let startTime: Date
-    let endTime: Date
+    let startTime: [Date]
+    let endTime: [Date]
     let step: Int
     let distance: Double
     
