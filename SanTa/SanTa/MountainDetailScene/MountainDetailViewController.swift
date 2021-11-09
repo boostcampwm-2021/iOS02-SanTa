@@ -94,18 +94,23 @@ extension MountainDetailViewController {
     private func upperMapHeaderView(mountainDetail: MountainDetailModel) -> UIImageView {
         let mapOptions = MKMapSnapshotter.Options.init()
         mapOptions.region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: mountainDetail.latitude, longitude: mountainDetail.longitude), span: MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1))
-        mapOptions.size = CGSize(width: view.bounds.width, height: view.bounds.height / 3)
         mapOptions.mapType = .satellite
-//        let mountainAnnotationView = MountainAnnotationView(annotation: MountainAnnotation(title: mountainDetail.moutainName, subtitle: mountainDetail.altitude, latitude: mountainDetail.latitude, longitude: mountainDetail.longitude, mountainDescription: mountainDetail.mountainDescription, region: mountainDetail.regions.joined(separator: ", ")), reuseIdentifier: MountainAnnotationView.ReuseID)
-//
-//        mountainAnnotationView.canShowCallout = true
-//        mountainAnnotationView.calloutOffset = CGPoint(x: 0, y: 5)
         
         let imgView = UIImageView()
         let snapShotter = MKMapSnapshotter(options: mapOptions)
         snapShotter.start { snapShot, error in
             if let snapShot = snapShot {
-                imgView.image = snapShot.image
+                let mapImage = snapShot.image
+                
+                UIGraphicsBeginImageContext(mapImage.size)
+                mapImage.draw(in: CGRect(origin: CGPoint.zero, size: mapImage.size))
+                UIImage(systemName: "heart.fill")?.draw(at: snapShot.point(for: CLLocationCoordinate2D(latitude: mountainDetail.latitude, longitude: mountainDetail.longitude)))
+                let image = UIGraphicsGetImageFromCurrentImageContext()
+                UIGraphicsEndImageContext()
+                
+                imgView.image = image
+                
+                print(snapShot.image.size, snapShot.point(for: CLLocationCoordinate2D(latitude: mountainDetail.latitude, longitude: mountainDetail.longitude)))
             } else if let error = error {
                 print(error.localizedDescription)
             }

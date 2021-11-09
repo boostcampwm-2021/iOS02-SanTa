@@ -32,9 +32,7 @@ class RecordingViewCoordinator: Coordinator {
     
     func dismiss() {
         self.navigationController.dismiss(animated: true)
-        self.parentCoordinator?.childCoordinators.removeAll(where: { coordinator in
-            coordinator is Self
-        })
+        self.parentCoordinator?.childCoordinators.removeAll()
     }
 }
 
