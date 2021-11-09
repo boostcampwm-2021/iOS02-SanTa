@@ -145,12 +145,6 @@ class RecordingViewController: UIViewController {
         let terminationAction = UIAlertAction(title: "종료", style: .default) { [weak self] (action) in
             self?.view.backgroundColor = .black
             self?.coordinator?.presentRecordingTitleViewController()
-            
-//            self?.recordingViewModel?.save() { [weak self] completion in
-//                DispatchQueue.main.async {
-//                    self?.coordinator?.dismiss()
-//                }
-//            }
         }
         stopAlert.addAction(noneAction)
         stopAlert.addAction(terminationAction)
@@ -164,6 +158,10 @@ class RecordingViewController: UIViewController {
 
 extension RecordingViewController: RecordingViewDelegate {
     func didTitleWriteDone(title: String) {
-        print(title)
+        self.recordingViewModel?.save(title: title) { [weak self] completion in
+            DispatchQueue.main.async {
+                self?.coordinator?.dismiss()
+            }
+        }
     }
 }

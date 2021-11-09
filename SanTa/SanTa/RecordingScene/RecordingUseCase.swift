@@ -10,7 +10,7 @@ import Foundation
 protocol RecordingUseCase {
     var recording: RecordingModel { get set }
     
-    func save(completion: @escaping (Result<Record, Error>) -> Void)
+    func save(title: String, completion: @escaping (Result<Record, Error>) -> Void)
 }
 
 final class DefaultRecordingUseCase: RecordingUseCase, ObservableObject {
@@ -23,7 +23,7 @@ final class DefaultRecordingUseCase: RecordingUseCase, ObservableObject {
         self.recording = recordingModel
     }
     
-    func save(completion: @escaping (Result<Record, Error>) -> Void) {
+    func save(title: String, completion: @escaping (Result<Record, Error>) -> Void) {
 //        self.recordRepository.save(record: recording.cancel(), completion: completion)
     }
 }
