@@ -8,6 +8,10 @@
 import UIKit
 import Combine
 
+protocol RecordingViewDelegate: AnyObject {
+    func didTitleWriteDone(title: String)
+}
+
 class RecordingViewController: UIViewController {
     weak var coordinator: RecordingViewCoordinator?
     
@@ -154,5 +158,11 @@ class RecordingViewController: UIViewController {
     
     @objc private func locationButtonAction(_ sender: UIResponder) {
         self.coordinator?.hide()
+    }
+}
+
+extension RecordingViewController: RecordingViewDelegate {
+    func didTitleWriteDone(title: String) {
+        
     }
 }
