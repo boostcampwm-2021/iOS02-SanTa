@@ -12,6 +12,7 @@ protocol RecordingUseCase {
     
     func save(title: String, completion: @escaping (Result<Record, Error>) -> Void)
     func pause()
+    func resume()
 }
 
 final class DefaultRecordingUseCase: RecordingUseCase, ObservableObject {
@@ -26,6 +27,10 @@ final class DefaultRecordingUseCase: RecordingUseCase, ObservableObject {
     
     func pause() {
         self.recording.pause()
+    }
+    
+    func resume() {
+        self.recording.resume()
     }
     
     func save(title: String, completion: @escaping (Result<Record, Error>) -> Void) {

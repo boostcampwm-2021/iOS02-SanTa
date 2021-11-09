@@ -82,6 +82,7 @@ class RecordingViewController: UIViewController {
     
     private var recordingViewModel: RecordingViewModel?
     private var subscriptions = Set<AnyCancellable>()
+    private var currentState = true
     
     convenience init(viewModel: RecordingViewModel) {
         self.init()
@@ -136,7 +137,13 @@ class RecordingViewController: UIViewController {
     }
     
     @objc private func pauseButtonAction(_ sender: UIResponder) {
-        self.recordingViewModel?.pause()
+        if currentState {
+            self.view.backgroundColor = .black
+            self.recordingViewModel?.pause()
+        } else {
+            self.view.backgroundColor = .systemBlue
+            self.recordingViewModel?.pause()
+        }
     }
     
     @objc private func stopButtonAction(_ sender: UIResponder) {
@@ -163,5 +170,6 @@ extension RecordingViewController: RecordingViewDelegate {
                 self?.coordinator?.dismiss()
             }
         }
+        self.coordinator?.dismiss()
     }
 }
