@@ -9,7 +9,6 @@ import UIKit
 
 class MapViewCoordinator: Coordinator {
     weak var parentCoordinator: Coordinator?
-    weak var mapViewController: MapViewController?
     var navigationController: UINavigationController = UINavigationController()
     var childCoordinator: [Coordinator] = []
     
@@ -19,7 +18,6 @@ class MapViewCoordinator: Coordinator {
     func startPush() -> UINavigationController {
         let mapViewController = MapViewController(viewModel: injectDependencies())
         mapViewController.coordinator = self
-        self.mapViewController = mapViewController
         self.navigationController.setViewControllers([mapViewController], animated: false)
 
         return navigationController
@@ -38,11 +36,13 @@ extension MapViewCoordinator {
     }
     
     func recordingViewDidHide(){
-        self.mapViewController?.presentAnimation()
+        guard let animatableViewController = navigationController.viewControllers.first as? Animatable else { return }
+        animatableViewController.shouldAnimate()
     }
     
     func recordingViewDidDismiss(){
-        self.mapViewController?.unpresentAnimation()
+        guard let animatableViewController = navigationController.viewControllers.first as? Animatable else { return }
+        animatableViewController.shouldStopAnimate()
     }
     
     private func injectDependencies() -> MapViewModel {
