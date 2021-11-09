@@ -88,7 +88,13 @@ extension MountainDetailViewController {
     }
     
     private func configuredTableView(mountainDetail: MountainDetailModel) -> UITableView {
-        return UITableView()
+        let tableView = UITableView()
+        
+        tableView.register(MountainDetailTableViewCell.self, forCellReuseIdentifier: MountainDetailTableViewCell.identifier)
+        tableView.separatorStyle = .none
+        tableView.delegate = self
+        tableView.dataSource = self
+        return tableView
     }
     
     private func upperMapHeaderView(mountainDetail: MountainDetailModel) -> UIImageView {
@@ -123,5 +129,48 @@ extension MountainDetailViewController {
         titleView.configure(with: mountainDetail.moutainName, distance: mountainDetail.distance)
         titleView.backgroundColor = .white
         return titleView
+    }
+}
+
+extension MountainDetailViewController: UITableViewDelegate, UITableViewDataSource {
+    enum MountainDetailCategories: Int, CaseIterable {
+        case region = 0
+        case altitude = 1
+        case description = 2
+        
+        var text: String {
+            switch self {
+            case .region:
+                return "소재지"
+            case .altitude:
+                return "고도"
+            case .description:
+                return "설명"
+            }
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: MountainDetailTableViewCell.identifier, for: indexPath) as? MountainDetailTableViewCell,
+              let category = MountainDetailCategories(rawValue: indexPath.row) else {
+            return UITableViewCell()
+        }
+        
+        var content: String? = ""
+        switch category {
+        case .region:
+            content = self.viewModel?.mountainDetail?.regions.joined(separator: "\n")
+        case .altitude:
+            content = self.viewModel?.mountainDetail?.altitude
+        case .description:
+            content = self.viewModel?.mountainDetail?.mountainDescription
+        }
+        
+        cell.configure(category: category.text, content: content ?? "")
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return MountainDetailCategories.allCases.count
     }
 }

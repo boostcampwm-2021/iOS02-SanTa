@@ -14,6 +14,7 @@
 		49D5A94F2738C72E00937821 /* MountainDetailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D5A94E2738C72E00937821 /* MountainDetailUseCase.swift */; };
 		49D5A9532738FBCD00937821 /* MountainDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D5A9522738FBCD00937821 /* MountainDetailModel.swift */; };
 		49D5A955273A5A5C00937821 /* MountainDetailTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D5A954273A5A5C00937821 /* MountainDetailTitleView.swift */; };
+		49D5A957273A62F800937821 /* MountainDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D5A956273A62F800937821 /* MountainDetailTableViewCell.swift */; };
 		49FEEDB7273255DD00D37CCA /* MountainExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FEEDB6273255DD00D37CCA /* MountainExtractor.swift */; };
 		49FEEDB92732584000D37CCA /* MountainEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FEEDB82732584000D37CCA /* MountainEntity.swift */; };
 		5428FDB4272F894D002F9D40 /* MapViewRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5428FDB3272F894D002F9D40 /* MapViewRepository.swift */; };
@@ -59,6 +60,7 @@
 		49D5A94E2738C72E00937821 /* MountainDetailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainDetailUseCase.swift; sourceTree = "<group>"; };
 		49D5A9522738FBCD00937821 /* MountainDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainDetailModel.swift; sourceTree = "<group>"; };
 		49D5A954273A5A5C00937821 /* MountainDetailTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainDetailTitleView.swift; sourceTree = "<group>"; };
+		49D5A956273A62F800937821 /* MountainDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainDetailTableViewCell.swift; sourceTree = "<group>"; };
 		49FEEDB6273255DD00D37CCA /* MountainExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainExtractor.swift; sourceTree = "<group>"; };
 		49FEEDB82732584000D37CCA /* MountainEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainEntity.swift; sourceTree = "<group>"; };
 		5428FDB3272F894D002F9D40 /* MapViewRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewRepository.swift; sourceTree = "<group>"; };
@@ -160,6 +162,7 @@
 				49D5A94E2738C72E00937821 /* MountainDetailUseCase.swift */,
 				49D5A9522738FBCD00937821 /* MountainDetailModel.swift */,
 				49D5A954273A5A5C00937821 /* MountainDetailTitleView.swift */,
+				49D5A956273A62F800937821 /* MountainDetailTableViewCell.swift */,
 			);
 			path = MountainDetailScene;
 			sourceTree = "<group>";
@@ -337,6 +340,7 @@
 				9889DA512730FFCD00F3C772 /* MapOptionCell.swift in Sources */,
 				49D5A94B2738C3AB00937821 /* MountainDetailViewController.swift in Sources */,
 				5429694D272FC1390070B362 /* ResultViewController.swift in Sources */,
+				49D5A957273A62F800937821 /* MountainDetailTableViewCell.swift in Sources */,
 				5429695D27302B1D0070B362 /* ClusterAnnotationView.swift in Sources */,
 				984DDEC127325D67003BE56B /* Record.swift in Sources */,
 				49D5A9492738C31600937821 /* MountainDetailViewCoordinator.swift in Sources */,
