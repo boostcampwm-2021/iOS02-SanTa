@@ -7,7 +7,12 @@
 
 import Foundation
 
+struct Records {
+    let record: [Record]
+}
+
 struct Record {
+    let title: String?
     let startTime: [Date]
     let endTime: [Date]
     let step: Int

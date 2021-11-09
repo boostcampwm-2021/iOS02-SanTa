@@ -19,6 +19,7 @@ final class RecordingModel: NSObject, ObservableObject {
     private let pedoMeter = CMPedometer()
     private var locationManager = CLLocationManager()
     private var timer: DispatchSourceTimer?
+    private var records: Records?g
     private var startDate: [Date]?
     private var endDate: [Date]?
     private var currentWalk = 0
@@ -72,25 +73,43 @@ final class RecordingModel: NSObject, ObservableObject {
     }
     
     private func checkPedoMeter() {
-        guard let startDate = self.startDate,
-              let date = startDate.last else { return }
+        guard let startDate = self.startDate else { return }
         
-        pedoMeter.queryPedometerData(from: date, to: Date()) { [weak self] data, error in
-            guard let activityData = data,
-                  error == nil else { return }
-            
-            self?.walk = "\(activityData.numberOfSteps)"
-            
-            guard let walk = self?.walk,
-                let walkNumber = Int(walk) else { return }
-            
-            self?.currentWalk = walkNumber
-            
-            guard let distance = activityData.distance else { return }
-            let transformatKilometer = Double(truncating: distance) / 1000
-            self?.currentKilo = transformatKilometer
-            let distanceString = String(format: "%.2f", transformatKilometer)
-            
+        self.currentWalk = 0
+        self.currentKilo = 0
+        
+        let dispatchGroup = DispatchGroup()
+        
+        startDate.enumerated().forEach { index, date in
+            var endDate: Date?
+            switch index {
+            case 0:
+                endDate = currentTime
+            default:
+                endDate = self.endDate?[index]
+            }
+            guard let endDate = endDate else { return }
+            dispatchGroup.enter()
+            pedoMeter.queryPedometerData(from: date, to: endDate) { [weak self] data, error in
+                guard let activityData = data,
+                      error == nil else { return }
+                
+                guard let walk = self?.walk,
+                    let walkNumber = Int(walk) else { return }
+                
+                self?.currentWalk += walkNumber
+                
+                guard let distance = activityData.distance else { return }
+                let transformatKilometer = Double(truncating: distance) / 1000
+                self?.currentKilo += transformatKilometer
+                dispatchGroup.leave()
+            }
+        }
+        
+        dispatchGroup.notify(queue: .main) { [weak self] in
+            guard let currentKilo = self?.currentKilo else { return }
+            self?.walk = "\(String(describing: self?.currentWalk))"
+            let distanceString = String(format: "%.2f", currentKilo)
             self?.kilometer = "\(distanceString)"
         }
     }
