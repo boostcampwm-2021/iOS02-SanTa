@@ -86,24 +86,57 @@ final class RecordingModel: NSObject, ObservableObject {
     
     private func checkPedoMeter() {
         guard let date = self.startDate else { return }
+        let dispatchGroup = DispatchGroup()
         
+        self.currentWalk = 0
+        self.currentKilo = 0
+        
+        dispatchGroup.enter()
         self.pedoMeter.queryPedometerData(from: date, to: self.currentTime) { [weak self] data, error in
             guard let activityData = data,
                   error == nil else { return }
             
-            self?.walk = "\(activityData.numberOfSteps)"
+            let walk = "\(activityData.numberOfSteps)"
             
-            guard let walk = self?.walk,
-                  let walkNumber = Int(walk) else { return }
+            guard let walkNumber = Int(walk) else { return }
             
-            self?.currentWalk = walkNumber
+            self?.currentWalk += walkNumber
             
             guard let distance = activityData.distance else { return }
             let transformatKilometer = Double(truncating: distance) / 1000
-            self?.currentKilo = transformatKilometer
-            let distanceString = String(format: "%.2f", transformatKilometer)
+            self?.currentKilo += transformatKilometer
+            dispatchGroup.leave()
+        }
+        
+        dispatchGroup.notify(queue: .main) { [weak self] in
+            guard let walk = self?.currentWalk else { return }
+            
+            self?.walk = "\(walk)"
+            guard let currentKile = self?.currentKilo else { return }
+            let distanceString = String(format: "%.2f", currentKile)
             
             self?.kilometer = "\(distanceString)"
+        }
+        
+        guard let records = records else { return }
+        
+        records.records.forEach {
+            dispatchGroup.enter()
+            self.pedoMeter.queryPedometerData(from: $0.startTime, to: $0.endTime) { [weak self] data, error in
+                guard let activityData = data,
+                      error == nil else { return }
+                
+                let walk = "\(activityData.numberOfSteps)"
+                
+                guard let walkNumber = Int(walk) else { return }
+                
+                self?.currentWalk += walkNumber
+                
+                guard let distance = activityData.distance else { return }
+                let transformatKilometer = Double(truncating: distance) / 1000
+                self?.currentKilo += transformatKilometer
+                dispatchGroup.leave()
+            }
         }
     }
     
