@@ -42,6 +42,7 @@ class RecordingTitleViewController: UIViewController {
         textField.clearButtonMode = .whileEditing
         textField.textAlignment = .center
         textField.borderStyle = .none
+        textField.adjustsFontSizeToFitWidth = true
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
