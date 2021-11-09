@@ -19,6 +19,10 @@ struct Record {
     let distance: Double
     
     let locations: [Location]
+    
+    mutating func configureTitle(title: String) {
+        self.title = title
+    }
 }
 
 struct Location {

@@ -19,7 +19,7 @@ final class RecordingModel: NSObject, ObservableObject {
     private let pedoMeter = CMPedometer()
     private var locationManager = CLLocationManager()
     private var timer: DispatchSourceTimer?
-    private var records: Records?g
+    private var records: Records?
     private var startDate: [Date]?
     private var endDate: [Date]?
     private var currentWalk = 0
@@ -134,7 +134,8 @@ final class RecordingModel: NSObject, ObservableObject {
         guard let startdate = self.startDate,
               let endDate = self.endDate else { return nil }
         
-        let resultRecord = Record(startTime: startdate,
+        let resultRecord = Record(title: nil,
+                                  startTime: startdate,
                                   endTime: endDate,
                                   step: self.currentWalk,
                                   distance: self.currentKilo,
