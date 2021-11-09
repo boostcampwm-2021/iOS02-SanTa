@@ -9,7 +9,8 @@ import UIKit
 
 class RecordingTitleViewController: UIViewController {
     weak var coordinator: RecordingTitleViewCoordinator?
-    
+    weak var delegate: RecordingViewDelegate?
+     
     private var displayView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
