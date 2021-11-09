@@ -8,6 +8,7 @@
 import UIKit
 
 class RecordingTitleViewController: UIViewController {
+    weak var coordinator: RecordingTitleViewCoordinator?
     
     private var displayView: UIView = {
         let view = UIView()
@@ -92,7 +93,7 @@ class RecordingTitleViewController: UIViewController {
         let frameWidth = view.frame.width
         let frameHeight = view.frame.height
 
-        self.displayView.frame = CGRect(x: 6, y: frameHeight/2 - frameWidth * 2/3, width: frameWidth - 12, height: frameHeight/3)
+        self.displayView.frame = CGRect(x: 6, y: frameHeight - frameHeight/2, width: frameWidth - 12, height: frameHeight/3)
         
         [self.recordingTitle, self.recordingTitleDescription, self.recordingTitleText, self.inputButton, self.notInputButton].forEach {
             self.titleStackView.addArrangedSubview($0)
@@ -141,10 +142,12 @@ extension RecordingTitleViewController {
         let keyboardHeight = keyboardRectangle.height
         keyHeight = keyboardHeight
         
-        self.view.frame.size.height -= keyboardHeight
+        self.displayView.frame.origin.y -= keyboardHeight
     }
     
     @objc func keyboardWillHide(_ sender: Notification) {
-        self.view.frame.size.height += keyHeight!
+        guard let keyHeight = keyHeight else { return }
+        
+        self.displayView.frame.origin.y += keyHeight
     }
 }

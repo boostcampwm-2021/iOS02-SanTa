@@ -40,3 +40,12 @@ class RecordingViewCoordinator: Coordinator {
     }
 }
 
+extension RecordingViewCoordinator {
+    func presentRecordingTitleViewController() {
+        let recordingTitleViewCoordinator = RecordingTitleViewCoordinator(navigationController: self.navigationController)
+        self.childCoordinator.append(recordingTitleViewCoordinator)
+        recordingTitleViewCoordinator.parentCoordinator = self
+        
+        recordingTitleViewCoordinator.start()
+    }
+}
