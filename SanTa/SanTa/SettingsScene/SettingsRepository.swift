@@ -9,8 +9,8 @@ import Foundation
 
 protocol SettingsRepository {
     func save<T: Codable>(value: T, key: Settings)
-    func getToggleOption(key: Settings, completion: @escaping (Option) -> Void)
-    func getMapOption(key: Settings, completion: @escaping (Option) -> Void)
+    func makeToggleOption(key: Settings, completion: @escaping (Option) -> Void)
+    func makeMapOption(key: Settings, completion: @escaping (Option) -> Void)
 }
 
 final class DefaultSettingsRepository: SettingsRepository {
@@ -25,7 +25,7 @@ final class DefaultSettingsRepository: SettingsRepository {
         self.settingsStorage.save(value: value, key: key)
     }
     
-    func getToggleOption(key: Settings, completion: @escaping (Option) -> Void) {
+    func makeToggleOption(key: Settings, completion: @escaping (Option) -> Void) {
         self.settingsStorage.exist(key: key) { exist in
             if !exist {
                 guard let value = key.initValue as? Bool else { return }
@@ -38,7 +38,7 @@ final class DefaultSettingsRepository: SettingsRepository {
         }
     }
     
-    func getMapOption(key: Settings, completion: @escaping (Option) -> Void) {
+    func makeMapOption(key: Settings, completion: @escaping (Option) -> Void) {
         self.settingsStorage.exist(key: key) { exist in
             if !exist {
                 guard let value = key.initValue as? String else { return }

@@ -14,11 +14,11 @@ class SettingsUsecaseTests: XCTestCase {
             
         }
         
-        func getToggleOption(key: Settings, completion: @escaping (Option) -> Void) {
+        func makeToggleOption(key: Settings, completion: @escaping (Option) -> Void) {
             completion(ToggleOption(text: "토글", toggle: true))
         }
         
-        func getMapOption(key: Settings, completion: @escaping (Option) -> Void) {
+        func makeMapOption(key: Settings, completion: @escaping (Option) -> Void) {
             completion(MapOption(text: "맵", map: .infomation))
         }
     }
