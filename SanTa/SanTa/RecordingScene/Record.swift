@@ -12,7 +12,7 @@ struct Records {
 }
 
 struct Record {
-    let title: String?
+    var title: String?
     let startTime: [Date]
     let endTime: [Date]
     let step: Int
