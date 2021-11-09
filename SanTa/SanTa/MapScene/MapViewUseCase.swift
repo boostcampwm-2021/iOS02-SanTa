@@ -26,4 +26,16 @@ class MapViewUseCase {
             }
         }
     }
+    
+    func prepareMap(completion: @escaping (Map?) -> Void) {
+        self.repository.fetchMapOption(key: Settings.mapFormat) { result in
+            switch result {
+            case .failure(let error):
+                os_log(.error, log: .default, "\(error.localizedDescription)")
+                completion(nil)
+            case .success(let map):
+                completion(map)
+            }
+        }
+    }
 }
