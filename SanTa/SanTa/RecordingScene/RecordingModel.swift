@@ -93,11 +93,13 @@ final class RecordingModel: NSObject, ObservableObject {
     }
     
     func pause() {
-        timer?.suspend()
+        self.timer?.suspend()
+        self.locationManager.stopUpdatingLocation()
     }
     
     func resume() {
-        timer?.resume()
+        self.timer?.resume()
+        self.locationManager.startUpdatingLocation()
     }
     
     func cancel() -> Record? {
