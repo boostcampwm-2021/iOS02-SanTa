@@ -15,9 +15,9 @@ protocol SettingsRepository {
 
 final class DefaultSettingsRepository: SettingsRepository {
     
-    let settingsStorage: SettingsStorage
+    let settingsStorage: UserDefaultsStorage
     
-    init(settingsStorage: SettingsStorage) {
+    init(settingsStorage: UserDefaultsStorage) {
         self.settingsStorage = settingsStorage
     }
     

@@ -7,14 +7,14 @@
 
 import Foundation
 
-protocol SettingsStorage {
+protocol UserDefaultsStorage {
     func save<T: Codable>(value: T, key: Settings)
     func exist(key: Settings, completion: @escaping (Bool) -> Void)
     func bool(key: Settings, completion: @escaping (Bool) -> Void)
     func string(key: Settings, completion: @escaping (String?) -> Void)
 }
 
-final class UserDefaultsSettingsStorage: SettingsStorage {
+final class DefaultUserDefaultsStorage: UserDefaultsStorage {
     
     let userDefaults: UserDefaults
     

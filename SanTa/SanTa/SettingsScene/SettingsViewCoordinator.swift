@@ -25,7 +25,7 @@ class SettingsViewCoordinator: Coordinator {
 
 extension SettingsViewCoordinator {
     private func injectDependencies() -> SettingsViewController {
-        let persistence = UserDefaultsSettingsStorage()
+        let persistence = DefaultUserDefaultsStorage()
         let repository = DefaultSettingsRepository(settingsStorage: persistence)
         let usecase = DefaultSettingsUsecase(settingsRepository: repository)
         let viewModel = SettingsViewModel(settingsUseCase: usecase)

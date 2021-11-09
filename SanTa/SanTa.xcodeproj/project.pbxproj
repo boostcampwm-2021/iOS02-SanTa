@@ -38,7 +38,6 @@
 		9826F4382739546E0064FA85 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BCF4F82737A7120073E6FB /* SettingsViewModel.swift */; };
 		9826F4392739546E0064FA85 /* SettingsUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BCF4F62737A66E0073E6FB /* SettingsUsecase.swift */; };
 		9826F43A2739546E0064FA85 /* SettingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BCF4F42737A3480073E6FB /* SettingsRepository.swift */; };
-		9826F43B2739546E0064FA85 /* UserDefaultsSettingsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A913002736844E008AAE39 /* UserDefaultsSettingsStorage.swift */; };
 		9826F43C2739546E0064FA85 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9826F3DE273904010064FA85 /* Settings.swift */; };
 		9826F43D2739546E0064FA85 /* Option.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9826F3DC2739035E0064FA85 /* Option.swift */; };
 		984DDEC127325D67003BE56B /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984DDEC027325D67003BE56B /* Record.swift */; };
@@ -49,7 +48,7 @@
 		985EEF63272FDA98002413D9 /* MountainCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985EEF62272FDA98002413D9 /* MountainCell.swift */; };
 		985EEF65273010BD002413D9 /* ToggleOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 985EEF64273010BD002413D9 /* ToggleOptionCell.swift */; };
 		9889DA512730FFCD00F3C772 /* MapOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9889DA502730FFCD00F3C772 /* MapOptionCell.swift */; };
-		98A913012736844E008AAE39 /* UserDefaultsSettingsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A913002736844E008AAE39 /* UserDefaultsSettingsStorage.swift */; };
+		98A913012736844E008AAE39 /* UserDefaultsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A913002736844E008AAE39 /* UserDefaultsStorage.swift */; };
 		98AEF1D727310759002E9C9A /* PaddingLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98AEF1D627310759002E9C9A /* PaddingLabel.swift */; };
 		98BCF4F52737A3480073E6FB /* SettingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BCF4F42737A3480073E6FB /* SettingsRepository.swift */; };
 		98BCF4F72737A66E0073E6FB /* SettingsUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BCF4F62737A66E0073E6FB /* SettingsUsecase.swift */; };
@@ -109,7 +108,7 @@
 		985EEF62272FDA98002413D9 /* MountainCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainCell.swift; sourceTree = "<group>"; };
 		985EEF64273010BD002413D9 /* ToggleOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleOptionCell.swift; sourceTree = "<group>"; };
 		9889DA502730FFCD00F3C772 /* MapOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapOptionCell.swift; sourceTree = "<group>"; };
-		98A913002736844E008AAE39 /* UserDefaultsSettingsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsSettingsStorage.swift; sourceTree = "<group>"; };
+		98A913002736844E008AAE39 /* UserDefaultsStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsStorage.swift; sourceTree = "<group>"; };
 		98AEF1D627310759002E9C9A /* PaddingLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaddingLabel.swift; sourceTree = "<group>"; };
 		98BCF4F42737A3480073E6FB /* SettingsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRepository.swift; sourceTree = "<group>"; };
 		98BCF4F62737A66E0073E6FB /* SettingsUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsUsecase.swift; sourceTree = "<group>"; };
@@ -197,7 +196,6 @@
 				98BCF4F82737A7120073E6FB /* SettingsViewModel.swift */,
 				98BCF4F62737A66E0073E6FB /* SettingsUsecase.swift */,
 				98BCF4F42737A3480073E6FB /* SettingsRepository.swift */,
-				98A913002736844E008AAE39 /* UserDefaultsSettingsStorage.swift */,
 				9826F3DE273904010064FA85 /* Settings.swift */,
 				9826F3DC2739035E0064FA85 /* Option.swift */,
 			);
@@ -217,6 +215,7 @@
 			children = (
 				984DDEC8273271EC003BE56B /* CoreDataStorage.swift */,
 				49FEEDB6273255DD00D37CCA /* MountainExtractor.swift */,
+				98A913002736844E008AAE39 /* UserDefaultsStorage.swift */,
 			);
 			path = Persistences;
 			sourceTree = "<group>";
@@ -425,7 +424,7 @@
 				984DDEC527325FB9003BE56B /* RecordRepository.swift in Sources */,
 				984DDEC327325DFC003BE56B /* RecordingUseCase.swift in Sources */,
 				984DDEC727327064003BE56B /* CoreDataRecordStorage.swift in Sources */,
-				98A913012736844E008AAE39 /* UserDefaultsSettingsStorage.swift in Sources */,
+				98A913012736844E008AAE39 /* UserDefaultsStorage.swift in Sources */,
 				DAB37D50273256B900EC523F /* RecordingModel.swift in Sources */,
 				54296945272FBC6E0070B362 /* AppCoordinator.swift in Sources */,
 				5429694B272FBFCA0070B362 /* RecordingViewCoordinator.swift in Sources */,
@@ -452,7 +451,6 @@
 				9826F4382739546E0064FA85 /* SettingsViewModel.swift in Sources */,
 				9826F4392739546E0064FA85 /* SettingsUsecase.swift in Sources */,
 				9826F43A2739546E0064FA85 /* SettingsRepository.swift in Sources */,
-				9826F43B2739546E0064FA85 /* UserDefaultsSettingsStorage.swift in Sources */,
 				9826F43C2739546E0064FA85 /* Settings.swift in Sources */,
 				9826F43D2739546E0064FA85 /* Option.swift in Sources */,
 				9826F437273954030064FA85 /* SettingsUsecaseTests.swift in Sources */,
