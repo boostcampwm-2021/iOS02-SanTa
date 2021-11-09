@@ -11,6 +11,9 @@ import MapKit
 class MountainDetailViewController: UIViewController {
     weak var coordinator: MountainDetailViewCoordinator?
     private var viewModel: MountainDetailViewModel?
+    private var mutatingTopConstraint: NSLayoutConstraint?
+    private var mutatingBottomConstraint: NSLayoutConstraint?
+    private let maxRollUpDistance: CGFloat = 100
     
     convenience init(viewModel: MountainDetailViewModel) {
         self.init()
@@ -70,16 +73,23 @@ extension MountainDetailViewController {
         ]
         NSLayoutConstraint.activate(mapConstraints)
         
-        let titleViewConstraints = [
-            titleView.topAnchor.constraint(equalTo: mapSnapShot.bottomAnchor),
+        self.mutatingTopConstraint = titleView.topAnchor.constraint(equalTo: mapSnapShot.bottomAnchor)
+        self.mutatingBottomConstraint = titleView.bottomAnchor.constraint(equalTo: headerView.bottomAnchor)
+        var titleViewConstraints = [
             titleView.leftAnchor.constraint(equalTo: headerView.leftAnchor),
             titleView.rightAnchor.constraint(equalTo: headerView.rightAnchor),
-            titleView.bottomAnchor.constraint(equalTo: headerView.bottomAnchor)
         ]
+        
+        if let upperConstraint = self.mutatingTopConstraint,
+           let lowerConstraint = self.mutatingBottomConstraint {
+            titleViewConstraints.append(upperConstraint)
+            titleViewConstraints.append(lowerConstraint)
+        }
+        
         NSLayoutConstraint.activate(titleViewConstraints)
         
         let tableViewConstraints = [
-            tableView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
+            tableView.topAnchor.constraint(equalTo: titleView.bottomAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
             tableView.rightAnchor.constraint(equalTo: view.rightAnchor)
@@ -172,5 +182,14 @@ extension MountainDetailViewController: UITableViewDelegate, UITableViewDataSour
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return MountainDetailCategories.allCases.count
+    }
+}
+
+extension MountainDetailViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y < self.maxRollUpDistance && scrollView.contentOffset.y > 0 {
+            self.mutatingTopConstraint?.constant = -scrollView.contentOffset.y
+            self.mutatingBottomConstraint?.constant = -scrollView.contentOffset.y
+        }
     }
 }
