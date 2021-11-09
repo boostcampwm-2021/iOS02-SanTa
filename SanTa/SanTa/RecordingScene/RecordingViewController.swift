@@ -139,10 +139,20 @@ class RecordingViewController: UIViewController {
     @objc private func pauseButtonAction(_ sender: UIResponder) {
         if currentState {
             self.view.backgroundColor = .black
+            var pauseConfiguration = UIButton.Configuration.plain()
+            pauseConfiguration.image = UIImage(systemName: "play.fill")
+            pauseConfiguration.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+            self.pauseButton.configuration = pauseConfiguration
             self.recordingViewModel?.pause()
+            self.currentState = false
         } else {
             self.view.backgroundColor = .systemBlue
+            var pauseConfiguration = UIButton.Configuration.plain()
+            pauseConfiguration.image = UIImage(systemName: "pause.fill")
+            pauseConfiguration.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+            self.pauseButton.configuration = pauseConfiguration
             self.recordingViewModel?.pause()
+            self.currentState = true
         }
     }
     
