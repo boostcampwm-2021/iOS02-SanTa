@@ -8,21 +8,21 @@
 import Foundation
 
 struct Records {
-    let record: [Record]
-}
-
-struct Record {
     var title: String?
-    let startTime: [Date]
-    let endTime: [Date]
-    let step: Int
-    let distance: Double
-    
-    let locations: [Location]
+    var record: [Record]
     
     mutating func configureTitle(title: String) {
         self.title = title
     }
+}
+
+struct Record {
+    let startTime: Date
+    let endTime: Date
+    let step: Int
+    let distance: Double
+    
+    let locations: [Location]
 }
 
 struct Location {
