@@ -151,7 +151,7 @@ class RecordingViewController: UIViewController {
             pauseConfiguration.image = UIImage(systemName: "pause.fill")
             pauseConfiguration.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
             self.pauseButton.configuration = pauseConfiguration
-            self.recordingViewModel?.pause()
+            self.recordingViewModel?.resume()
             self.currentState = true
         }
     }
