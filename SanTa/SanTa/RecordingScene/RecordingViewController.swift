@@ -143,6 +143,7 @@ class RecordingViewController: UIViewController {
         let stopAlert = UIAlertController(title: "기록 종료", message: "기록을 종료합니다.", preferredStyle: UIAlertController.Style.alert)
         let noneAction = UIAlertAction(title: "아니요", style: .default)
         let terminationAction = UIAlertAction(title: "종료", style: .default) { [weak self] (action) in
+            self?.view.backgroundColor = .black
             self?.coordinator?.presentRecordingTitleViewController()
             
 //            self?.recordingViewModel?.save() { [weak self] completion in
