@@ -27,7 +27,7 @@ final class RecordingModel: NSObject, ObservableObject {
     
     private var currentTime = Date() {
         didSet {
-            self.timeConverter()
+            self.timeCalculation()
             self.checkPedoMeter()
         }
     }
@@ -58,22 +58,36 @@ final class RecordingModel: NSObject, ObservableObject {
         self.locationManager.delegate = self
     }
     
-    private func timeConverter() {
+    private func timeCalculation() {
         guard let startDate = self.startDate else { return }
+        var elapsedTimeSeconds = 0
         
-        let elapsedTimeSeconds = Int(self.currentTime.timeIntervalSince(startDate))
+        elapsedTimeSeconds = Int(self.currentTime.timeIntervalSince(startDate))
+        
+        guard let records = records else {
+            self.timeConverter(elapsedTimeSeconds: elapsedTimeSeconds)
+            return
+        }
 
+        records.records.forEach {
+            elapsedTimeSeconds += Int($0.endTime.timeIntervalSince($0.startTime))
+        }
+        
+        self.timeConverter(elapsedTimeSeconds: elapsedTimeSeconds)
+    }
+    
+    private func timeConverter(elapsedTimeSeconds: Int) {
         let seconds = elapsedTimeSeconds % 60
         let minutes = (elapsedTimeSeconds / 60) % 60
         let hours = (elapsedTimeSeconds / 3600)
         
-        time = String(format: "%0.2d:%0.2d %0.2d\"", hours, minutes, seconds)
+        self.time = String(format: "%0.2d:%0.2d %0.2d\"", hours, minutes, seconds)
     }
     
     private func checkPedoMeter() {
         guard let date = self.startDate else { return }
         
-        pedoMeter.queryPedometerData(from: date, to: self.currentTime) { [weak self] data, error in
+        self.pedoMeter.queryPedometerData(from: date, to: self.currentTime) { [weak self] data, error in
             guard let activityData = data,
                   error == nil else { return }
             
@@ -102,12 +116,11 @@ final class RecordingModel: NSObject, ObservableObject {
                             locations: self.location)
         
         guard self.records != nil else {
-            
-            self.records = Records(title: nil, record: [record])
+            self.records = Records(title: nil, records: [record])
             return
         }
         
-        self.records?.record.append(record)
+        self.records?.records.append(record)
     }
     
     func pause() {

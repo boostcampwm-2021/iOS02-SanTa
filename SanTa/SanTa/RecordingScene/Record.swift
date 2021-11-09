@@ -9,7 +9,7 @@ import Foundation
 
 struct Records {
     var title: String?
-    var record: [Record]
+    var records: [Record]
     
     mutating func configureTitle(title: String) {
         self.title = title
