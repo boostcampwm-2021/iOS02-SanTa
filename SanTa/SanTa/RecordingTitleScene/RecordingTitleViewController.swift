@@ -175,6 +175,7 @@ extension RecordingTitleViewController: UITextFieldDelegate {
 
 extension RecordingTitleViewController {
     @objc func keyboardWillShow(_ sender: Notification) {
+        guard self.keyHeight == nil else { return }
         let userInfo:NSDictionary = sender.userInfo! as NSDictionary
         let keyboardFrame:NSValue = userInfo.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as! NSValue
         let keyboardRectangle = keyboardFrame.cgRectValue
@@ -188,5 +189,6 @@ extension RecordingTitleViewController {
         guard let keyHeight = keyHeight else { return }
         
         self.displayView.frame.origin.y += keyHeight
+        self.keyHeight = nil
     }
 }
