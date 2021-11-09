@@ -121,13 +121,15 @@ final class RecordingModel: NSObject, ObservableObject {
         self.timer?.resume()
         self.locationManager.startUpdatingLocation()
         self.startDate = Date()
+        self.location = [Location]()
     }
     
     func cancel() -> Records? {
         guard let records = self.records else { return nil }
     
-        timer?.cancel()
-        timer = nil
+        self.timer?.cancel()
+        self.timer = nil
+        self.locationManager.stopUpdatingLocation()
         
         return records
     }
