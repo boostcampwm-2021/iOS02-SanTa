@@ -119,8 +119,9 @@ extension MountainDetailViewController {
     }
     
     private func lowerMountainTitleView(mountainDetail: MountainDetailModel) -> UIView {
-        let empty = UIView()
-        empty.backgroundColor = .blue
-        return empty
+        let titleView = MountainDetailTitleView()
+        titleView.configure(with: mountainDetail.moutainName, distance: mountainDetail.distance)
+        titleView.backgroundColor = .white
+        return titleView
     }
 }
