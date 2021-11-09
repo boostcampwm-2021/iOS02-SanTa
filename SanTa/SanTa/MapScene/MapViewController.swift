@@ -56,8 +56,6 @@ class MapViewController: UIViewController {
     private func configureViews() {
         self.mapView = MKMapView(frame: view.bounds)
         guard let mapView = mapView else { return }
-        mapView.showsUserLocation = true
-        mapView.delegate = self
         self.view.addSubview(mapView)
         mapView.showsUserLocation = true
         mapView.showsScale = true
