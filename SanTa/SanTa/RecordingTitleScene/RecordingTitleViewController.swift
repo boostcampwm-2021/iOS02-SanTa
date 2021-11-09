@@ -80,10 +80,15 @@ class RecordingTitleViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.configureDelegate()
         self.configureNotification()
         self.configureConstraints()
         self.configureTarget()
         self.titleTextFieldUnderLine()
+    }
+    
+    private func configureDelegate() {
+        self.recordingTitleText.delegate = self
     }
     
     private func configureNotification() {
@@ -154,7 +159,17 @@ class RecordingTitleViewController: UIViewController {
         self.delegate?.didTitleWriteDone(title: "")
         self.coordinator?.dismiss()
     }
+}
 
+extension RecordingTitleViewController: UITextFieldDelegate {
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        guard let text = textField.text else { return false }
+        if text.count >= 20 && range.length == 0 && range.location >= 20 {
+            return false
+        }
+        
+        return true
+    }
 }
 
 extension RecordingTitleViewController {
