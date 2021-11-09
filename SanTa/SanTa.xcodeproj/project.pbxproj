@@ -25,6 +25,8 @@
 		5429695B273026B10070B362 /* MountainAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5429695A273026B10070B362 /* MountainAnnotationView.swift */; };
 		5429695D27302B1D0070B362 /* ClusterAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5429695C27302B1D0070B362 /* ClusterAnnotationView.swift */; };
 		54731B65272F84D300534097 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54731B64272F84D300534097 /* MapViewModel.swift */; };
+		547CDD9A27392474007CCA29 /* walkingManAnimation.gif in Resources */ = {isa = PBXBuildFile; fileRef = 547CDD9927392474007CCA29 /* walkingManAnimation.gif */; };
+		547CDD9C27392496007CCA29 /* UIImage+Gif.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547CDD9B27392496007CCA29 /* UIImage+Gif.swift */; };
 		54851282272A6AD500407F28 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54851281272A6AD500407F28 /* AppDelegate.swift */; };
 		54851284272A6AD500407F28 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54851283272A6AD500407F28 /* SceneDelegate.swift */; };
 		54851286272A6AD500407F28 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54851285272A6AD500407F28 /* MapViewController.swift */; };
@@ -64,6 +66,8 @@
 		5429695A273026B10070B362 /* MountainAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainAnnotationView.swift; sourceTree = "<group>"; };
 		5429695C27302B1D0070B362 /* ClusterAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClusterAnnotationView.swift; sourceTree = "<group>"; };
 		54731B64272F84D300534097 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
+		547CDD9927392474007CCA29 /* walkingManAnimation.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = walkingManAnimation.gif; sourceTree = "<group>"; };
+		547CDD9B27392496007CCA29 /* UIImage+Gif.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Gif.swift"; sourceTree = "<group>"; };
 		5485127E272A6AD500407F28 /* SanTa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SanTa.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		54851281272A6AD500407F28 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		54851283272A6AD500407F28 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -186,6 +190,7 @@
 				5429695A273026B10070B362 /* MountainAnnotationView.swift */,
 				5429695C27302B1D0070B362 /* ClusterAnnotationView.swift */,
 				49A3E61C2732756C0020CAC1 /* MountainAnnotation.swift */,
+				547CDD9B27392496007CCA29 /* UIImage+Gif.swift */,
 			);
 			path = MapScene;
 			sourceTree = "<group>";
@@ -206,6 +211,7 @@
 				5485128A272A6AD500407F28 /* SanTa.xcdatamodeld */,
 				5485128F272A6AD600407F28 /* LaunchScreen.storyboard */,
 				5485128D272A6AD600407F28 /* Assets.xcassets */,
+				547CDD9927392474007CCA29 /* walkingManAnimation.gif */,
 				54851292272A6AD600407F28 /* Info.plist */,
 			);
 			path = Resources;
@@ -305,6 +311,7 @@
 			files = (
 				54851291272A6AD600407F28 /* LaunchScreen.storyboard in Resources */,
 				5485128E272A6AD600407F28 /* Assets.xcassets in Resources */,
+				547CDD9A27392474007CCA29 /* walkingManAnimation.gif in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -338,6 +345,7 @@
 				984DDEC727327064003BE56B /* CoreDataRecordStorage.swift in Sources */,
 				DAB37D50273256B900EC523F /* RecordingModel.swift in Sources */,
 				54296945272FBC6E0070B362 /* AppCoordinator.swift in Sources */,
+				547CDD9C27392496007CCA29 /* UIImage+Gif.swift in Sources */,
 				5429694B272FBFCA0070B362 /* RecordingViewCoordinator.swift in Sources */,
 				985EEF65273010BD002413D9 /* ToggleOptionCell.swift in Sources */,
 				49A3E61D2732756C0020CAC1 /* MountainAnnotation.swift in Sources */,

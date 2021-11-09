@@ -157,6 +157,15 @@ class MapViewController: UIViewController {
             self.present(authAlert(), animated: false)
         }
     }
+    
+    func presentAnimation() {
+        let image = UIImage.gifImage(named: "walkingManAnimation")
+        self.startButton.setImage(image, for: .normal)
+    }
+    
+    func unpresentAnimation(){
+        self.startButton.setImage(nil, for: .normal)
+    }
 }
 
 extension MapViewController: MKMapViewDelegate {
