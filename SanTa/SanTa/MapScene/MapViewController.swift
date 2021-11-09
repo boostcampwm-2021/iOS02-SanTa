@@ -25,7 +25,6 @@ class MapViewController: UIViewController {
         self.registerAnnotationView()
         self.configureCoreLocationManager()
         self.configureViewModel()
-        //print(UserDefaults.standard.string(forKey: "지도 형식"))
     }
     
     override func viewWillAppear(_ animated: Bool) {
