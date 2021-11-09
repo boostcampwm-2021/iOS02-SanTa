@@ -140,11 +140,16 @@ class RecordingTitleViewController: UIViewController {
     }
     
     @objc private func inputButtonAction(sender: UIButton) {
+        guard let title = self.recordingTitleText.text else {
+            self.delegate?.didTitleWriteDone(title: "")
+            return
+        }
         
+        self.delegate?.didTitleWriteDone(title: title)
     }
     
     @objc private func notInputButtonButtonAction(sender: UIButton) {
-        
+        self.delegate?.didTitleWriteDone(title: "")
     }
 
 }
