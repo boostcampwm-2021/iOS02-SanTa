@@ -82,6 +82,7 @@ class RecordingTitleViewController: UIViewController {
         
         self.configureNotification()
         self.configureConstraints()
+        self.configureTarget()
         self.titleTextFieldUnderLine()
     }
     
@@ -125,12 +126,25 @@ class RecordingTitleViewController: UIViewController {
         self.view.layoutIfNeeded()
     }
     
+    private func configureTarget() {
+        self.inputButton.addTarget(self, action: #selector(inputButtonAction), for: .touchUpInside)
+        self.notInputButton.addTarget(self, action: #selector(notInputButtonButtonAction), for: .touchUpInside)
+    }
+    
     private func titleTextFieldUnderLine() {
         let border = CALayer()
         border.frame = CGRect(x: 1, y: self.recordingTitleText.frame.size.height - 1, width: self.recordingTitleText.frame.width - 1, height: 1)
         border.borderWidth = 1
         border.backgroundColor = UIColor.systemGray2.cgColor
         self.recordingTitleText.layer.addSublayer(border)
+    }
+    
+    @objc private func inputButtonAction(sender: UIButton) {
+        
+    }
+    
+    @objc private func notInputButtonButtonAction(sender: UIButton) {
+        
     }
 
 }
