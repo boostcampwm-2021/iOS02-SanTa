@@ -163,6 +163,6 @@ class RecordingViewController: UIViewController {
 
 extension RecordingViewController: RecordingViewDelegate {
     func didTitleWriteDone(title: String) {
-        
+        print(title)
     }
 }

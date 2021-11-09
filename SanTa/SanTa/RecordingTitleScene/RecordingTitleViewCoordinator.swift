@@ -27,7 +27,14 @@ class RecordingTitleViewCoordinator: Coordinator {
     }
     
     func dismiss() {
-        self.navigationController.dismiss(animated: true)
-        self.parentCoordinator?.childCoordinator.removeAll()
+        guard let recordingCoordinator = parentCoordinator as? RecordingViewCoordinator else { return }
+        
+        recordingCoordinator.recordingViewController.dismiss(animated: true)
+        self.parentCoordinator?.childCoordinator.enumerated().forEach { (index, coordinator) in
+            if coordinator is RecordingTitleViewCoordinator {
+                parentCoordinator?.childCoordinator.remove(at: index)
+                return
+            }
+        }
     }
 }
