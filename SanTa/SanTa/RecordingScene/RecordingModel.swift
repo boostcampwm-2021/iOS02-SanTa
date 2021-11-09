@@ -92,7 +92,7 @@ final class RecordingModel: NSObject, ObservableObject {
         }
     }
     
-    func suspend() {
+    func pause() {
         timer?.suspend()
     }
     

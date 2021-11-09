@@ -136,7 +136,7 @@ class RecordingViewController: UIViewController {
     }
     
     @objc private func pauseButtonAction(_ sender: UIResponder) {
-        
+        self.recordingViewModel?.pause()
     }
     
     @objc private func stopButtonAction(_ sender: UIResponder) {
