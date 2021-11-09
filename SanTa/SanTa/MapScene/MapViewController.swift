@@ -136,9 +136,26 @@ class MapViewController: UIViewController {
         let region = MKCoordinateRegion(center: coordinate, span: span)
         mapView.setRegion(region, animated: true)
     }
+    
+    private func authAlert() -> UIAlertController {
+        let alert = UIAlertController(title: "위치정보 활성화", message: "지도에 현재 위치를 표시할 수 있도록 위치정보를 활성화해주세요", preferredStyle: .alert)
+        let cancel = UIAlertAction(title: "아니요", style: .cancel)
+        let confirm = UIAlertAction(title: "활성화", style: .default) { _ in
+            guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
+            UIApplication.shared.open(url)
+        }
+        alert.addAction(cancel)
+        alert.addAction(confirm)
+        return alert
+    }
 
     @objc private func presentRecordingViewController() {
-        coordinator?.presentRecordingViewController()
+        switch self.manager.authorizationStatus{
+        case .authorizedWhenInUse, .authorizedAlways:
+            self.coordinator?.presentRecordingViewController()
+        default:
+            self.present(authAlert(), animated: false)
+        }
     }
 }
 
