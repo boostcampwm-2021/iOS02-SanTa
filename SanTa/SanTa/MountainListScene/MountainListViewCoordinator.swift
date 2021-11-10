@@ -9,7 +9,7 @@ import UIKit
 
 class MountainListViewCoordinator: Coordinator {
     weak var parentCoordinator: Coordinator?
-    var childCoordinator: [Coordinator] = []
+    var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
 
     init() {

@@ -9,7 +9,7 @@ import UIKit
 
 class SettingsViewCoordinator: Coordinator {
     weak var parentCoordinator: Coordinator?
-    var childCoordinator: [Coordinator] = []
+    var childCoordinators: [Coordinator] = []
 
     func start() {
         

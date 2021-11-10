@@ -6,35 +6,43 @@
 //
 
 import UIKit
+import CoreLocation
 
 class MapViewCoordinator: Coordinator {
     weak var parentCoordinator: Coordinator?
     weak var mapViewController: MapViewController?
     var navigationController: UINavigationController = UINavigationController()
-    var childCoordinator: [Coordinator] = []
+    var childCoordinators: [Coordinator] = []
     
     func start() {
     }
-
+    
     func startPush() -> UINavigationController {
         let mapViewController = MapViewController(viewModel: injectDependencies())
         mapViewController.coordinator = self
         self.mapViewController = mapViewController
         self.navigationController.setViewControllers([mapViewController], animated: false)
-
+        
         return navigationController
     }
 }
 
 extension MapViewCoordinator {
     func presentRecordingViewController() {
-        if self.childCoordinator.isEmpty {
+        if self.childCoordinators.isEmpty {
             let recordingViewCoordinator = RecordingViewCoordinator(navigationController: self.navigationController)
-            self.childCoordinator.append(recordingViewCoordinator)
+            self.childCoordinators.append(recordingViewCoordinator)
             recordingViewCoordinator.parentCoordinator = self
         }
+        childCoordinators.first?.start()
+    }
+    
+    func presentMountainDetailViewController(mountainAnnotation: MountainAnnotation, location: CLLocation?) {
+        let mountainDetailViewCoordinator = MountainDetailViewCoordinator(navigationController: self.navigationController, mountainAnnotation: mountainAnnotation, location: location)
+        mountainDetailViewCoordinator.parentCoordinator = self
+        self.childCoordinators.append(mountainDetailViewCoordinator)
         
-        childCoordinator.first?.start()
+        mountainDetailViewCoordinator.start()
     }
     
     func recordingViewDidHide(){
