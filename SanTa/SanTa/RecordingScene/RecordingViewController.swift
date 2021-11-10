@@ -8,6 +8,10 @@
 import UIKit
 import Combine
 
+protocol RecordingViewDelegate: AnyObject {
+    func didTitleWriteDone(title: String)
+}
+
 class RecordingViewController: UIViewController {
     weak var coordinator: RecordingViewCoordinator?
     
@@ -78,6 +82,7 @@ class RecordingViewController: UIViewController {
     
     private var recordingViewModel: RecordingViewModel?
     private var subscriptions = Set<AnyCancellable>()
+    private var currentState = true
     
     convenience init(viewModel: RecordingViewModel) {
         self.init()
@@ -132,18 +137,32 @@ class RecordingViewController: UIViewController {
     }
     
     @objc private func pauseButtonAction(_ sender: UIResponder) {
-        
+        if currentState {
+            self.view.backgroundColor = .black
+            var pauseConfiguration = UIButton.Configuration.plain()
+            pauseConfiguration.image = UIImage(systemName: "play.fill")
+            pauseConfiguration.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+            self.pauseButton.configuration = pauseConfiguration
+            self.recordingViewModel?.pause()
+            self.currentState = false
+        } else {
+            self.view.backgroundColor = .systemBlue
+            var pauseConfiguration = UIButton.Configuration.plain()
+            pauseConfiguration.image = UIImage(systemName: "pause.fill")
+            pauseConfiguration.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+            self.pauseButton.configuration = pauseConfiguration
+            self.recordingViewModel?.resume()
+            self.currentState = true
+        }
     }
     
     @objc private func stopButtonAction(_ sender: UIResponder) {
         let stopAlert = UIAlertController(title: "기록 종료", message: "기록을 종료합니다.", preferredStyle: UIAlertController.Style.alert)
         let noneAction = UIAlertAction(title: "아니요", style: .default)
         let terminationAction = UIAlertAction(title: "종료", style: .default) { [weak self] (action) in
-            self?.recordingViewModel?.save() { [weak self] completion in
-                DispatchQueue.main.async {
-                    self?.coordinator?.dismiss()
-                }
-            }
+            self?.view.backgroundColor = .black
+            self?.recordingViewModel?.pause()
+            self?.coordinator?.presentRecordingTitleViewController()
         }
         stopAlert.addAction(noneAction)
         stopAlert.addAction(terminationAction)
@@ -152,5 +171,16 @@ class RecordingViewController: UIViewController {
     
     @objc private func locationButtonAction(_ sender: UIResponder) {
         self.coordinator?.hide()
+    }
+}
+
+extension RecordingViewController: RecordingViewDelegate {
+    func didTitleWriteDone(title: String) {
+//        self.recordingViewModel?.save(title: title) { [weak self] completion in
+//            DispatchQueue.main.async {
+//                self?.coordinator?.dismiss()
+//            }
+//        }
+        self.coordinator?.dismiss()
     }
 }

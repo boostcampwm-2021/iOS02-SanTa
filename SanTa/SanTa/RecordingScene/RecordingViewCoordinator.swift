@@ -11,7 +11,7 @@ import UIKit
 class RecordingViewCoordinator: Coordinator {
     weak var parentCoordinator: Coordinator?
     var navigationController: UINavigationController
-    var childCoordinator: [Coordinator] = []
+    var childCoordinators: [Coordinator] = []
     var recordingViewController: RecordingViewController
     
     init(navigationController: UINavigationController) {
@@ -22,7 +22,7 @@ class RecordingViewCoordinator: Coordinator {
     }
 
     func start() {
-        recordingViewController.modalPresentationStyle = .fullScreen
+        self.recordingViewController.modalPresentationStyle = .fullScreen
         self.navigationController.present(recordingViewController, animated: true)
     }
     
@@ -40,3 +40,12 @@ class RecordingViewCoordinator: Coordinator {
     }
 }
 
+extension RecordingViewCoordinator {
+    func presentRecordingTitleViewController() {
+        let recordingTitleViewCoordinator = RecordingTitleViewCoordinator(navigationController: self.navigationController, delegate: self.recordingViewController)
+        self.childCoordinator.append(recordingTitleViewCoordinator)
+        recordingTitleViewCoordinator.parentCoordinator = self
+        
+        recordingTitleViewCoordinator.start()
+    }
+}

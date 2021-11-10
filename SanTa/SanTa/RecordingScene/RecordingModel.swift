@@ -19,21 +19,22 @@ final class RecordingModel: NSObject, ObservableObject {
     private let pedoMeter = CMPedometer()
     private var locationManager = CLLocationManager()
     private var timer: DispatchSourceTimer?
-    private var date: Date?
+    private var records: Records?
+    private var startDate: Date?
     private var currentWalk = 0
     private var currentKilo: Double = 0
     private var location = [Location]()
     
     private var currentTime = Date() {
         didSet {
-            self.timeConverter()
+            self.timeCalculation()
             self.checkPedoMeter()
         }
     }
     
     override init() {
         super.init()
-        self.date = Date()
+        self.startDate = Date()
         self.configureTimer()
         self.configureLocationManager()
     }
@@ -52,66 +53,131 @@ final class RecordingModel: NSObject, ObservableObject {
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
         self.locationManager.startUpdatingLocation()
         self.locationManager.allowsBackgroundLocationUpdates = true
-        self.locationManager.pausesLocationUpdatesAutomatically = true
+        self.locationManager.pausesLocationUpdatesAutomatically = false
         self.locationManager.showsBackgroundLocationIndicator = true
         self.locationManager.delegate = self
     }
     
-    private func timeConverter() {
-        guard let startDate = self.date else { return }
+    private func timeCalculation() {
+        guard let startDate = self.startDate else { return }
+        var elapsedTimeSeconds = 0
         
-        let elapsedTimeSeconds = Int(self.currentTime.timeIntervalSince(startDate))
+        elapsedTimeSeconds = Int(self.currentTime.timeIntervalSince(startDate))
+        
+        guard let records = records else {
+            self.timeConverter(elapsedTimeSeconds: elapsedTimeSeconds)
+            return
+        }
 
+        records.records.forEach {
+            elapsedTimeSeconds += Int($0.endTime.timeIntervalSince($0.startTime))
+        }
+        
+        self.timeConverter(elapsedTimeSeconds: elapsedTimeSeconds)
+    }
+    
+    private func timeConverter(elapsedTimeSeconds: Int) {
         let seconds = elapsedTimeSeconds % 60
         let minutes = (elapsedTimeSeconds / 60) % 60
         let hours = (elapsedTimeSeconds / 3600)
         
-        time = String(format: "%0.2d:%0.2d %0.2d\"", hours, minutes, seconds)
+        self.time = String(format: "%0.2d:%0.2d %0.2d\"", hours, minutes, seconds)
     }
     
     private func checkPedoMeter() {
-        guard let date = self.date else { return }
+        guard let date = self.startDate else { return }
+        let dispatchGroup = DispatchGroup()
         
-        pedoMeter.queryPedometerData(from: date, to: Date()) { [weak self] data, error in
+        self.currentWalk = 0
+        self.currentKilo = 0
+        
+        dispatchGroup.enter()
+        self.pedoMeter.queryPedometerData(from: date, to: self.currentTime) { [weak self] data, error in
             guard let activityData = data,
                   error == nil else { return }
             
-            self?.walk = "\(activityData.numberOfSteps)"
+            let walk = "\(activityData.numberOfSteps)"
             
-            guard let walk = self?.walk,
-                let walkNumber = Int(walk) else { return }
+            guard let walkNumber = Int(walk) else { return }
             
-            self?.currentWalk = walkNumber
+            self?.currentWalk += walkNumber
             
             guard let distance = activityData.distance else { return }
             let transformatKilometer = Double(truncating: distance) / 1000
-            self?.currentKilo = transformatKilometer
-            let distanceString = String(format: "%.2f", transformatKilometer)
+            self?.currentKilo += transformatKilometer
+            dispatchGroup.leave()
+        }
+        
+        dispatchGroup.notify(queue: .main) { [weak self] in
+            guard let walk = self?.currentWalk else { return }
+            
+            self?.walk = "\(walk)"
+            guard let currentKile = self?.currentKilo else { return }
+            let distanceString = String(format: "%.2f", currentKile)
             
             self?.kilometer = "\(distanceString)"
         }
+        
+        guard let records = records else { return }
+        
+        records.records.forEach {
+            dispatchGroup.enter()
+            self.pedoMeter.queryPedometerData(from: $0.startTime, to: $0.endTime) { [weak self] data, error in
+                guard let activityData = data,
+                      error == nil else { return }
+                
+                let walk = "\(activityData.numberOfSteps)"
+                
+                guard let walkNumber = Int(walk) else { return }
+                
+                self?.currentWalk += walkNumber
+                
+                guard let distance = activityData.distance else { return }
+                let transformatKilometer = Double(truncating: distance) / 1000
+                self?.currentKilo += transformatKilometer
+                dispatchGroup.leave()
+            }
+        }
     }
     
-    func suspend() {
-        timer?.suspend()
+    private func appendRecord() {
+        guard let startdate = self.startDate else { return }
+        let record = Record(startTime: startdate,
+                            endTime: self.currentTime,
+                            step: self.currentWalk,
+                            distance: self.currentKilo,
+                            locations: self.location)
+        
+        guard self.records != nil else {
+            self.records = Records(title: nil, records: [record])
+            return
+        }
+        
+        self.records?.records.append(record)
+    }
+    
+    func pause() {
+        self.appendRecord()
+        self.timer?.suspend()
+        self.locationManager.stopUpdatingLocation()
+        self.startDate = nil
     }
     
     func resume() {
-        timer?.resume()
+        self.timer?.resume()
+        self.locationManager.startUpdatingLocation()
+        self.startDate = Date()
+        self.location = [Location]()
     }
     
-    func cancel() -> Record? {
-        guard let date = self.date else { return nil }
+    func cancel() -> Records? {
+        guard let records = self.records else { return nil }
+    
+        self.timer?.cancel()
+        self.timer = nil
+        self.locationManager.stopUpdatingLocation()
         
-        let resultRecord = Record(startTime: date,
-                                  endTime: self.currentTime,
-                                  step: self.currentWalk,
-                                  distance: self.currentKilo,
-                                  locations: self.location)
-        timer?.cancel()
-        timer = nil
-        
-        return resultRecord
+        return records
     }
 }
 
