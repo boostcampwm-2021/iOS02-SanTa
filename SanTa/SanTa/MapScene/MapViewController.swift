@@ -6,6 +6,11 @@
 //
 import MapKit
 
+protocol Animatable: AnyObject {
+    func shouldAnimate()
+    func shouldStopAnimate()
+}
+
 class MapViewController: UIViewController {
     weak var coordinator: MapViewCoordinator?
     private var mapView: MKMapView?
@@ -159,13 +164,15 @@ class MapViewController: UIViewController {
             self.present(authAlert(), animated: false)
         }
     }
-    
-    func presentAnimation() {
+}
+
+extension MapViewController: Animatable {
+    func shouldAnimate() {
         let image = UIImage.gifImage(named: "walkingManAnimation")
         self.startButton.setImage(image, for: .normal)
     }
     
-    func unpresentAnimation(){
+    func shouldStopAnimate() {
         self.startButton.setImage(nil, for: .normal)
     }
 }
