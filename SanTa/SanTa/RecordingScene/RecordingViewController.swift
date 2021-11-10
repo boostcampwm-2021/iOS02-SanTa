@@ -8,6 +8,10 @@
 import UIKit
 import Combine
 
+protocol RecordingViewDelegate: AnyObject {
+    func didTitleWriteDone(title: String)
+}
+
 class RecordingViewController: UIViewController {
     weak var coordinator: RecordingViewCoordinator?
     
@@ -139,11 +143,8 @@ class RecordingViewController: UIViewController {
         let stopAlert = UIAlertController(title: "기록 종료", message: "기록을 종료합니다.", preferredStyle: UIAlertController.Style.alert)
         let noneAction = UIAlertAction(title: "아니요", style: .default)
         let terminationAction = UIAlertAction(title: "종료", style: .default) { [weak self] (action) in
-            self?.recordingViewModel?.save() { [weak self] completion in
-                DispatchQueue.main.async {
-                    self?.coordinator?.dismiss()
-                }
-            }
+            self?.view.backgroundColor = .black
+            self?.coordinator?.presentRecordingTitleViewController()
         }
         stopAlert.addAction(noneAction)
         stopAlert.addAction(terminationAction)
@@ -152,5 +153,15 @@ class RecordingViewController: UIViewController {
     
     @objc private func locationButtonAction(_ sender: UIResponder) {
         self.coordinator?.hide()
+    }
+}
+
+extension RecordingViewController: RecordingViewDelegate {
+    func didTitleWriteDone(title: String) {
+        self.recordingViewModel?.save(title: title) { [weak self] completion in
+            DispatchQueue.main.async {
+                self?.coordinator?.dismiss()
+            }
+        }
     }
 }
