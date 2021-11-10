@@ -9,7 +9,7 @@ import Foundation
 import CoreData
 
 protocol RecordsStorage {
-    func save(record: Record,
+    func save(record: Records,
               completion: @escaping (Result<Records, Error>) -> Void)
 }
 
@@ -21,32 +21,32 @@ final class CoreDataRecordStorage: RecordsStorage {
        self.coreDataStorage = coreDataStorage
     }
     
-    func save(record: Record, completion: @escaping (Result<Records, Error>) -> Void) {
+    func save(record: Records, completion: @escaping (Result<Records, Error>) -> Void) {
         self.coreDataStorage.performBackgroundTask { context in
             let recordObject = NSEntityDescription.insertNewObject(forEntityName: "RecordEntity",
                                                                    into: context)
 //            recordObject.setValue(record.time, forKey: "time")
-            recordObject.setValue(record.distance, forKey: "distance")
-            recordObject.setValue(record.step, forKey: "step")
+//            recordObject.setValue(record.distance, forKey: "distance")
+//            recordObject.setValue(record.step, forKey: "step")
             
-            record.locations.forEach {
-                let locationObject = NSEntityDescription.insertNewObject(forEntityName: "LocationEntity",
-                                                                         into: context) as? LocationEntityMO
-                locationObject?.altitude = $0.altitude
-                locationObject?.latitude = $0.latitude
-                locationObject?.longitude = $0.longitude
-                
-                guard let locationObject = locationObject else { return }
-                (recordObject as? RecordEntityMO)?.addToLocations(locationObject)
+//            record.locations.forEach {
+//                let locationObject = NSEntityDescription.insertNewObject(forEntityName: "LocationEntity",
+//                                                                         into: context) as? LocationEntityMO
+//                locationObject?.altitude = $0.altitude
+//                locationObject?.latitude = $0.latitude
+//                locationObject?.longitude = $0.longitude
+//
+//                guard let locationObject = locationObject else { return }
+//                (recordObject as? RecordEntityMO)?.addToLocations(locationObject)
             }
             
-            do {
-                try context.save()
+//            do {
+//                try context.save()
 //                completion(.success(record))
-            } catch {
-                completion(.failure(error))
-            }
-        }
+//            } catch {
+//                completion(.failure(error))
+//            }
+//        }
     }
     
     

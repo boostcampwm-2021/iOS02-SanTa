@@ -8,7 +8,7 @@
 import Foundation
 
 protocol RecordRepository {
-    func save(record: Record,
+    func save(record: Records,
               completion: @escaping (Result<Records, Error>) -> Void)
 }
 
@@ -20,7 +20,7 @@ final class DefaultRecordRepository: RecordRepository {
         self.recordStorage = recordStorage
     }
     
-    func save(record: Record, completion: @escaping (Result<Records, Error>) -> Void) {
+    func save(record: Records, completion: @escaping (Result<Records, Error>) -> Void) {
         self.recordStorage.save(record: record, completion: completion)
     }
 }
