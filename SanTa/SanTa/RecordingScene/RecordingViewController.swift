@@ -172,15 +172,19 @@ class RecordingViewController: UIViewController {
     @objc private func locationButtonAction(_ sender: UIResponder) {
         self.coordinator?.hide()
     }
+    
+    deinit {
+        print("😇RecordingViewController is deinit \(Date())!!😇")
+    }
 }
 
 extension RecordingViewController: RecordingViewDelegate {
     func didTitleWriteDone(title: String) {
-//        self.recordingViewModel?.save(title: title) { [weak self] completion in
-//            DispatchQueue.main.async {
-//                self?.coordinator?.dismiss()
-//            }
-//        }
+        self.recordingViewModel?.save(title: title) { [weak self] completion in
+            DispatchQueue.main.async {
+                self?.coordinator?.dismiss()
+            }
+        }
         self.coordinator?.dismiss()
     }
 }
