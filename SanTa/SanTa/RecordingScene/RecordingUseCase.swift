@@ -37,6 +37,6 @@ final class DefaultRecordingUseCase: RecordingUseCase, ObservableObject {
         guard var records = recording.cancel() else { return }
         
         records.configureTitle(title: title)
-//        self.recordRepository.save(record: recording.cancel(), completion: completion)
+        self.recordRepository.save(records: records, completion: completion)
     }
 }

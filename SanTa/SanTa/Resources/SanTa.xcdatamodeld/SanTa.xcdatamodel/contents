@@ -8,18 +8,19 @@
     </entity>
     <entity name="RecordEntity" representedClassName=".RecordEntityMO" syncable="YES" codeGenerationType="class">
         <attribute name="distance" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="endTime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="startTime" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="step" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="time" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="locations" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="LocationEntity" inverseName="record" inverseEntity="LocationEntity"/>
         <relationship name="records" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RecordsEntity" inverseName="records" inverseEntity="RecordsEntity"/>
     </entity>
-    <entity name="RecordsEntity" representedClassName="RecordsEntity" syncable="YES" codeGenerationType="class">
+    <entity name="RecordsEntity" representedClassName=".RecordsEntityMO" syncable="YES" codeGenerationType="class">
         <attribute name="title" optional="YES" attributeType="String"/>
         <relationship name="records" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RecordEntity" inverseName="records" inverseEntity="RecordEntity"/>
     </entity>
     <elements>
         <element name="LocationEntity" positionX="-50350.43591308594" positionY="-6695.536254882812" width="128" height="103"/>
-        <element name="RecordEntity" positionX="-50540.45288085938" positionY="-6705.159729003906" width="128" height="118"/>
+        <element name="RecordEntity" positionX="-50540.45288085938" positionY="-6705.159729003906" width="128" height="133"/>
         <element name="RecordsEntity" positionX="-50725.08505249023" positionY="-6673.378601074219" width="128" height="73"/>
     </elements>
 </model>
