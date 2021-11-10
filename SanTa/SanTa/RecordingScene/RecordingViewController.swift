@@ -181,12 +181,25 @@ class RecordingViewController: UIViewController {
 extension RecordingViewController: RecordingViewDelegate {
     func didTitleWriteDone(title: String) {
         self.recordingViewModel?.save(title: title) { [weak self] completion in
-            DispatchQueue.main.async {
-                switch completion {
-                case .success(_):
+            switch completion {
+            case .success(_):
+                DispatchQueue.main.async {
                     self?.coordinator?.dismiss()
-                case .failure(_):
-                    break
+                }
+            case .failure(_):
+                let resultAlert = UIAlertController(title: "저장 실패", message: "데이터 저장에 실패했습니다.", preferredStyle: UIAlertController.Style.alert)
+                let restoreAction = UIAlertAction(title: "다시 저장하기", style: .default) { [weak self] (action) in
+                    self?.didTitleWriteDone(title: title)
+                }
+                let endAction = UIAlertAction(title: "저장하지 않기", style: .default) { [weak self] (action) in
+                    DispatchQueue.main.async {
+                        self?.coordinator?.dismiss()
+                    }
+                }
+                resultAlert.addAction(restoreAction)
+                resultAlert.addAction(endAction)
+                DispatchQueue.main.async {
+                    self?.present(resultAlert, animated: true, completion: nil)
                 }
             }
         }
