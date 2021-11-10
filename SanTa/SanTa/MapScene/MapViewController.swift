@@ -15,6 +15,7 @@ class MapViewController: UIViewController {
     weak var coordinator: MapViewCoordinator?
     private var mapView: MKMapView?
     private var startButton = UIButton()
+    private var addAnnotationButton = UIButton()
     private var manager = CLLocationManager()
     private var userTrackingButton = MKUserTrackingButton()
     private var viewModel: MapViewModel?
@@ -122,6 +123,29 @@ class MapViewController: UIViewController {
             self.userTrackingButton.centerYAnchor.constraint(equalTo: self.startButton.centerYAnchor)
         ]
         NSLayoutConstraint.activate(userTrackingButtonConstraints)
+        
+        self.view.addSubview(self.addAnnotationButton)
+        self.addAnnotationButton.isHidden = true
+        self.addAnnotationButton.translatesAutoresizingMaskIntoConstraints = false
+        self.addAnnotationButton.backgroundColor = UIColor(named: "SantaColor")
+        self.addAnnotationButton.setTitle("이곳을 알고 계시나요?", for: .normal)
+        self.addAnnotationButton.setTitleColor(.white, for: .normal)
+        self.addAnnotationButton.titleLabel?.font = .boldSystemFont(ofSize: 15)
+        self.addAnnotationButton.layer.cornerRadius = 15
+        self.addAnnotationButton.layer.shadowColor = UIColor.gray.cgColor
+        self.addAnnotationButton.layer.shadowOpacity = 1
+        self.addAnnotationButton.layer.shadowRadius = 3
+        self.addAnnotationButton.layer.shadowOffset = CGSize(width: 0, height: 2)
+        let addAnnotationButtonConstraints = [
+            self.addAnnotationButton.widthAnchor.constraint(equalToConstant: 150),
+            self.addAnnotationButton.heightAnchor.constraint(equalToConstant: 30),
+            self.addAnnotationButton.bottomAnchor.constraint(
+                equalTo: startButton.topAnchor,
+                constant: -10
+            ),
+            self.addAnnotationButton.centerXAnchor.constraint(equalTo: self.startButton.centerXAnchor)
+        ]
+        NSLayoutConstraint.activate(addAnnotationButtonConstraints)
     }
     
     private func registerAnnotationView() {
@@ -199,6 +223,36 @@ extension MapViewController: MKMapViewDelegate {
             reuseIdentifier: MountainAnnotationView.ReuseID
         )
     }
+
+    func mapView(_ mapView: MKMapView, didChange mode: MKUserTrackingMode, animated: Bool) {
+        switch mode {
+        case .follow, .followWithHeading:
+            if addAnnotationButton.isHidden {
+                self.addAnnotationButton.isHidden = false
+                self.addAnnotationButton.alpha = 0
+                UIView.transition(
+                    with: addAnnotationButton,
+                    duration: 0.5,
+                    options: [],
+                    animations: { [weak self] in
+                        self?.addAnnotationButton.alpha = 1
+                    }
+                )
+            }
+        default:
+            UIView.transition(
+                with: addAnnotationButton,
+                duration: 0.5,
+                options: [],
+                animations: { [weak self] in
+                    self?.addAnnotationButton.alpha = 0
+                }, completion: { [weak self] _ in
+                    self?.addAnnotationButton.isHidden = true
+                }
+            )
+        }
+    }
+  
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         guard let annotation = view.annotation as? MountainAnnotation else { return }
         
