@@ -14,10 +14,23 @@ class RecordingViewCoordinator: Coordinator {
     var childCoordinators: [Coordinator] = []
     var recordingViewController: RecordingViewController
     
-    init(navigationController: UINavigationController) {
+    private let coreDataStorage: CoreDataStorage
+    
+    init(navigationController: UINavigationController, coreDataStorage: CoreDataStorage) {
         self.navigationController = navigationController
-        let viewModel = RecordingViewModel(recordingUseCase: DefaultRecordingUseCase(recordRepository: DefaultRecordRepository(recordStorage: CoreDataRecordStorage(coreDataStorage: CoreDataStorage())), recordingModel: RecordingModel()))
-        self.recordingViewController = RecordingViewController(viewModel: viewModel)
+        self.coreDataStorage = coreDataStorage
+        self.recordingViewController = RecordingViewController(
+            viewModel: RecordingViewModel(
+                recordingUseCase: DefaultRecordingUseCase(
+                    recordRepository: DefaultRecordRepository(
+                        recordStorage: CoreDataRecordStorage(
+                            coreDataStorage: self.coreDataStorage
+                        )
+                    ),
+                    recordingModel: RecordingModel()
+                )
+            )
+        )
         self.recordingViewController.coordinator = self
     }
 

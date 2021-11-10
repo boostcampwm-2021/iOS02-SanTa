@@ -18,6 +18,9 @@ class AppCoordinator: Coordinator {
     let window: UIWindow?
 
     private var firstViewController: UIViewController!
+    private let coreDataStorage = CoreDataStorage()
+    private let mountainExtractor = MountainExtractor()
+    private let userDefaultsStorage = DefaultUserDefaultsStorage()
 
     init(_ window: UIWindow?) {
         self.window = window
@@ -25,7 +28,7 @@ class AppCoordinator: Coordinator {
     }
 
     func start() {
-        DefaultUserDefaultsStorage.shared.makeFirstData()
+        self.userDefaultsStorage.makeFirstData()
         let tabBarController = self.setTabBarController()
         self.window?.rootViewController = tabBarController
     }
@@ -39,7 +42,9 @@ class AppCoordinator: Coordinator {
         let thirdItem = UITabBarItem(title: "목록", image: nil, tag: 2)
         let fourthItem = UITabBarItem(title: "설정", image: nil, tag: 3)
         
-        let mapViewCoordinator = MapViewCoordinator()
+        let mapViewCoordinator = MapViewCoordinator(userDefaultsStorage: self.userDefaultsStorage,
+                                                    mountainExtractor: self.mountainExtractor,
+                                                    coreDataStorage: self.coreDataStorage)
         mapViewCoordinator.parentCoordinator = self
         childCoordinators.append(mapViewCoordinator)
         let mapViewController = mapViewCoordinator.startPush()
@@ -60,7 +65,7 @@ class AppCoordinator: Coordinator {
         mountainListViewController.tabBarItem = thirdItem
         mountainListViewController.tabBarItem.image = .init(systemName: "text.below.photo")
         
-        let settingsViewCoordinator = SettingsViewCoordinator()
+        let settingsViewCoordinator = SettingsViewCoordinator(userDefaultsStorage: self.userDefaultsStorage)
         settingsViewCoordinator.parentCoordinator = self
         childCoordinators.append(settingsViewCoordinator)
         let settingsViewController = settingsViewCoordinator.startPush()
