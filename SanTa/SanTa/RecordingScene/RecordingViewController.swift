@@ -182,8 +182,12 @@ extension RecordingViewController: RecordingViewDelegate {
     func didTitleWriteDone(title: String) {
         self.recordingViewModel?.save(title: title) { [weak self] completion in
             DispatchQueue.main.async {
-                print(completion)
-                self?.coordinator?.dismiss()
+                switch completion {
+                case .success(_):
+                    self?.coordinator?.dismiss()
+                case .failure(_):
+                    break
+                }
             }
         }
     }
