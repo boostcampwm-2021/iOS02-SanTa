@@ -33,6 +33,7 @@ class MapViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        viewModel?.viewWillAppear()
         switch self.manager.authorizationStatus {
         case .authorizedAlways, .authorizedWhenInUse:
             self.userTrackingButton.isHidden = false
@@ -43,6 +44,7 @@ class MapViewController: UIViewController {
     
     private func configureViewModel() {
         self.viewModel?.markersShouldUpdate = { self.configureMarkers() }
+        self.viewModel?.mapShouldUpdate = { self.configureMap() }
         self.viewModel?.viewDidLoad()
     }
     
@@ -57,6 +59,18 @@ class MapViewController: UIViewController {
                 region: mountainEntity.mountain.mountainRegion
             )
             self.mapView?.addAnnotation(mountainAnnotation)
+        }
+    }
+    
+    private func configureMap() {
+        guard let map = viewModel?.map else { return }
+        switch map {
+        case .infomation:
+            mapView?.mapType = .mutedStandard
+        case .normal:
+            mapView?.mapType = .standard
+        case .satellite:
+            mapView?.mapType = .satellite
         }
     }
     
