@@ -35,10 +35,9 @@ final class DefaultRecordingUseCase: RecordingUseCase, ObservableObject {
     
     func save(title: String, completion: @escaping (Result<Records, CoreDataError>) -> Void) {
         guard var records = recording.cancel() else {
-//            completion(.failure(error))
+            completion(.failure(CoreDataError.coreDataError))
             return
         }
-        
         records.configureTitle(title: title)
         self.recordRepository.save(records: records, completion: completion)
     }

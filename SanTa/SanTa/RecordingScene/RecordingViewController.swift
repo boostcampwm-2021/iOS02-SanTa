@@ -191,7 +191,7 @@ extension RecordingViewController: RecordingViewDelegate {
                 let restoreAction = UIAlertAction(title: "다시 저장하기", style: .default) { [weak self] (action) in
                     self?.didTitleWriteDone(title: title)
                 }
-                let endAction = UIAlertAction(title: "저장하지 않기", style: .default) { [weak self] (action) in
+                let endAction = UIAlertAction(title: "저장하지 않기", style: .destructive) { [weak self] (action) in
                     DispatchQueue.main.async {
                         self?.coordinator?.dismiss()
                     }
