@@ -25,7 +25,7 @@ final class CoreDataRecordStorage: RecordsStorage {
         self.coreDataStorage.performBackgroundTask { context in
             let recordObject = NSEntityDescription.insertNewObject(forEntityName: "RecordEntity",
                                                                    into: context)
-            recordObject.setValue(record.time, forKey: "time")
+//            recordObject.setValue(record.time, forKey: "time")
             recordObject.setValue(record.distance, forKey: "distance")
             recordObject.setValue(record.step, forKey: "step")
             

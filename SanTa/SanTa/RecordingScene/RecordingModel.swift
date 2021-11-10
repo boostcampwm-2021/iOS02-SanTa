@@ -24,7 +24,7 @@ final class RecordingModel: NSObject, ObservableObject {
     private var currentKilo: Double = 0
     private var location = [Location]()
     
-    private var currentTime = 0 {
+    private var currentTime = Date() {
         didSet {
             self.timeConverter()
             self.checkPedoMeter()
@@ -42,22 +42,29 @@ final class RecordingModel: NSObject, ObservableObject {
         self.timer = DispatchSource.makeTimerSource(flags: [], queue: DispatchQueue.main)
         self.timer?.schedule(deadline: .now(), repeating: 1)
         self.timer?.setEventHandler(handler: { [weak self] in
-            self?.currentTime += 1
+            self?.currentTime = Date()
         })
         
         self.resume()
     }
     
     private func configureLocationManager() {
-        self.locationManager.requestWhenInUseAuthorization()
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
         self.locationManager.startUpdatingLocation()
+        self.locationManager.allowsBackgroundLocationUpdates = true
+        self.locationManager.pausesLocationUpdatesAutomatically = true
+        self.locationManager.showsBackgroundLocationIndicator = true
         self.locationManager.delegate = self
     }
     
     private func timeConverter() {
-        let seconds = currentTime % 60
-        let minutes = (currentTime / 60) % 60
-        let hours = (currentTime / 3600)
+        guard let startDate = self.date else { return }
+        
+        let elapsedTimeSeconds = Int(self.currentTime.timeIntervalSince(startDate))
+
+        let seconds = elapsedTimeSeconds % 60
+        let minutes = (elapsedTimeSeconds / 60) % 60
+        let hours = (elapsedTimeSeconds / 3600)
         
         time = String(format: "%0.2d:%0.2d %0.2d\"", hours, minutes, seconds)
     }
@@ -93,8 +100,11 @@ final class RecordingModel: NSObject, ObservableObject {
         timer?.resume()
     }
     
-    func cancel() -> Record {
-        let resultRecord = Record(time: self.currentTime,
+    func cancel() -> Record? {
+        guard let date = self.date else { return nil }
+        
+        let resultRecord = Record(startTime: date,
+                                  endTime: self.currentTime,
                                   step: self.currentWalk,
                                   distance: self.currentKilo,
                                   locations: self.location)

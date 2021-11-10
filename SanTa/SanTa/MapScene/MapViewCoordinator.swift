@@ -10,6 +10,7 @@ import CoreLocation
 
 class MapViewCoordinator: Coordinator {
     weak var parentCoordinator: Coordinator?
+    weak var mapViewController: MapViewController?
     var navigationController: UINavigationController = UINavigationController()
     var childCoordinators: [Coordinator] = []
     
@@ -19,6 +20,7 @@ class MapViewCoordinator: Coordinator {
     func startPush() -> UINavigationController {
         let mapViewController = MapViewController(viewModel: injectDependencies())
         mapViewController.coordinator = self
+        self.mapViewController = mapViewController
         self.navigationController.setViewControllers([mapViewController], animated: false)
         
         return navigationController
@@ -41,6 +43,14 @@ extension MapViewCoordinator {
         self.childCoordinators.append(mountainDetailViewCoordinator)
         
         mountainDetailViewCoordinator.start()
+    }
+    
+    func recordingViewDidHide(){
+        self.mapViewController?.presentAnimation()
+    }
+    
+    func recordingViewDidDismiss(){
+        self.mapViewController?.unpresentAnimation()
     }
     
     private func injectDependencies() -> MapViewModel {
