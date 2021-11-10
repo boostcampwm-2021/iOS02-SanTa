@@ -28,10 +28,10 @@ class MapViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        if manager.authorizationStatus == .authorizedAlways ||
-            manager.authorizationStatus == .authorizedWhenInUse {
+        switch self.manager.authorizationStatus {
+        case .authorizedAlways, .authorizedWhenInUse:
             userTrackingButton.isHidden = false
-        } else {
+        default:
             userTrackingButton.isHidden = true
         }
     }
@@ -58,8 +58,6 @@ class MapViewController: UIViewController {
     private func configureViews() {
         self.mapView = MKMapView(frame: view.bounds)
         guard let mapView = mapView else { return }
-        mapView.showsUserLocation = true
-        mapView.delegate = self
         self.view.addSubview(mapView)
         mapView.showsUserLocation = true
         mapView.showsScale = true
@@ -67,7 +65,7 @@ class MapViewController: UIViewController {
         mapView.delegate = self
         
         self.view.addSubview(self.startButton)
-        self.startButton.backgroundColor = .blue
+        self.startButton.backgroundColor = UIColor(named: "SantaColor")
         self.startButton.translatesAutoresizingMaskIntoConstraints = false
         self.startButton.setTitle("시작", for: .normal)
         self.startButton.setTitleColor(.white, for: .normal)
@@ -140,9 +138,35 @@ class MapViewController: UIViewController {
         let region = MKCoordinateRegion(center: coordinate, span: span)
         mapView.setRegion(region, animated: true)
     }
+    
+    private func authAlert() -> UIAlertController {
+        let alert = UIAlertController(title: "위치정보 활성화", message: "지도에 현재 위치를 표시할 수 있도록 위치정보를 활성화해주세요", preferredStyle: .alert)
+        let cancel = UIAlertAction(title: "아니요", style: .cancel)
+        let confirm = UIAlertAction(title: "활성화", style: .default) { _ in
+            guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
+            UIApplication.shared.open(url)
+        }
+        alert.addAction(cancel)
+        alert.addAction(confirm)
+        return alert
+    }
 
     @objc private func presentRecordingViewController() {
-        coordinator?.presentRecordingViewController()
+        switch self.manager.authorizationStatus{
+        case .authorizedWhenInUse, .authorizedAlways:
+            self.coordinator?.presentRecordingViewController()
+        default:
+            self.present(authAlert(), animated: false)
+        }
+    }
+    
+    func presentAnimation() {
+        let image = UIImage.gifImage(named: "walkingManAnimation")
+        self.startButton.setImage(image, for: .normal)
+    }
+    
+    func unpresentAnimation(){
+        self.startButton.setImage(nil, for: .normal)
     }
 }
 
@@ -164,15 +188,17 @@ extension MapViewController: MKMapViewDelegate {
 extension MapViewController: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
-            manager.stopUpdatingLocation()
+            self.manager.stopUpdatingLocation()
             self.render(location)
         }
     }
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        if manager.authorizationStatus == .authorizedWhenInUse ||
-            manager.authorizationStatus == .authorizedAlways {
+        switch self.manager.authorizationStatus {
+        case .authorizedAlways, .authorizedWhenInUse:
             userTrackingButton.isHidden = false
+        default:
+            userTrackingButton.isHidden = true
         }
     }
 }

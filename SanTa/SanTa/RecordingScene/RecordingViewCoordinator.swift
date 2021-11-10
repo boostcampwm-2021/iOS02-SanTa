@@ -28,11 +28,15 @@ class RecordingViewCoordinator: Coordinator {
     
     func hide() {
         self.navigationController.dismiss(animated: true)
+        guard let mapViewCoordinator = parentCoordinator as? MapViewCoordinator else { return }
+        mapViewCoordinator.recordingViewDidHide()
     }
     
     func dismiss() {
         self.navigationController.dismiss(animated: true)
-        self.parentCoordinator?.childCoordinators.removeAll()
+        guard let mapViewCoordinator = parentCoordinator as? MapViewCoordinator else { return }
+        mapViewCoordinator.recordingViewDidDismiss()
+        self.parentCoordinator?.childCoordinator.removeAll()
     }
 }
 

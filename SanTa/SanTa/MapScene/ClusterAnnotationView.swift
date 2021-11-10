@@ -24,17 +24,17 @@ class ClusterAnnotationView: MKAnnotationView {
         if let cluster = annotation as? MKClusterAnnotation {
             let count = cluster.memberAnnotations.count
             
-            image = UIGraphicsImageRenderer(size: CGSize(width: 40, height: 40)).image { _ in
+            image = UIGraphicsImageRenderer(size: CGSize(width: 30, height: 30)).image { _ in
                 UIColor.white.setFill()
-                UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: 40, height: 40)).fill()
-                UIColor.blue.setFill()
-                UIBezierPath(ovalIn: CGRect(x: 5, y: 5, width: 30, height: 30)).fill()
+                UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: 30, height: 30)).fill()
+                UIColor(named: "SantaColor")?.setFill()
+                UIBezierPath(ovalIn: CGRect(x: 3, y: 3, width: 24, height: 24)).fill()
                 
                 let attributes = [ NSAttributedString.Key.foregroundColor: UIColor.white,
-                                   NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 15)]
+                                   NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 11)]
                 let text = count > 99 ? "99+" : "\(count)"
                 let size = text.size(withAttributes: attributes)
-                let rect = CGRect(x: 20 - size.width / 2, y: 20 - size.height / 2, width: size.width, height: size.height)
+                let rect = CGRect(x: 15 - size.width / 2, y: 15 - size.height / 2, width: size.width, height: size.height)
                 text.draw(in: rect, withAttributes: attributes)
             }
         }
