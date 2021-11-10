@@ -150,7 +150,7 @@ final class RecordingModel: NSObject, ObservableObject {
                             locations: self.location)
         
         guard self.records != nil else {
-            self.records = Records(title: nil, records: [record])
+            self.records = Records(title: "", records: [record])
             return
         }
         
