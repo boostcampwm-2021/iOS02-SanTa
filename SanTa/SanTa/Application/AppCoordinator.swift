@@ -25,6 +25,7 @@ class AppCoordinator: Coordinator {
     }
 
     func start() {
+        DefaultUserDefaultsStorage.shared.makeFirstData()
         let tabBarController = self.setTabBarController()
         self.window?.rootViewController = tabBarController
     }

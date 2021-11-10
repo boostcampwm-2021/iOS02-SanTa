@@ -31,25 +31,25 @@ final class DefaultSettingsUsecase: SettingsUsecase {
         var voiceSettings: [Option] = []
         var mapSetting: [Option] = []
         
-        self.settingsRepository.getToggleOption(key: Settings.recordPhoto) { value in
+        self.settingsRepository.makeToggleOption(key: Settings.recordPhoto) { value in
             photoSettings.append(value)
         }
-        self.settingsRepository.getToggleOption(key: Settings.photosOnMap) { value in
+        self.settingsRepository.makeToggleOption(key: Settings.photosOnMap) { value in
             photoSettings.append(value)
         }
-        self.settingsRepository.getToggleOption(key: Settings.autoPauseResume) { value in
+        self.settingsRepository.makeToggleOption(key: Settings.autoPauseResume) { value in
             autoSettins.append(value)
         }
-        self.settingsRepository.getToggleOption(key: Settings.autoPauseResumeVoiceGuidance) { value in
+        self.settingsRepository.makeToggleOption(key: Settings.autoPauseResumeVoiceGuidance) { value in
             autoSettins.append(value)
         }
-        self.settingsRepository.getToggleOption(key: Settings.voiceGuidanceEveryOnekm) { value in
+        self.settingsRepository.makeToggleOption(key: Settings.voiceGuidanceEveryOnekm) { value in
             voiceSettings.append(value)
         }
-        self.settingsRepository.getMapOption(key: Settings.mapFormat) { value in
+        self.settingsRepository.makeMapOption(key: Settings.mapFormat) { value in
             mapSetting.append(value)
         }
-        self.settingsRepository.getToggleOption(key: Settings.markHikingTrailsOnTheMap) { value in
+        self.settingsRepository.makeToggleOption(key: Settings.markHikingTrailsOnTheMap) { value in
             mapSetting.append(value)
         }
         
