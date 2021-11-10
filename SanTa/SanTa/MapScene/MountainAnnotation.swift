@@ -27,4 +27,13 @@ class MountainAnnotation: NSObject, MKAnnotation {
         self.mountainDescription = mountainDescription
         self.region = region
     }
+    
+    init(title: String, subtitle: String) {
+        self.title = title
+        self.subtitle = subtitle
+        self.latitude = 0
+        self.longitude = 0
+        self.mountainDescription = ""
+        self.region = ""
+    }
 }

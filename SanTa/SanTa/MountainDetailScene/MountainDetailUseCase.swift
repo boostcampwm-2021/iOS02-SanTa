@@ -19,9 +19,10 @@ class MountainDetailUseCase {
     
     private func calculateDistance() -> Double?  {
         let mountainLocation = CLLocation(latitude: self.mountainAnnotation.latitude, longitude: self.mountainAnnotation.longitude)
-        let distance = location?.distance(from: mountainLocation)
-        print(distance)
-        return distance
+        guard let distance = location?.distance(from: mountainLocation) else  {
+            return nil
+        }
+        return distance / 1000
     }
     
     private func mountainRegions() -> [String] {

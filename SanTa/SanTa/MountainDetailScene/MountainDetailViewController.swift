@@ -11,6 +11,9 @@ import MapKit
 class MountainDetailViewController: UIViewController {
     weak var coordinator: MountainDetailViewCoordinator?
     private var viewModel: MountainDetailViewModel?
+    private var mutatingTopConstraint: NSLayoutConstraint?
+    private var mutatingBottomConstraint: NSLayoutConstraint?
+    private let maxRollUpDistance: CGFloat = 100
     
     convenience init(viewModel: MountainDetailViewModel) {
         self.init()
@@ -70,16 +73,23 @@ extension MountainDetailViewController {
         ]
         NSLayoutConstraint.activate(mapConstraints)
         
-        let titleViewConstraints = [
-            titleView.topAnchor.constraint(equalTo: mapSnapShot.bottomAnchor),
+        self.mutatingTopConstraint = titleView.topAnchor.constraint(equalTo: mapSnapShot.bottomAnchor)
+        self.mutatingBottomConstraint = titleView.bottomAnchor.constraint(equalTo: headerView.bottomAnchor)
+        var titleViewConstraints = [
             titleView.leftAnchor.constraint(equalTo: headerView.leftAnchor),
             titleView.rightAnchor.constraint(equalTo: headerView.rightAnchor),
-            titleView.bottomAnchor.constraint(equalTo: headerView.bottomAnchor)
         ]
+        
+        if let upperConstraint = self.mutatingTopConstraint,
+           let lowerConstraint = self.mutatingBottomConstraint {
+            titleViewConstraints.append(upperConstraint)
+            titleViewConstraints.append(lowerConstraint)
+        }
+        
         NSLayoutConstraint.activate(titleViewConstraints)
         
         let tableViewConstraints = [
-            tableView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
+            tableView.topAnchor.constraint(equalTo: titleView.bottomAnchor),
             tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             tableView.leftAnchor.constraint(equalTo: view.leftAnchor),
             tableView.rightAnchor.constraint(equalTo: view.rightAnchor)
@@ -88,24 +98,35 @@ extension MountainDetailViewController {
     }
     
     private func configuredTableView(mountainDetail: MountainDetailModel) -> UITableView {
-        return UITableView()
+        let tableView = UITableView()
+        
+        tableView.register(MountainDetailTableViewCell.self, forCellReuseIdentifier: MountainDetailTableViewCell.identifier)
+        tableView.separatorStyle = .none
+        tableView.delegate = self
+        tableView.dataSource = self
+        return tableView
     }
     
     private func upperMapHeaderView(mountainDetail: MountainDetailModel) -> UIImageView {
         let mapOptions = MKMapSnapshotter.Options.init()
         mapOptions.region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: mountainDetail.latitude, longitude: mountainDetail.longitude), span: MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1))
-        mapOptions.size = CGSize(width: view.bounds.width, height: view.bounds.height / 3)
         mapOptions.mapType = .satellite
-//        let mountainAnnotationView = MountainAnnotationView(annotation: MountainAnnotation(title: mountainDetail.moutainName, subtitle: mountainDetail.altitude, latitude: mountainDetail.latitude, longitude: mountainDetail.longitude, mountainDescription: mountainDetail.mountainDescription, region: mountainDetail.regions.joined(separator: ", ")), reuseIdentifier: MountainAnnotationView.ReuseID)
-//
-//        mountainAnnotationView.canShowCallout = true
-//        mountainAnnotationView.calloutOffset = CGPoint(x: 0, y: 5)
         
         let imgView = UIImageView()
         let snapShotter = MKMapSnapshotter(options: mapOptions)
         snapShotter.start { snapShot, error in
             if let snapShot = snapShot {
-                imgView.image = snapShot.image
+                let mapImage = snapShot.image
+                
+                UIGraphicsBeginImageContext(mapImage.size)
+                mapImage.draw(in: CGRect(origin: CGPoint.zero, size: mapImage.size))
+                UIImage(systemName: "heart.fill")?.draw(at: snapShot.point(for: CLLocationCoordinate2D(latitude: mountainDetail.latitude, longitude: mountainDetail.longitude)))
+                let image = UIGraphicsGetImageFromCurrentImageContext()
+                UIGraphicsEndImageContext()
+                
+                imgView.image = image
+                
+                print(snapShot.image.size, snapShot.point(for: CLLocationCoordinate2D(latitude: mountainDetail.latitude, longitude: mountainDetail.longitude)))
             } else if let error = error {
                 print(error.localizedDescription)
             }
@@ -114,8 +135,61 @@ extension MountainDetailViewController {
     }
     
     private func lowerMountainTitleView(mountainDetail: MountainDetailModel) -> UIView {
-        let empty = UIView()
-        empty.backgroundColor = .blue
-        return empty
+        let titleView = MountainDetailTitleView()
+        titleView.configure(with: mountainDetail.moutainName, distance: mountainDetail.distance)
+        titleView.backgroundColor = .white
+        return titleView
+    }
+}
+
+extension MountainDetailViewController: UITableViewDelegate, UITableViewDataSource {
+    enum MountainDetailCategories: Int, CaseIterable {
+        case region = 0
+        case altitude = 1
+        case description = 2
+        
+        var text: String {
+            switch self {
+            case .region:
+                return "소재지"
+            case .altitude:
+                return "고도"
+            case .description:
+                return "설명"
+            }
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: MountainDetailTableViewCell.identifier, for: indexPath) as? MountainDetailTableViewCell,
+              let category = MountainDetailCategories(rawValue: indexPath.row) else {
+            return UITableViewCell()
+        }
+        
+        var content: String? = ""
+        switch category {
+        case .region:
+            content = self.viewModel?.mountainDetail?.regions.joined(separator: "\n")
+        case .altitude:
+            content = self.viewModel?.mountainDetail?.altitude
+        case .description:
+            content = self.viewModel?.mountainDetail?.mountainDescription
+        }
+        
+        cell.configure(category: category.text, content: content ?? "")
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return MountainDetailCategories.allCases.count
+    }
+}
+
+extension MountainDetailViewController: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y < self.maxRollUpDistance && scrollView.contentOffset.y > 0 {
+            self.mutatingTopConstraint?.constant = -scrollView.contentOffset.y
+            self.mutatingBottomConstraint?.constant = -scrollView.contentOffset.y
+        }
     }
 }
