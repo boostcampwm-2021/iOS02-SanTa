@@ -10,7 +10,7 @@ import CoreData
 
 protocol RecordsStorage {
     func save(record: Record,
-              completion: @escaping (Result<Record, Error>) -> Void)
+              completion: @escaping (Result<Records, Error>) -> Void)
 }
 
 final class CoreDataRecordStorage: RecordsStorage {
@@ -21,7 +21,7 @@ final class CoreDataRecordStorage: RecordsStorage {
        self.coreDataStorage = coreDataStorage
     }
     
-    func save(record: Record, completion: @escaping (Result<Record, Error>) -> Void) {
+    func save(record: Record, completion: @escaping (Result<Records, Error>) -> Void) {
         self.coreDataStorage.performBackgroundTask { context in
             let recordObject = NSEntityDescription.insertNewObject(forEntityName: "RecordEntity",
                                                                    into: context)
@@ -42,7 +42,7 @@ final class CoreDataRecordStorage: RecordsStorage {
             
             do {
                 try context.save()
-                completion(.success(record))
+//                completion(.success(record))
             } catch {
                 completion(.failure(error))
             }
