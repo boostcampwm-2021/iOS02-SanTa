@@ -13,20 +13,29 @@ class MapOptionCell: UITableViewCell {
     
     private(set) var title: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = UIFont.preferredFont(forTextStyle: .caption1)
+        label.adjustsFontForContentSizeCategory = true
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.setContentCompressionResistancePriority(.init(rawValue: 800), for: .horizontal)
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
     private var map: UILabel = {
         let label = PaddingLabel()
         label.padding(top: 5, bottom: 5, left: 10, right: 10)
-        label.font = UIFont.systemFont(ofSize: 12)
+        label.font = UIFont.preferredFont(forTextStyle: .caption2)
+        label.adjustsFontForContentSizeCategory = true
         label.textColor = .white
         label.backgroundColor = .darkGray
         label.translatesAutoresizingMaskIntoConstraints = false
         label.clipsToBounds = true
         label.layer.cornerRadius = 5
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.setContentCompressionResistancePriority(.init(rawValue: 1000), for: .horizontal)
         return label
     }()
     
@@ -65,6 +74,7 @@ class MapOptionCell: UITableViewCell {
         let mapConstrain = [
             self.map.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
             self.map.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -30),
+            self.map.leftAnchor.constraint(equalTo: self.title.rightAnchor, constant: 10),
         ]
         NSLayoutConstraint.activate(mapConstrain)
     }

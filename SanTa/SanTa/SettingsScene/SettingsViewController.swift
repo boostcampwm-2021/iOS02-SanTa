@@ -149,6 +149,10 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
         self.showMapActionSheet(cellTitle: title)
         self.tableView.deselectRow(at: indexPath, animated: true)
     }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
 }
 
 extension SettingsViewController: ToggleOptionCellDelegate {

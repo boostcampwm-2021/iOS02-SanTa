@@ -19,8 +19,13 @@ class ToggleOptionCell: UITableViewCell {
     
     private var title: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 14)
+        label.font = UIFont.preferredFont(forTextStyle: .caption1)
+        label.adjustsFontForContentSizeCategory = true
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.setContentCompressionResistancePriority(.init(rawValue: 800), for: .horizontal)
+        label.adjustsFontSizeToFitWidth = true
         return label
     }()
     
@@ -29,6 +34,7 @@ class ToggleOptionCell: UITableViewCell {
         controlSwitch.translatesAutoresizingMaskIntoConstraints = false
         controlSwitch.addTarget(self, action: #selector(onClickSwitch(sender:)), for: .valueChanged)
         controlSwitch.onTintColor = .systemBlue
+        controlSwitch.setContentCompressionResistancePriority(.init(rawValue: 1000), for: .horizontal)
         return controlSwitch
     }()
     
@@ -64,6 +70,7 @@ class ToggleOptionCell: UITableViewCell {
     }
     
     private func configureView() {
+        
         self.contentView.addSubview(self.title)
         let locationConstrain = [
             self.title.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
@@ -75,6 +82,7 @@ class ToggleOptionCell: UITableViewCell {
         let switchConstrain = [
             self.controlSwitch.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
             self.controlSwitch.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -30),
+            self.controlSwitch.leftAnchor.constraint(equalTo: self.title.rightAnchor, constant: 10),
         ]
         NSLayoutConstraint.activate(switchConstrain)
     }
