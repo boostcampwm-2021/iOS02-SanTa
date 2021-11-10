@@ -7,6 +7,15 @@
 
 import Foundation
 
+struct Records {
+    var title: String?
+    var records: [Record]
+    
+    mutating func configureTitle(title: String) {
+        self.title = title
+    }
+}
+
 struct Record {
     let startTime: Date
     let endTime: Date

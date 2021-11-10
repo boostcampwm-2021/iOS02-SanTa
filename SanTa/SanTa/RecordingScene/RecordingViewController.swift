@@ -82,6 +82,7 @@ class RecordingViewController: UIViewController {
     
     private var recordingViewModel: RecordingViewModel?
     private var subscriptions = Set<AnyCancellable>()
+    private var currentState = true
     
     convenience init(viewModel: RecordingViewModel) {
         self.init()
@@ -136,7 +137,23 @@ class RecordingViewController: UIViewController {
     }
     
     @objc private func pauseButtonAction(_ sender: UIResponder) {
-        
+        if currentState {
+            self.view.backgroundColor = .black
+            var pauseConfiguration = UIButton.Configuration.plain()
+            pauseConfiguration.image = UIImage(systemName: "play.fill")
+            pauseConfiguration.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+            self.pauseButton.configuration = pauseConfiguration
+            self.recordingViewModel?.pause()
+            self.currentState = false
+        } else {
+            self.view.backgroundColor = .systemBlue
+            var pauseConfiguration = UIButton.Configuration.plain()
+            pauseConfiguration.image = UIImage(systemName: "pause.fill")
+            pauseConfiguration.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+            self.pauseButton.configuration = pauseConfiguration
+            self.recordingViewModel?.resume()
+            self.currentState = true
+        }
     }
     
     @objc private func stopButtonAction(_ sender: UIResponder) {
@@ -144,6 +161,7 @@ class RecordingViewController: UIViewController {
         let noneAction = UIAlertAction(title: "아니요", style: .default)
         let terminationAction = UIAlertAction(title: "종료", style: .default) { [weak self] (action) in
             self?.view.backgroundColor = .black
+            self?.recordingViewModel?.pause()
             self?.coordinator?.presentRecordingTitleViewController()
         }
         stopAlert.addAction(noneAction)
@@ -158,10 +176,11 @@ class RecordingViewController: UIViewController {
 
 extension RecordingViewController: RecordingViewDelegate {
     func didTitleWriteDone(title: String) {
-        self.recordingViewModel?.save(title: title) { [weak self] completion in
-            DispatchQueue.main.async {
-                self?.coordinator?.dismiss()
-            }
-        }
+//        self.recordingViewModel?.save(title: title) { [weak self] completion in
+//            DispatchQueue.main.async {
+//                self?.coordinator?.dismiss()
+//            }
+//        }
+        self.coordinator?.dismiss()
     }
 }
