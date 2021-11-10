@@ -10,7 +10,7 @@ import UIKit
 class RecordingTitleViewCoordinator: Coordinator {
     weak var parentCoordinator: Coordinator?
     var navigationController: UINavigationController
-    var childCoordinator: [Coordinator] = []
+    var childCoordinators: [Coordinator] = []
     var recordingTitleViewController: RecordingTitleViewController
     
     init(navigationController: UINavigationController, delegate: RecordingViewDelegate) {
@@ -30,11 +30,6 @@ class RecordingTitleViewCoordinator: Coordinator {
         guard let recordingCoordinator = parentCoordinator as? RecordingViewCoordinator else { return }
         
         recordingCoordinator.recordingViewController.dismiss(animated: true)
-        self.parentCoordinator?.childCoordinator.enumerated().forEach { (index, coordinator) in
-            if coordinator is RecordingTitleViewCoordinator {
-                parentCoordinator?.childCoordinator.remove(at: index)
-                return
-            }
-        }
+        self.parentCoordinator?.childCoordinators.removeLast()
     }
 }
