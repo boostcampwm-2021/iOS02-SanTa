@@ -55,7 +55,7 @@ extension RecordingViewController {
     
     
     func configureConstraints() {
-        self.view.backgroundColor = .systemBlue
+        self.view.backgroundColor = UIColor(named: "SantaColor")
         
         [self.timeLabel, self.altitudeLabel, self.walkLabel].forEach {
             self.calculateStackView.addArrangedSubview($0)

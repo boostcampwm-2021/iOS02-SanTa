@@ -146,7 +146,7 @@ class RecordingViewController: UIViewController {
             self.recordingViewModel?.pause()
             self.currentState = false
         } else {
-            self.view.backgroundColor = .systemBlue
+            self.view.backgroundColor = UIColor(named: "SantaColor")
             var pauseConfiguration = UIButton.Configuration.plain()
             pauseConfiguration.image = UIImage(systemName: "pause.fill")
             pauseConfiguration.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
