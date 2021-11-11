@@ -9,12 +9,10 @@ import UIKit
 
 class RecordingTitleViewCoordinator: Coordinator {
     weak var parentCoordinator: Coordinator?
-    var navigationController: UINavigationController
     var childCoordinators: [Coordinator] = []
     var recordingTitleViewController: RecordingTitleViewController
     
-    init(navigationController: UINavigationController, delegate: RecordingViewDelegate) {
-        self.navigationController = navigationController
+    init(delegate: RecordingViewDelegate) {
         self.recordingTitleViewController = RecordingTitleViewController()
         self.recordingTitleViewController.delegate = delegate
         self.recordingTitleViewController.coordinator = self
@@ -31,5 +29,9 @@ class RecordingTitleViewCoordinator: Coordinator {
         
         recordingCoordinator.recordingViewController.dismiss(animated: true)
         self.parentCoordinator?.childCoordinators.removeLast()
+    }
+    
+    deinit {
+        print("😇RecordingTitleViewCoordinator is deinit \(Date())!!😇")
     }
 }

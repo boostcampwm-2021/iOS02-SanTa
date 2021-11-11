@@ -19,6 +19,7 @@ final class RecordingModel: NSObject, ObservableObject {
     private let pedoMeter = CMPedometer()
     private var locationManager = CLLocationManager()
     private var timer: DispatchSourceTimer?
+    private var timerIsRunning = false
     private var records: Records?
     private var startDate: Date?
     private var currentWalk = 0
@@ -157,6 +158,9 @@ final class RecordingModel: NSObject, ObservableObject {
     }
     
     func pause() {
+        guard self.timerIsRunning == true else { return }
+        
+        self.timerIsRunning = false
         self.appendRecord()
         self.timer?.suspend()
         self.locationManager.stopUpdatingLocation()
@@ -164,6 +168,9 @@ final class RecordingModel: NSObject, ObservableObject {
     }
     
     func resume() {
+        guard self.timerIsRunning == false else { return }
+        
+        self.timerIsRunning = true
         self.timer?.resume()
         self.locationManager.startUpdatingLocation()
         self.startDate = Date()
@@ -173,6 +180,10 @@ final class RecordingModel: NSObject, ObservableObject {
     func cancel() -> Records? {
         guard let records = self.records else { return nil }
     
+        if !self.timerIsRunning {
+            self.timer?.resume()
+        }
+        
         self.timer?.cancel()
         self.timer = nil
         self.locationManager.stopUpdatingLocation()

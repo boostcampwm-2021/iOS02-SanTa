@@ -49,13 +49,17 @@ class RecordingViewCoordinator: Coordinator {
         self.navigationController.dismiss(animated: true)
         guard let mapViewCoordinator = parentCoordinator as? MapViewCoordinator else { return }
         mapViewCoordinator.recordingViewDidDismiss()
-        self.parentCoordinator?.childCoordinators.removeAll()
+        self.parentCoordinator?.childCoordinators.removeLast()
+    }
+    
+    deinit {
+        print("😇RecordingViewCoordinator is deinit \(Date())!!😇")
     }
 }
 
 extension RecordingViewCoordinator {
     func presentRecordingTitleViewController() {
-        let recordingTitleViewCoordinator = RecordingTitleViewCoordinator(navigationController: self.navigationController, delegate: self.recordingViewController)
+        let recordingTitleViewCoordinator = RecordingTitleViewCoordinator(delegate: self.recordingViewController)
         self.childCoordinators.append(recordingTitleViewCoordinator)
         recordingTitleViewCoordinator.parentCoordinator = self
         

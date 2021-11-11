@@ -34,6 +34,7 @@ final class DefaultRecordingUseCase: RecordingUseCase, ObservableObject {
     }
     
     func save(title: String, completion: @escaping (Result<Record, Error>) -> Void) {
+        recording.cancel()
 //        self.recordRepository.save(record: recording.cancel(), completion: completion)
     }
 }
