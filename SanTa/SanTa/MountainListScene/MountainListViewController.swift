@@ -38,12 +38,19 @@ class MountainListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.configureSearchBar()
         self.configureCollectionView()
         self.configureView()
         self.configuareDataSource()
         self.configureData()
         self.configureBinding()
         self.viewModel?.viewDidLoad()
+    }
+    
+    private func configureSearchBar() {
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchBar.placeholder = "검색"
+        self.navigationItem.searchController = searchController
     }
     
     private func bindSnapShotApply(section: MountainListSection, item: [AnyHashable]) {
