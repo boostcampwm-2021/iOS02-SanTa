@@ -187,7 +187,9 @@ extension MountainDetailViewController: UITableViewDelegate, UITableViewDataSour
 
 extension MountainDetailViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.y < self.maxRollUpDistance && scrollView.contentOffset.y > 0 {
+        let remainingScroll = scrollView.contentSize.height - scrollView.bounds.size.height
+        let rollUp = min(remainingScroll, self.maxRollUpDistance)
+        if scrollView.contentOffset.y < rollUp && scrollView.contentOffset.y > 0 {
             self.mutatingTopConstraint?.constant = -scrollView.contentOffset.y
             self.mutatingBottomConstraint?.constant = -scrollView.contentOffset.y
         }
