@@ -12,6 +12,9 @@ class MountainListViewController: UIViewController {
         case main
     }
     
+    typealias MountainListDataSource = UICollectionViewDiffableDataSource<MountainListSection, AnyHashable>
+    typealias MountainListSnapshot = NSDiffableDataSourceSnapshot<MountainListSection, AnyHashable>
+    
     weak var coordinator: MountainListViewCoordinator?
     
     private var tableView: UITableView = {
