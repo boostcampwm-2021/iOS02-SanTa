@@ -51,6 +51,7 @@ class MountainListViewController: UIViewController {
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchBar.placeholder = "검색"
         self.navigationItem.searchController = searchController
+        self.navigationItem.hidesSearchBarWhenScrolling = false
     }
     
     private func bindSnapShotApply(section: MountainListSection, item: [AnyHashable]) {
