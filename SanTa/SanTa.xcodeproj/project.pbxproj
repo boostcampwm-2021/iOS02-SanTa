@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		49225C5E273CDB4F0021AD79 /* ResultDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49225C5D273CDB4F0021AD79 /* ResultDetailViewController.swift */; };
+		49225C60273CDB680021AD79 /* ResultDetailSmallerInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49225C5F273CDB680021AD79 /* ResultDetailSmallerInfoView.swift */; };
 		49A3E61D2732756C0020CAC1 /* MountainAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A3E61C2732756C0020CAC1 /* MountainAnnotation.swift */; };
 		49D5A9492738C31600937821 /* MountainDetailViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D5A9482738C31600937821 /* MountainDetailViewCoordinator.swift */; };
 		49D5A94B2738C3AB00937821 /* MountainDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D5A94A2738C3AB00937821 /* MountainDetailViewController.swift */; };
@@ -80,6 +82,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		49225C5D273CDB4F0021AD79 /* ResultDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailViewController.swift; sourceTree = "<group>"; };
+		49225C5F273CDB680021AD79 /* ResultDetailSmallerInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailSmallerInfoView.swift; sourceTree = "<group>"; };
 		49A3E61C2732756C0020CAC1 /* MountainAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainAnnotation.swift; sourceTree = "<group>"; };
 		49D5A9482738C31600937821 /* MountainDetailViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainDetailViewCoordinator.swift; sourceTree = "<group>"; };
 		49D5A94A2738C3AB00937821 /* MountainDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainDetailViewController.swift; sourceTree = "<group>"; };
@@ -186,6 +190,8 @@
 		5428FDB7272F8B34002F9D40 /* ResultDetailScene */ = {
 			isa = PBXGroup;
 			children = (
+				49225C5D273CDB4F0021AD79 /* ResultDetailViewController.swift */,
+				49225C5F273CDB680021AD79 /* ResultDetailSmallerInfoView.swift */,
 			);
 			path = ResultDetailScene;
 			sourceTree = "<group>";
@@ -470,6 +476,7 @@
 				984DDEC527325FB9003BE56B /* RecordRepository.swift in Sources */,
 				984DDEC327325DFC003BE56B /* RecordingUseCase.swift in Sources */,
 				984DDEC727327064003BE56B /* CoreDataRecordStorage.swift in Sources */,
+				49225C60273CDB680021AD79 /* ResultDetailSmallerInfoView.swift in Sources */,
 				98A913012736844E008AAE39 /* UserDefaultsStorage.swift in Sources */,
 				DAB37D50273256B900EC523F /* RecordingModel.swift in Sources */,
 				54296945272FBC6E0070B362 /* AppCoordinator.swift in Sources */,
@@ -491,6 +498,7 @@
 				54851284272A6AD500407F28 /* SceneDelegate.swift in Sources */,
 				5429694F272FC1740070B362 /* ResultViewCoordinator.swift in Sources */,
 				98BCF4F72737A66E0073E6FB /* SettingsUsecase.swift in Sources */,
+				49225C5E273CDB4F0021AD79 /* ResultDetailViewController.swift in Sources */,
 				54731B65272F84D300534097 /* MapViewModel.swift in Sources */,
 				49D5A94F2738C72E00937821 /* MountainDetailUseCase.swift in Sources */,
 			);
