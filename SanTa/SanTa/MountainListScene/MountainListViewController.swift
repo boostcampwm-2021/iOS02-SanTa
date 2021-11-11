@@ -43,6 +43,7 @@ class MountainListViewController: UIViewController {
         self.configuareDataSource()
         self.configureData()
         self.configureBinding()
+        self.viewModel?.viewDidLoad()
     }
     
     private func bindSnapShotApply(section: MountainListSection, item: [AnyHashable]) {
@@ -99,7 +100,7 @@ class MountainListViewController: UIViewController {
             
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MountainCell.identifier, for: indexPath) as? MountainCell else  {
                 return UICollectionViewCell() }
-            guard let item = item as? Mountain else { return cell }
+            guard let item = item as? MountainEntity else { return cell }
             cell.update(mountain: item)
             return cell
         })
@@ -122,6 +123,3 @@ extension MountainListViewController: UICollectionViewDelegate {
         collectionView.deselectItem(at: indexPath, animated: true)
     }
 }
-
-let dummy = [Mountain(name: "백두산", height: "1000m", location: "북한"),
-             Mountain(name: "한라산", height: "2000m", location: "제주도")]

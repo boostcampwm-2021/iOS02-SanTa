@@ -68,9 +68,9 @@ final class MountainCell: UICollectionViewCell {
         NSLayoutConstraint.activate(locationConstrain)
     }
     
-    func update(mountain: Mountain) {
-        self.name.text = mountain.name
-        self.height.text = mountain.height
-        self.location.text = mountain.location
+    func update(mountain: MountainEntity) {
+        self.name.text = mountain.mountain.mountainName
+        self.height.text = mountain.mountain.mountainHeight
+        self.location.text = mountain.mountain.mountainRegion
     }
 }
