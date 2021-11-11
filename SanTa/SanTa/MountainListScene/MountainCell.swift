@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class MountainCell: UITableViewCell {
+final class MountainCell: UICollectionViewCell {
     
     static let identifier = "MountainCell"
     
@@ -41,10 +41,10 @@ final class MountainCell: UITableViewCell {
         return stackView
     }()
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        self.configureView()
-        self.accessoryType = .disclosureIndicator
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+
+        configureView()
     }
     
     required init?(coder: NSCoder) {
