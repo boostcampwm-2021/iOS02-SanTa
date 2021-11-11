@@ -31,6 +31,7 @@ class MountainListViewController: UIViewController {
         super.viewDidLoad()
         self.configureCollectionView()
         self.configureView()
+        self.configuareDataSource()
         self.configureData()
     }
     
@@ -61,6 +62,20 @@ class MountainListViewController: UIViewController {
             section.contentInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 0)
             return section
         }
+    }
+    
+    private func configuareDataSource() {
+        let datasource = MountainListDataSource (collectionView: self.mountainListCollectionView, cellProvider: { (collectionView, indexPath, item) -> UICollectionViewCell in
+            
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MountainCell.identifier, for: indexPath) as? MountainCell else  {
+                return UICollectionViewCell() }
+            guard let item = item as? Mountain else { return cell }
+            cell.update(mountain: item)
+            return cell
+        })
+        
+        self.dataSource = datasource
+        self.mountainListCollectionView.dataSource = dataSource
     }
     
     private func configureData() {
