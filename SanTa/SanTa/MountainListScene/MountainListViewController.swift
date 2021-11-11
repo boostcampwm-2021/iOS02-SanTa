@@ -17,55 +17,42 @@ class MountainListViewController: UIViewController {
     
     weak var coordinator: MountainListViewCoordinator?
     
-    private var tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.register(MountainCell.self, forCellReuseIdentifier: MountainCell.identifier)
-        return tableView
+    let mountainListCollectionView: UICollectionView = {
+        let flowLayout = UICollectionViewFlowLayout()
+        let collectionView = UICollectionView(frame: .init(x: 0, y: 0, width: 0, height: 0), collectionViewLayout: flowLayout)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+
+        return collectionView
     }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.configureTableView()
+        self.configureCollectionView()
         self.configureView()
     }
     
-    private func configureTableView() {
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
+    private func configureCollectionView() {
+        self.mountainListCollectionView.delegate = self
     }
     
     private func configureView() {
-        self.view.addSubview(self.tableView)
-        let tableViewConstrain = [
-            self.tableView.topAnchor.constraint(equalTo: self.view.topAnchor),
-            self.tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-            self.tableView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
-            self.tableView.rightAnchor.constraint(equalTo: self.view.rightAnchor),
+        self.view.addSubview(self.mountainListCollectionView)
+        let collectionViewConstrain = [
+            self.mountainListCollectionView.topAnchor.constraint(equalTo: self.view.topAnchor),
+            self.mountainListCollectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            self.mountainListCollectionView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
+            self.mountainListCollectionView.rightAnchor.constraint(equalTo: self.view.rightAnchor),
         ]
-        NSLayoutConstraint.activate(tableViewConstrain)
+        NSLayoutConstraint.activate(collectionViewConstrain)
     }
 }
 
-extension MountainListViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dummy.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = self.tableView.dequeueReusableCell(withIdentifier: MountainCell.identifier, for: indexPath)
-                as? MountainCell
-        else {
-            return UITableViewCell()
-        }
-        cell.update(mountain: dummy[indexPath.row])
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.tableView.deselectRow(at: indexPath, animated: true)
+extension MountainListViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
     }
 }
+
 
 struct Mountain {
     let name: String
