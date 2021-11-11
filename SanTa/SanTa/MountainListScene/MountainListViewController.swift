@@ -37,6 +37,7 @@ class MountainListViewController: UIViewController {
     private func configureCollectionView() {
         self.mountainListCollectionView.delegate = self
         self.mountainListCollectionView.collectionViewLayout = configureCompositionalLayout()
+        self.mountainListCollectionView.register(MountainCell.self, forCellWithReuseIdentifier: MountainCell.identifier)
     }
     
     private func configureView() {
