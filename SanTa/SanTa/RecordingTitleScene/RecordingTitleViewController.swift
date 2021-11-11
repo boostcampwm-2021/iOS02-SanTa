@@ -13,7 +13,7 @@ class RecordingTitleViewController: UIViewController {
      
     private var displayView: UIView = {
         let view = UIView()
-        view.backgroundColor = .white
+        view.backgroundColor = UIColor(named: "RecordingSubViewBackgroundColor")
         view.layer.masksToBounds = true
         view.layer.cornerRadius = 12
         return view
