@@ -7,6 +7,10 @@
 
 import CoreData
 
+enum CoreDataError: Error {
+    case coreDataError
+}
+
 final class CoreDataStorage {
 
     private lazy var persistentContainer: NSPersistentContainer = {

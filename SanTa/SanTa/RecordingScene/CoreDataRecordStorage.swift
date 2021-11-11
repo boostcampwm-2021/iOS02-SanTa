@@ -9,8 +9,8 @@ import Foundation
 import CoreData
 
 protocol RecordsStorage {
-    func save(record: Record,
-              completion: @escaping (Result<Record, Error>) -> Void)
+    func save(records: Records,
+              completion: @escaping (Result<Records, CoreDataError>) -> Void)
     func fetch(completion: @escaping (Result<[NSManagedObject], Error>) -> Void)
 }
 
@@ -22,30 +22,42 @@ final class CoreDataRecordStorage: RecordsStorage {
        self.coreDataStorage = coreDataStorage
     }
     
-    func save(record: Record, completion: @escaping (Result<Record, Error>) -> Void) {
+    func save(records: Records, completion: @escaping (Result<Records, CoreDataError>) -> Void) {
         self.coreDataStorage.performBackgroundTask { context in
-            let recordObject = NSEntityDescription.insertNewObject(forEntityName: "RecordEntity",
-                                                                   into: context)
-//            recordObject.setValue(record.time, forKey: "time")
-            recordObject.setValue(record.distance, forKey: "distance")
-            recordObject.setValue(record.step, forKey: "step")
+            let recordsObject = NSEntityDescription.insertNewObject(forEntityName: "RecordsEntity",
+                                                                    into: context)
             
-            record.locations.forEach {
-                let locationObject = NSEntityDescription.insertNewObject(forEntityName: "LocationEntity",
-                                                                         into: context) as? LocationEntityMO
-                locationObject?.altitude = $0.altitude
-                locationObject?.latitude = $0.latitude
-                locationObject?.longitude = $0.longitude
+            recordsObject.setValue(records.title, forKey: "title")
+            
+            records.records.forEach {
+                let recordObject = NSEntityDescription.insertNewObject(forEntityName: "RecordEntity",
+                                                                       into: context) as? RecordEntityMO
                 
-                guard let locationObject = locationObject else { return }
-                (recordObject as? RecordEntityMO)?.addToLocations(locationObject)
+                recordObject?.startTime = $0.startTime
+                recordObject?.endTime = $0.endTime
+                recordObject?.distance = $0.distance
+                recordObject?.step = Int16($0.step)
+                
+                guard let recordObject = recordObject else { return }
+                (recordsObject as? RecordsEntityMO)?.addToRecords(recordObject)
+                
+                $0.locations.forEach {
+                    let locationObject = NSEntityDescription.insertNewObject(forEntityName: "LocationEntity",
+                                                                             into: context) as? LocationEntityMO
+                    locationObject?.altitude = $0.altitude
+                    locationObject?.latitude = $0.latitude
+                    locationObject?.longitude = $0.longitude
+                    
+                    guard let locationObject = locationObject else { return }
+                    recordObject.addToLocations(locationObject)
+                }
             }
             
             do {
                 try context.save()
-                completion(.success(record))
+                completion(.success(records))
             } catch {
-                completion(.failure(error))
+                completion(.failure(CoreDataError.coreDataError))
             }
         }
     }

@@ -60,7 +60,7 @@ final class RecordingViewModel: ObservableObject {
         self.recordingUseCase?.resume()
     }
     
-    func save(title: String, completion: @escaping (Result<Record, Error>) -> Void) {
+    func save(title: String, completion: @escaping (Result<Records, CoreDataError>) -> Void) {
         self.recordingUseCase?.save(title: title, completion: completion)
     }
 }
