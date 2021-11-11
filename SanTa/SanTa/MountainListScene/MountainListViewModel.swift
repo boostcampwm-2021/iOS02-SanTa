@@ -8,5 +8,17 @@
 import Combine
 
 final class MountainListViewModel {
+    @Published private(set) var mountains: [MountainEntity]?
     
+    private let useCase: MountainListUseCase
+    
+    init(useCase: MountainListUseCase) {
+        self.useCase = useCase
+    }
+    
+    func viewDidLoad() {
+        self.useCase.prepareMountainList { [weak self] mountains in
+            self?.mountains = mountains
+        }
+    }
 }
