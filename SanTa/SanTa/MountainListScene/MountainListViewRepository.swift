@@ -7,7 +7,7 @@
 
 import Foundation
 
-protocol MountainListViewReposiory {
+protocol MountainListViewRepository {
     func fetchMountains(completion: @escaping (Result<[MountainEntity], Error>) -> Void)
 }
 
@@ -20,10 +20,6 @@ class DefaultMountainListViewReposiory {
         case notExists
     }
     
-    enum optionError: Error {
-        case notExists
-    }
-    
     private let mountainExtractor: MountainExtractor
     private let settingsStorage: UserDefaultsStorage
     
@@ -33,7 +29,7 @@ class DefaultMountainListViewReposiory {
     }
 }
 
-extension DefaultMountainListViewReposiory: MountainListViewReposiory {
+extension DefaultMountainListViewReposiory: MountainListViewRepository {
     func fetchMountains(completion: @escaping (Result<[MountainEntity], Error>) -> Void) {
         self.mountainExtractor.extract { result in
             switch result {
