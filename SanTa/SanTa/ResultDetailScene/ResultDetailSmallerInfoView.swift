@@ -49,18 +49,23 @@ class ResultDetailSmallerInfoView: UIView {
         
         let upperStack = UIStackView()
         upperStack.axis = .horizontal
+        upperStack.distribution = .fillEqually
+        upperStack.spacing = 50
         upperStack.addArrangedSubview(kiloStackView)
         upperStack.addArrangedSubview(timeStackView)
         upperStack.addArrangedSubview(stepStackView)
         
         let lowerStack = UIStackView()
         lowerStack.axis = .horizontal
+        lowerStack.distribution = .fillEqually
+        lowerStack.spacing = 50
         lowerStack.addArrangedSubview(maxAltStackView)
         lowerStack.addArrangedSubview(minAltStackView)
         lowerStack.addArrangedSubview(avgSpdStackView)
         
         let totalStack = UIStackView()
         totalStack.axis = .vertical
+        totalStack.spacing = 30
         totalStack.addArrangedSubview(upperStack)
         totalStack.addArrangedSubview(lowerStack)
         self.addSubview(totalStack)
@@ -74,7 +79,7 @@ class ResultDetailSmallerInfoView: UIView {
     }
     
     private func displayArrowImage() {
-        let arrow = UIImage(systemName: "chevron.compact.up")
+        let arrow = UIImage(systemName: "chevron.compact.up")?.withTintColor(.black)
         let imageView = UIImageView(image: arrow)
         self.addSubview(imageView)
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -93,6 +98,7 @@ class ResultDetailSmallerInfoView: UIView {
         let kiloDescription = UILabel()
         kiloDescription.text = "킬로미터"
         self.kiloStackView.axis = .vertical
+        self.kiloStackView.alignment = .center
         self.kiloStackView.addArrangedSubview(kilo)
         self.kiloStackView.addArrangedSubview(kiloDescription)
     }
@@ -103,6 +109,7 @@ class ResultDetailSmallerInfoView: UIView {
         let timeDescription = UILabel()
         timeDescription.text = "시간"
         self.timeStackView.axis = .vertical
+        self.timeStackView.alignment = .center
         self.timeStackView.addArrangedSubview(self.time)
         self.timeStackView.addArrangedSubview(timeDescription)
     }
@@ -113,6 +120,7 @@ class ResultDetailSmallerInfoView: UIView {
         let stepDescription = UILabel()
         stepDescription.text = "걸음"
         self.stepStackView.axis = .vertical
+        self.stepStackView.alignment = .center
         self.stepStackView.addArrangedSubview(self.steps)
         self.stepStackView.addArrangedSubview(stepDescription)
     }
@@ -123,6 +131,7 @@ class ResultDetailSmallerInfoView: UIView {
         let maxAltDescription = UILabel()
         maxAltDescription.text = "최고 고도"
         self.maxAltStackView.axis = .vertical
+        self.maxAltStackView.alignment = .center
         self.maxAltStackView.addArrangedSubview(self.maxAltitude)
         self.maxAltStackView.addArrangedSubview(maxAltDescription)
     }
@@ -133,6 +142,7 @@ class ResultDetailSmallerInfoView: UIView {
         let minAltDescription = UILabel()
         minAltDescription.text = "최저 고도"
         self.minAltStackView.axis = .vertical
+        self.minAltStackView.alignment = .center
         self.minAltStackView.addArrangedSubview(self.minAltitude)
         self.minAltStackView.addArrangedSubview(minAltDescription)
     }
@@ -143,6 +153,7 @@ class ResultDetailSmallerInfoView: UIView {
         let avgSpeedDescription = UILabel()
         avgSpeedDescription.text = "평균 속도"
         self.avgSpdStackView.axis = .vertical
+        self.avgSpdStackView.alignment = .center
         self.avgSpdStackView.addArrangedSubview(self.avgSpeed)
         self.avgSpdStackView.addArrangedSubview(avgSpeedDescription)
     }
