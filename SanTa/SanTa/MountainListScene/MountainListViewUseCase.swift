@@ -22,23 +22,25 @@ final class MountainListUseCase {
             return
         }
         
-        self.repository.fetchMountains { result in
+        self.repository.fetchMountains { [weak self] result in
             switch result {
             case .failure(let error):
                 os_log(.error, log: .default, "\(error.localizedDescription)")
                 completion(nil)
             case .success(let mountains):
-                self.entireMountains = mountains
+                self?.entireMountains = mountains
                 completion(mountains)
             }
         }
     }
     
     func findMountains(name: String, completion: @escaping ([MountainEntity]?) -> Void) {
-        guard self.entireMountains == nil else {
+        guard self.entireMountains != nil else { return }
+        guard name.isEmpty != true else {
+            completion(self.entireMountains)
             return
         }
         
-        completion(entireMountains?.filter {  $0.mountain.mountainName == name })
+        completion(self.entireMountains?.filter {  $0.mountain.mountainName == name })
     }
 }

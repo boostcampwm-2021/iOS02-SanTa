@@ -57,12 +57,13 @@ class MountainListViewController: UIViewController {
     }
     
     private func bindSnapShotApply(section: MountainListSection, item: [AnyHashable]) {
-        DispatchQueue.global().sync {
-            guard var snapshot = dataSource?.snapshot() else { return }
+        DispatchQueue.main.async { [weak self] in
+            var snapshot = MountainListSnapshot()
+            snapshot.appendSections([.main])
             item.forEach {
                 snapshot.appendItems([$0], toSection: section)
             }
-            dataSource?.apply(snapshot, animatingDifferences: true)
+            self?.dataSource?.apply(snapshot, animatingDifferences: true)
         }
     }
     
@@ -74,6 +75,13 @@ class MountainListViewController: UIViewController {
                 self?.bindSnapShotApply(section: MountainListSection.main, item: mountains)
             })
             .store(in: &self.subscriptions)
+        
+        self.viewModel?.$mountainName
+            .debounce(for: 0.7, scheduler: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.viewModel?.findMountains()
+            }
+            .store(in: &subscriptions)
     }
     
     private func configureCollectionView() {
@@ -136,6 +144,7 @@ extension MountainListViewController: UICollectionViewDelegate {
 
 extension MountainListViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        
+        guard let mountainName = searchController.searchBar.text else { return }
+        self.viewModel?.mountainName = mountainName
     }
 }

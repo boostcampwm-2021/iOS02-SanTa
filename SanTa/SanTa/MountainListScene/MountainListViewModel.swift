@@ -9,8 +9,10 @@ import Combine
 
 final class MountainListViewModel {
     @Published private(set) var mountains: [MountainEntity]?
+    @Published var mountainName: String?
     
     private let useCase: MountainListUseCase
+    private var cancellables = Set<AnyCancellable>()
     
     init(useCase: MountainListUseCase) {
         self.useCase = useCase
@@ -22,7 +24,11 @@ final class MountainListViewModel {
         }
     }
     
-    func findMountains(name: String) {
-        
+    func findMountains() {
+        guard let name = mountainName else { return }
+        self.useCase.findMountains(name: name) { [weak self] mountains in
+            print(mountains)
+            self?.mountains = mountains
+        }
     }
 }
