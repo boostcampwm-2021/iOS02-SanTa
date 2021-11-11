@@ -6,66 +6,136 @@
 //
 
 import UIKit
+import Combine
 
 class MountainListViewController: UIViewController {
+    enum MountainListSection: Int, CaseIterable {
+        case main
+    }
+    
+    typealias MountainListDataSource = UICollectionViewDiffableDataSource<MountainListSection, AnyHashable>
+    typealias MountainListSnapshot = NSDiffableDataSourceSnapshot<MountainListSection, AnyHashable>
     
     weak var coordinator: MountainListViewCoordinator?
     
-    private var tableView: UITableView = {
-        let tableView = UITableView()
-        tableView.translatesAutoresizingMaskIntoConstraints = false
-        tableView.register(MountainCell.self, forCellReuseIdentifier: MountainCell.identifier)
-        return tableView
+    var dataSource: MountainListDataSource?
+    
+    private var viewModel: MountainListViewModel?
+    private var subscriptions = Set<AnyCancellable>()
+    
+    let mountainListCollectionView: UICollectionView = {
+        let flowLayout = UICollectionViewFlowLayout()
+        let collectionView = UICollectionView(frame: .init(x: 0, y: 0, width: 0, height: 0), collectionViewLayout: flowLayout)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+
+        return collectionView
     }()
+    
+    convenience init(viewModel: MountainListViewModel) {
+        self.init()
+        self.viewModel = viewModel
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.configureTableView()
+        self.configureSearchBar()
+        self.configureCollectionView()
         self.configureView()
+        self.configuareDataSource()
+        self.configureBinding()
+        self.viewModel?.viewDidLoad()
     }
     
-    private func configureTableView() {
-        self.tableView.delegate = self
-        self.tableView.dataSource = self
+    private func configureSearchBar() {
+        let searchController = UISearchController(searchResultsController: nil)
+        searchController.searchBar.placeholder = "검색"
+        searchController.searchResultsUpdater = self
+        
+        self.navigationItem.searchController = searchController
+        self.navigationItem.hidesSearchBarWhenScrolling = false
+    }
+    
+    private func bindSnapShotApply(section: MountainListSection, item: [AnyHashable]) {
+        DispatchQueue.main.async { [weak self] in
+            var snapshot = MountainListSnapshot()
+            snapshot.appendSections([.main])
+            item.forEach {
+                snapshot.appendItems([$0], toSection: section)
+            }
+            self?.dataSource?.apply(snapshot, animatingDifferences: true)
+        }
+    }
+    
+    private func configureBinding() {
+        self.viewModel?.$mountains
+            .receive(on: DispatchQueue.main)
+            .sink (receiveValue: { [weak self] mountains in
+                guard let mountains = mountains else { return }
+                self?.bindSnapShotApply(section: MountainListSection.main, item: mountains)
+            })
+            .store(in: &self.subscriptions)
+        
+        self.viewModel?.$mountainName
+            .debounce(for: 0.7, scheduler: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.viewModel?.findMountains()
+            }
+            .store(in: &subscriptions)
+    }
+    
+    private func configureCollectionView() {
+        self.mountainListCollectionView.delegate = self
+        self.mountainListCollectionView.collectionViewLayout = configureCompositionalLayout()
+        self.mountainListCollectionView.register(MountainCell.self, forCellWithReuseIdentifier: MountainCell.identifier)
     }
     
     private func configureView() {
-        self.view.addSubview(self.tableView)
-        let tableViewConstrain = [
-            self.tableView.topAnchor.constraint(equalTo: self.view.topAnchor),
-            self.tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-            self.tableView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
-            self.tableView.rightAnchor.constraint(equalTo: self.view.rightAnchor),
+        self.view.addSubview(self.mountainListCollectionView)
+        let collectionViewConstrain = [
+            self.mountainListCollectionView.topAnchor.constraint(equalTo: self.view.topAnchor),
+            self.mountainListCollectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            self.mountainListCollectionView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
+            self.mountainListCollectionView.rightAnchor.constraint(equalTo: self.view.rightAnchor),
         ]
-        NSLayoutConstraint.activate(tableViewConstrain)
-    }
-}
-
-extension MountainListViewController: UITableViewDelegate, UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return dummy.count
+        NSLayoutConstraint.activate(collectionViewConstrain)
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = self.tableView.dequeueReusableCell(withIdentifier: MountainCell.identifier, for: indexPath)
-                as? MountainCell
-        else {
-            return UITableViewCell()
+    private func configureCompositionalLayout() -> UICollectionViewCompositionalLayout {
+        return UICollectionViewCompositionalLayout { (sectionNumber, env) -> NSCollectionLayoutSection? in
+            let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(0.25)))
+            item.contentInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 0)
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(180)),subitems: [item])
+            let section = NSCollectionLayoutSection(group: group)
+            section.orthogonalScrollingBehavior = .none
+            section.contentInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 0)
+            return section
         }
-        cell.update(mountain: dummy[indexPath.row])
-        return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.tableView.deselectRow(at: indexPath, animated: true)
+    private func configuareDataSource() {
+        let datasource = MountainListDataSource (collectionView: self.mountainListCollectionView, cellProvider: { (collectionView, indexPath, item) -> UICollectionViewCell in
+            
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MountainCell.identifier, for: indexPath) as? MountainCell else  {
+                return UICollectionViewCell() }
+            guard let item = item as? MountainEntity else { return cell }
+            cell.update(mountain: item)
+            return cell
+        })
+        
+        self.dataSource = datasource
+        self.mountainListCollectionView.dataSource = dataSource
     }
 }
 
-struct Mountain {
-    let name: String
-    let height: String
-    let location: String
+extension MountainListViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+    }
 }
 
-let dummy = [Mountain(name: "백두산", height: "1000m", location: "북한"),
-             Mountain(name: "한라산", height: "2000m", location: "제주도")]
+extension MountainListViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        guard let mountainName = searchController.searchBar.text else { return }
+        self.viewModel?.mountainName = mountainName
+    }
+}

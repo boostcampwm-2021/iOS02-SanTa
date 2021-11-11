@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct MountainEntity: Codable {
+struct MountainEntity: Codable, Hashable {
+    var id = UUID()
     
     struct MountainDetail: Codable {
         let mountainName, mountainRegion, mountainHeight, mountainShortDescription: String
@@ -28,5 +29,13 @@ struct MountainEntity: Codable {
         case mountain = "mountain"
         case latitude = "latitude"
         case longitude = "longitude"
+    }
+    
+    func hash(into hasher: inout Hasher) {
+      hasher.combine(id)
+    }
+
+    static func == (lhs: MountainEntity, rhs: MountainEntity) -> Bool {
+      lhs.id == rhs.id
     }
 }

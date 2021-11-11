@@ -58,7 +58,8 @@ class AppCoordinator: Coordinator {
         resultViewController.tabBarItem = secondItem
         resultViewController.tabBarItem.image = .init(systemName: "list.dash")
         
-        let mountainListViewCoordinator = MountainListViewCoordinator()
+        let mountainListViewCoordinator = MountainListViewCoordinator(userDefaultsStorage: self.userDefaultsStorage,
+                                                                      mountainExtractor: self.mountainExtractor)
         mountainListViewCoordinator.parentCoordinator = self
         childCoordinators.append(mountainListViewCoordinator)
         let mountainListViewController = mountainListViewCoordinator.startPush()

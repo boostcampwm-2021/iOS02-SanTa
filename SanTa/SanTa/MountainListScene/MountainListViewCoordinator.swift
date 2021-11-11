@@ -10,21 +10,39 @@ import UIKit
 class MountainListViewCoordinator: Coordinator {
     weak var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
-    var navigationController: UINavigationController
+    var navigationController: UINavigationController = UINavigationController()
 
-    init() {
-        self.navigationController = UINavigationController()
+    private let userDefaultsStorage: UserDefaultsStorage
+    private let mountainExtractor: MountainExtractor
+    
+    init(userDefaultsStorage: UserDefaultsStorage,
+         mountainExtractor: MountainExtractor) {
+        self.userDefaultsStorage = userDefaultsStorage
+        self.mountainExtractor = mountainExtractor
     }
     
     func start() {
     }
 
     func startPush() -> UINavigationController {
-        let mountainListViewController = MountainListViewController()
+        let mountainListViewController = MountainListViewController(viewModel: self.injectDependencies())
         mountainListViewController.coordinator = self
         self.navigationController.setViewControllers([mountainListViewController], animated: true)
         self.navigationController.navigationBar.topItem?.title = "산 목록"
+        self.navigationController.navigationBar.prefersLargeTitles = true
 
         return navigationController
     }
 }
+
+extension MountainListViewCoordinator {
+    private func injectDependencies() -> MountainListViewModel {
+        return MountainListViewModel(
+            useCase: MountainListUseCase(
+                repository: DefaultMountainListViewReposiory(
+                    mountainExtractor: self.mountainExtractor,
+                    userDefaultsStorage: self.userDefaultsStorage)))
+
+    }
+}
+
