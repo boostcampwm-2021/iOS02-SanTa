@@ -27,7 +27,6 @@ final class MountainListViewModel {
     func findMountains() {
         guard let name = mountainName else { return }
         self.useCase.findMountains(name: name) { [weak self] mountains in
-            print(mountains)
             self?.mountains = mountains
         }
     }
