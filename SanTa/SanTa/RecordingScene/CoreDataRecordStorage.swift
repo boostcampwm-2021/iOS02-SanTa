@@ -11,6 +11,7 @@ import CoreData
 protocol RecordsStorage {
     func save(records: Records,
               completion: @escaping (Result<Records, CoreDataError>) -> Void)
+    func fetch(completion: @escaping (Result<[NSManagedObject], Error>) -> Void)
 }
 
 final class CoreDataRecordStorage: RecordsStorage {
@@ -61,5 +62,15 @@ final class CoreDataRecordStorage: RecordsStorage {
         }
     }
     
-    
+    func fetch(completion: @escaping (Result<[NSManagedObject], Error>) -> Void) {
+        self.coreDataStorage.performBackgroundTask { context in
+            do {
+                let requset = NSFetchRequest<NSManagedObject>(entityName: "Records")
+                let result = try context.fetch(requset)
+                completion(.success(result))
+            } catch {
+                completion(.failure(error))
+            }
+        }
+    }
 }

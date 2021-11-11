@@ -10,13 +10,19 @@ import UIKit
 class SettingsViewCoordinator: Coordinator {
     weak var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
-
+    
+    private var userDefaultsStorage: UserDefaultsStorage
+    
+    init(userDefaultsStorage: UserDefaultsStorage) {
+        self.userDefaultsStorage = userDefaultsStorage
+    }
+    
     func start() {
         
     }
 
     func startPush() -> SettingsViewController {
-        let settingsViewController = injectDependencies()
+        let settingsViewController = SettingsViewController(viewModel: injectDependencies())
         settingsViewController.coordinator = self
 
         return settingsViewController
@@ -24,11 +30,13 @@ class SettingsViewCoordinator: Coordinator {
 }
 
 extension SettingsViewCoordinator {
-    private func injectDependencies() -> SettingsViewController {
-        let repository = DefaultSettingsRepository(settingsStorage: DefaultUserDefaultsStorage.shared)
-        let usecase = DefaultSettingsUsecase(settingsRepository: repository)
-        let viewModel = SettingsViewModel(settingsUseCase: usecase)
-        let viewController = SettingsViewController(viewModel: viewModel)
-        return viewController
+    private func injectDependencies() -> SettingsViewModel {
+        return SettingsViewModel(
+            settingsUseCase: DefaultSettingsUsecase(
+                settingsRepository: DefaultSettingsRepository(
+                    settingsStorage: self.userDefaultsStorage
+                )
+            )
+        )
     }
 }

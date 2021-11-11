@@ -16,11 +16,9 @@ protocol UserDefaultsStorage {
 
 final class DefaultUserDefaultsStorage: UserDefaultsStorage {
     
-    static let shared = DefaultUserDefaultsStorage()
-    
     let userDefaults: UserDefaults
     
-    private init(useuserDefaults: UserDefaults = UserDefaults.standard) {
+    init(useuserDefaults: UserDefaults = UserDefaults.standard) {
         self.userDefaults = useuserDefaults
     }
     
