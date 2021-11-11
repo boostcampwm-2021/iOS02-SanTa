@@ -50,6 +50,8 @@ class MountainListViewController: UIViewController {
     private func configureSearchBar() {
         let searchController = UISearchController(searchResultsController: nil)
         searchController.searchBar.placeholder = "검색"
+        searchController.searchResultsUpdater = self
+        
         self.navigationItem.searchController = searchController
         self.navigationItem.hidesSearchBarWhenScrolling = false
     }
@@ -129,5 +131,11 @@ class MountainListViewController: UIViewController {
 extension MountainListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
+    }
+}
+
+extension MountainListViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        
     }
 }
