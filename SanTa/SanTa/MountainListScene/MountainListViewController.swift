@@ -42,7 +42,6 @@ class MountainListViewController: UIViewController {
         self.configureCollectionView()
         self.configureView()
         self.configuareDataSource()
-        self.configureData()
         self.configureBinding()
         self.viewModel?.viewDidLoad()
     }
@@ -125,14 +124,6 @@ class MountainListViewController: UIViewController {
         
         self.dataSource = datasource
         self.mountainListCollectionView.dataSource = dataSource
-    }
-    
-    private func configureData() {
-        var snapshot = MountainListSnapshot()
-        MountainListSection.allCases.forEach {
-            snapshot.appendSections([$0])
-        }
-        dataSource?.apply(snapshot, animatingDifferences: true)
     }
 }
 
