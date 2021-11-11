@@ -19,6 +19,8 @@ class MountainListViewController: UIViewController {
     
     var dataSource: MountainListDataSource?
     
+    private var viewModel: MountainListViewModel?
+    
     let mountainListCollectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .init(x: 0, y: 0, width: 0, height: 0), collectionViewLayout: flowLayout)
@@ -26,6 +28,11 @@ class MountainListViewController: UIViewController {
 
         return collectionView
     }()
+    
+    convenience init(viewModel: MountainListViewModel) {
+        self.init()
+        self.viewModel = viewModel
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
