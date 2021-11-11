@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Combine
 
 class MountainListViewController: UIViewController {
     enum MountainListSection: Int, CaseIterable {
@@ -20,6 +21,7 @@ class MountainListViewController: UIViewController {
     var dataSource: MountainListDataSource?
     
     private var viewModel: MountainListViewModel?
+    private var subscriptions = Set<AnyCancellable>()
     
     let mountainListCollectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
@@ -40,11 +42,10 @@ class MountainListViewController: UIViewController {
         self.configureView()
         self.configuareDataSource()
         self.configureData()
-        
-        self.bindSnapShotApply(section: MountainListSection.main, item: dummy)
+        self.configureBinding()
     }
     
-    func bindSnapShotApply(section: MountainListSection, item: [AnyHashable]) {
+    private func bindSnapShotApply(section: MountainListSection, item: [AnyHashable]) {
         DispatchQueue.global().sync {
             guard var snapshot = dataSource?.snapshot() else { return }
             item.forEach {
@@ -52,6 +53,16 @@ class MountainListViewController: UIViewController {
             }
             dataSource?.apply(snapshot, animatingDifferences: true)
         }
+    }
+    
+    private func configureBinding() {
+        self.viewModel?.$mountains
+            .receive(on: DispatchQueue.main)
+            .sink (receiveValue: { [weak self] mountains in
+                guard let mountains = mountains else { return }
+                self?.bindSnapShotApply(section: MountainListSection.main, item: mountains)
+            })
+            .store(in: &self.subscriptions)
     }
     
     private func configureCollectionView() {
