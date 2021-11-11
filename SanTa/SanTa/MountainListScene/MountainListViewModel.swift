@@ -21,4 +21,8 @@ final class MountainListViewModel {
             self?.mountains = mountains
         }
     }
+    
+    func findMountains(name: String) {
+        
+    }
 }
