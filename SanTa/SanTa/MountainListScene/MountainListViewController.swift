@@ -33,6 +33,18 @@ class MountainListViewController: UIViewController {
         self.configureView()
         self.configuareDataSource()
         self.configureData()
+        
+        self.bindSnapShotApply(section: MountainListSection.main, item: dummy)
+    }
+    
+    func bindSnapShotApply(section: MountainListSection, item: [AnyHashable]) {
+        DispatchQueue.global().sync {
+            guard var snapshot = dataSource?.snapshot() else { return }
+            item.forEach {
+                snapshot.appendItems([$0], toSection: section)
+            }
+            dataSource?.apply(snapshot, animatingDifferences: true)
+        }
     }
     
     private func configureCollectionView() {
@@ -91,13 +103,6 @@ extension MountainListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         collectionView.deselectItem(at: indexPath, animated: true)
     }
-}
-
-
-struct Mountain {
-    let name: String
-    let height: String
-    let location: String
 }
 
 let dummy = [Mountain(name: "백두산", height: "1000m", location: "북한"),
