@@ -33,6 +33,7 @@ class MountainListViewController: UIViewController {
     
     private func configureCollectionView() {
         self.mountainListCollectionView.delegate = self
+        self.mountainListCollectionView.collectionViewLayout = configureCompositionalLayout()
     }
     
     private func configureView() {
@@ -44,6 +45,18 @@ class MountainListViewController: UIViewController {
             self.mountainListCollectionView.rightAnchor.constraint(equalTo: self.view.rightAnchor),
         ]
         NSLayoutConstraint.activate(collectionViewConstrain)
+    }
+    
+    private func configureCompositionalLayout() -> UICollectionViewCompositionalLayout {
+        return UICollectionViewCompositionalLayout { (sectionNumber, env) -> NSCollectionLayoutSection? in
+            let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(0.25)))
+            item.contentInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 0)
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(180)),subitems: [item])
+            let section = NSCollectionLayoutSection(group: group)
+            section.orthogonalScrollingBehavior = .none
+            section.contentInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 0)
+            return section
+        }
     }
 }
 
