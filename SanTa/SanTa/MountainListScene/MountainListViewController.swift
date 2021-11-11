@@ -17,6 +17,8 @@ class MountainListViewController: UIViewController {
     
     weak var coordinator: MountainListViewCoordinator?
     
+    var dataSource: MountainListDataSource?
+    
     let mountainListCollectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .init(x: 0, y: 0, width: 0, height: 0), collectionViewLayout: flowLayout)
@@ -29,6 +31,7 @@ class MountainListViewController: UIViewController {
         super.viewDidLoad()
         self.configureCollectionView()
         self.configureView()
+        self.configureData()
     }
     
     private func configureCollectionView() {
@@ -57,6 +60,14 @@ class MountainListViewController: UIViewController {
             section.contentInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 0)
             return section
         }
+    }
+    
+    private func configureData() {
+        var snapshot = MountainListSnapshot()
+        MountainListSection.allCases.forEach {
+            snapshot.appendSections([$0])
+        }
+        dataSource?.apply(snapshot, animatingDifferences: true)
     }
 }
 
