@@ -8,6 +8,9 @@
 import UIKit
 
 class MountainListViewController: UIViewController {
+    enum MountainListSection: Int, CaseIterable {
+        case main
+    }
     
     weak var coordinator: MountainListViewCoordinator?
     
