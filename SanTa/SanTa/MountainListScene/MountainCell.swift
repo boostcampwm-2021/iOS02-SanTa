@@ -70,7 +70,7 @@ final class MountainCell: UICollectionViewCell {
     
     func update(mountain: MountainEntity) {
         self.name.text = mountain.mountain.mountainName
-        self.height.text = mountain.mountain.mountainHeight
+        self.height.text = mountain.mountain.mountainHeight + " m"
         self.location.text = mountain.mountain.mountainRegion
     }
 }

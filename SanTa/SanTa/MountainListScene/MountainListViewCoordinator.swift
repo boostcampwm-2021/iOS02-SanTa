@@ -29,6 +29,7 @@ class MountainListViewCoordinator: Coordinator {
         mountainListViewController.coordinator = self
         self.navigationController.setViewControllers([mountainListViewController], animated: true)
         self.navigationController.navigationBar.topItem?.title = "산 목록"
+        self.navigationController.navigationBar.prefersLargeTitles = true
 
         return navigationController
     }
