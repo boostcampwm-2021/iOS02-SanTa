@@ -15,7 +15,7 @@ protocol RecordsStorage {
 }
 
 final class CoreDataRecordStorage: RecordsStorage {
-
+   
     private let coreDataStorage: CoreDataStorage
 
     init(coreDataStorage: CoreDataStorage) {

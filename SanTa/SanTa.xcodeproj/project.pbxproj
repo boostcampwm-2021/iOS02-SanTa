@@ -167,7 +167,6 @@
 				DAB37D4B2731166B00EC523F /* RecordingViewModel.swift */,
 				984DDEC227325DFC003BE56B /* RecordingUseCase.swift */,
 				984DDEC427325FB9003BE56B /* RecordRepository.swift */,
-				984DDEC627327064003BE56B /* CoreDataRecordStorage.swift */,
 				984DDEC027325D67003BE56B /* Record.swift */,
 				DAB37D4F273256B900EC523F /* RecordingModel.swift */,
 			);
@@ -245,6 +244,7 @@
 				984DDEC8273271EC003BE56B /* CoreDataStorage.swift */,
 				49FEEDB6273255DD00D37CCA /* MountainExtractor.swift */,
 				98A913002736844E008AAE39 /* UserDefaultsStorage.swift */,
+				984DDEC627327064003BE56B /* CoreDataRecordStorage.swift */,
 			);
 			path = Persistences;
 			sourceTree = "<group>";
