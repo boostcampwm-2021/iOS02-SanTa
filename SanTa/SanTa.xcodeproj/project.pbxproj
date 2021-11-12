@@ -42,6 +42,8 @@
 		5485128C272A6AD500407F28 /* SanTa.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5485128A272A6AD500407F28 /* SanTa.xcdatamodeld */; };
 		5485128E272A6AD600407F28 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5485128D272A6AD600407F28 /* Assets.xcassets */; };
 		54851291272A6AD600407F28 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5485128F272A6AD600407F28 /* LaunchScreen.storyboard */; };
+		9800821D273CB45D006A847A /* ResultRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9800821C273CB45D006A847A /* ResultRepository.swift */; };
+		9800821F273CE16E006A847A /* ResultUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9800821E273CE16E006A847A /* ResultUseCase.swift */; };
 		9826F3DD2739035E0064FA85 /* Option.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9826F3DC2739035E0064FA85 /* Option.swift */; };
 		9826F3DF273904010064FA85 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9826F3DE273904010064FA85 /* Settings.swift */; };
 		9826F436273954020064FA85 /* SettingsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9826F425273925BF0064FA85 /* SettingsViewModelTests.swift */; };
@@ -122,6 +124,8 @@
 		5485128D272A6AD600407F28 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		54851290272A6AD600407F28 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		54851292272A6AD600407F28 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9800821C273CB45D006A847A /* ResultRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultRepository.swift; sourceTree = "<group>"; };
+		9800821E273CE16E006A847A /* ResultUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultUseCase.swift; sourceTree = "<group>"; };
 		9826F3DC2739035E0064FA85 /* Option.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Option.swift; sourceTree = "<group>"; };
 		9826F3DE273904010064FA85 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
 		9826F425273925BF0064FA85 /* SettingsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModelTests.swift; sourceTree = "<group>"; };
@@ -177,7 +181,6 @@
 				DAB37D4B2731166B00EC523F /* RecordingViewModel.swift */,
 				984DDEC227325DFC003BE56B /* RecordingUseCase.swift */,
 				984DDEC427325FB9003BE56B /* RecordRepository.swift */,
-				984DDEC627327064003BE56B /* CoreDataRecordStorage.swift */,
 				984DDEC027325D67003BE56B /* Record.swift */,
 				DAB37D4F273256B900EC523F /* RecordingModel.swift */,
 			);
@@ -189,6 +192,8 @@
 			children = (
 				5429694C272FC1390070B362 /* ResultViewController.swift */,
 				5429694E272FC1740070B362 /* ResultViewCoordinator.swift */,
+				9800821E273CE16E006A847A /* ResultUseCase.swift */,
+				9800821C273CB45D006A847A /* ResultRepository.swift */,
 			);
 			path = ResultScene;
 			sourceTree = "<group>";
@@ -260,6 +265,7 @@
 				984DDEC8273271EC003BE56B /* CoreDataStorage.swift */,
 				49FEEDB6273255DD00D37CCA /* MountainExtractor.swift */,
 				98A913002736844E008AAE39 /* UserDefaultsStorage.swift */,
+				984DDEC627327064003BE56B /* CoreDataRecordStorage.swift */,
 			);
 			path = Persistences;
 			sourceTree = "<group>";
@@ -488,7 +494,9 @@
 				984DDEC727327064003BE56B /* CoreDataRecordStorage.swift in Sources */,
 				49225C60273CDB680021AD79 /* ResultDetailSmallerInfoView.swift in Sources */,
 				98A913012736844E008AAE39 /* UserDefaultsStorage.swift in Sources */,
+				9800821D273CB45D006A847A /* ResultRepository.swift in Sources */,
 				DAB37D50273256B900EC523F /* RecordingModel.swift in Sources */,
+				9800821F273CE16E006A847A /* ResultUseCase.swift in Sources */,
 				54296945272FBC6E0070B362 /* AppCoordinator.swift in Sources */,
 				547CDD9C27392496007CCA29 /* UIImage+Gif.swift in Sources */,
 				5429694B272FBFCA0070B362 /* RecordingViewCoordinator.swift in Sources */,

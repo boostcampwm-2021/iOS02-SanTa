@@ -154,7 +154,7 @@ final class RecordingModel: NSObject, ObservableObject {
             return
         }
         
-        self.records?.records.append(record)
+        self.records?.add(record: record)
     }
     
     func pause() {
