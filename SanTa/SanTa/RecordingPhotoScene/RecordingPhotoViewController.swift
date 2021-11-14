@@ -53,9 +53,63 @@ class RecordingPhotoViewController: UIViewController {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
+    
+    private let photoStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.spacing = 12
+        stackView.axis = .vertical
+        stackView.distribution = .fillEqually
+        stackView.alignment = .center
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        return stackView
+    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        self.configureConstraints()
+    }
+    
+    private func configureConstraints() {
+        let frameWidth = view.frame.width
+        let frameHeight = view.frame.height
+        
+        self.displayView.frame = CGRect(x: 6, y: frameHeight - frameHeight/2, width: frameWidth - 12, height: frameHeight/3)
+        
+        [self.recordingPhotoTitle, self.recordingPhotoImage, self.recordingPhotoDescription, self.agreeButton].forEach {
+            self.photoStackView.addArrangedSubview($0)
+        }
+        
+        self.view.addSubview(displayView)
+        self.displayView.addSubview(photoStackView)
+        
+        let recordingPhotoTitleConstraints = [
+            self.recordingPhotoTitle.widthAnchor.constraint(equalToConstant: frameWidth - 12)
+        ]
+        
+        let recordingPhotoImageConstraints = [
+            self.recordingPhotoImage.widthAnchor.constraint(equalToConstant: frameWidth - 12)
+        ]
+        
+        let recordingPhotoDescriptionText = [
+            self.recordingPhotoDescription.widthAnchor.constraint(equalToConstant: frameWidth - 12)
+        ]
+        
+        let agreeButtonConstraints = [
+            self.agreeButton.widthAnchor.constraint(equalToConstant: frameWidth - 12)
+        ]
+        
+        let titleStackViewConstraints = [
+            self.photoStackView.topAnchor.constraint(equalTo: self.displayView.topAnchor, constant: 16),
+            self.photoStackView.leadingAnchor.constraint(equalTo: self.displayView.leadingAnchor, constant: 16),
+            self.photoStackView.trailingAnchor.constraint(equalTo: self.displayView.trailingAnchor, constant: -16),
+            self.photoStackView.bottomAnchor.constraint(equalTo: self.displayView.bottomAnchor, constant: -16)
+        ]
+        
+        NSLayoutConstraint.activate(recordingPhotoTitleConstraints)
+        NSLayoutConstraint.activate(recordingPhotoImageConstraints)
+        NSLayoutConstraint.activate(recordingPhotoDescriptionText)
+        NSLayoutConstraint.activate(agreeButtonConstraints)
+        NSLayoutConstraint.activate(titleStackViewConstraints)
     }
 }
