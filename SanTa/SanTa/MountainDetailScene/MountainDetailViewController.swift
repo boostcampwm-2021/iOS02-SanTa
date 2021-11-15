@@ -92,6 +92,27 @@ extension MountainDetailViewController {
             tableView.rightAnchor.constraint(equalTo: view.rightAnchor)
         ]
         NSLayoutConstraint.activate(tableViewConstraints)
+        
+//        let backButton = UIButton()
+//        backButton.setImage(.init(systemName: "xmark"), for: .normal)
+//        backButton.tintColor = .white
+        let backButton = UIImageView(image: .init(systemName: "xmark")?.withTintColor(.white))
+        self.view.addSubview(backButton)
+        backButton.translatesAutoresizingMaskIntoConstraints = false
+        backButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(close)))
+        backButton.isUserInteractionEnabled = true
+        
+        let backButtonConstraints = [
+            backButton.topAnchor.constraint(equalTo: self.view.topAnchor),
+            backButton.leftAnchor.constraint(equalTo: self.view.leftAnchor),
+            backButton.widthAnchor.constraint(equalToConstant: 40),
+            backButton.heightAnchor.constraint(equalToConstant: 40),
+            
+        ]
+        NSLayoutConstraint.activate(backButtonConstraints)
+    }
+    @objc private func close() {
+        self.dismiss(animated: true, completion: nil)
     }
     
     private func configuredTableView(mountainDetail: MountainDetailModel) -> UITableView {
