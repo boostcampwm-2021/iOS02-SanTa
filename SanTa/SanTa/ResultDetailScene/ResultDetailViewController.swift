@@ -1,48 +1,70 @@
 //
-//  ResultDetailViewController.swift
-//  SanTa
+//  ViewController.swift
+//  SwipeView
 //
-//  Created by Jiwon Yoon on 2021/11/11.
+//  Created by Jiwon Yoon on 2021/11/10.
 //
 
 import UIKit
 import MapKit
 
 class ResultDetailViewController: UIViewController {
-    private let mapView = MKMapView()
-    private let miniInfoView = ResultDetailSmallerInfoView()
+    private var mapView: MKMapView?
+    private var infoView: UIView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.layout()
-        // Do any additional setup after loading the view.
+        self.layoutInitialRecordDetailView()
+        self.registerRecognizers()
     }
 }
 
 extension ResultDetailViewController {
-    private func layout() {
-        self.view.addSubview(self.mapView)
-        self.mapView.translatesAutoresizingMaskIntoConstraints = false
+    private func registerRecognizers() {
+        let swipeDownRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(showSmallInfoView))
+        swipeDownRecognizer.direction = .down
+        self.infoView?.addGestureRecognizer(swipeDownRecognizer)
         
-        let mapViewConstraints = [
-            mapView.topAnchor.constraint(equalTo: self.view.topAnchor),
-            mapView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
-            mapView.rightAnchor.constraint(equalTo: self.view.rightAnchor),
-            mapView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.75)
-        ]
-        NSLayoutConstraint.activate(mapViewConstraints)
-        
-        self.view.addSubview(self.miniInfoView)
-        self.miniInfoView.translatesAutoresizingMaskIntoConstraints = false
-        
-        let swipeViewConstraints = [
-            miniInfoView.topAnchor.constraint(equalTo: self.mapView.bottomAnchor),
-            miniInfoView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
-            miniInfoView.rightAnchor.constraint(equalTo: self.view.rightAnchor),
-            miniInfoView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
-        ]
-        miniInfoView.backgroundColor = .red
-        NSLayoutConstraint.activate(swipeViewConstraints)
+        let swipeUpRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(showLargeInfoView))
+        swipeUpRecognizer.direction = .up
+        self.infoView?.addGestureRecognizer(swipeUpRecognizer)
     }
     
+    private func layoutInitialRecordDetailView() {
+        let mapFrame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: self.view.bounds.height * 0.75)
+        self.mapView = MKMapView(frame: mapFrame)
+        if let mapView = self.mapView { self.view.addSubview(mapView) }
+        
+        self.infoView = UIView(frame: CGRect(x: 0, y: self.view.bounds.height * 0.75, width: self.view.bounds.width, height: self.view.bounds.height * 0.25))
+        if let infoView = self.infoView {
+            self.view.addSubview(infoView)
+            infoView.addSubview(ResultDetailSmallerInfoView(frame: infoView.bounds))
+        }
+    }
 }
+
+extension ResultDetailViewController {
+    @objc private func showLargeInfoView() {
+        self.infoView?.subviews.forEach { $0.removeFromSuperview() }
+        let newY = self.view.bounds.height * 0.1
+        let newHeight = self.view.bounds.height * 0.9
+        self.mapView?.isUserInteractionEnabled = false
+        UIView.animate(withDuration: 0.25) {
+            self.infoView?.frame = CGRect(x: 0, y: newY, width: self.view.bounds.width, height: newHeight)
+        }
+        self.infoView?.addSubview(ResultDetailLargerInfoView(frame: self.infoView?.bounds ?? CGRect.zero))
+    }
+    
+    @objc private func showSmallInfoView() {
+        self.infoView?.subviews.forEach { $0.removeFromSuperview() }
+        let newY = self.view.bounds.height * 0.75
+        let newHeight = self.view.bounds.height * 0.25
+        self.mapView?.isUserInteractionEnabled = true
+        UIView.animate(withDuration: 0.25) {
+            self.infoView?.frame = CGRect(x: 0, y: newY, width: self.view.bounds.width, height: newHeight)
+        }
+        self.infoView?.addSubview(ResultDetailSmallerInfoView(frame: self.infoView?.bounds ?? CGRect.zero))
+    }
+}
+
+

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		49225C5E273CDB4F0021AD79 /* ResultDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49225C5D273CDB4F0021AD79 /* ResultDetailViewController.swift */; };
 		49225C60273CDB680021AD79 /* ResultDetailSmallerInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49225C5F273CDB680021AD79 /* ResultDetailSmallerInfoView.swift */; };
+		49742D562740E1A0008F7DC2 /* ResultDetailLargerInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49742D552740E1A0008F7DC2 /* ResultDetailLargerInfoView.swift */; };
 		49A3E61D2732756C0020CAC1 /* MountainAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A3E61C2732756C0020CAC1 /* MountainAnnotation.swift */; };
 		49D5A9492738C31600937821 /* MountainDetailViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D5A9482738C31600937821 /* MountainDetailViewCoordinator.swift */; };
 		49D5A94B2738C3AB00937821 /* MountainDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D5A94A2738C3AB00937821 /* MountainDetailViewController.swift */; };
@@ -89,6 +90,7 @@
 /* Begin PBXFileReference section */
 		49225C5D273CDB4F0021AD79 /* ResultDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailViewController.swift; sourceTree = "<group>"; };
 		49225C5F273CDB680021AD79 /* ResultDetailSmallerInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailSmallerInfoView.swift; sourceTree = "<group>"; };
+		49742D552740E1A0008F7DC2 /* ResultDetailLargerInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailLargerInfoView.swift; sourceTree = "<group>"; };
 		49A3E61C2732756C0020CAC1 /* MountainAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainAnnotation.swift; sourceTree = "<group>"; };
 		49D5A9482738C31600937821 /* MountainDetailViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainDetailViewCoordinator.swift; sourceTree = "<group>"; };
 		49D5A94A2738C3AB00937821 /* MountainDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainDetailViewController.swift; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 			children = (
 				49225C5D273CDB4F0021AD79 /* ResultDetailViewController.swift */,
 				49225C5F273CDB680021AD79 /* ResultDetailSmallerInfoView.swift */,
+				49742D552740E1A0008F7DC2 /* ResultDetailLargerInfoView.swift */,
 			);
 			path = ResultDetailScene;
 			sourceTree = "<group>";
@@ -478,6 +481,7 @@
 				DAAF4D6E273CE06A00780DC8 /* MountainListViewUseCase.swift in Sources */,
 				985EEF63272FDA98002413D9 /* MountainCell.swift in Sources */,
 				5428FDBD272F8C5B002F9D40 /* MapViewUseCase.swift in Sources */,
+				49742D562740E1A0008F7DC2 /* ResultDetailLargerInfoView.swift in Sources */,
 				5428FDB4272F894D002F9D40 /* MapViewRepository.swift in Sources */,
 				5485128C272A6AD500407F28 /* SanTa.xcdatamodeld in Sources */,
 				54296947272FBD4B0070B362 /* MapViewCoordinator.swift in Sources */,
@@ -681,6 +685,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B3PWYBKFUK;
@@ -711,6 +716,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = B3PWYBKFUK;

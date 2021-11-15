@@ -1,8 +1,8 @@
 //
-//  ResultDetailSmallerInfoView.swift
-//  SanTa
+//  SwipeViewBefore.swift
+//  SwipeView
 //
-//  Created by Jiwon Yoon on 2021/11/11.
+//  Created by Jiwon Yoon on 2021/11/10.
 //
 
 import UIKit
@@ -29,9 +29,13 @@ class ResultDetailSmallerInfoView: UIView {
     
     
     init() {
-        super.init(frame: CGRect.zero)
+        super.init(frame: .zero)
         self.layout()
-        print("layout swipeview")
+    }
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.layout()
     }
     
     required init?(coder: NSCoder) {
