@@ -12,23 +12,28 @@ import Photos
 final class RecordingPhotoModel {
     
     private let imageManager = PHImageManager()
-    private let thumbnailSize = CGSize(width: 1024, height: 1024)
     
     var representedAssetIdentifier: String?
     
-    func fetchPhotos(startDate: Date, endDate: Date) -> [Date]? {
+    func fetchPhotos(startDate: Date, endDate: Date, completion: @escaping ([Data]?) -> Void){
         let allMedia = PHAsset.fetchAssets(with: .image, options: nil)
         
         for i in 0..<allMedia.count {
             let asset = allMedia[i]
-            requestIamge(with: asset, thumbnailSize: self.thumbnailSize) { (image) in
-//                print(image)
+            if asset.creationDate == nil || asset.location == nil {
+                continue
+            }
+            
+            guard let creationDate = asset.creationDate,
+                  let location = asset.location else { return }
+            
+            requestIamge(with: asset) { (image) in
+                print(image)
             }
         }
-        return nil
     }
     
-    func requestIamge(with asset: PHAsset?, thumbnailSize: CGSize, completion: @escaping (Data?) -> Void) {
+    func requestIamge(with asset: PHAsset?, completion: @escaping (Data?) -> Void) {
         guard let asset = asset,
               let date = asset.creationDate else {
             completion(nil)

@@ -143,3 +143,9 @@ struct Location {
     let longitude: Double
     let altitude: Double
 }
+
+struct Photo {
+    let latitude: Double
+    let longitude: Double
+    let date: Date
+}
