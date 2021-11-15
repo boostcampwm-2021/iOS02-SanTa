@@ -17,8 +17,9 @@ final class RecordingPhotoModel {
     
     func fetchPhotos(startDate: Date, endDate: Date, completion: @escaping ([Data]?) -> Void){
         let allMedia = PHAsset.fetchAssets(with: .image, options: nil)
+        var photos = [Photo]()
         
-        for i in 0..<allMedia.count {
+        for i in stride(from: allMedia.count - 1, through: 0, by: -1) {
             let asset = allMedia[i]
             if asset.creationDate == nil || asset.location == nil {
                 continue
@@ -27,19 +28,32 @@ final class RecordingPhotoModel {
             guard let creationDate = asset.creationDate,
                   let location = asset.location else { return }
             
-            requestIamge(with: asset) { (image) in
-                print(image)
+            switch startDate.compare(creationDate) {
+            case .orderedDescending, .orderedSame:
+                switch endDate.compare(creationDate) {
+                case .orderedAscending, .orderedSame:
+                    
+                    requestIamge(with: asset) { (image) in
+                        guard let image = image else { return }
+                        let photo = Photo(latitude: Double(location.coordinate.latitude), longitude: Double(location.coordinate.longitude), date: image)
+                        photos.append(photo)
+                    }
+                case .orderedDescending:
+                    break
+                }
+            case .orderedAscending:
+                break
             }
+            
         }
     }
     
     func requestIamge(with asset: PHAsset?, completion: @escaping (Data?) -> Void) {
-        guard let asset = asset,
-              let date = asset.creationDate else {
+        guard let asset = asset else {
             completion(nil)
             return
         }
-        print(date)
+        
         self.representedAssetIdentifier = asset.localIdentifier
         
 //        self.imageManager.requestImageDataAndOrientation(for: asset, options: nil, resultHandler: { data, str, orientation, info in

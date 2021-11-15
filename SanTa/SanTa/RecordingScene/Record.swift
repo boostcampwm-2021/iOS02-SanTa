@@ -147,5 +147,5 @@ struct Location {
 struct Photo {
     let latitude: Double
     let longitude: Double
-    let date: Date
+    let date: Data
 }
