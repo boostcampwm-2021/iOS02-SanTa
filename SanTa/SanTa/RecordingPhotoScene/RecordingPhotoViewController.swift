@@ -16,6 +16,7 @@ class RecordingPhotoViewController: UIViewController {
         view.backgroundColor = UIColor(named: "RecordingSubViewBackgroundColor")
         view.layer.masksToBounds = true
         view.layer.cornerRadius = 12
+        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
@@ -62,9 +63,9 @@ class RecordingPhotoViewController: UIViewController {
     
     private let photoStackView: UIStackView = {
         let stackView = UIStackView()
-        stackView.spacing = 8
+        stackView.spacing = 16
         stackView.axis = .vertical
-        stackView.distribution = .fillProportionally
+        stackView.distribution = .fill
         stackView.alignment = .center
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
@@ -79,9 +80,6 @@ class RecordingPhotoViewController: UIViewController {
     
     private func configureConstraints() {
         let frameWidth = view.frame.width
-        let frameHeight = view.frame.height
-        
-        self.displayView.frame = CGRect(x: 6, y: frameWidth, width: frameWidth - 12, height: frameHeight/2 - 64)
         
         [self.recordingPhotoTitle, self.recordingPhotoImage, self.recordingPhotoDescription, self.agreeButton].forEach {
             self.photoStackView.addArrangedSubview($0)
@@ -89,6 +87,12 @@ class RecordingPhotoViewController: UIViewController {
         
         self.view.addSubview(displayView)
         self.displayView.addSubview(photoStackView)
+        
+        let displayViweConstraints = [
+            self.displayView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 6),
+            self.displayView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -6),
+            self.displayView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -64)
+        ]
         
         let recordingPhotoTitleConstraints = [
             self.recordingPhotoTitle.widthAnchor.constraint(equalToConstant: frameWidth - 12)
@@ -104,7 +108,8 @@ class RecordingPhotoViewController: UIViewController {
         ]
 
         let agreeButtonConstraints = [
-            self.agreeButton.widthAnchor.constraint(equalToConstant: frameWidth - 12)
+            self.agreeButton.widthAnchor.constraint(equalToConstant: frameWidth - 12),
+            self.agreeButton.heightAnchor.constraint(equalToConstant: frameWidth/8)
         ]
         
         let titleStackViewConstraints = [
@@ -114,6 +119,7 @@ class RecordingPhotoViewController: UIViewController {
             self.photoStackView.bottomAnchor.constraint(equalTo: self.displayView.bottomAnchor, constant: -16)
         ]
         
+        NSLayoutConstraint.activate(displayViweConstraints)
         NSLayoutConstraint.activate(recordingPhotoTitleConstraints)
         NSLayoutConstraint.activate(recordingPhotoImageConstraints)
         NSLayoutConstraint.activate(recordingPhotoDescriptionText)
