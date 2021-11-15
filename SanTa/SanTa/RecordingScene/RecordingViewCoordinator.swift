@@ -27,7 +27,8 @@ class RecordingViewCoordinator: Coordinator {
                             coreDataStorage: self.coreDataStorage
                         )
                     ),
-                    recordingModel: RecordingModel()
+                    recordingModel: RecordingModel(),
+                    recordingPhoto: RecordingPhotoModel()
                 )
             )
         )

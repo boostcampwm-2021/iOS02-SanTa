@@ -76,6 +76,7 @@
 		DAB37D50273256B900EC523F /* RecordingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB37D4F273256B900EC523F /* RecordingModel.swift */; };
 		DAFA9B59274112D800BF168C /* RecordingPhotoCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFA9B58274112D800BF168C /* RecordingPhotoCoordinator.swift */; };
 		DAFA9B5B2741131400BF168C /* RecordingPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFA9B5A2741131400BF168C /* RecordingPhotoViewController.swift */; };
+		DAFA9B5D27424C9A00BF168C /* RecordingPhotoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFA9B5C27424C9A00BF168C /* RecordingPhotoModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -156,6 +157,7 @@
 		DAB37D4F273256B900EC523F /* RecordingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingModel.swift; sourceTree = "<group>"; };
 		DAFA9B58274112D800BF168C /* RecordingPhotoCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingPhotoCoordinator.swift; sourceTree = "<group>"; };
 		DAFA9B5A2741131400BF168C /* RecordingPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingPhotoViewController.swift; sourceTree = "<group>"; };
+		DAFA9B5C27424C9A00BF168C /* RecordingPhotoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingPhotoModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +186,7 @@
 				5429694A272FBFCA0070B362 /* RecordingViewCoordinator.swift */,
 				DAB37D4B2731166B00EC523F /* RecordingViewModel.swift */,
 				984DDEC227325DFC003BE56B /* RecordingUseCase.swift */,
+				DAFA9B5C27424C9A00BF168C /* RecordingPhotoModel.swift */,
 				984DDEC427325FB9003BE56B /* RecordRepository.swift */,
 				984DDEC027325D67003BE56B /* Record.swift */,
 				DAB37D4F273256B900EC523F /* RecordingModel.swift */,
@@ -502,6 +505,7 @@
 				98AEF1D727310759002E9C9A /* PaddingLabel.swift in Sources */,
 				54851282272A6AD500407F28 /* AppDelegate.swift in Sources */,
 				49D5A9532738FBCD00937821 /* MountainDetailModel.swift in Sources */,
+				DAFA9B5D27424C9A00BF168C /* RecordingPhotoModel.swift in Sources */,
 				49FEEDB92732584000D37CCA /* MountainEntity.swift in Sources */,
 				98BCF4F92737A7120073E6FB /* SettingsViewModel.swift in Sources */,
 				54296949272FBFAB0070B362 /* RecordingViewController.swift in Sources */,
