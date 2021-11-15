@@ -7,6 +7,7 @@
 
 import UIKit
 import Combine
+import Photos
 
 protocol RecordingViewDelegate: AnyObject {
     func didTitleWriteDone(title: String)
@@ -104,7 +105,7 @@ class RecordingViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        self.presentRecordingPhotoView()
+        self.configureAlbumPermission()
     }
     
     private func configureBindings() {
@@ -143,8 +144,19 @@ class RecordingViewController: UIViewController {
         self.locationButton.addTarget(self, action: #selector(locationButtonAction), for: .touchUpInside)
     }
     
-    private func presentRecordingPhotoView() {
-        self.coordinator?.presentRecordingPhotoViewController()
+    private func configureAlbumPermission() {
+        let status = PHPhotoLibrary.authorizationStatus(for: .readWrite)
+        
+        switch status{
+        case .authorized:
+            break
+        case .denied:
+            self.coordinator?.presentRecordingPhotoViewController()
+        case .restricted, .notDetermined:
+            self.coordinator?.presentRecordingPhotoViewController()
+        default:
+            break
+        }
     }
     
     @objc private func pauseButtonAction(_ sender: UIResponder) {
@@ -217,6 +229,6 @@ extension RecordingViewController: RecordingViewDelegate {
     }
     
     func didAgreeButtonTouchDone() {
-        
+        PHPhotoLibrary.requestAuthorization { _ in }
     }
 }

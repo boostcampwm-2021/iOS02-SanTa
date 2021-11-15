@@ -127,5 +127,6 @@ class RecordingPhotoViewController: UIViewController {
     
     @objc private func agreeButtonAction(_ sender: UIButton) {
         self.delegate?.didAgreeButtonTouchDone()
+        self.coordinator?.dismiss()
     }
 }
