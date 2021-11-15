@@ -10,7 +10,7 @@ import UIKit
 class MountainDetailTableViewCell: UITableViewCell {
     static let identifier = "MountainDetailTableViewCellID"
     
-    let categoryLabel = UILabel()
+    let categoryLabel = MountainDetailCategoryLabel()
     let contentLabel = UILabel()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -24,11 +24,15 @@ class MountainDetailTableViewCell: UITableViewCell {
     }
     
     private func setLayout() {
-        categoryLabel.backgroundColor = .green
+        categoryLabel.backgroundColor = .init(named: "SantaColor")
         categoryLabel.textColor = .white
+        categoryLabel.clipsToBounds = true
+        categoryLabel.font = UIFont.systemFont(ofSize: 15, weight: .bold)
+        categoryLabel.layer.cornerRadius = 5
         
         contentLabel.numberOfLines = 0
         contentLabel.lineBreakMode = .byCharWrapping
+        contentLabel.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         
         categoryLabel.translatesAutoresizingMaskIntoConstraints = false
         contentLabel.translatesAutoresizingMaskIntoConstraints = false

@@ -53,8 +53,8 @@ extension MountainDetailViewController {
         
         headerView.addSubview(mapSnapShot)
         headerView.addSubview(titleView)
-        view.addSubview(headerView)
         view.addSubview(tableView)
+        view.addSubview(headerView)
         
         let headerConstraints = [
             headerView.topAnchor.constraint(equalTo: view.topAnchor),
