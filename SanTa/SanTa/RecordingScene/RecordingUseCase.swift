@@ -11,7 +11,7 @@ protocol RecordingUseCase {
     var recording: RecordingModel { get set }
     
     func save(title: String, completion: @escaping (Result<Records, CoreDataError>) -> Void)
-    func fetchPhotos()
+    func fetchPhotos(startDate: Date?, endDate: Date?) -> [Date]?
     func pause()
     func resume()
 }
@@ -42,11 +42,17 @@ final class DefaultRecordingUseCase: RecordingUseCase, ObservableObject {
             return
         }
         records.configureTitle(title: title)
-        self.fetchPhotos() // 임시
+        self.fetchPhotos(startDate: records.records.last?.endTime, endDate: records.records.first?.startTime)
         self.recordRepository.save(records: records, completion: completion)
     }
     
-    func fetchPhotos() {
-        self.recordingPhoto.fetchPhotos()
+    func fetchPhotos(startDate: Date?, endDate: Date?) -> [Date]? {
+        guard let startDate = startDate,
+              let endDate = endDate else {
+            return nil
+        }
+
+        self.recordingPhoto.fetchPhotos(startDate: startDate, endDate: endDate)
+        return nil
     }
 }
