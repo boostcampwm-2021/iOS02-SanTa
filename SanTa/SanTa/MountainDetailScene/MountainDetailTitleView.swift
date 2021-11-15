@@ -23,7 +23,6 @@ class MountainDetailTitleView: UIView {
         self.layer.shadowRadius = 1
         self.layer.shadowColor = UIColor.lightGray.cgColor
         self.layer.shadowOffset = CGSize(width: 0, height: 1)
-        print("add shadow")
     }
 
     private func layoutTitleView() {
@@ -37,13 +36,13 @@ class MountainDetailTitleView: UIView {
         
         let titleConstraints = [
             titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
-            titleLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20)
+            titleLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 25)
         ]
         NSLayoutConstraint.activate(titleConstraints)
         
         let distanceLabelConstraints = [
             distanceLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
-            distanceLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20)
+            distanceLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 25)
         ]
         NSLayoutConstraint.activate(distanceLabelConstraints)
     }

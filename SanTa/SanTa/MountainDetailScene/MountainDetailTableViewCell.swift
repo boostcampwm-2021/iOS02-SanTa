@@ -41,13 +41,13 @@ class MountainDetailTableViewCell: UITableViewCell {
         self.addSubview(contentLabel)
         
         let categoryLabelConstraints = [
-            categoryLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20),
+            categoryLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 25),
             categoryLabel.topAnchor.constraint(equalTo: self.topAnchor, constant:  20)
         ]
         NSLayoutConstraint.activate(categoryLabelConstraints)
         
         let contentLabelConstraints = [
-            contentLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20),
+            contentLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 25),
             contentLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -10),
             contentLabel.topAnchor.constraint(equalTo: categoryLabel.bottomAnchor, constant: 10),
             contentLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor)
@@ -56,6 +56,7 @@ class MountainDetailTableViewCell: UITableViewCell {
     }
     
     func configure(category: String, content: String) {
+        categoryLabel.isHidden = content.isEmpty
         categoryLabel.text = category
         contentLabel.text = content
     }
