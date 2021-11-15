@@ -31,6 +31,7 @@ class RecordingPhotoViewController: UIViewController {
         let label = UILabel()
         label.text = "사진 기록하기"
         label.font = .preferredFont(forTextStyle: .title1)
+        label.adjustsFontForContentSizeCategory = true
         label.textAlignment = .center
         label.textColor = .systemGray
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -41,6 +42,7 @@ class RecordingPhotoViewController: UIViewController {
         let label = UILabel()
         label.text = "사진을 찍으면 지도에 표시됩니다."
         label.font = .preferredFont(forTextStyle: .title2)
+        label.adjustsFontForContentSizeCategory = true
         label.numberOfLines = 2
         label.textAlignment = .center
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -72,6 +74,7 @@ class RecordingPhotoViewController: UIViewController {
         super.viewDidLoad()
         
         self.configureConstraints()
+        self.configureTarget()
     }
     
     private func configureConstraints() {
@@ -116,5 +119,13 @@ class RecordingPhotoViewController: UIViewController {
         NSLayoutConstraint.activate(recordingPhotoDescriptionText)
         NSLayoutConstraint.activate(agreeButtonConstraints)
         NSLayoutConstraint.activate(titleStackViewConstraints)
+    }
+    
+    private func configureTarget() {
+        self.agreeButton.addTarget(self, action: #selector(agreeButtonAction), for: .touchUpInside)
+    }
+    
+    @objc private func agreeButtonAction(_ sender: UIButton) {
+        self.delegate?.didAgreeButtonTouchDone()
     }
 }

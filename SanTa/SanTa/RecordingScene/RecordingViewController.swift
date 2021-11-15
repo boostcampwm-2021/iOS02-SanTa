@@ -10,6 +10,7 @@ import Combine
 
 protocol RecordingViewDelegate: AnyObject {
     func didTitleWriteDone(title: String)
+    func didAgreeButtonTouchDone()
 }
 
 class RecordingViewController: UIViewController {
@@ -213,5 +214,9 @@ extension RecordingViewController: RecordingViewDelegate {
                 }
             }
         }
+    }
+    
+    func didAgreeButtonTouchDone() {
+        
     }
 }
