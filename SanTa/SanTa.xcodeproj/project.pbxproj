@@ -10,6 +10,7 @@
 		49225C5E273CDB4F0021AD79 /* ResultDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49225C5D273CDB4F0021AD79 /* ResultDetailViewController.swift */; };
 		49225C60273CDB680021AD79 /* ResultDetailSmallerInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49225C5F273CDB680021AD79 /* ResultDetailSmallerInfoView.swift */; };
 		49450A4D274205040062CD51 /* MountainDetailCategoryLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49450A4C274205040062CD51 /* MountainDetailCategoryLabel.swift */; };
+		4955B8EB2742A65D00D90F94 /* MountainDetailAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4955B8EA2742A65D00D90F94 /* MountainDetailAnnotationView.swift */; };
 		49742D562740E1A0008F7DC2 /* ResultDetailLargerInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49742D552740E1A0008F7DC2 /* ResultDetailLargerInfoView.swift */; };
 		49A3E61D2732756C0020CAC1 /* MountainAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49A3E61C2732756C0020CAC1 /* MountainAnnotation.swift */; };
 		49D5A9492738C31600937821 /* MountainDetailViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D5A9482738C31600937821 /* MountainDetailViewCoordinator.swift */; };
@@ -92,6 +93,7 @@
 		49225C5D273CDB4F0021AD79 /* ResultDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailViewController.swift; sourceTree = "<group>"; };
 		49225C5F273CDB680021AD79 /* ResultDetailSmallerInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailSmallerInfoView.swift; sourceTree = "<group>"; };
 		49450A4C274205040062CD51 /* MountainDetailCategoryLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainDetailCategoryLabel.swift; sourceTree = "<group>"; };
+		4955B8EA2742A65D00D90F94 /* MountainDetailAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainDetailAnnotationView.swift; sourceTree = "<group>"; };
 		49742D552740E1A0008F7DC2 /* ResultDetailLargerInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailLargerInfoView.swift; sourceTree = "<group>"; };
 		49A3E61C2732756C0020CAC1 /* MountainAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainAnnotation.swift; sourceTree = "<group>"; };
 		49D5A9482738C31600937821 /* MountainDetailViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainDetailViewCoordinator.swift; sourceTree = "<group>"; };
@@ -236,6 +238,7 @@
 				49D5A954273A5A5C00937821 /* MountainDetailTitleView.swift */,
 				49D5A956273A62F800937821 /* MountainDetailTableViewCell.swift */,
 				49450A4C274205040062CD51 /* MountainDetailCategoryLabel.swift */,
+				4955B8EA2742A65D00D90F94 /* MountainDetailAnnotationView.swift */,
 			);
 			path = MountainDetailScene;
 			sourceTree = "<group>";
@@ -523,6 +526,7 @@
 				49FEEDB7273255DD00D37CCA /* MountainExtractor.swift in Sources */,
 				DA9D7C9F273A45BE0018AD45 /* RecordingTitleViewCoordinator.swift in Sources */,
 				49D5A94D2738C71700937821 /* MountainDetailViewModel.swift in Sources */,
+				4955B8EB2742A65D00D90F94 /* MountainDetailAnnotationView.swift in Sources */,
 				54851284272A6AD500407F28 /* SceneDelegate.swift in Sources */,
 				5429694F272FC1740070B362 /* ResultViewCoordinator.swift in Sources */,
 				98BCF4F72737A66E0073E6FB /* SettingsUsecase.swift in Sources */,

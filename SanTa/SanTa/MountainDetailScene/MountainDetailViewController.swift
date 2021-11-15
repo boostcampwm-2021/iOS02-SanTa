@@ -40,7 +40,7 @@ class MountainDetailViewController: UIViewController {
 extension MountainDetailViewController {
     private func layoutMountainDetailView(mountainDetail: MountainDetailModel) {
         let headerView = UIView()
-        let mapSnapShot = upperMapHeaderView(mountainDetail: mountainDetail)
+        let mapSnapShot = upperMapView(mountainDetail: mountainDetail)
         let titleView = lowerMountainTitleView(mountainDetail: mountainDetail)
         let tableView = configuredTableView(mountainDetail: mountainDetail)
         
@@ -102,6 +102,22 @@ extension MountainDetailViewController {
         tableView.delegate = self
         tableView.dataSource = self
         return tableView
+    }
+    
+    private func upperMapView(mountainDetail: MountainDetailModel) -> MKMapView {
+        let mapView = MKMapView()
+        mapView.delegate = self
+        mapView.region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: mountainDetail.latitude, longitude: mountainDetail.longitude), span: MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1))
+        
+        mapView.mapType = .satellite
+        mapView.isUserInteractionEnabled = false
+        let annotation = MountainAnnotation(title: mountainDetail.moutainName, subtitle: mountainDetail.altitude, latitude: mountainDetail.latitude, longitude: mountainDetail.longitude)
+//        let annotation = MountainAnnotation(title: mountainDetail.moutainName, subtitle: mountainDetail.altitude, latitude: mountainDetail.latitude, longitude: mountainDetail.longitude, mountainDescription: mountainDetail.mountainDescription, region: "")
+        mapView.register(MountainAnnotationView.self, forAnnotationViewWithReuseIdentifier: MountainAnnotationView.ReuseID)
+        mapView.addAnnotation(annotation)
+        mapView.selectAnnotation(annotation, animated: true)
+        
+        return mapView
     }
     
     private func upperMapHeaderView(mountainDetail: MountainDetailModel) -> UIImageView {
@@ -197,8 +213,20 @@ extension MountainDetailViewController: UITableViewDelegate, UITableViewDataSour
 
 extension MountainDetailViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let isBottom = scrollView.contentSize.height <= scrollView.bounds.height + scrollView.contentOffset.y
+        guard !isBottom else { return }
         if scrollView.contentOffset.y > 0 && scrollView.contentOffset.y < self.maxRollUpDistance {
             self.mutatingTopConstraint?.constant = -scrollView.contentOffset.y
         }
+    }
+}
+
+extension MountainDetailViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard let annotation = annotation as? MountainAnnotation else { return nil }
+        return MountainnDetailAnnotationView(
+            annotation: annotation,
+            reuseIdentifier: MountainnDetailAnnotationView.ReuseID
+        )
     }
 }
