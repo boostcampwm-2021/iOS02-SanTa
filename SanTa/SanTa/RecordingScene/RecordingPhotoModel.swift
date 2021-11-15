@@ -15,8 +15,9 @@ final class RecordingPhotoModel {
     
     var representedAssetIdentifier: String?
     
-    func fetchPhotos(startDate: Date, endDate: Date, completion: @escaping ([Data]?) -> Void){
+    func fetchPhotos(startDate: Date, endDate: Date, completion: @escaping ([Photo]?) -> Void){
         let allMedia = PHAsset.fetchAssets(with: .image, options: nil)
+        let dispatchGroup = DispatchGroup()
         var photos = [Photo]()
         
         for i in stride(from: allMedia.count - 1, through: 0, by: -1) {
@@ -32,11 +33,12 @@ final class RecordingPhotoModel {
             case .orderedDescending, .orderedSame:
                 switch endDate.compare(creationDate) {
                 case .orderedAscending, .orderedSame:
-                    
+                    dispatchGroup.enter()
                     requestIamge(with: asset) { (image) in
                         guard let image = image else { return }
                         let photo = Photo(latitude: Double(location.coordinate.latitude), longitude: Double(location.coordinate.longitude), date: image)
                         photos.append(photo)
+                        dispatchGroup.leave()
                     }
                 case .orderedDescending:
                     break
@@ -44,7 +46,10 @@ final class RecordingPhotoModel {
             case .orderedAscending:
                 break
             }
-            
+        }
+        
+        dispatchGroup.notify(queue: .global()) {
+            completion(photos)
         }
     }
     
@@ -56,10 +61,10 @@ final class RecordingPhotoModel {
         
         self.representedAssetIdentifier = asset.localIdentifier
         
-//        self.imageManager.requestImageDataAndOrientation(for: asset, options: nil, resultHandler: { data, str, orientation, info in
-//            if self.representedAssetIdentifier == asset.localIdentifier {
-//
-//            }
-//        })
+        self.imageManager.requestImageDataAndOrientation(for: asset, options: nil, resultHandler: { data, str, orientation, info in
+            if self.representedAssetIdentifier == asset.localIdentifier {
+                completion(data)
+            }
+        })
     }
 }
