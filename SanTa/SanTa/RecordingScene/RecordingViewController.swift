@@ -100,6 +100,12 @@ class RecordingViewController: UIViewController {
         self.configureTarget()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        self.presentRecordingPhotoView()
+    }
+    
     private func configureBindings() {
         self.recordingViewModel?.$currentTime
             .receive(on: DispatchQueue.main)
@@ -134,6 +140,10 @@ class RecordingViewController: UIViewController {
         self.pauseButton.addTarget(self, action: #selector(pauseButtonAction), for: .touchUpInside)
         self.stopButton.addTarget(self, action: #selector(stopButtonAction), for: .touchUpInside)
         self.locationButton.addTarget(self, action: #selector(locationButtonAction), for: .touchUpInside)
+    }
+    
+    private func presentRecordingPhotoView() {
+        self.coordinator?.presentRecordingPhotoViewController()
     }
     
     @objc private func pauseButtonAction(_ sender: UIResponder) {

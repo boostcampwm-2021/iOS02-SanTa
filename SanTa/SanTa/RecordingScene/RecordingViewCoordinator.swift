@@ -65,4 +65,12 @@ extension RecordingViewCoordinator {
         
         recordingTitleViewCoordinator.start()
     }
+    
+    func presentRecordingPhotoViewController() {
+        let recordingPhotoViewCoordinator = RecordingPhotoViewCoordinator(delegate: self.recordingViewController)
+        self.childCoordinators.append(recordingPhotoViewCoordinator)
+        recordingPhotoViewCoordinator.parentCoordinator = self
+        
+        recordingPhotoViewCoordinator.start()
+    }
 }
