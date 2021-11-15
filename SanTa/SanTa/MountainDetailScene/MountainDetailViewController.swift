@@ -123,9 +123,14 @@ extension MountainDetailViewController {
                      return image.withRenderingMode(renderingMode)
                  }
                  */
+                UIGraphicsBeginImageContext(CGSize(width: 20, height: 20))
+                UIImage(named: "SantaImage")?.draw(in: CGRect(x: 0, y: 0, width: 20, height: 20))
+                let markerImage = UIGraphicsGetImageFromCurrentImageContext()
+                UIGraphicsEndImageContext()
+                
                 UIGraphicsBeginImageContext(mapImage.size)
                 mapImage.draw(in: CGRect(origin: CGPoint.zero, size: mapImage.size))
-                UIImage(systemName: "heart.fill")?.draw(at: snapShot.point(for: CLLocationCoordinate2D(latitude: mountainDetail.latitude, longitude: mountainDetail.longitude)))
+                markerImage?.draw(at: snapShot.point(for: CLLocationCoordinate2D(latitude: mountainDetail.latitude, longitude: mountainDetail.longitude)))
                 let image = UIGraphicsGetImageFromCurrentImageContext()
                 UIGraphicsEndImageContext()
                 
