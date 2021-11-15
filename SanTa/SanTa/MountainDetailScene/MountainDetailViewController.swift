@@ -12,8 +12,7 @@ class MountainDetailViewController: UIViewController {
     weak var coordinator: MountainDetailViewCoordinator?
     private var viewModel: MountainDetailViewModel?
     private var mutatingTopConstraint: NSLayoutConstraint?
-    private var mutatingBottomConstraint: NSLayoutConstraint?
-    private let maxRollUpDistance: CGFloat = 100
+    private let maxRollUpDistance: CGFloat = 50
     
     convenience init(viewModel: MountainDetailViewModel) {
         self.init()
@@ -74,16 +73,14 @@ extension MountainDetailViewController {
         NSLayoutConstraint.activate(mapConstraints)
         
         self.mutatingTopConstraint = titleView.topAnchor.constraint(equalTo: mapSnapShot.bottomAnchor)
-        self.mutatingBottomConstraint = titleView.bottomAnchor.constraint(equalTo: headerView.bottomAnchor)
         var titleViewConstraints = [
             titleView.leftAnchor.constraint(equalTo: headerView.leftAnchor),
             titleView.rightAnchor.constraint(equalTo: headerView.rightAnchor),
+            titleView.heightAnchor.constraint(equalToConstant: self.view.bounds.height * 0.07)
         ]
         
-        if let upperConstraint = self.mutatingTopConstraint,
-           let lowerConstraint = self.mutatingBottomConstraint {
+        if let upperConstraint = self.mutatingTopConstraint {
             titleViewConstraints.append(upperConstraint)
-            titleViewConstraints.append(lowerConstraint)
         }
         
         NSLayoutConstraint.activate(titleViewConstraints)
@@ -117,7 +114,15 @@ extension MountainDetailViewController {
         snapShotter.start { snapShot, error in
             if let snapShot = snapShot {
                 let mapImage = snapShot.image
-                
+                /*
+                 func imageWith(newSize: CGSize) -> UIImage {
+                     let image = UIGraphicsImageRenderer(size: newSize).image { _ in
+                         draw(in: CGRect(origin: .zero, size: newSize))
+                     }
+                         
+                     return image.withRenderingMode(renderingMode)
+                 }
+                 */
                 UIGraphicsBeginImageContext(mapImage.size)
                 mapImage.draw(in: CGRect(origin: CGPoint.zero, size: mapImage.size))
                 UIImage(systemName: "heart.fill")?.draw(at: snapShot.point(for: CLLocationCoordinate2D(latitude: mountainDetail.latitude, longitude: mountainDetail.longitude)))
@@ -137,7 +142,7 @@ extension MountainDetailViewController {
     private func lowerMountainTitleView(mountainDetail: MountainDetailModel) -> UIView {
         let titleView = MountainDetailTitleView()
         titleView.configure(with: mountainDetail.moutainName, distance: mountainDetail.distance)
-        titleView.backgroundColor = .white
+        titleView.backgroundColor = .systemBackground
         return titleView
     }
 }
@@ -187,11 +192,8 @@ extension MountainDetailViewController: UITableViewDelegate, UITableViewDataSour
 
 extension MountainDetailViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let remainingScroll = scrollView.contentSize.height - scrollView.bounds.size.height
-        let rollUp = min(remainingScroll, self.maxRollUpDistance)
-        if scrollView.contentOffset.y < rollUp && scrollView.contentOffset.y > 0 {
+        if scrollView.contentOffset.y > 0 && scrollView.contentOffset.y < self.maxRollUpDistance {
             self.mutatingTopConstraint?.constant = -scrollView.contentOffset.y
-            self.mutatingBottomConstraint?.constant = -scrollView.contentOffset.y
         }
     }
 }
