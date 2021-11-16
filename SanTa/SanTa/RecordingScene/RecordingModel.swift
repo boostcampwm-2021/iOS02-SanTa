@@ -15,6 +15,7 @@ final class RecordingModel: NSObject, ObservableObject {
     @Published private(set) var kilometer = ""
     @Published private(set) var altitude = ""
     @Published private(set) var walk = ""
+    @Published private(set) var gpsStatus = true
     
     private let pedoMeter = CMPedometer()
     private var locationManager = CLLocationManager()
@@ -203,7 +204,6 @@ extension RecordingModel: CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        // GPS를 켜지 않았을 경우
-        print(error)
+        self.gpsStatus = false
     }
 }
