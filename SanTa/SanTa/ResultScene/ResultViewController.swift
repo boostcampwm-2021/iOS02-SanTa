@@ -137,10 +137,16 @@ extension ResultViewController: UICollectionViewDelegate {
         guard let navigationBar = self.navigationController?.navigationBar else { return }
         let navigationBarChangePointY = 100.0
         if scrollView.contentOffset.y > navigationBarChangePointY {
-            navigationBar.isHidden = false
+            if navigationBar.isHidden {
+                navigationBar.isHidden = false
+                self.view.setNeedsLayout()
+            }
             navigationBar.layer.opacity = Float(0.05 * (scrollView.contentOffset.y - navigationBarChangePointY))
         } else {
-            navigationBar.isHidden = true
+            if !navigationBar.isHidden {
+                navigationBar.isHidden = true
+                self.view.setNeedsLayout()
+            }
         }
     }
 }
