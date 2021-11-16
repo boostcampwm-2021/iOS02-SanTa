@@ -142,7 +142,9 @@ class RecordingViewController: UIViewController {
             .sink (receiveValue: { [weak self] gpsStatus in
                 if gpsStatus != self?.currentState {
                     if !gpsStatus {
-                        guard let alert = self?.authAlert() else { return }
+                        let title = "위치정보 활성화"
+                        let message = "측정을 다시 시작할 수 있도록 위치정보를 활성화해주세요."
+                        guard let alert = self?.authAlert(title: title, message: message) else { return }
                         DispatchQueue.main.async {
                             self?.present(alert, animated: false)
                         }
@@ -163,11 +165,7 @@ class RecordingViewController: UIViewController {
         let status = PHPhotoLibrary.authorizationStatus(for: .readWrite)
         
         switch status{
-        case .authorized:
-            break
-        case .denied:
-            self.coordinator?.presentRecordingPhotoViewController()
-        case .restricted, .notDetermined:
+        case .notDetermined:
             self.coordinator?.presentRecordingPhotoViewController()
         default:
             break
@@ -194,8 +192,8 @@ class RecordingViewController: UIViewController {
         }
     }
     
-    private func authAlert() -> UIAlertController {
-        let alert = UIAlertController(title: "위치정보 활성화", message: "측정을 다시 시작할 수 있도록 위치정보를 활성화해주세요.", preferredStyle: .alert)
+    private func authAlert(title: String, message: String) -> UIAlertController {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let cancel = UIAlertAction(title: "아니요", style: .cancel)
         let confirm = UIAlertAction(title: "활성화", style: .default) { _ in
             guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
