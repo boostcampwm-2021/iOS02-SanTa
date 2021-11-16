@@ -43,7 +43,7 @@ final class RecordingModel: NSObject, ObservableObject {
     }
     
     private func configureTimer() {
-        self.timer = DispatchSource.makeTimerSource(flags: [], queue: DispatchQueue.main)
+        self.timer = DispatchSource.makeTimerSource(flags: [], queue: DispatchQueue.global())
         self.timer?.schedule(deadline: .now(), repeating: 1)
         self.timer?.setEventHandler(handler: { [weak self] in
             self?.currentTime = Date()
@@ -119,7 +119,7 @@ final class RecordingModel: NSObject, ObservableObject {
         }
         dispatchGroup.leave()
         
-        dispatchGroup.notify(queue: .main) { [weak self] in
+        dispatchGroup.notify(queue: .global()) { [weak self] in
             guard let walk = self?.currentWalk else { return }
             
             self?.walk = "\(walk)"
