@@ -195,6 +195,7 @@ class MapViewController: UIViewController {
     }
 
     @objc private func presentRecordingViewController() {
+        UINotificationFeedbackGenerator().notificationOccurred(.success)
         switch self.manager.authorizationStatus{
         case .authorizedWhenInUse, .authorizedAlways:
             self.coordinator?.presentRecordingViewController()
