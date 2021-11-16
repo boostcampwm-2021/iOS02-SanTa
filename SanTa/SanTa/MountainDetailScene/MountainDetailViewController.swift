@@ -96,17 +96,20 @@ extension MountainDetailViewController {
 //        let backButton = UIButton()
 //        backButton.setImage(.init(systemName: "xmark"), for: .normal)
 //        backButton.tintColor = .white
-        let backButton = UIImageView(image: .init(systemName: "xmark")?.withTintColor(.white))
+        let backButton = UIImageView(image: .init(systemName: "xmark"))
+        backButton.tintColor = .white
+//        backButton.image?.withTintColor(.white)
+        backButton.tintColorDidChange()
         self.view.addSubview(backButton)
         backButton.translatesAutoresizingMaskIntoConstraints = false
         backButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(close)))
         backButton.isUserInteractionEnabled = true
         
         let backButtonConstraints = [
-            backButton.topAnchor.constraint(equalTo: self.view.topAnchor),
-            backButton.leftAnchor.constraint(equalTo: self.view.leftAnchor),
-            backButton.widthAnchor.constraint(equalToConstant: 40),
-            backButton.heightAnchor.constraint(equalToConstant: 40),
+            backButton.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 10),
+            backButton.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 10),
+            backButton.widthAnchor.constraint(equalToConstant: 30),
+            backButton.heightAnchor.constraint(equalToConstant: 30),
             
         ]
         NSLayoutConstraint.activate(backButtonConstraints)
