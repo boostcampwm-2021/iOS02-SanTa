@@ -20,6 +20,7 @@ final class RecordingPhotoModel {
         let dispatchGroup = DispatchGroup()
         var photos = [Photo]()
         
+        dispatchGroup.enter()
         for i in stride(from: allMedia.count - 1, through: 0, by: -1) {
             let asset = allMedia[i]
             if asset.creationDate == nil || asset.location == nil {
@@ -48,6 +49,7 @@ final class RecordingPhotoModel {
             }
         }
         
+        dispatchGroup.leave()
         dispatchGroup.notify(queue: .global()) {
             completion(photos)
         }
