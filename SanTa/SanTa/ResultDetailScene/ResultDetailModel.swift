@@ -9,16 +9,28 @@ import Foundation
 import CoreLocation
 
 struct ResultDetailData {
-    let record: ResultRecordInformation
+    let timeStamp: ResultTimeStamp
     let distance: ResultDistance
-    
+    /*
+     let time: ResultTime
+     let pace: ResultPace
+     */
+    let altitude: ResultAltitude
+    let incline: ResultIncline
 }
 
-struct ResultRecordInformation {
+struct ResultTimeStamp {
     let startTime: Date
     let endTime: Date
-    let startLocation: CLLocation
-    let endLocation: CLLocation
+    let startLocation: Location?
+    let endLocation: Location?
+    
+    init(records: Records) {
+        self.startTime = records.records.first?.startTime ?? Date.distantPast
+        self.endTime = records.records.last?.endTime ?? Date.distantFuture
+        self.startLocation = records.records.first?.locations.first
+        self.endLocation = records.records.last?.locations.last
+    }
 }
 
 struct ResultDistance {
@@ -28,7 +40,7 @@ struct ResultDistance {
     
     init(records: Records) {
         self.total = records.distances
-        self.exercise = records.distances
+        self.exercise = records.distances  //??
         self.steps = records.steps
     }
 }
