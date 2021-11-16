@@ -7,9 +7,11 @@
 
 import UIKit
 import Combine
+import Photos
 
 protocol RecordingViewDelegate: AnyObject {
     func didTitleWriteDone(title: String)
+    func didAgreeButtonTouchDone()
 }
 
 class RecordingViewController: UIViewController {
@@ -100,6 +102,12 @@ class RecordingViewController: UIViewController {
         self.configureTarget()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        self.configureAlbumPermission()
+    }
+    
     private func configureBindings() {
         self.recordingViewModel?.$currentTime
             .receive(on: DispatchQueue.main)
@@ -134,6 +142,21 @@ class RecordingViewController: UIViewController {
         self.pauseButton.addTarget(self, action: #selector(pauseButtonAction), for: .touchUpInside)
         self.stopButton.addTarget(self, action: #selector(stopButtonAction), for: .touchUpInside)
         self.locationButton.addTarget(self, action: #selector(locationButtonAction), for: .touchUpInside)
+    }
+    
+    private func configureAlbumPermission() {
+        let status = PHPhotoLibrary.authorizationStatus(for: .readWrite)
+        
+        switch status{
+        case .authorized:
+            break
+        case .denied:
+            self.coordinator?.presentRecordingPhotoViewController()
+        case .restricted, .notDetermined:
+            self.coordinator?.presentRecordingPhotoViewController()
+        default:
+            break
+        }
     }
     
     @objc private func pauseButtonAction(_ sender: UIResponder) {
@@ -203,5 +226,9 @@ extension RecordingViewController: RecordingViewDelegate {
                 }
             }
         }
+    }
+    
+    func didAgreeButtonTouchDone() {
+        PHPhotoLibrary.requestAuthorization { _ in }
     }
 }

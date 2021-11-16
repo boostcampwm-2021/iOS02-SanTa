@@ -79,6 +79,9 @@
 		DAAF4D70273CE08B00780DC8 /* MountainListViewRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAF4D6F273CE08B00780DC8 /* MountainListViewRepository.swift */; };
 		DAB37D4C2731166B00EC523F /* RecordingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB37D4B2731166B00EC523F /* RecordingViewModel.swift */; };
 		DAB37D50273256B900EC523F /* RecordingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB37D4F273256B900EC523F /* RecordingModel.swift */; };
+		DAFA9B59274112D800BF168C /* RecordingPhotoCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFA9B58274112D800BF168C /* RecordingPhotoCoordinator.swift */; };
+		DAFA9B5B2741131400BF168C /* RecordingPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFA9B5A2741131400BF168C /* RecordingPhotoViewController.swift */; };
+		DAFA9B5D27424C9A00BF168C /* RecordingPhotoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFA9B5C27424C9A00BF168C /* RecordingPhotoModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -162,6 +165,9 @@
 		DAAF4D6F273CE08B00780DC8 /* MountainListViewRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainListViewRepository.swift; sourceTree = "<group>"; };
 		DAB37D4B2731166B00EC523F /* RecordingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingViewModel.swift; sourceTree = "<group>"; };
 		DAB37D4F273256B900EC523F /* RecordingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingModel.swift; sourceTree = "<group>"; };
+		DAFA9B58274112D800BF168C /* RecordingPhotoCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingPhotoCoordinator.swift; sourceTree = "<group>"; };
+		DAFA9B5A2741131400BF168C /* RecordingPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingPhotoViewController.swift; sourceTree = "<group>"; };
+		DAFA9B5C27424C9A00BF168C /* RecordingPhotoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingPhotoModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,6 +196,7 @@
 				5429694A272FBFCA0070B362 /* RecordingViewCoordinator.swift */,
 				DAB37D4B2731166B00EC523F /* RecordingViewModel.swift */,
 				984DDEC227325DFC003BE56B /* RecordingUseCase.swift */,
+				DAFA9B5C27424C9A00BF168C /* RecordingPhotoModel.swift */,
 				984DDEC427325FB9003BE56B /* RecordRepository.swift */,
 				984DDEC027325D67003BE56B /* Record.swift */,
 				DAB37D4F273256B900EC523F /* RecordingModel.swift */,
@@ -352,6 +359,7 @@
 				5428FDB6272F8B2B002F9D40 /* ResultScene */,
 				5428FDB5272F89F0002F9D40 /* RecordingScene */,
 				DA9D7C9B273A42B90018AD45 /* RecordingTitleScene */,
+				DAFA9B55274112AB00BF168C /* RecordingPhotoScene */,
 				5428FDB7272F8B34002F9D40 /* ResultDetailScene */,
 				5428FDB9272F8BD9002F9D40 /* MountainListScene */,
 				5428FDBA272F8BF6002F9D40 /* MountainDetailScene */,
@@ -376,6 +384,15 @@
 				DA9D7C9E273A45BE0018AD45 /* RecordingTitleViewCoordinator.swift */,
 			);
 			path = RecordingTitleScene;
+			sourceTree = "<group>";
+		};
+		DAFA9B55274112AB00BF168C /* RecordingPhotoScene */ = {
+			isa = PBXGroup;
+			children = (
+				DAFA9B58274112D800BF168C /* RecordingPhotoCoordinator.swift */,
+				DAFA9B5A2741131400BF168C /* RecordingPhotoViewController.swift */,
+			);
+			path = RecordingPhotoScene;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -494,15 +511,18 @@
 				DAAF4D6E273CE06A00780DC8 /* MountainListViewUseCase.swift in Sources */,
 				985EEF63272FDA98002413D9 /* MountainCell.swift in Sources */,
 				5428FDBD272F8C5B002F9D40 /* MapViewUseCase.swift in Sources */,
+				DAFA9B5B2741131400BF168C /* RecordingPhotoViewController.swift in Sources */,
 				49742D562740E1A0008F7DC2 /* ResultDetailLargerInfoView.swift in Sources */,
 				5428FDB4272F894D002F9D40 /* MapViewRepository.swift in Sources */,
 				5485128C272A6AD500407F28 /* SanTa.xcdatamodeld in Sources */,
+				DAFA9B59274112D800BF168C /* RecordingPhotoCoordinator.swift in Sources */,
 				54296947272FBD4B0070B362 /* MapViewCoordinator.swift in Sources */,
 				54296953272FC3530070B362 /* MountainListViewCoordinator.swift in Sources */,
 				DAAF2716272FF73700F8A115 /* RecordingViewController+Extension.swift in Sources */,
 				98AEF1D727310759002E9C9A /* PaddingLabel.swift in Sources */,
 				54851282272A6AD500407F28 /* AppDelegate.swift in Sources */,
 				49D5A9532738FBCD00937821 /* MountainDetailModel.swift in Sources */,
+				DAFA9B5D27424C9A00BF168C /* RecordingPhotoModel.swift in Sources */,
 				49FEEDB92732584000D37CCA /* MountainEntity.swift in Sources */,
 				98BCF4F92737A7120073E6FB /* SettingsViewModel.swift in Sources */,
 				54296949272FBFAB0070B362 /* RecordingViewController.swift in Sources */,

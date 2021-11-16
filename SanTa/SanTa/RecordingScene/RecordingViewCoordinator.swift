@@ -27,7 +27,8 @@ class RecordingViewCoordinator: Coordinator {
                             coreDataStorage: self.coreDataStorage
                         )
                     ),
-                    recordingModel: RecordingModel()
+                    recordingModel: RecordingModel(),
+                    recordingPhoto: RecordingPhotoModel()
                 )
             )
         )
@@ -64,5 +65,13 @@ extension RecordingViewCoordinator {
         recordingTitleViewCoordinator.parentCoordinator = self
         
         recordingTitleViewCoordinator.start()
+    }
+    
+    func presentRecordingPhotoViewController() {
+        let recordingPhotoViewCoordinator = RecordingPhotoViewCoordinator(delegate: self.recordingViewController)
+        self.childCoordinators.append(recordingPhotoViewCoordinator)
+        recordingPhotoViewCoordinator.parentCoordinator = self
+        
+        recordingPhotoViewCoordinator.start()
     }
 }
