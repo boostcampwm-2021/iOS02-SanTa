@@ -16,6 +16,7 @@ final class RecordingModel: NSObject, ObservableObject {
     @Published private(set) var altitude = ""
     @Published private(set) var walk = ""
     @Published private(set) var gpsStatus = true
+    @Published private(set) var gpsAuth = true
     
     private let pedoMeter = CMPedometer()
     private var locationManager = CLLocationManager()
@@ -87,42 +88,18 @@ final class RecordingModel: NSObject, ObservableObject {
     }
     
     private func checkPedoMeter() {
-        guard let date = self.startDate else { return }
+        guard let date = self.startDate,
+              let records = records else { return }
+        var dates = records.records
+        dates.append(Record(startTime: date, endTime: self.currentTime, step: 0, distance: 0, locations: [Location]()))
+        
         let dispatchGroup = DispatchGroup()
         
         self.currentWalk = 0
         self.currentKilo = 0
         
         dispatchGroup.enter()
-        self.pedoMeter.queryPedometerData(from: date, to: self.currentTime) { [weak self] data, error in
-            guard let activityData = data,
-                  error == nil else { return }
-            
-            let walk = "\(activityData.numberOfSteps)"
-            
-            guard let walkNumber = Int(walk) else { return }
-            
-            self?.currentWalk += walkNumber
-            
-            guard let distance = activityData.distance else { return }
-            let transformatKilometer = Double(truncating: distance) / 1000
-            self?.currentKilo += transformatKilometer
-            dispatchGroup.leave()
-        }
-        
-        dispatchGroup.notify(queue: .main) { [weak self] in
-            guard let walk = self?.currentWalk else { return }
-            
-            self?.walk = "\(walk)"
-            guard let currentKile = self?.currentKilo else { return }
-            let distanceString = String(format: "%.2f", currentKile)
-            
-            self?.kilometer = "\(distanceString)"
-        }
-        
-        guard let records = records else { return }
-        
-        records.records.forEach {
+        dates.forEach {
             dispatchGroup.enter()
             self.pedoMeter.queryPedometerData(from: $0.startTime, to: $0.endTime) { [weak self] data, error in
                 guard let activityData = data,
@@ -139,6 +116,17 @@ final class RecordingModel: NSObject, ObservableObject {
                 self?.currentKilo += transformatKilometer
                 dispatchGroup.leave()
             }
+        }
+        dispatchGroup.leave()
+        
+        dispatchGroup.notify(queue: .main) { [weak self] in
+            guard let walk = self?.currentWalk else { return }
+            
+            self?.walk = "\(walk)"
+            guard let currentKile = self?.currentKilo else { return }
+            let distanceString = String(format: "%.2f", currentKile)
+            
+            self?.kilometer = "\(distanceString)"
         }
     }
     
