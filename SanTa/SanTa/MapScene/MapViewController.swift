@@ -104,7 +104,7 @@ class MapViewController: UIViewController {
         ]
         NSLayoutConstraint.activate(startButtonConstraints)
         
-        self.startButton.addTarget(self, action: #selector(presentRecordingViewController), for: .touchUpInside)
+        self.startButton.addTarget(self, action: #selector(presentRecordingViewController), for: .touchDown)
         
         self.userTrackingButton = .init(mapView: mapView)
         self.view.addSubview(self.userTrackingButton)
@@ -206,7 +206,7 @@ class MapViewController: UIViewController {
 
 extension MapViewController: Animatable {
     func shouldAnimate() {
-        let image = UIImage.gifImage(named: "walkingManAnimation")
+        let image = UIImage.gifImage(named: "walkingManAnimation", withTintColor: .white)
         self.startButton.setImage(image, for: .normal)
     }
     
