@@ -22,7 +22,7 @@ class MapOptionCell: UITableViewCell {
     
     private(set) var title: UILabel = {
         let label = UILabel()
-        label.font = UIFont.preferredFont(forTextStyle: .caption1)
+        label.font = UIFont.preferredFont(forTextStyle: .body)
         label.adjustsFontForContentSizeCategory = true
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
@@ -35,7 +35,7 @@ class MapOptionCell: UITableViewCell {
     private var map: UILabel = {
         let label = PaddingLabel()
         label.padding(top: 5, bottom: 5, left: 10, right: 10)
-        label.font = UIFont.preferredFont(forTextStyle: .caption2)
+        label.font = UIFont.preferredFont(forTextStyle: .caption1)
         label.adjustsFontForContentSizeCategory = true
         label.textColor = .white
         label.backgroundColor = .darkGray
