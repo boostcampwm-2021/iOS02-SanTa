@@ -11,6 +11,15 @@ class MapOptionCell: UITableViewCell {
     
     static let identifier = "MapOptionCell"
     
+    private var stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.distribution = .equalCentering
+        return stackView
+    }()
+    
     private(set) var title: UILabel = {
         let label = UILabel()
         label.font = UIFont.preferredFont(forTextStyle: .caption1)
@@ -63,20 +72,17 @@ class MapOptionCell: UITableViewCell {
     }
 
     private func configureView() {
-        self.contentView.addSubview(self.title)
+        self.stackView.addArrangedSubview(self.title)
+        self.stackView.addArrangedSubview(self.map)
+        
+        self.contentView.addSubview(self.stackView)
         let locationConstrain = [
-            self.title.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
-            self.title.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 30),
+            self.stackView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 15),
+            self.stackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -15),
+            self.stackView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 30),
+            self.stackView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -30),
         ]
         NSLayoutConstraint.activate(locationConstrain)
-        
-        self.contentView.addSubview(self.map)
-        let mapConstrain = [
-            self.map.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
-            self.map.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -30),
-            self.map.leftAnchor.constraint(equalTo: self.title.rightAnchor, constant: 10),
-        ]
-        NSLayoutConstraint.activate(mapConstrain)
     }
     
     func update(option: MapOption) {

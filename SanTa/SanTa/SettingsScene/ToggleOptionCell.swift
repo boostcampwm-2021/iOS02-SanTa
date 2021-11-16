@@ -17,6 +17,14 @@ class ToggleOptionCell: UITableViewCell {
     
     weak var delegate: ToggleOptionCellDelegate?
     
+    private var stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        return stackView
+    }()
+    
     private var title: UILabel = {
         let label = UILabel()
         label.font = UIFont.preferredFont(forTextStyle: .caption1)
@@ -70,21 +78,17 @@ class ToggleOptionCell: UITableViewCell {
     }
     
     private func configureView() {
+        self.stackView.addArrangedSubview(self.title)
+        self.stackView.addArrangedSubview(self.controlSwitch)
         
-        self.contentView.addSubview(self.title)
+        self.contentView.addSubview(self.stackView)
         let locationConstrain = [
-            self.title.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
-            self.title.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 30),
+            self.stackView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 15),
+            self.stackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -15),
+            self.stackView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 30),
+            self.stackView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -30),
         ]
         NSLayoutConstraint.activate(locationConstrain)
-        
-        self.contentView.addSubview(self.controlSwitch)
-        let switchConstrain = [
-            self.controlSwitch.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
-            self.controlSwitch.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -30),
-            self.controlSwitch.leftAnchor.constraint(equalTo: self.title.rightAnchor, constant: 10),
-        ]
-        NSLayoutConstraint.activate(switchConstrain)
     }
     
     func update(option: ToggleOption) {
