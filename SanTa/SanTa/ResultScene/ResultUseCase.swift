@@ -8,27 +8,23 @@
 import Foundation
 import OSLog
 
-protocol ResultUseCase {
-    func fetch(completion: @escaping (TotalRecords?) -> Void)
-}
-
-
-final class DefaultResultUseCase {
-    
+final class ResultUseCase {
     private let resultRepository: ResultRepository
+    private(set) var totalRecords: TotalRecords?
     
     init(resultRepository: ResultRepository) {
         self.resultRepository = resultRepository
     }
     
-    func fetch(completion: @escaping (TotalRecords?) -> Void) {
-        self.resultRepository.fetch { result in
+    func fetch(completion: @escaping (Void?) -> Void) {
+        self.resultRepository.fetch { [weak self] result in
             switch result {
             case .success(let objects):
-                let totalRecords = self.makeTotalRecords(objects: objects)
-                completion(totalRecords)
+                self?.totalRecords = self?.makeTotalRecords(objects: objects)
+                completion(Void())
             case .failure(let error):
                 os_log(.error, log: .default, "\(error.localizedDescription)")
+                self?.totalRecords = nil
                 completion(nil)
             }
         }

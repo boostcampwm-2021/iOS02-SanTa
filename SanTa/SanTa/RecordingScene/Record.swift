@@ -16,11 +16,15 @@ class TotalRecords {
         return totalRecords.reduce(0) { $0 + $1.distances }
     }
     
-    var count: Int {
+    var sectionCount: Int {
         return totalRecords.count
     }
     
-    var totalTimes: Double {
+    var totalCount: Int {
+        return totalRecords.reduce(0) { $0 + $1.count }
+    }
+    
+    var totalTimes: TimeInterval {
         return totalRecords.reduce(0) { $0 + $1.times }
     }
     
@@ -28,14 +32,15 @@ class TotalRecords {
         return totalRecords.reduce(0) { $0 + $1.steps }
     }
 
-    subscript(section: Int, item: Int) -> Records? {
-        guard self.count > section && totalRecords[section].count > item else { return nil }
-        return totalRecords[section].dateSeperateRecords[item]
+    subscript(section: Int) -> DateSeperateRecords? {
+        guard self.totalCount > section else { return nil }
+        return totalRecords[section]
     }
-    
+
     func add(records: Records) {
-        guard let year = records.year else { return }
-        guard let month = records.month else { return }
+        guard let date = records.date else { return }
+        let year = Calendar.current.component(.year, from: date)
+        let month = Calendar.current.component(.month, from: date)
         let key = "\(year)\(month)"
         
         if let seperateDateRecords = self.mappingDateSeperateRecords[key] {
@@ -55,6 +60,11 @@ class DateSeperateRecords {
     
     private(set) var dateSeperateRecords: [Records] = []
     
+    subscript(item: Int) -> Records? {
+        guard self.count > item else { return nil }
+        return dateSeperateRecords[item]
+    }
+    
     init(year: Int, month: Int) {
         self.year = year
         self.month = month
@@ -68,7 +78,7 @@ class DateSeperateRecords {
         return dateSeperateRecords.count
     }
     
-    var times: Double {
+    var times: TimeInterval {
         return dateSeperateRecords.reduce(0) { $0 + $1.times }
     }
     
@@ -86,19 +96,15 @@ struct Records {
     private(set) var title: String
     private(set) var records: [Record]
     
-    var year: Int? {
-        return records.isEmpty ? nil : Calendar.current.component(.year, from: records[0].startTime)
-    }
-    
-    var month: Int? {
-        return records.isEmpty ? nil : Calendar.current.component(.month, from: records[0].startTime)
+    var date: Date? {
+        return records.last?.endTime
     }
     
     var distances: Double {
         return records.reduce(0) { $0 + $1.distance }
     }
     
-    var times: Double {
+    var times: TimeInterval {
         return records.reduce(0) { $0 + $1.time }
     }
     

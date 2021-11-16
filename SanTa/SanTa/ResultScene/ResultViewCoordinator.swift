@@ -11,19 +11,35 @@ class ResultViewCoordinator: Coordinator {
     weak var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
+    private let coreDataStorage: CoreDataStorage
 
-    init() {
+    init(coreDataStorage: CoreDataStorage) {
         self.navigationController = UINavigationController()
+        self.coreDataStorage = coreDataStorage
     }
     
     func start() {
     }
 
     func startPush() -> UINavigationController {
-        let resultViewController = ResultViewController()
+        let resultViewController = ResultViewController(viewModel: injectDependencies())
         resultViewController.coordinator = self
         navigationController.setViewControllers([resultViewController], animated: true)
 
         return navigationController
+    }
+}
+
+extension ResultViewCoordinator {
+    private func injectDependencies() -> ResultViewModel {
+        return ResultViewModel(
+            useCase: ResultUseCase(
+                resultRepository: DefaultResultRepository(
+                    recordStorage: CoreDataRecordStorage(
+                        coreDataStorage: self.coreDataStorage
+                    )
+                )
+            )
+        )
     }
 }
