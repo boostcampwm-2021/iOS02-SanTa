@@ -51,7 +51,7 @@ class AppCoordinator: Coordinator {
         mapViewController.tabBarItem = firstItem
         mapViewController.tabBarItem.image = .init(systemName: "play.fill")
         
-        let resultViewCoordinator = ResultViewCoordinator()
+        let resultViewCoordinator = ResultViewCoordinator(coreDataStorage: self.coreDataStorage)
         resultViewCoordinator.parentCoordinator = self
         childCoordinators.append(resultViewCoordinator)
         let resultViewController = resultViewCoordinator.startPush()
