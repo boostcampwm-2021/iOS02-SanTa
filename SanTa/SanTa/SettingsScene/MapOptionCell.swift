@@ -10,16 +10,7 @@ import UIKit
 class MapOptionCell: UITableViewCell {
     
     static let identifier = "MapOptionCell"
-    
-    private var stackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .horizontal
-        stackView.alignment = .center
-        stackView.distribution = .equalCentering
-        return stackView
-    }()
-    
+
     private(set) var title: UILabel = {
         let label = UILabel()
         label.font = UIFont.preferredFont(forTextStyle: .body)
@@ -48,6 +39,16 @@ class MapOptionCell: UITableViewCell {
         return label
     }()
     
+    private lazy var stackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [self.title, self.map])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.distribution = .equalCentering
+        return stackView
+    }()
+    
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.configureView()
@@ -56,25 +57,8 @@ class MapOptionCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    override var frame: CGRect {
-        get {
-            return super.frame
-        }
-        set (newFrame) {
-            var frame = newFrame
-            let newWidth = frame.width * 0.90
-            let space = (frame.width - newWidth) / 2
-            frame.size.width = newWidth
-            frame.origin.x += space
-            super.frame = frame
-        }
-    }
 
     private func configureView() {
-        self.stackView.addArrangedSubview(self.title)
-        self.stackView.addArrangedSubview(self.map)
-        
         self.contentView.addSubview(self.stackView)
         let locationConstrain = [
             self.stackView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 15),
