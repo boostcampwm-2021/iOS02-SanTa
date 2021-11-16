@@ -9,7 +9,7 @@ import UIKit
 
 class ResultViewController: UIViewController {
     weak var coordinator: ResultViewCoordinator?
-    private let collectionView = UICollectionView(frame: .zero, collectionViewLayout: ResultViewController.createCompositionalLayout())
+    private var collectionView: UICollectionView?
     private var viewModel: ResultViewModel?
     
     convenience init(viewModel: ResultViewModel) {
@@ -27,49 +27,49 @@ class ResultViewController: UIViewController {
         viewModel?.viewWillAppear() { [weak self] in
             DispatchQueue.main.async {
                 self?.navigationController?.navigationBar.topItem?.title = self?.viewModel?.totalDistance
-                self?.collectionView.reloadData()
+                self?.collectionView?.reloadData()
             }
         }
     }
     
     private func configureCollectionView() {
+        self.collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createCompositionalLayout())
+        guard let collectionView = collectionView else { return }
         view.addSubview(collectionView)
         collectionView.register(TotalRecordsViewCell.self, forCellWithReuseIdentifier: TotalRecordsViewCell.identifier)
         collectionView.register(RecordsViewCell.self, forCellWithReuseIdentifier: RecordsViewCell.identifier)
         collectionView.register(SectionHeaderView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionHeaderView.identifier)
-        collectionView.frame = view.bounds
         collectionView.delegate = self
         collectionView.dataSource = self
     }
     
-    private static func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
+    private func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
         return UICollectionViewCompositionalLayout { (sectionNumber, env) -> NSCollectionLayoutSection? in
             switch sectionNumber {
-            case 0: return ResultViewController.firstLayoutSection()
-            default: return ResultViewController.secondLayoutSection()
+            case 0: return self.firstLayoutSection()
+            default: return self.secondLayoutSection()
             }
         }
     }
 
-    private static func firstLayoutSection() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(300))
+    private func firstLayoutSection() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(300))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.35))
         let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: 1)
         let section = NSCollectionLayoutSection(group: group)
         return section
     }
     
-    private static func secondLayoutSection() -> NSCollectionLayoutSection {
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(130))
+    private func secondLayoutSection() -> NSCollectionLayoutSection {
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = .init(top: 3, leading: 10, bottom: 13, trailing: 10)
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(130))
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.16))
         let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitem: item, count: 1)
         group.contentInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 0)
         let section = NSCollectionLayoutSection(group: group)
-        
-        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .absolute(50))
+        let headerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(0.06))
         let header = NSCollectionLayoutBoundarySupplementaryItem(
             layoutSize: headerSize,
             elementKind: UICollectionView.elementKindSectionHeader,
@@ -77,7 +77,6 @@ class ResultViewController: UIViewController {
         )
         header.pinToVisibleBounds = true
         section.boundarySupplementaryItems = [header]
-        
         return section
     }
 }
