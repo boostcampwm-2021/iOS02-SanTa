@@ -12,8 +12,7 @@ class MountainDetailViewController: UIViewController {
     weak var coordinator: MountainDetailViewCoordinator?
     private var viewModel: MountainDetailViewModel?
     private var mutatingTopConstraint: NSLayoutConstraint?
-    private var mutatingBottomConstraint: NSLayoutConstraint?
-    private let maxRollUpDistance: CGFloat = 100
+    private let maxRollUpDistance: CGFloat = 50
     
     convenience init(viewModel: MountainDetailViewModel) {
         self.init()
@@ -41,7 +40,7 @@ class MountainDetailViewController: UIViewController {
 extension MountainDetailViewController {
     private func layoutMountainDetailView(mountainDetail: MountainDetailModel) {
         let headerView = UIView()
-        let mapSnapShot = upperMapHeaderView(mountainDetail: mountainDetail)
+        let mapSnapShot = upperMapView(mountainDetail: mountainDetail)
         let titleView = lowerMountainTitleView(mountainDetail: mountainDetail)
         let tableView = configuredTableView(mountainDetail: mountainDetail)
         
@@ -53,8 +52,8 @@ extension MountainDetailViewController {
         
         headerView.addSubview(mapSnapShot)
         headerView.addSubview(titleView)
-        view.addSubview(headerView)
         view.addSubview(tableView)
+        view.addSubview(headerView)
         
         let headerConstraints = [
             headerView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -74,16 +73,14 @@ extension MountainDetailViewController {
         NSLayoutConstraint.activate(mapConstraints)
         
         self.mutatingTopConstraint = titleView.topAnchor.constraint(equalTo: mapSnapShot.bottomAnchor)
-        self.mutatingBottomConstraint = titleView.bottomAnchor.constraint(equalTo: headerView.bottomAnchor)
         var titleViewConstraints = [
             titleView.leftAnchor.constraint(equalTo: headerView.leftAnchor),
             titleView.rightAnchor.constraint(equalTo: headerView.rightAnchor),
+            titleView.heightAnchor.constraint(equalToConstant: self.view.bounds.height * 0.07)
         ]
         
-        if let upperConstraint = self.mutatingTopConstraint,
-           let lowerConstraint = self.mutatingBottomConstraint {
+        if let upperConstraint = self.mutatingTopConstraint {
             titleViewConstraints.append(upperConstraint)
-            titleViewConstraints.append(lowerConstraint)
         }
         
         NSLayoutConstraint.activate(titleViewConstraints)
@@ -95,6 +92,30 @@ extension MountainDetailViewController {
             tableView.rightAnchor.constraint(equalTo: view.rightAnchor)
         ]
         NSLayoutConstraint.activate(tableViewConstraints)
+        
+//        let backButton = UIButton()
+//        backButton.setImage(.init(systemName: "xmark"), for: .normal)
+//        backButton.tintColor = .white
+        let backButton = UIImageView(image: .init(systemName: "xmark"))
+        backButton.tintColor = .white
+//        backButton.image?.withTintColor(.white)
+        backButton.tintColorDidChange()
+        self.view.addSubview(backButton)
+        backButton.translatesAutoresizingMaskIntoConstraints = false
+        backButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(close)))
+        backButton.isUserInteractionEnabled = true
+        
+        let backButtonConstraints = [
+            backButton.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 10),
+            backButton.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 10),
+            backButton.widthAnchor.constraint(equalToConstant: 30),
+            backButton.heightAnchor.constraint(equalToConstant: 30),
+            
+        ]
+        NSLayoutConstraint.activate(backButtonConstraints)
+    }
+    @objc private func close() {
+        self.dismiss(animated: true, completion: nil)
     }
     
     private func configuredTableView(mountainDetail: MountainDetailModel) -> UITableView {
@@ -107,6 +128,22 @@ extension MountainDetailViewController {
         return tableView
     }
     
+    private func upperMapView(mountainDetail: MountainDetailModel) -> MKMapView {
+        let mapView = MKMapView()
+        mapView.delegate = self
+        mapView.region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: mountainDetail.latitude, longitude: mountainDetail.longitude), span: MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1))
+        
+        mapView.mapType = .satellite
+        mapView.isUserInteractionEnabled = false
+        let annotation = MountainAnnotation(title: mountainDetail.moutainName, subtitle: mountainDetail.altitude, latitude: mountainDetail.latitude, longitude: mountainDetail.longitude)
+//        let annotation = MountainAnnotation(title: mountainDetail.moutainName, subtitle: mountainDetail.altitude, latitude: mountainDetail.latitude, longitude: mountainDetail.longitude, mountainDescription: mountainDetail.mountainDescription, region: "")
+        mapView.register(MountainAnnotationView.self, forAnnotationViewWithReuseIdentifier: MountainAnnotationView.ReuseID)
+        mapView.addAnnotation(annotation)
+        mapView.selectAnnotation(annotation, animated: true)
+        
+        return mapView
+    }
+    
     private func upperMapHeaderView(mountainDetail: MountainDetailModel) -> UIImageView {
         let mapOptions = MKMapSnapshotter.Options.init()
         mapOptions.region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: mountainDetail.latitude, longitude: mountainDetail.longitude), span: MKCoordinateSpan(latitudeDelta: 1, longitudeDelta: 1))
@@ -117,10 +154,23 @@ extension MountainDetailViewController {
         snapShotter.start { snapShot, error in
             if let snapShot = snapShot {
                 let mapImage = snapShot.image
+                /*
+                 func imageWith(newSize: CGSize) -> UIImage {
+                     let image = UIGraphicsImageRenderer(size: newSize).image { _ in
+                         draw(in: CGRect(origin: .zero, size: newSize))
+                     }
+                         
+                     return image.withRenderingMode(renderingMode)
+                 }
+                 */
+                UIGraphicsBeginImageContext(CGSize(width: 20, height: 20))
+                UIImage(named: "SantaImage")?.draw(in: CGRect(x: 0, y: 0, width: 20, height: 20))
+                let markerImage = UIGraphicsGetImageFromCurrentImageContext()
+                UIGraphicsEndImageContext()
                 
                 UIGraphicsBeginImageContext(mapImage.size)
                 mapImage.draw(in: CGRect(origin: CGPoint.zero, size: mapImage.size))
-                UIImage(systemName: "heart.fill")?.draw(at: snapShot.point(for: CLLocationCoordinate2D(latitude: mountainDetail.latitude, longitude: mountainDetail.longitude)))
+                markerImage?.draw(at: snapShot.point(for: CLLocationCoordinate2D(latitude: mountainDetail.latitude, longitude: mountainDetail.longitude)))
                 let image = UIGraphicsGetImageFromCurrentImageContext()
                 UIGraphicsEndImageContext()
                 
@@ -137,7 +187,7 @@ extension MountainDetailViewController {
     private func lowerMountainTitleView(mountainDetail: MountainDetailModel) -> UIView {
         let titleView = MountainDetailTitleView()
         titleView.configure(with: mountainDetail.moutainName, distance: mountainDetail.distance)
-        titleView.backgroundColor = .white
+        titleView.backgroundColor = .systemBackground
         return titleView
     }
 }
@@ -187,11 +237,20 @@ extension MountainDetailViewController: UITableViewDelegate, UITableViewDataSour
 
 extension MountainDetailViewController: UIScrollViewDelegate {
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let remainingScroll = scrollView.contentSize.height - scrollView.bounds.size.height
-        let rollUp = min(remainingScroll, self.maxRollUpDistance)
-        if scrollView.contentOffset.y < rollUp && scrollView.contentOffset.y > 0 {
+        let isBottom = scrollView.contentSize.height <= scrollView.bounds.height + scrollView.contentOffset.y
+        guard !isBottom else { return }
+        if scrollView.contentOffset.y > 0 && scrollView.contentOffset.y < self.maxRollUpDistance {
             self.mutatingTopConstraint?.constant = -scrollView.contentOffset.y
-            self.mutatingBottomConstraint?.constant = -scrollView.contentOffset.y
         }
+    }
+}
+
+extension MountainDetailViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard let annotation = annotation as? MountainAnnotation else { return nil }
+        return MountainnDetailAnnotationView(
+            annotation: annotation,
+            reuseIdentifier: MountainnDetailAnnotationView.ReuseID
+        )
     }
 }

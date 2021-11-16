@@ -10,7 +10,7 @@ import UIKit
 class MountainDetailTableViewCell: UITableViewCell {
     static let identifier = "MountainDetailTableViewCellID"
     
-    let categoryLabel = UILabel()
+    let categoryLabel = MountainDetailCategoryLabel()
     let contentLabel = UILabel()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -24,11 +24,15 @@ class MountainDetailTableViewCell: UITableViewCell {
     }
     
     private func setLayout() {
-        categoryLabel.backgroundColor = .green
+        categoryLabel.backgroundColor = .init(named: "SantaColor")
         categoryLabel.textColor = .white
+        categoryLabel.clipsToBounds = true
+        categoryLabel.font = UIFont.systemFont(ofSize: 15, weight: .bold)
+        categoryLabel.layer.cornerRadius = 5
         
         contentLabel.numberOfLines = 0
         contentLabel.lineBreakMode = .byCharWrapping
+        contentLabel.font = UIFont.systemFont(ofSize: 15, weight: .regular)
         
         categoryLabel.translatesAutoresizingMaskIntoConstraints = false
         contentLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -37,13 +41,13 @@ class MountainDetailTableViewCell: UITableViewCell {
         self.addSubview(contentLabel)
         
         let categoryLabelConstraints = [
-            categoryLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20),
+            categoryLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 25),
             categoryLabel.topAnchor.constraint(equalTo: self.topAnchor, constant:  20)
         ]
         NSLayoutConstraint.activate(categoryLabelConstraints)
         
         let contentLabelConstraints = [
-            contentLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20),
+            contentLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 25),
             contentLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -10),
             contentLabel.topAnchor.constraint(equalTo: categoryLabel.bottomAnchor, constant: 10),
             contentLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor)
@@ -52,6 +56,7 @@ class MountainDetailTableViewCell: UITableViewCell {
     }
     
     func configure(category: String, content: String) {
+        categoryLabel.isHidden = content.isEmpty
         categoryLabel.text = category
         contentLabel.text = content
     }
