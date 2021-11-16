@@ -14,9 +14,11 @@ protocol RecordRepository {
 
 final class DefaultRecordRepository: RecordRepository {
     
+    private let settingsStorage: UserDefaultsStorage
     private let recordStorage: CoreDataRecordStorage
     
-    init(recordStorage: CoreDataRecordStorage) {
+    init(settingsStorage: UserDefaultsStorage, recordStorage: CoreDataRecordStorage) {
+        self.settingsStorage = settingsStorage
         self.recordStorage = recordStorage
     }
     
