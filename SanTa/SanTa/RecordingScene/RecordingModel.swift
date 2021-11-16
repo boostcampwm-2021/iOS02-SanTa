@@ -16,7 +16,6 @@ final class RecordingModel: NSObject, ObservableObject {
     @Published private(set) var altitude = ""
     @Published private(set) var walk = ""
     @Published private(set) var gpsStatus = true
-    @Published private(set) var gpsAuth = true
     
     private let pedoMeter = CMPedometer()
     private var locationManager = CLLocationManager()
@@ -88,9 +87,13 @@ final class RecordingModel: NSObject, ObservableObject {
     }
     
     private func checkPedoMeter() {
-        guard let date = self.startDate,
-              let records = records else { return }
-        var dates = records.records
+        guard let date = self.startDate else { return }
+        var dates = [Record]()
+        if records != nil {
+            guard let records = records else { return }
+            dates = records.records
+        }
+        
         dates.append(Record(startTime: date, endTime: self.currentTime, step: 0, distance: 0, locations: [Location]()))
         
         let dispatchGroup = DispatchGroup()
@@ -146,6 +149,15 @@ final class RecordingModel: NSObject, ObservableObject {
         self.records?.add(record: record)
     }
     
+    private func checkAuthorizationStatus() {
+        switch self.locationManager.authorizationStatus{
+        case .authorizedWhenInUse, .authorizedAlways:
+            self.gpsStatus = true
+        default:
+            self.gpsStatus = false
+        }
+    }
+    
     func pause() {
         guard self.timerIsRunning == true else { return }
         
@@ -158,6 +170,10 @@ final class RecordingModel: NSObject, ObservableObject {
     
     func resume() {
         guard self.timerIsRunning == false else { return }
+        
+        self.checkAuthorizationStatus()
+        
+        guard self.gpsStatus == true else { return }
         
         self.timerIsRunning = true
         self.timer?.resume()
