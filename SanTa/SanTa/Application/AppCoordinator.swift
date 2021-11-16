@@ -35,7 +35,9 @@ class AppCoordinator: Coordinator {
 
     func setTabBarController() -> UITabBarController {
         let tabBarController = UITabBarController()
-        tabBarController.tabBar.backgroundColor = UIColor.white
+        tabBarController.tabBar.backgroundColor = .systemBackground
+        tabBarController.tabBar.tintColor = UIColor(named: "SantaColor")
+        tabBarController.tabBar.unselectedItemTintColor = .systemGray2
 
         let firstItem = UITabBarItem(title: "시작", image: nil, tag: 0)
         let secondItem = UITabBarItem(title: "기록", image: nil, tag: 1)
