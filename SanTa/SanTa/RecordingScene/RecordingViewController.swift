@@ -136,6 +136,19 @@ class RecordingViewController: UIViewController {
                 self?.walkLabel.text = walk
             })
             .store(in: &self.subscriptions)
+        
+        self.recordingViewModel?.$gpsStatus
+            .receive(on: DispatchQueue.main)
+            .sink (receiveValue: { [weak self] gpsStatus in
+                if gpsStatus != self?.currentState {
+                    if gpsStatus == false {
+                        self?.changeRecordingStatus()
+                    } else {
+                        self?.changeRecordingStatus()
+                    }
+                }
+            })
+            .store(in: &self.subscriptions)
     }
     
     private func configureTarget() {
@@ -159,7 +172,7 @@ class RecordingViewController: UIViewController {
         }
     }
     
-    @objc private func pauseButtonAction(_ sender: UIResponder) {
+    private func changeRecordingStatus() {
         if currentState {
             self.view.backgroundColor = .black
             var pauseConfiguration = UIButton.Configuration.plain()
@@ -177,6 +190,10 @@ class RecordingViewController: UIViewController {
             self.recordingViewModel?.resume()
             self.currentState = true
         }
+    }
+    
+    @objc private func pauseButtonAction(_ sender: UIResponder) {
+        changeRecordingStatus()
     }
     
     @objc private func stopButtonAction(_ sender: UIResponder) {
