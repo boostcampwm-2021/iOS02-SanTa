@@ -50,6 +50,7 @@ class ToggleOptionCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.selectionStyle = .none
         self.configureView()
+        self.configureStackViewAccessibility()
     }
     
     required init?(coder: NSCoder) {
@@ -80,4 +81,12 @@ class ToggleOptionCell: UITableViewCell {
     }
 }
 
+// MARK: - Accessibility
 
+extension ToggleOptionCell {
+    private func configureStackViewAccessibility() {
+        self.stackView.axis =
+        self.traitCollection.preferredContentSizeCategory < .accessibilityLarge ?
+            .horizontal : .vertical
+    }
+}

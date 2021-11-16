@@ -52,6 +52,7 @@ class MapOptionCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.configureView()
+        self.configureStackViewAccessibility()
     }
     
     required init?(coder: NSCoder) {
@@ -72,5 +73,15 @@ class MapOptionCell: UITableViewCell {
     func update(option: MapOption) {
         self.title.text = option.text
         self.map.text = option.map.name
+    }
+}
+
+// MARK: - Accessibility
+
+extension MapOptionCell {
+    private func configureStackViewAccessibility() {
+        self.stackView.axis =
+        self.traitCollection.preferredContentSizeCategory < .accessibilityLarge ?
+            .horizontal : .vertical
     }
 }
