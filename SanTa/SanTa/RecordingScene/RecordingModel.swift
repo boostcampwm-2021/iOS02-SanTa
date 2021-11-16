@@ -11,6 +11,7 @@ import CoreMotion
 import Combine
 
 final class RecordingModel: NSObject, ObservableObject {
+    @Published private(set) var currentStatus = true
     @Published private(set) var time = ""
     @Published private(set) var kilometer = ""
     @Published private(set) var altitude = ""

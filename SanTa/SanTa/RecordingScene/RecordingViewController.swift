@@ -201,7 +201,7 @@ class RecordingViewController: UIViewController {
     }
 
     @objc private func pauseButtonAction(_ sender: UIResponder) {
-        
+        changeRecordingStatus()
     }
     
     @objc private func stopButtonAction(_ sender: UIResponder) {

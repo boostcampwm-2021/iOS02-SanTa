@@ -9,6 +9,7 @@ import Foundation
 import Combine
 
 final class RecordingViewModel: ObservableObject {
+    @Published private(set) var currentStatus = true
     @Published private(set) var currentTime = ""
     @Published private(set) var kilometer = ""
     @Published private(set) var altitude = ""
@@ -24,6 +25,13 @@ final class RecordingViewModel: ObservableObject {
     }
     
     private func configureBindings() {
+        self.recordingUseCase?.recording.currentStatus
+            .receive(on: DispatchQueue.main)
+            .sink (receiveValue: { [weak self] currentStatus in
+                self?.currentStatus = currentStatus
+            })
+            .store(in: &self.subscriptions)
+        
         self.recordingUseCase?.recording.$time
             .receive(on: DispatchQueue.main)
             .sink (receiveValue: { [weak self] time in
