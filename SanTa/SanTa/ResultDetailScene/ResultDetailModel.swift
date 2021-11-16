@@ -11,10 +11,8 @@ import CoreLocation
 struct ResultDetailData {
     let timeStamp: ResultTimeStamp
     let distance: ResultDistance
-    /*
-     let time: ResultTime
-     let pace: ResultPace
-     */
+    let time: ResultTime
+//    let pace: ResultPace
     let altitude: ResultAltitude
     let incline: ResultIncline
 }
@@ -47,12 +45,23 @@ struct ResultDistance {
 
 struct ResultTime {
     let spent: TimeInterval
-    let exercise: TimeInterval
-    let rest: TimeInterval
+    let active: TimeInterval
+    let inactive: TimeInterval
     
-//    init(records: Records) {
-//        self.spent = records.times
-//    }
+    init(records: Records) {
+        var active: TimeInterval = 0
+        var inactive: TimeInterval = 0
+        for index in 0..<records.records.count - 1 {
+            let startTime = records.records[index].startTime
+            let timeBeforeStop = records.records[index].endTime
+            let resumeTime = records.records[index+1].startTime
+            inactive += resumeTime.timeIntervalSince(timeBeforeStop)
+            active += timeBeforeStop.timeIntervalSince(startTime)
+        }
+        self.active = active
+        self.inactive = inactive
+        self.spent = active + inactive
+    }
 }
 
 struct ResultPace {
