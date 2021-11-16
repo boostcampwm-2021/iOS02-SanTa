@@ -11,8 +11,8 @@ class ResultDetailLargerInfoView: UIView {
     private var collectionView: UICollectionView
 
     override init(frame: CGRect) {
-        super.init(frame: frame)
         self.collectionView = UICollectionView(frame: frame)
+        super.init(frame: frame)
         self.backgroundColor = .green
     }
     
@@ -39,6 +39,15 @@ extension ResultDetailLargerInfoView {
         collectionView.dataSource = self
         let layout = UICollectionViewFlowLayout()
         collectionView.collectionViewLayout = layout
+        
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        let constraints = [
+            collectionView.topAnchor.constraint(equalTo: self.topAnchor, constant: 50),
+            collectionView.leftAnchor.constraint(equalTo: self.leftAnchor),
+            collectionView.rightAnchor.constraint(equalTo: self.rightAnchor),
+            collectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+        ]
+        NSLayoutConstraint.activate(constraints)
     }
 }
 
@@ -48,8 +57,6 @@ extension ResultDetailLargerInfoView: UICollectionViewDelegate, UICollectionView
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        <#code#>
+        return UICollectionViewCell()
     }
-    
-    
 }

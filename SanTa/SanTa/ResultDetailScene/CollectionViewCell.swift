@@ -8,7 +8,7 @@
 import UIKit
 
 class CollectionViewCell: UICollectionViewCell {
-    convenience init() {
-        
-    }
+//    convenience init() {
+//        
+//    }
 }

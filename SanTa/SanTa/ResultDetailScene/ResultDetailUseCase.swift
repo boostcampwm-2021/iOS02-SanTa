@@ -8,5 +8,9 @@
 import Foundation
 
 class ResultDetailUseCase {
+    private var records: Records
     
+    init(records: Records) {
+        self.records = records
+    }
 }

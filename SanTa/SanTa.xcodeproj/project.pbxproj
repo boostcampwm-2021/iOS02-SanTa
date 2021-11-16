@@ -10,6 +10,7 @@
 		49225C5E273CDB4F0021AD79 /* ResultDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49225C5D273CDB4F0021AD79 /* ResultDetailViewController.swift */; };
 		49225C60273CDB680021AD79 /* ResultDetailSmallerInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49225C5F273CDB680021AD79 /* ResultDetailSmallerInfoView.swift */; };
 		493178B42743992400B5FB88 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493178B32743992400B5FB88 /* CollectionViewCell.swift */; };
+		493178B627439D0000B5FB88 /* ResultDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493178B527439D0000B5FB88 /* ResultDetailModel.swift */; };
 		494803822743748D002854B1 /* ResultDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494803812743748D002854B1 /* ResultDetailViewModel.swift */; };
 		4948038427437499002854B1 /* ResultDetailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4948038327437499002854B1 /* ResultDetailUseCase.swift */; };
 		4955B8EB2742A65D00D90F94 /* MountainDetailAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4955B8EA2742A65D00D90F94 /* MountainDetailAnnotationView.swift */; };
@@ -102,6 +103,7 @@
 		49225C5D273CDB4F0021AD79 /* ResultDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailViewController.swift; sourceTree = "<group>"; };
 		49225C5F273CDB680021AD79 /* ResultDetailSmallerInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailSmallerInfoView.swift; sourceTree = "<group>"; };
 		493178B32743992400B5FB88 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
+		493178B527439D0000B5FB88 /* ResultDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailModel.swift; sourceTree = "<group>"; };
 		494803812743748D002854B1 /* ResultDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailViewModel.swift; sourceTree = "<group>"; };
 		4948038327437499002854B1 /* ResultDetailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailUseCase.swift; sourceTree = "<group>"; };
 		4955B8EA2742A65D00D90F94 /* MountainDetailAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainDetailAnnotationView.swift; sourceTree = "<group>"; };
@@ -236,6 +238,7 @@
 				494803812743748D002854B1 /* ResultDetailViewModel.swift */,
 				4948038327437499002854B1 /* ResultDetailUseCase.swift */,
 				493178B32743992400B5FB88 /* CollectionViewCell.swift */,
+				493178B527439D0000B5FB88 /* ResultDetailModel.swift */,
 			);
 			path = ResultDetailScene;
 			sourceTree = "<group>";
@@ -529,6 +532,7 @@
 				5428FDB4272F894D002F9D40 /* MapViewRepository.swift in Sources */,
 				5485128C272A6AD500407F28 /* SanTa.xcdatamodeld in Sources */,
 				DAFA9B59274112D800BF168C /* RecordingPhotoCoordinator.swift in Sources */,
+				493178B627439D0000B5FB88 /* ResultDetailModel.swift in Sources */,
 				54296947272FBD4B0070B362 /* MapViewCoordinator.swift in Sources */,
 				54296953272FC3530070B362 /* MountainListViewCoordinator.swift in Sources */,
 				DAAF2716272FF73700F8A115 /* RecordingViewController+Extension.swift in Sources */,
