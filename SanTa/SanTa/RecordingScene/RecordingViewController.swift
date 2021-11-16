@@ -141,6 +141,12 @@ class RecordingViewController: UIViewController {
             .receive(on: DispatchQueue.main)
             .sink (receiveValue: { [weak self] gpsStatus in
                 if gpsStatus != self?.currentState {
+                    if !gpsStatus {
+                        guard let alert = self?.authAlert() else { return }
+                        DispatchQueue.main.async {
+                            self?.present(alert, animated: false)
+                        }
+                    }
                     self?.changeRecordingStatus()
                 }
             })

@@ -11,7 +11,6 @@ import CoreMotion
 import Combine
 
 final class RecordingModel: NSObject, ObservableObject {
-    @Published private(set) var currentStatus = true
     @Published private(set) var time = ""
     @Published private(set) var kilometer = ""
     @Published private(set) var altitude = ""
@@ -118,8 +117,8 @@ final class RecordingModel: NSObject, ObservableObject {
                 dispatchGroup.leave()
             }
         }
-        dispatchGroup.leave()
         
+        dispatchGroup.leave()
         dispatchGroup.notify(queue: .global()) { [weak self] in
             guard let walk = self?.currentWalk else { return }
             
