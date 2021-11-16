@@ -38,7 +38,7 @@ class MapOptionCell: UITableViewCell {
         label.font = UIFont.preferredFont(forTextStyle: .caption1)
         label.adjustsFontForContentSizeCategory = true
         label.textColor = .white
-        label.backgroundColor = .darkGray
+        label.backgroundColor = UIColor(named: "SantaColor")
         label.translatesAutoresizingMaskIntoConstraints = false
         label.clipsToBounds = true
         label.layer.cornerRadius = 5
