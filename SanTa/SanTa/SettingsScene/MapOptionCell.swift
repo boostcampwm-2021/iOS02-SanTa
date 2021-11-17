@@ -91,9 +91,10 @@ extension MapOptionCell {
     
     private func configureVoiceOverAccessibility() {
         self.map.isAccessibilityElement = false
-        self.accessibilityLabel = "\(title.text ?? "")"
-        self.accessibilityValue = "\(map.text ?? "")"
+        guard let title = title.text, let map = map.text else { return }
+        self.accessibilityLabel = "\(title)"
+        self.accessibilityValue = "\(map)"
         self.accessibilityHint = "지도형식을 바꾸려면 이중탭 하십시오"
-        self.accessibilityIdentifier = "\(title.text ?? "") Cell"
+        self.accessibilityIdentifier = "\(title) Cell"
     }
 }

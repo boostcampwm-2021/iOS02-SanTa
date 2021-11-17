@@ -102,9 +102,10 @@ extension ToggleOptionCell {
     
     private func configureVoiceOverAccessibility() {
         self.controlSwitch.isAccessibilityElement = false
-        self.accessibilityLabel = "\(title.text ?? "")"
+        guard let title = title.text else { return }
+        self.accessibilityLabel = "\(title)"
         self.accessibilityValue = self.controlSwitch.isOn ? "켜짐" : "꺼짐"
         self.accessibilityHint = "설정을 끄거나 켜려면 이중탭 하십시오"
-        self.accessibilityIdentifier = "\(title.text ?? "") Cell"
+        self.accessibilityIdentifier = "\(title) Cell"
     }
 }
