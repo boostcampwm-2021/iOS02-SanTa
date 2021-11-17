@@ -73,5 +73,14 @@ final class DefaultRecordingUseCase: RecordingUseCase, ObservableObject {
                 self.recording.changedWillSpeechStatus(status: status)
             }
         }
+        
+        self.recordRepository.fetchVoiceOption(key: Settings.recordPhoto) { result in
+            switch result {
+            case .failure(_):
+                return
+            case .success(let status):
+                print(status)
+            }
+        }
     }
 }
