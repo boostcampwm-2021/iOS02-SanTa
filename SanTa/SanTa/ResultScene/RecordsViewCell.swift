@@ -11,13 +11,13 @@ extension UILabel {
     fileprivate convenience init(text: String, normalFontWithSize: CGFloat) {
         self.init()
         self.text = text
-        self.textColor = .black
+        self.textColor = .label
     }
     
     fileprivate convenience init(boldFontWithSize: CGFloat) {
         self.init()
         self.font = .boldSystemFont(ofSize: boldFontWithSize)
-        self.textColor = .black
+        self.textColor = .label
     }
 }
 
@@ -53,6 +53,7 @@ class RecordsViewCell: UICollectionViewCell {
         self.time.text = time
         self.altitude.text = altitude
         self.steps.text = steps
+        self.backgroundColor = UIColor(named: "RecodingResultCellColor")
         
         self.configureSubviews()
         self.configureLayout()

@@ -23,13 +23,13 @@ extension UILabel {
 
 class SectionHeaderView: UICollectionReusableView {
     static let identifier = "SectionHeaderView"
-    let monthLabel = UILabel(boldFontWithSize: 17, withTextColor: .black)
+    let monthLabel = UILabel(boldFontWithSize: 17, withTextColor: .label)
     let countLabel = UILabel(normalFontWithSize: 15, withTextColor: .systemGray)
     let distanceLabel = UILabel(normalFontWithSize: 15, withTextColor: .systemGray)
     let timeLabel = UILabel(normalFontWithSize: 15, withTextColor: .systemGray)
     
     func configure(month: String, count: String, distance: String, time: String){
-        self.backgroundColor = .white
+        self.backgroundColor = .systemBackground
         self.monthLabel.text = month
         self.countLabel.text = count
         self.distanceLabel.text = distance
