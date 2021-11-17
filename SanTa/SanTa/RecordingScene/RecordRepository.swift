@@ -42,7 +42,12 @@ final class DefaultRecordRepository: RecordRepository {
                 return
             }
             
-            print(value)
+            guard value == "1" else {
+                completion(.success(false))
+                return
+            }
+            
+            completion(.success(true))
         }
     }
 }
