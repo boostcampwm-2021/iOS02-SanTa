@@ -67,11 +67,10 @@ final class DefaultRecordingUseCase: RecordingUseCase, ObservableObject {
     func fetchOptions() {
         self.recordRepository.fetchVoiceOption(key: Settings.voiceGuidanceEveryOnekm) { result in
             switch result {
-            case .failure(let error):
-                print(error)
+            case .failure(_):
                 return
             case .success(let status):
-                print(status)
+                self.recording.changedWillSpeechStatus(status: status)
             }
         }
     }

@@ -32,6 +32,8 @@ final class RecordingModel: NSObject, ObservableObject {
     private var sliceDistance: Double = 1
     private var location = [Location]()
     
+    private var willSpeech = false
+    
     private var currentTime = Date() {
         didSet {
             self.timeCalculation()
@@ -144,7 +146,8 @@ final class RecordingModel: NSObject, ObservableObject {
                 return
             }
             let elapsedTimeMinutes = Int(self.currentTime.timeIntervalSince(oneKileDate))
-            self.willSpeechCurrentStatus()
+            
+            if willSpeech { self.willSpeechCurrentStatus() }
             
             if elapsedTimeMinutes > self.maxOneKiloTime {
                 self.maxOneKiloTime = elapsedTimeMinutes
@@ -192,6 +195,10 @@ final class RecordingModel: NSObject, ObservableObject {
         default:
             self.gpsStatus = false
         }
+    }
+    
+    func changedWillSpeechStatus(status: Bool) {
+        self.willSpeech = status
     }
     
     func pause() {
