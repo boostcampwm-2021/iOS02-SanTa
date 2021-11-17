@@ -151,6 +151,11 @@ final class RecordingModel: NSObject, ObservableObject {
                 self.maxSpeed = speed
                 self.oneKileDate = self.currentTime
             }
+            
+            if speed < self.minSpeed {
+                self.minSpeed = speed
+                self.oneKileDate = self.currentTime
+            }
         }
     }
     
