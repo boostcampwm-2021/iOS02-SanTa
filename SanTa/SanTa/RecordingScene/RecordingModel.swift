@@ -34,7 +34,6 @@ final class RecordingModel: NSObject, ObservableObject {
     private var currentTime = Date() {
         didSet {
             self.timeCalculation()
-//            self.checkPedoMeter()
         }
     }
     
@@ -94,8 +93,7 @@ final class RecordingModel: NSObject, ObservableObject {
     private func checkPedoMeter() {
         guard let date = self.startDate else { return }
         var dates = [Record]()
-        if records != nil {
-            guard let records = records else { return }
+        if let records = self.records {
             dates = records.records
         }
         
@@ -128,10 +126,10 @@ final class RecordingModel: NSObject, ObservableObject {
         
         dispatchGroup.leave()
         dispatchGroup.notify(queue: .global()) { [weak self] in
-            guard let walk = self?.currentWalk else { return }
+            guard let walk = self?.currentWalk,
+                  let currentKile = self?.currentKilo else { return }
             
             self?.walk = "\(walk)"
-            guard let currentKile = self?.currentKilo else { return }
             let distanceString = String(format: "%.2f", currentKile)
             
             self?.kilometer = "\(distanceString)"
