@@ -23,7 +23,6 @@ class ResultDetailCoordinator: Coordinator {
         self.parentCoordinator?.childCoordinators.removeLast()
     }
     
-    
     init(navigationController: UINavigationController, records: Records) {
         self.navigationController = navigationController
         let viewModel = ResultDetailViewModel(useCase: ResultDetailUseCase(model: ResultDetailData(records: records)))

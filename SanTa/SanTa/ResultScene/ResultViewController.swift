@@ -130,6 +130,10 @@ extension ResultViewController:  UICollectionViewDataSource {
         sectionHeader.configure(month: sectionInfo.date, count: sectionInfo.count, distance: sectionInfo.distance, time: sectionInfo.time)
         return sectionHeader
     }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+    }
 }
 
 extension ResultViewController: UICollectionViewDelegate {

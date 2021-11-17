@@ -23,7 +23,6 @@ class ResultDetailLargerInfoView: UIView {
 
 extension ResultDetailLargerInfoView {
     private func configureDownArrow() {
-        //chevron.compact.down
         let downArrow:UIImageView = .init(image: UIImage(systemName: "chevron.compact.down")?.withTintColor(.black))
         downArrow.translatesAutoresizingMaskIntoConstraints = false
         let downArrowConstraints = [
@@ -52,7 +51,7 @@ extension ResultDetailLargerInfoView {
 
 extension ResultDetailLargerInfoView: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        4
+        section == 0 ? 3 : 2
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
