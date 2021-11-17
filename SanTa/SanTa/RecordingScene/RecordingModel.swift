@@ -30,7 +30,7 @@ final class RecordingModel: NSObject, ObservableObject {
     private var currentWalk = 0
     private var currentDistance: Double = 0
     private var maxOneKiloTime = 0
-    private var minOneKiloTime = 0
+    private var minOneKiloTime = Int.max
     private var sliceDistance: Double = 1
     private var location = [Location]()
     
@@ -182,11 +182,15 @@ final class RecordingModel: NSObject, ObservableObject {
                             locations: self.location)
         
         guard self.records != nil else {
+            var minTime = 0
+            if minOneKiloTime != Int.max {
+                minTime = self.minOneKiloTime
+            }
             self.records = Records(title: "",
                                    records: [record],
                                    assetIdentifiers: [String](),
-                                   secondPerHighestSpeed: minOneKiloTime,
-                                   secondPerMinimumSpeed: maxOneKiloTime)
+                                   secondPerHighestSpeed: minTime,
+                                   secondPerMinimumSpeed: self.maxOneKiloTime)
             return
         }
         
