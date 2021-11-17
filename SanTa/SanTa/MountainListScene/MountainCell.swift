@@ -14,12 +14,14 @@ final class MountainCell: UICollectionViewCell {
     private var name: UILabel = {
         let label = UILabel()
         label.font = .preferredFont(forTextStyle: .headline)
+        label.adjustsFontForContentSizeCategory = true
         return label
     }()
     
     private var height: UILabel = {
         let label = UILabel()
         label.font = .preferredFont(forTextStyle: .subheadline)
+        label.adjustsFontForContentSizeCategory = true
         label.textColor = .systemGray2
         return label
     }()
@@ -27,8 +29,9 @@ final class MountainCell: UICollectionViewCell {
     private var location: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = .preferredFont(forTextStyle: .caption1)
-        label.numberOfLines = 2
+        label.adjustsFontForContentSizeCategory = true
+        label.font = .preferredFont(forTextStyle: .callout)
+        label.numberOfLines = 5
         label.textColor = .systemGray2
         return label
     }()
@@ -64,6 +67,7 @@ final class MountainCell: UICollectionViewCell {
         let locationConstrain = [
             self.location.topAnchor.constraint(equalTo: self.stackView.bottomAnchor, constant: 10),
             self.location.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 30),
+            self.location.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -30),
             self.location.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
         ]
         NSLayoutConstraint.activate(locationConstrain)
