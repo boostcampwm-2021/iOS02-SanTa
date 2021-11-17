@@ -19,7 +19,9 @@ final class RecordingModel: NSObject, ObservableObject {
     @Published private(set) var gpsStatus = true
     
     private let pedoMeter = CMPedometer()
+    private let synthesizer = AVSpeechSynthesizer()
     private var locationManager = CLLocationManager()
+    
     private var timer: DispatchSourceTimer?
     private var timerIsRunning = false
     private var records: Records?
@@ -131,7 +133,7 @@ final class RecordingModel: NSObject, ObservableObject {
         dispatchGroup.notify(queue: .global()) { [weak self] in
             guard let walk = self?.currentWalk,
                   let currentKile = self?.currentDistance else { return }
-            
+            self?.calculateSpeed()
             self?.walk = "\(walk)"
             let distanceString = String(format: "%.2f", currentKile)
             
@@ -164,12 +166,11 @@ final class RecordingModel: NSObject, ObservableObject {
     }
     
     private func willSpeechCurrentStatus() {
-        let synthesizer = AVSpeechSynthesizer()
-        let speech = "현재 총 거리는 \(kilometer)킬로미터 소요 시간은 \(time)초 현재 고도는 \(altitude)입니다."
+        let speech = "현재 총 거리는 \(self.kilometer)킬로미터 소요 시간은 \(self.time)초 현재 고도는 \(self.altitude)입니다."
         let utterance = AVSpeechUtterance(string: speech)
         utterance.voice = AVSpeechSynthesisVoice(language: "ko-KR")
         utterance.rate = 0.4
-        synthesizer.speak(utterance)
+        self.synthesizer.speak(utterance)
     }
     
     private func appendRecord() {
