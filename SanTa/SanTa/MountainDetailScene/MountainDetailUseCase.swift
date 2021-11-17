@@ -10,16 +10,15 @@ import CoreLocation
 
 class MountainDetailUseCase {
     private let mountainAnnotation: MountainAnnotation
-    private let location: CLLocation?
+    private let manager = CLLocationManager()
     
-    init(mountainAnnotation: MountainAnnotation, location: CLLocation?) {
+    init(mountainAnnotation: MountainAnnotation) {
         self.mountainAnnotation = mountainAnnotation
-        self.location = location
     }
     
     private func calculateDistance() -> Double?  {
         let mountainLocation = CLLocation(latitude: self.mountainAnnotation.latitude, longitude: self.mountainAnnotation.longitude)
-        guard let distance = location?.distance(from: mountainLocation) else  {
+        guard let distance = manager.location?.distance(from: mountainLocation) else  {
             return nil
         }
         return distance / 1000
