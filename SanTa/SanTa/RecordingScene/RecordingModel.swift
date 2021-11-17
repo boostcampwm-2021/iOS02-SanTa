@@ -144,6 +144,7 @@ final class RecordingModel: NSObject, ObservableObject {
                 return
             }
             let elapsedTimeMinutes = Int(self.currentTime.timeIntervalSince(oneKileDate))
+            self.willSpeechCurrentStatus()
             
             if elapsedTimeMinutes > self.maxOneKiloTime {
                 self.maxOneKiloTime = elapsedTimeMinutes
@@ -157,6 +158,15 @@ final class RecordingModel: NSObject, ObservableObject {
                 self.sliceDistance += 1
             }
         }
+    }
+    
+    private func willSpeechCurrentStatus() {
+        let synthesizer = AVSpeechSynthesizer()
+        let speech = "현재 총 거리는 \(kilometer)킬로미터 소요 시간은 \(time)초 현재 고도는 \(altitude)입니다."
+        let utterance = AVSpeechUtterance(string: speech)
+        utterance.voice = AVSpeechSynthesisVoice(language: "ko-KR")
+        utterance.rate = 0.4
+        synthesizer.speak(utterance)
     }
     
     private func appendRecord() {
