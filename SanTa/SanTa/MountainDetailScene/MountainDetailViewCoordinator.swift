@@ -21,6 +21,10 @@ class MountainDetailViewCoordinator: Coordinator {
         }
     }
     
+    func startPush() {
+        self.navigationController.pushViewController(self.mountainDetailViewController, animated: true)
+    }
+    
     func dismiss() {
         self.navigationController.dismiss(animated: true)
         self.parentCoordinator?.childCoordinators.removeLast()
