@@ -65,7 +65,7 @@ final class DefaultRecordingUseCase: RecordingUseCase, ObservableObject {
     }
     
     func fetchOptions() {
-        self.recordRepository.fetchVoiceOption(key: Settings.voiceGuidanceEveryOnekm) { result in
+        self.recordRepository.fetchRecordOption(key: Settings.voiceGuidanceEveryOnekm) { result in
             switch result {
             case .failure(_):
                 return
@@ -74,7 +74,7 @@ final class DefaultRecordingUseCase: RecordingUseCase, ObservableObject {
             }
         }
         
-        self.recordRepository.fetchVoiceOption(key: Settings.recordPhoto) { result in
+        self.recordRepository.fetchRecordOption(key: Settings.recordPhoto) { result in
             switch result {
             case .failure(_):
                 return
