@@ -7,6 +7,7 @@
 
 import UIKit
 import Combine
+import CoreLocation
 
 class MountainListViewController: UIViewController {
     enum MountainListSection: Int, CaseIterable {
@@ -129,7 +130,15 @@ class MountainListViewController: UIViewController {
 
 extension MountainListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        collectionView.deselectItem(at: indexPath, animated: true)
+        guard let mountains = self.viewModel?.mountains else { return }
+        let location = CLLocation(latitude: CLLocationDegrees(mountains[indexPath.item].latitude),
+                                  longitude: mountains[indexPath.item].longitude)
+        self.coordinator?.pushMountainDetailViewController(mountainAnnotation: MountainAnnotation(
+            title: mountains[indexPath.item].mountain.mountainName,
+            subtitle: mountains[indexPath.item].mountain.mountainHeight,
+            latitude: mountains[indexPath.item].latitude,
+            longitude: mountains[indexPath.item].longitude),
+                                                           location: location)
     }
 }
 
