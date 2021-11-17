@@ -49,8 +49,8 @@ extension MapViewCoordinator {
         childCoordinators.first?.start()
     }
     
-    func presentMountainDetailViewController(mountainAnnotation: MountainAnnotation, location: CLLocation?) {
-        let mountainDetailViewCoordinator = MountainDetailViewCoordinator(navigationController: self.navigationController, mountainAnnotation: mountainAnnotation, location: location)
+    func presentMountainDetailViewController(mountainAnnotation: MountainAnnotation) {
+        let mountainDetailViewCoordinator = MountainDetailViewCoordinator(navigationController: self.navigationController, mountainAnnotation: mountainAnnotation)
         mountainDetailViewCoordinator.parentCoordinator = self
         self.childCoordinators.append(mountainDetailViewCoordinator)
         
