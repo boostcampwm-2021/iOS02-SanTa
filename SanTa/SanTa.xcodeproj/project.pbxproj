@@ -76,6 +76,7 @@
 		98BCF4F52737A3480073E6FB /* SettingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BCF4F42737A3480073E6FB /* SettingsRepository.swift */; };
 		98BCF4F72737A66E0073E6FB /* SettingsUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BCF4F62737A66E0073E6FB /* SettingsUsecase.swift */; };
 		98BCF4F92737A7120073E6FB /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BCF4F82737A7120073E6FB /* SettingsViewModel.swift */; };
+		DA854FBE274545FA00E51E4B /* MountainFooterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA854FBD274545FA00E51E4B /* MountainFooterView.swift */; };
 		DA9D7C9D273A433E0018AD45 /* RecordingTitleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9D7C9C273A433E0018AD45 /* RecordingTitleViewController.swift */; };
 		DA9D7C9F273A45BE0018AD45 /* RecordingTitleViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9D7C9E273A45BE0018AD45 /* RecordingTitleViewCoordinator.swift */; };
 		DAAF2716272FF73700F8A115 /* RecordingViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAF2715272FF73700F8A115 /* RecordingViewController+Extension.swift */; };
@@ -167,6 +168,7 @@
 		98BCF4F42737A3480073E6FB /* SettingsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRepository.swift; sourceTree = "<group>"; };
 		98BCF4F62737A66E0073E6FB /* SettingsUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsUsecase.swift; sourceTree = "<group>"; };
 		98BCF4F82737A7120073E6FB /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		DA854FBD274545FA00E51E4B /* MountainFooterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainFooterView.swift; sourceTree = "<group>"; };
 		DA9D7C9C273A433E0018AD45 /* RecordingTitleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingTitleViewController.swift; sourceTree = "<group>"; };
 		DA9D7C9E273A45BE0018AD45 /* RecordingTitleViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingTitleViewCoordinator.swift; sourceTree = "<group>"; };
 		DAAF2715272FF73700F8A115 /* RecordingViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RecordingViewController+Extension.swift"; sourceTree = "<group>"; };
@@ -252,6 +254,7 @@
 				DAAF4D6D273CE06A00780DC8 /* MountainListViewUseCase.swift */,
 				DAAF4D6F273CE08B00780DC8 /* MountainListViewRepository.swift */,
 				985EEF62272FDA98002413D9 /* MountainCell.swift */,
+				DA854FBD274545FA00E51E4B /* MountainFooterView.swift */,
 			);
 			path = MountainListScene;
 			sourceTree = "<group>";
@@ -524,6 +527,7 @@
 				54851286272A6AD500407F28 /* MapViewController.swift in Sources */,
 				984DDEC9273271EC003BE56B /* CoreDataStorage.swift in Sources */,
 				9826F3DD2739035E0064FA85 /* Option.swift in Sources */,
+				DA854FBE274545FA00E51E4B /* MountainFooterView.swift in Sources */,
 				DAAF4D6E273CE06A00780DC8 /* MountainListViewUseCase.swift in Sources */,
 				985EEF63272FDA98002413D9 /* MountainCell.swift in Sources */,
 				5428FDBD272F8C5B002F9D40 /* MapViewUseCase.swift in Sources */,

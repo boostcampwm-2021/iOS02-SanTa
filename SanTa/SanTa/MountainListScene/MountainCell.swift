@@ -58,7 +58,7 @@ final class MountainCell: UICollectionViewCell {
     func configureView() {
         self.addSubview(self.stackView)
         let stackViewConstrain = [
-            self.stackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
+            self.stackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
             self.stackView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 30),
         ]
         NSLayoutConstraint.activate(stackViewConstrain)
@@ -68,7 +68,7 @@ final class MountainCell: UICollectionViewCell {
             self.location.topAnchor.constraint(equalTo: self.stackView.bottomAnchor, constant: 10),
             self.location.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 30),
             self.location.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -30),
-            self.location.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
+            self.location.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -20),
         ]
         NSLayoutConstraint.activate(locationConstrain)
     }

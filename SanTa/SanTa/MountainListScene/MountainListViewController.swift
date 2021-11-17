@@ -88,6 +88,7 @@ class MountainListViewController: UIViewController {
         self.mountainListCollectionView.delegate = self
         self.mountainListCollectionView.collectionViewLayout = configureCompositionalLayout()
         self.mountainListCollectionView.register(MountainCell.self, forCellWithReuseIdentifier: MountainCell.identifier)
+        self.mountainListCollectionView.register(MountainFooterView.self, forSupplementaryViewOfKind: "footer", withReuseIdentifier: MountainFooterView.identifier)
     }
     
     private func configureView() {
@@ -100,7 +101,7 @@ class MountainListViewController: UIViewController {
         ]
         NSLayoutConstraint.activate(collectionViewConstrain)
     }
-    //fractionalWidth(0.25)
+    
     private func configureCompositionalLayout() -> UICollectionViewCompositionalLayout {
         return UICollectionViewCompositionalLayout { (sectionNumber, env) -> NSCollectionLayoutSection? in
             let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(500)))
@@ -109,6 +110,12 @@ class MountainListViewController: UIViewController {
             let section = NSCollectionLayoutSection(group: group)
             section.orthogonalScrollingBehavior = .none
             section.contentInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 0)
+            
+            let footerSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(1))
+            let footer = NSCollectionLayoutBoundarySupplementaryItem(layoutSize: footerSize, elementKind: "footer", alignment: .bottom)
+
+            section.boundarySupplementaryItems = [footer]
+            
             return section
         }
     }
