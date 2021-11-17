@@ -12,9 +12,9 @@ import Combine
 
 final class RecordingModel: NSObject, ObservableObject {
     @Published private(set) var time = ""
-    @Published private(set) var kilometer = ""
-    @Published private(set) var altitude = ""
-    @Published private(set) var walk = ""
+    @Published private(set) var kilometer = "0.00"
+    @Published private(set) var altitude = "0"
+    @Published private(set) var walk = "0"
     @Published private(set) var gpsStatus = true
     
     private let pedoMeter = CMPedometer()
