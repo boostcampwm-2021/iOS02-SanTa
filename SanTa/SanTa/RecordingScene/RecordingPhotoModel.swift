@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import UIKit
 import Photos
 
 final class RecordingPhotoModel {
