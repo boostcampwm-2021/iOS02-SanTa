@@ -28,6 +28,8 @@ final class CoreDataRecordStorage: RecordsStorage {
                                                                     into: context)
             
             recordsObject.setValue(records.title, forKey: "title")
+            recordsObject.setValue(records.secondPerHighestSpeed, forKey: "secondPerHighestSpeed")
+            recordsObject.setValue(records.secondPerMinimumSpeed, forKey: "secondPerMinimumSpeed")
             
             do {
                 let assetIdentifiers = try NSKeyedArchiver.archivedData(withRootObject: records.assetIdentifiers, requiringSecureCoding: true)
