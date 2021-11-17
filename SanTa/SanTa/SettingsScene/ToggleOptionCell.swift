@@ -50,7 +50,6 @@ class ToggleOptionCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.selectionStyle = .none
         self.configureView()
-        self.configureStackViewAccessibility()
     }
     
     required init?(coder: NSCoder) {
@@ -79,14 +78,33 @@ class ToggleOptionCell: UITableViewCell {
         self.title.text = option.text
         self.controlSwitch.isOn = option.toggle
     }
+    
+    func changeSwitch() {
+        self.controlSwitch.isOn.toggle()
+        self.onClickSwitch(sender: self.controlSwitch)
+        self.accessibilityValue = self.controlSwitch.isOn ? "켜짐" : "꺼짐"
+    }
 }
 
 // MARK: - Accessibility
 
 extension ToggleOptionCell {
-    private func configureStackViewAccessibility() {
+    func configureAccessibility() {
+        self.configureDynamicTypeAccessibility()
+        self.configureVoiceOverAccessibility()
+    }
+    
+    private func configureDynamicTypeAccessibility() {
         self.stackView.axis =
         self.traitCollection.preferredContentSizeCategory < .accessibilityLarge ?
             .horizontal : .vertical
+    }
+    
+    private func configureVoiceOverAccessibility() {
+        self.controlSwitch.isAccessibilityElement = false
+        self.accessibilityLabel = "\(title.text ?? "")"
+        self.accessibilityValue = self.controlSwitch.isOn ? "켜짐" : "꺼짐"
+        self.accessibilityHint = "설정을 끄거나 켜려면 이중탭 하십시오"
+        self.accessibilityIdentifier = "\(title.text ?? "") Cell"
     }
 }

@@ -52,7 +52,6 @@ class MapOptionCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.configureView()
-        self.configureStackViewAccessibility()
     }
     
     required init?(coder: NSCoder) {
@@ -79,9 +78,22 @@ class MapOptionCell: UITableViewCell {
 // MARK: - Accessibility
 
 extension MapOptionCell {
-    private func configureStackViewAccessibility() {
+    func configureAccessibility() {
+        self.configureDynamicTypeAccessibility()
+        self.configureVoiceOverAccessibility()
+    }
+    
+    private func configureDynamicTypeAccessibility() {
         self.stackView.axis =
         self.traitCollection.preferredContentSizeCategory < .accessibilityLarge ?
             .horizontal : .vertical
+    }
+    
+    private func configureVoiceOverAccessibility() {
+        self.map.isAccessibilityElement = false
+        self.accessibilityLabel = "\(title.text ?? "")"
+        self.accessibilityValue = "\(map.text ?? "")"
+        self.accessibilityHint = "지도형식을 바꾸려면 이중탭 하십시오"
+        self.accessibilityIdentifier = "\(title.text ?? "") Cell"
     }
 }

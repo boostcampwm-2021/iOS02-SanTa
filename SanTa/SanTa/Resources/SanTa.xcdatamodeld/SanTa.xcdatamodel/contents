@@ -15,6 +15,7 @@
         <relationship name="records" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RecordsEntity" inverseName="records" inverseEntity="RecordsEntity"/>
     </entity>
     <entity name="RecordsEntity" representedClassName=".RecordsEntityMO" syncable="YES" codeGenerationType="class">
+
         <attribute name="assetIdentifiers" optional="YES" attributeType="Binary"/>
         <attribute name="title" optional="YES" attributeType="String"/>
         <relationship name="records" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="RecordEntity" inverseName="records" inverseEntity="RecordEntity"/>
@@ -23,5 +24,6 @@
         <element name="LocationEntity" positionX="-50350.43591308594" positionY="-6695.536254882812" width="128" height="103"/>
         <element name="RecordEntity" positionX="-50540.45288085938" positionY="-6705.159729003906" width="128" height="133"/>
         <element name="RecordsEntity" positionX="-50725.08505249023" positionY="-6673.378601074219" width="128" height="88"/>
+
     </elements>
 </model>
