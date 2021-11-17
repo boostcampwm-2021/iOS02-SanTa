@@ -10,10 +10,10 @@ import UIKit
 class MapOptionCell: UITableViewCell {
     
     static let identifier = "MapOptionCell"
-    
+
     private(set) var title: UILabel = {
         let label = UILabel()
-        label.font = UIFont.preferredFont(forTextStyle: .caption1)
+        label.font = UIFont.preferredFont(forTextStyle: .body)
         label.adjustsFontForContentSizeCategory = true
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
@@ -26,10 +26,10 @@ class MapOptionCell: UITableViewCell {
     private var map: UILabel = {
         let label = PaddingLabel()
         label.padding(top: 5, bottom: 5, left: 10, right: 10)
-        label.font = UIFont.preferredFont(forTextStyle: .caption2)
+        label.font = UIFont.preferredFont(forTextStyle: .caption1)
         label.adjustsFontForContentSizeCategory = true
         label.textColor = .white
-        label.backgroundColor = .darkGray
+        label.backgroundColor = UIColor(named: "SantaColor")
         label.translatesAutoresizingMaskIntoConstraints = false
         label.clipsToBounds = true
         label.layer.cornerRadius = 5
@@ -39,48 +39,49 @@ class MapOptionCell: UITableViewCell {
         return label
     }()
     
+    private lazy var stackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [self.title, self.map])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.distribution = .equalCentering
+        return stackView
+    }()
+    
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.configureView()
+        self.configureStackViewAccessibility()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    override var frame: CGRect {
-        get {
-            return super.frame
-        }
-        set (newFrame) {
-            var frame = newFrame
-            let newWidth = frame.width * 0.90
-            let space = (frame.width - newWidth) / 2
-            frame.size.width = newWidth
-            frame.origin.x += space
-            super.frame = frame
-        }
-    }
 
     private func configureView() {
-        self.contentView.addSubview(self.title)
+        self.contentView.addSubview(self.stackView)
         let locationConstrain = [
-            self.title.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
-            self.title.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 30),
+            self.stackView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 15),
+            self.stackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -15),
+            self.stackView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 30),
+            self.stackView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -30),
         ]
         NSLayoutConstraint.activate(locationConstrain)
-        
-        self.contentView.addSubview(self.map)
-        let mapConstrain = [
-            self.map.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
-            self.map.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -30),
-            self.map.leftAnchor.constraint(equalTo: self.title.rightAnchor, constant: 10),
-        ]
-        NSLayoutConstraint.activate(mapConstrain)
     }
     
     func update(option: MapOption) {
         self.title.text = option.text
         self.map.text = option.map.name
+    }
+}
+
+// MARK: - Accessibility
+
+extension MapOptionCell {
+    private func configureStackViewAccessibility() {
+        self.stackView.axis =
+        self.traitCollection.preferredContentSizeCategory < .accessibilityLarge ?
+            .horizontal : .vertical
     }
 }

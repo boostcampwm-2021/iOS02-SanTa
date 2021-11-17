@@ -19,7 +19,7 @@ class ToggleOptionCell: UITableViewCell {
     
     private var title: UILabel = {
         let label = UILabel()
-        label.font = UIFont.preferredFont(forTextStyle: .caption1)
+        label.font = UIFont.preferredFont(forTextStyle: .body)
         label.adjustsFontForContentSizeCategory = true
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
@@ -33,35 +33,30 @@ class ToggleOptionCell: UITableViewCell {
         let controlSwitch = UISwitch()
         controlSwitch.translatesAutoresizingMaskIntoConstraints = false
         controlSwitch.addTarget(self, action: #selector(onClickSwitch(sender:)), for: .valueChanged)
-        controlSwitch.onTintColor = .systemBlue
+        controlSwitch.onTintColor = UIColor(named: "SantaColor")
         controlSwitch.setContentCompressionResistancePriority(.init(rawValue: 1000), for: .horizontal)
         return controlSwitch
+    }()
+    
+    private lazy var stackView: UIStackView = {
+        let stackView = UIStackView(arrangedSubviews: [self.title, self.controlSwitch])
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        return stackView
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.selectionStyle = .none
         self.configureView()
+        self.configureStackViewAccessibility()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    override var frame: CGRect {
-        get {
-            return super.frame
-        }
-        set (newFrame) {
-            var frame = newFrame
-            let newWidth = frame.width * 0.90
-            let space = (frame.width - newWidth) / 2
-            frame.size.width = newWidth
-            frame.origin.x += space
-            super.frame = frame
-        }
-    }
-    
+
     @objc func onClickSwitch(sender: UISwitch) {
         guard let title = self.title.text else { return }
         self.delegate?.toggleOptionCellSwitchChanged(self,
@@ -70,21 +65,14 @@ class ToggleOptionCell: UITableViewCell {
     }
     
     private func configureView() {
-        
-        self.contentView.addSubview(self.title)
+        self.contentView.addSubview(self.stackView)
         let locationConstrain = [
-            self.title.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
-            self.title.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 30),
+            self.stackView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 15),
+            self.stackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -15),
+            self.stackView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 30),
+            self.stackView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -30),
         ]
         NSLayoutConstraint.activate(locationConstrain)
-        
-        self.contentView.addSubview(self.controlSwitch)
-        let switchConstrain = [
-            self.controlSwitch.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
-            self.controlSwitch.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -30),
-            self.controlSwitch.leftAnchor.constraint(equalTo: self.title.rightAnchor, constant: 10),
-        ]
-        NSLayoutConstraint.activate(switchConstrain)
     }
     
     func update(option: ToggleOption) {
@@ -93,4 +81,12 @@ class ToggleOptionCell: UITableViewCell {
     }
 }
 
+// MARK: - Accessibility
 
+extension ToggleOptionCell {
+    private func configureStackViewAccessibility() {
+        self.stackView.axis =
+        self.traitCollection.preferredContentSizeCategory < .accessibilityLarge ?
+            .horizontal : .vertical
+    }
+}
