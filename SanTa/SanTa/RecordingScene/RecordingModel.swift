@@ -15,6 +15,7 @@ final class RecordingModel: NSObject, ObservableObject {
     @Published private(set) var kilometer = ""
     @Published private(set) var altitude = ""
     @Published private(set) var walk = ""
+    @Published private(set) var gpsStatus = true
     
     private let pedoMeter = CMPedometer()
     private var locationManager = CLLocationManager()
@@ -41,7 +42,7 @@ final class RecordingModel: NSObject, ObservableObject {
     }
     
     private func configureTimer() {
-        self.timer = DispatchSource.makeTimerSource(flags: [], queue: DispatchQueue.main)
+        self.timer = DispatchSource.makeTimerSource(flags: [], queue: DispatchQueue.global())
         self.timer?.schedule(deadline: .now(), repeating: 1)
         self.timer?.setEventHandler(handler: { [weak self] in
             self?.currentTime = Date()
@@ -87,41 +88,21 @@ final class RecordingModel: NSObject, ObservableObject {
     
     private func checkPedoMeter() {
         guard let date = self.startDate else { return }
+        var dates = [Record]()
+        if records != nil {
+            guard let records = records else { return }
+            dates = records.records
+        }
+        
+        dates.append(Record(startTime: date, endTime: self.currentTime, step: 0, distance: 0, locations: [Location]()))
+        
         let dispatchGroup = DispatchGroup()
         
         self.currentWalk = 0
         self.currentKilo = 0
         
         dispatchGroup.enter()
-        self.pedoMeter.queryPedometerData(from: date, to: self.currentTime) { [weak self] data, error in
-            guard let activityData = data,
-                  error == nil else { return }
-            
-            let walk = "\(activityData.numberOfSteps)"
-            
-            guard let walkNumber = Int(walk) else { return }
-            
-            self?.currentWalk += walkNumber
-            
-            guard let distance = activityData.distance else { return }
-            let transformatKilometer = Double(truncating: distance) / 1000
-            self?.currentKilo += transformatKilometer
-            dispatchGroup.leave()
-        }
-        
-        dispatchGroup.notify(queue: .main) { [weak self] in
-            guard let walk = self?.currentWalk else { return }
-            
-            self?.walk = "\(walk)"
-            guard let currentKile = self?.currentKilo else { return }
-            let distanceString = String(format: "%.2f", currentKile)
-            
-            self?.kilometer = "\(distanceString)"
-        }
-        
-        guard let records = records else { return }
-        
-        records.records.forEach {
+        dates.forEach {
             dispatchGroup.enter()
             self.pedoMeter.queryPedometerData(from: $0.startTime, to: $0.endTime) { [weak self] data, error in
                 guard let activityData = data,
@@ -139,6 +120,17 @@ final class RecordingModel: NSObject, ObservableObject {
                 dispatchGroup.leave()
             }
         }
+        
+        dispatchGroup.leave()
+        dispatchGroup.notify(queue: .global()) { [weak self] in
+            guard let walk = self?.currentWalk else { return }
+            
+            self?.walk = "\(walk)"
+            guard let currentKile = self?.currentKilo else { return }
+            let distanceString = String(format: "%.2f", currentKile)
+            
+            self?.kilometer = "\(distanceString)"
+        }
     }
     
     private func appendRecord() {
@@ -150,11 +142,20 @@ final class RecordingModel: NSObject, ObservableObject {
                             locations: self.location)
         
         guard self.records != nil else {
-            self.records = Records(title: "", records: [record])
+            self.records = Records(title: "", records: [record], assetIdentifiers: [String]())
             return
         }
         
         self.records?.add(record: record)
+    }
+    
+    private func checkAuthorizationStatus() {
+        switch self.locationManager.authorizationStatus{
+        case .authorizedWhenInUse, .authorizedAlways:
+            self.gpsStatus = true
+        default:
+            self.gpsStatus = false
+        }
     }
     
     func pause() {
@@ -169,6 +170,10 @@ final class RecordingModel: NSObject, ObservableObject {
     
     func resume() {
         guard self.timerIsRunning == false else { return }
+        
+        self.checkAuthorizationStatus()
+        
+        guard self.gpsStatus == true else { return }
         
         self.timerIsRunning = true
         self.timer?.resume()
@@ -203,7 +208,6 @@ extension RecordingModel: CLLocationManagerDelegate {
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        // GPS를 켜지 않았을 경우
-        print(error)
+        self.gpsStatus = false
     }
 }

@@ -95,6 +95,7 @@ class DateSeperateRecords {
 struct Records {
     private(set) var title: String
     private(set) var records: [Record]
+    private(set) var assetIdentifiers: [String]
     
     var date: Date? {
         return records.last?.endTime
@@ -123,6 +124,10 @@ struct Records {
     
     mutating func configureTitle(title: String) {
         self.title = title
+    }
+    
+    mutating func configurePhoto(assetIdentifiers: [String]) {
+        self.assetIdentifiers = assetIdentifiers
     }
     
     mutating func add(record: Record) {
@@ -154,10 +159,4 @@ struct Location {
     let latitude: Double
     let longitude: Double
     let altitude: Double
-}
-
-struct Photo {
-    let latitude: Double
-    let longitude: Double
-    let date: Data
 }

@@ -29,6 +29,14 @@ final class CoreDataRecordStorage: RecordsStorage {
             
             recordsObject.setValue(records.title, forKey: "title")
             
+            do {
+                let assetIdentifiers = try NSKeyedArchiver.archivedData(withRootObject: records.assetIdentifiers, requiringSecureCoding: true)
+                
+                recordsObject.setValue(assetIdentifiers, forKey: "assetIdentifiers")
+            } catch {
+                completion(.failure(CoreDataError.coreDataError))
+            }
+
             records.records.forEach {
                 let recordObject = NSEntityDescription.insertNewObject(forEntityName: "RecordEntity",
                                                                        into: context) as? RecordEntityMO

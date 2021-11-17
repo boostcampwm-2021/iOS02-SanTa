@@ -136,6 +136,23 @@ class RecordingViewController: UIViewController {
                 self?.walkLabel.text = walk
             })
             .store(in: &self.subscriptions)
+        
+        self.recordingViewModel?.$gpsStatus
+            .receive(on: DispatchQueue.main)
+            .sink (receiveValue: { [weak self] gpsStatus in
+                if gpsStatus != self?.currentState {
+                    if !gpsStatus {
+                        let title = "위치정보 활성화"
+                        let message = "측정을 다시 시작할 수 있도록 위치정보를 활성화해주세요."
+                        guard let alert = self?.authAlert(title: title, message: message) else { return }
+                        DispatchQueue.main.async {
+                            self?.present(alert, animated: false)
+                        }
+                    }
+                    self?.changeRecordingStatus()
+                }
+            })
+            .store(in: &self.subscriptions)
     }
     
     private func configureTarget() {
@@ -148,18 +165,14 @@ class RecordingViewController: UIViewController {
         let status = PHPhotoLibrary.authorizationStatus(for: .readWrite)
         
         switch status{
-        case .authorized:
-            break
-        case .denied:
-            self.coordinator?.presentRecordingPhotoViewController()
-        case .restricted, .notDetermined:
+        case .notDetermined:
             self.coordinator?.presentRecordingPhotoViewController()
         default:
             break
         }
     }
     
-    @objc private func pauseButtonAction(_ sender: UIResponder) {
+    private func changeRecordingStatus() {
         if currentState {
             self.view.backgroundColor = .black
             var pauseConfiguration = UIButton.Configuration.plain()
@@ -177,6 +190,22 @@ class RecordingViewController: UIViewController {
             self.recordingViewModel?.resume()
             self.currentState = true
         }
+    }
+    
+    private func authAlert(title: String, message: String) -> UIAlertController {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let cancel = UIAlertAction(title: "아니요", style: .cancel)
+        let confirm = UIAlertAction(title: "활성화", style: .default) { _ in
+            guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
+            UIApplication.shared.open(url)
+        }
+        alert.addAction(cancel)
+        alert.addAction(confirm)
+        return alert
+    }
+
+    @objc private func pauseButtonAction(_ sender: UIResponder) {
+        changeRecordingStatus()
     }
     
     @objc private func stopButtonAction(_ sender: UIResponder) {

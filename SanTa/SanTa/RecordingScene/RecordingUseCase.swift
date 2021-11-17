@@ -11,7 +11,7 @@ protocol RecordingUseCase {
     var recording: RecordingModel { get set }
     
     func save(title: String, completion: @escaping (Result<Records, CoreDataError>) -> Void)
-    func fetchPhotos(startDate: Date?, endDate: Date?, completionFetchImages: @escaping ([Photo]?) -> Void)
+    func fetchPhotos(startDate: Date?, endDate: Date?) -> [String]
     func pause()
     func resume()
 }
@@ -41,25 +41,25 @@ final class DefaultRecordingUseCase: RecordingUseCase, ObservableObject {
             completion(.failure(CoreDataError.coreDataError))
             return
         }
+        
+        let asset = self.fetchPhotos(startDate: records.records.last?.endTime, endDate: records.records.first?.startTime)
+        
         records.configureTitle(title: title)
-        self.fetchPhotos(startDate: records.records.last?.endTime, endDate: records.records.first?.startTime) { [weak self] images in
-            self?.recordRepository.save(records: records, completion: completion)
-        }
+        records.configurePhoto(assetIdentifiers: asset)
+        
+        self.recordRepository.save(records: records, completion: completion)
     }
     
-    func fetchPhotos(startDate: Date?, endDate: Date?, completionFetchImages: @escaping ([Photo]?) -> Void) {
+    func fetchPhotos(startDate: Date?, endDate: Date?) -> [String] {
         guard let startDate = startDate,
               let endDate = endDate else {
-                  completionFetchImages(nil)
-                  return
+                  return [String]()
               }
         
-        self.recordingPhoto.fetchPhotos(startDate: startDate, endDate: endDate) { images in
-            guard let images = images else {
-                completionFetchImages(nil)
-                return
-            }
-            completionFetchImages(images)
+        guard let assets = self.recordingPhoto.fetchPhotos(startDate: startDate, endDate: endDate) else {
+            return [String]()
         }
+        
+        return assets
     }
 }
