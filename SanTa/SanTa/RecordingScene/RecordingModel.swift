@@ -182,7 +182,11 @@ final class RecordingModel: NSObject, ObservableObject {
                             locations: self.location)
         
         guard self.records != nil else {
-            self.records = Records(title: "", records: [record], assetIdentifiers: [String]())
+            self.records = Records(title: "",
+                                   records: [record],
+                                   assetIdentifiers: [String](),
+                                   secondPerHighestSpeed: minOneKiloTime,
+                                   secondPerMinimumSpeed: maxOneKiloTime)
             return
         }
         
