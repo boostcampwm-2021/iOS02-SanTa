@@ -25,7 +25,7 @@ final class RecordingModel: NSObject, ObservableObject {
     private var startDate: Date?
     private var oneKileDate: Date?
     private var currentWalk = 0
-    private var currentKilo: Double = 0
+    private var currentDistance: Double = 0
     private var maxSpeed: Double = 0
     private var minSpeed: Double = 0
     private var sliceDistance: Double = 1
@@ -102,7 +102,7 @@ final class RecordingModel: NSObject, ObservableObject {
         let dispatchGroup = DispatchGroup()
         
         self.currentWalk = 0
-        self.currentKilo = 0
+        self.currentDistance = 0
         
         dispatchGroup.enter()
         dates.forEach {
@@ -119,7 +119,7 @@ final class RecordingModel: NSObject, ObservableObject {
                 
                 guard let distance = activityData.distance else { return }
                 let transformatKilometer = Double(truncating: distance) / 1000
-                self?.currentKilo += transformatKilometer
+                self?.currentDistance += transformatKilometer
                 dispatchGroup.leave()
             }
         }
@@ -127,7 +127,7 @@ final class RecordingModel: NSObject, ObservableObject {
         dispatchGroup.leave()
         dispatchGroup.notify(queue: .global()) { [weak self] in
             guard let walk = self?.currentWalk,
-                  let currentKile = self?.currentKilo else { return }
+                  let currentKile = self?.currentDistance else { return }
             
             self?.walk = "\(walk)"
             let distanceString = String(format: "%.2f", currentKile)
@@ -137,7 +137,7 @@ final class RecordingModel: NSObject, ObservableObject {
     }
     
     private func calculateSpeed() {
-        if self.sliceDistance <= self.currentKilo {
+        if self.sliceDistance <= self.currentDistance {
             guard let oneKileDate = self.oneKileDate else {
                 self.oneKileDate = self.currentTime
                 return
@@ -164,7 +164,7 @@ final class RecordingModel: NSObject, ObservableObject {
         let record = Record(startTime: startdate,
                             endTime: self.currentTime,
                             step: self.currentWalk,
-                            distance: self.currentKilo,
+                            distance: self.currentDistance,
                             locations: self.location)
         
         guard self.records != nil else {
