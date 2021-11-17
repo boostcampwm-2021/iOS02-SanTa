@@ -79,7 +79,7 @@ final class DefaultRecordingUseCase: RecordingUseCase, ObservableObject {
             case .failure(_):
                 return
             case .success(let status):
-                print(status)
+                self.recordingPhoto.changedWillRecordPhotoStatus(status: status)
             }
         }
     }

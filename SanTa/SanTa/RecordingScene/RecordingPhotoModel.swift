@@ -11,10 +11,13 @@ import Photos
 final class RecordingPhotoModel {
     
     private let imageManager = PHImageManager()
-    
-    var representedAssetIdentifier: String?
+    private var willRecordPhoto = false
     
     func fetchPhotos(startDate: Date, endDate: Date) -> [String]? {
+        guard self.willRecordPhoto == true else {
+            return nil
+        }
+        
         let allMedia = PHAsset.fetchAssets(with: .image, options: nil)
         var assetIdentifiers = [String]()
         
@@ -40,5 +43,9 @@ final class RecordingPhotoModel {
         }
         
         return assetIdentifiers
+    }
+    
+    func changedWillRecordPhotoStatus(status: Bool) {
+        self.willRecordPhoto = status
     }
 }
