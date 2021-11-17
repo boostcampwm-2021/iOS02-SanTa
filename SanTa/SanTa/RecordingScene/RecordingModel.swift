@@ -23,20 +23,25 @@ final class RecordingModel: NSObject, ObservableObject {
     private var timerIsRunning = false
     private var records: Records?
     private var startDate: Date?
+    private var oneKileDate: Date?
     private var currentWalk = 0
     private var currentKilo: Double = 0
+    private var maxSpeed: Double = 0
+    private var minSpeed: Double = 0
+    private var sliceDistance: Double = 1
     private var location = [Location]()
     
     private var currentTime = Date() {
         didSet {
             self.timeCalculation()
-            self.checkPedoMeter()
+//            self.checkPedoMeter()
         }
     }
     
     override init() {
         super.init()
         self.startDate = Date()
+        self.oneKileDate = self.startDate
         self.configureTimer()
         self.configureLocationManager()
     }
@@ -133,6 +138,22 @@ final class RecordingModel: NSObject, ObservableObject {
         }
     }
     
+    private func calculateSpeed() {
+        if self.sliceDistance <= self.currentKilo {
+            guard let oneKileDate = self.oneKileDate else {
+                self.oneKileDate = self.currentTime
+                return
+            }
+            let elapsedTimeMinutes = Double(self.currentTime.timeIntervalSince(oneKileDate))/60
+            let speed: Double = 1000/elapsedTimeMinutes
+            
+            if speed > self.maxSpeed {
+                self.maxSpeed = speed
+                self.oneKileDate = self.currentTime
+            }
+        }
+    }
+    
     private func appendRecord() {
         guard let startdate = self.startDate else { return }
         let record = Record(startTime: startdate,
@@ -203,6 +224,7 @@ extension RecordingModel: CLLocationManagerDelegate {
             location.append(Location(latitude: Double(lastLocation.coordinate.latitude),
                                      longitude: Double(lastLocation.coordinate.longitude),
                                      altitude: Double(lastLocation.altitude)))
+            self.checkPedoMeter()
             altitude = "\(Int(lastLocation.altitude))"
         }
     }
