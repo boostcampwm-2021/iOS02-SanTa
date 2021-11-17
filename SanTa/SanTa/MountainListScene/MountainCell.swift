@@ -13,13 +13,13 @@ final class MountainCell: UICollectionViewCell {
     
     private var name: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+        label.font = .preferredFont(forTextStyle: .headline)
         return label
     }()
     
     private var height: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12, weight: .bold)
+        label.font = .preferredFont(forTextStyle: .subheadline)
         label.textColor = .systemGray2
         return label
     }()
@@ -27,7 +27,8 @@ final class MountainCell: UICollectionViewCell {
     private var location: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 12, weight: .light)
+        label.font = .preferredFont(forTextStyle: .caption1)
+        label.numberOfLines = 2
         label.textColor = .systemGray2
         return label
     }()
