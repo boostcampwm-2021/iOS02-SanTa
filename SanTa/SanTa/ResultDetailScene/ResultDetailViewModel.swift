@@ -27,3 +27,35 @@ protocol CellRepresentableData {
     var type: ResultDataType { get }
     var contents: [CellContentEntity] { get }
 }
+
+class ResultDetailViewModel {
+    private let useCase: ResultDetailUseCase
+    var resultDetailData: ResultDetailData?
+    var resultDetailDataReceived: (ResultDetailData) -> Void = { info in }
+    
+    init(useCase: ResultDetailUseCase) {
+        self.useCase = useCase
+    }
+    
+    func setUp() {
+        self.useCase.transferResultDetailData { [weak self] dataModel in
+            self?.resultDetailData = dataModel
+            self?.resultDetailDataReceived(dataModel)
+        }
+    }
+}
+
+//private let useCase: MountainDetailUseCase
+//var mountainDetail: MountainDetailModel?
+//var mountainInfoReceived: (MountainDetailModel) -> Void = { info in }
+//
+//init(useCase: MountainDetailUseCase) {
+//    self.useCase = useCase
+//}
+//
+//func setUpViewModel() {
+//    useCase.transferMountainInformation { [weak self] mountainInfo in
+//        self?.mountainDetail = mountainInfo
+//        self?.mountainInfoReceived(mountainInfo)
+//    }
+//}

@@ -37,8 +37,7 @@ extension ResultDetailLargerInfoView {
         self.addSubview(collectionView)
         collectionView.delegate = self
         collectionView.dataSource = self
-        let layout = UICollectionViewFlowLayout()
-        collectionView.collectionViewLayout = layout
+        collectionView.collectionViewLayout = UICollectionViewFlowLayout()
         
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         let constraints = [
