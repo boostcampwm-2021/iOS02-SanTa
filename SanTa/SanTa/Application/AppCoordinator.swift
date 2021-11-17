@@ -13,7 +13,7 @@ protocol Coordinator: AnyObject {
     func start ()
 }
 
-class AppCoordinator: Coordinator {
+class AppCoordinator: NSObject, Coordinator {
     var childCoordinators: [Coordinator] = []
     let window: UIWindow?
 
@@ -38,6 +38,7 @@ class AppCoordinator: Coordinator {
         tabBarController.tabBar.backgroundColor = .systemBackground
         tabBarController.tabBar.tintColor = UIColor(named: "SantaColor")
         tabBarController.tabBar.unselectedItemTintColor = .systemGray2
+        tabBarController.delegate = self
 
         let firstItem = UITabBarItem(title: "시작", image: nil, tag: 0)
         let secondItem = UITabBarItem(title: "기록", image: nil, tag: 1)
@@ -78,5 +79,11 @@ class AppCoordinator: Coordinator {
         tabBarController.viewControllers = [mapViewController, resultViewController, mountainListViewController, settingsViewController]
 
         return tabBarController
+    }
+}
+
+extension AppCoordinator: UITabBarControllerDelegate {
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        UISelectionFeedbackGenerator().selectionChanged()
     }
 }

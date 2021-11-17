@@ -113,8 +113,12 @@ struct Records {
     }
     
     var maxAltitudeDifference: Double {
-        let max = records.max { $0.altitudeDifference < $1.altitudeDifference }
-        return (max?.altitudeDifference ?? 0)
+        guard let max = records.compactMap({ $0.maxAltitude }).max(),
+              let min = records.compactMap({ $0.minAltitude }).min()
+        else {
+            return 0
+        }
+        return max - min
     }
     
     mutating func configureTitle(title: String) {
@@ -137,10 +141,12 @@ struct Record {
         return endTime.timeIntervalSinceReferenceDate - startTime.timeIntervalSinceReferenceDate
     }
 
-    var altitudeDifference: Double {
-        let min = locations.min { $0.altitude < $1.altitude }
-        let max = locations.max { $0.altitude < $1.altitude }
-        return (max?.altitude ?? 0) - (min?.altitude ?? 0)
+    var minAltitude: Double? {
+        return locations.map{ $0.altitude }.min()
+    }
+    
+    var maxAltitude: Double? {
+        return locations.map{ $0.altitude }.max()
     }
 }
 

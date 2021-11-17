@@ -56,21 +56,17 @@ class TotalRecordsViewCell: UICollectionViewCell {
         self.horizontalStackView.addArrangedSubview(stepsVerticalStackView)
         self.horizontalStackView.axis = .horizontal
         self.horizontalStackView.distribution = .fillEqually
-        self.countVerticalStackView.axis = .vertical
-        self.countVerticalStackView.alignment = .center
-        self.countVerticalStackView.spacing = 5
-        self.timeVerticalStackView.axis = .vertical
-        self.timeVerticalStackView.alignment = .center
-        self.timeVerticalStackView.spacing = 5
-        self.stepsVerticalStackView.axis = .vertical
-        self.stepsVerticalStackView.alignment = .center
-        self.stepsVerticalStackView.spacing = 5
         self.countVerticalStackView.addArrangedSubview(countNumber)
         self.countVerticalStackView.addArrangedSubview(count)
         self.timeVerticalStackView.addArrangedSubview(timeNumber)
         self.timeVerticalStackView.addArrangedSubview(time)
         self.stepsVerticalStackView.addArrangedSubview(stepsNumber)
         self.stepsVerticalStackView.addArrangedSubview(steps)
+        [self.countVerticalStackView, self.timeVerticalStackView, self.stepsVerticalStackView].forEach {
+            $0.axis = .vertical
+            $0.alignment = .center
+            $0.spacing = 5
+        }
     }
     
     private func configureLayout() {
