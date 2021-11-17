@@ -14,6 +14,7 @@ protocol RecordingUseCase {
     func fetchPhotos(startDate: Date?, endDate: Date?) -> [String]
     func pause()
     func resume()
+    func fetchOptions()
 }
 
 final class DefaultRecordingUseCase: RecordingUseCase, ObservableObject {
@@ -61,5 +62,17 @@ final class DefaultRecordingUseCase: RecordingUseCase, ObservableObject {
         }
         
         return assets
+    }
+    
+    func fetchOptions() {
+        self.recordRepository.fetchVoiceOption(key: Settings.voiceGuidanceEveryOnekm) { result in
+            switch result {
+            case .failure(let error):
+                print(error)
+                return
+            case .success(let status):
+                print(status)
+            }
+        }
     }
 }
