@@ -1,0 +1,31 @@
+//
+//  MountainAddingViewController.swift
+//  SanTa
+//
+//  Created by shin jae ung on 2021/11/17.
+//
+
+import MapKit
+
+class MountainAddingViewController: UIViewController {
+    weak var coordinator: MountainAddingViewCoordinator?
+    private lazy var mapView: MKMapView = {
+        let mapView = MKMapView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height * 2/5))
+        mapView.delegate = self
+        return mapView
+    }()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.configureViews()
+    }
+    
+    private func configureViews() {
+        self.view.addSubview(mapView)
+    }
+}
+
+extension MountainAddingViewController: MKMapViewDelegate {
+    
+}
+
