@@ -8,6 +8,7 @@
 import Foundation
 import CoreLocation
 import CoreMotion
+import AVFoundation
 import Combine
 
 final class RecordingModel: NSObject, ObservableObject {
@@ -26,8 +27,8 @@ final class RecordingModel: NSObject, ObservableObject {
     private var oneKileDate: Date?
     private var currentWalk = 0
     private var currentDistance: Double = 0
-    private var maxSpeed: Double = 0
-    private var minSpeed: Double = 0
+    private var maxOneKiloTime = 0
+    private var minOneKiloTime = 0
     private var sliceDistance: Double = 1
     private var location = [Location]()
     
@@ -142,17 +143,16 @@ final class RecordingModel: NSObject, ObservableObject {
                 self.oneKileDate = self.currentTime
                 return
             }
-            let elapsedTimeMinutes = Double(self.currentTime.timeIntervalSince(oneKileDate))/60
-            let speed: Double = 1000/elapsedTimeMinutes
+            let elapsedTimeMinutes = Int(self.currentTime.timeIntervalSince(oneKileDate))
             
-            if speed > self.maxSpeed {
-                self.maxSpeed = speed
+            if elapsedTimeMinutes > self.maxOneKiloTime {
+                self.maxOneKiloTime = elapsedTimeMinutes
                 self.oneKileDate = self.currentTime
                 self.sliceDistance += 1
             }
             
-            if speed < self.minSpeed {
-                self.minSpeed = speed
+            if elapsedTimeMinutes < self.minOneKiloTime {
+                self.minOneKiloTime = elapsedTimeMinutes
                 self.oneKileDate = self.currentTime
                 self.sliceDistance += 1
             }
