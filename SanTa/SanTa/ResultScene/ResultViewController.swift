@@ -118,7 +118,7 @@ extension ResultViewController:  UICollectionViewDataSource {
             cell.layer.shadowRadius = 2
             cell.layer.shadowOpacity = 0.8
             cell.layer.shadowOffset = CGSize(width: 0, height: 0.5)
-            cell.configure(date: cellInfo.date, distance: cellInfo.distance, time: cellInfo.time, altitude: cellInfo.altitudeDifference, steps: cellInfo.steps)
+            cell.configure(date: cellInfo.date, title: cellInfo.title, distance: cellInfo.distance, time: cellInfo.time, altitude: cellInfo.altitudeDifference, steps: cellInfo.steps)
             return cell
         }
     }
