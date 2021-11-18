@@ -79,3 +79,18 @@ final class MountainCell: UICollectionViewCell {
         self.location.text = mountain.mountain.mountainRegion
     }
 }
+
+// MARK: - Accessibility
+
+extension MountainCell {
+    func configureVoiceOverAccessibility() {
+        guard let name = name.text else { return }
+        guard let height = height.text else { return }
+        guard let location = location.text else { return }
+        self.isAccessibilityElement = true
+        self.accessibilityLabel = "\(name) \(height) \(location)"
+        self.accessibilityTraits = .button
+        self.accessibilityHint = "상세화면으로 이동하려면 이중탭 하십시오"
+        self.accessibilityIdentifier = "\(name) \(height) \(location) Cell"
+    }
+}
