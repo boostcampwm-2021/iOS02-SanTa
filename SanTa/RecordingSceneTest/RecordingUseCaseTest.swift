@@ -12,8 +12,19 @@ class RecordingUseCaseTest: XCTestCase {
     private var useCase: DefaultRecordingUseCase!
     private var repository: RecordRepository!
     
+    class TestRecordingRepository : RecordRepository {
+        func save(records: Records,
+                  completion: @escaping (Result<Records, Error>) -> Void) {
+            
+        }
+        
+        func fetchRecordOption(key: Settings, completion: @escaping (Result<Bool, Error>) -> Void) {
+            
+        }
+    }
+    
     override func setUpWithError() throws {
-        repository = DefaultRecordRepository()
+        repository = TestRecordingRepository()
         useCase = DefaultRecordingUseCase(settingsRepository: repository)
     }
     
