@@ -9,13 +9,23 @@ import UIKit
 import MapKit
 
 class ResultDetailViewController: UIViewController {
+    weak var coordinator: ResultDetailCoordinator?
+    private var viewModel: ResultDetailViewModel?
     private var mapView: MKMapView?
     private var infoView: UIView?
     
+    convenience init(viewModel: ResultDetailViewModel) {
+        self.init()
+        self.viewModel = viewModel
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.layoutInitialRecordDetailView()
-        self.registerRecognizers()
+        self.viewModel?.resultDetailDataReceived = { detailData in
+            self.layoutInitialRecordDetailView()
+            self.registerRecognizers()
+        }
+        viewModel?.setUp()
     }
 }
 

@@ -93,12 +93,8 @@ extension MountainDetailViewController {
         ]
         NSLayoutConstraint.activate(tableViewConstraints)
         
-//        let backButton = UIButton()
-//        backButton.setImage(.init(systemName: "xmark"), for: .normal)
-//        backButton.tintColor = .white
         let backButton = UIImageView(image: .init(systemName: "xmark"))
         backButton.tintColor = .white
-//        backButton.image?.withTintColor(.white)
         backButton.tintColorDidChange()
         self.view.addSubview(backButton)
         backButton.translatesAutoresizingMaskIntoConstraints = false
@@ -136,7 +132,6 @@ extension MountainDetailViewController {
         mapView.mapType = .satellite
         mapView.isUserInteractionEnabled = false
         let annotation = MountainAnnotation(title: mountainDetail.moutainName, subtitle: mountainDetail.altitude, latitude: mountainDetail.latitude, longitude: mountainDetail.longitude)
-//        let annotation = MountainAnnotation(title: mountainDetail.moutainName, subtitle: mountainDetail.altitude, latitude: mountainDetail.latitude, longitude: mountainDetail.longitude, mountainDescription: mountainDetail.mountainDescription, region: "")
         mapView.register(MountainAnnotationView.self, forAnnotationViewWithReuseIdentifier: MountainAnnotationView.ReuseID)
         mapView.addAnnotation(annotation)
         mapView.selectAnnotation(annotation, animated: true)
