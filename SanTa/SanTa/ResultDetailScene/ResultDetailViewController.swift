@@ -13,6 +13,15 @@ class ResultDetailViewController: UIViewController {
     private var viewModel: ResultDetailViewModel?
     private var mapView: MKMapView?
     private var infoView: UIView?
+    private var backButton: UIButton = {
+        let button = UIButton()
+        button.setImage(.init(systemName: "chevron.backward"), for: .normal)
+        button.setPreferredSymbolConfiguration(.init(pointSize: 25), forImageIn: .normal)
+        button.tintColor = .label
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(dismissViewController), for: .touchUpInside)
+        return button
+    }()
     
     convenience init(viewModel: ResultDetailViewModel) {
         self.init()
@@ -21,13 +30,31 @@ class ResultDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.viewModel?.resultDetailDataReceived = { detailData in
-            self.layoutInitialRecordDetailView()
-            self.registerRecognizers()
-        }
-        viewModel?.setUp()
+        self.configureViews()
+//
+//        self.viewModel?.resultDetailDataReceived = { detailData in
+//            self.layoutInitialRecordDetailView()
+//            self.registerRecognizers()
+//        }
+//        viewModel?.setUp()
+    }
+    
+    private func configureViews() {
+        self.view.addSubview(backButton)
+        NSLayoutConstraint.activate([
+            backButton.leftAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leftAnchor, constant: 10),
+            backButton.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 10),
+            backButton.widthAnchor.constraint(equalToConstant: 40),
+            backButton.heightAnchor.constraint(equalToConstant: 40),
+        ])
+    }
+    
+    @objc func dismissViewController() {
+        coordinator?.dismiss()
     }
 }
+
+
 
 extension ResultDetailViewController {
     private func registerRecognizers() {

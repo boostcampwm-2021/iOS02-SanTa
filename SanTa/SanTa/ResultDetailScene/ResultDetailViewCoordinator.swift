@@ -20,7 +20,7 @@ class ResultDetailViewCoordinator: Coordinator {
     }
     
     func dismiss() {
-        self.navigationController.dismiss(animated: true)
+        self.navigationController.popViewController(animated: true)
         self.parentCoordinator?.childCoordinators.removeLast()
     }
     
