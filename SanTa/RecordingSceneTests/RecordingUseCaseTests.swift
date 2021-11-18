@@ -19,7 +19,7 @@ class RecordingUseCaseTests: XCTestCase {
         }
         
         func fetchRecordOption(key: Settings, completion: @escaping (Result<Bool, Error>) -> Void) {
-            return
+            completion(.success(true))
         }
     }
     
@@ -28,8 +28,16 @@ class RecordingUseCaseTests: XCTestCase {
         useCase = DefaultRecordingUseCase(recordRepository: repository, recordingModel: RecordingModel(), recordingPhoto: RecordingPhotoModel())
     }
     
-    func test() {
-        
+    func test_음성안내_옵션_True_값_가져오기_성공() {
+        _ = XCTWaiter.wait(for: [expectation(description: "Wait for 0.5 seconds")], timeout: 0.5)
+        self.repository.fetchRecordOption(key: Settings.voiceGuidanceEveryOnekm) { result in
+            switch result {
+            case .failure(_):
+                return
+            case .success(let status):
+                XCTAssertTrue(status)
+            }
+        }
     }
 
 }

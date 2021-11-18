@@ -18,27 +18,27 @@ enum RecordingViewModelError: Error {
 }
 
 final class DefaultRecordingUseCase: RecordingUseCase, ObservableObject {
-    var recording: RecordingModel
+    var recording: RecordingModel?
     var recordingPhoto: RecordingPhotoModel
     
     private let recordRepository: RecordRepository
     
-    init(recordRepository: RecordRepository, recordingModel: RecordingModel, recordingPhoto: RecordingPhotoModel) {
+    init(recordRepository: RecordRepository, recordingModel: RecordingModel?, recordingPhoto: RecordingPhotoModel) {
         self.recordRepository = recordRepository
         self.recording = recordingModel
         self.recordingPhoto = recordingPhoto
     }
     
     func pause() {
-        self.recording.pause()
+        self.recording?.pause()
     }
     
     func resume() {
-        self.recording.resume()
+        self.recording?.resume()
     }
     
     func save(title: String, completion: @escaping (Result<Records, Error>) -> Void) {
-        guard var records = recording.cancel() else {
+        guard var records = recording?.cancel() else {
             
             completion(.failure(RecordingViewModelError.FetchError))
             return
@@ -71,7 +71,7 @@ final class DefaultRecordingUseCase: RecordingUseCase, ObservableObject {
             case .failure(_):
                 return
             case .success(let status):
-                self.recording.changedWillSpeechStatus(status: status)
+                self.recording?.changedWillSpeechStatus(status: status)
             }
         }
         
