@@ -25,15 +25,8 @@ class ResultViewCoordinator: Coordinator {
         let resultViewController = ResultViewController(viewModel: injectDependencies())
         resultViewController.coordinator = self
         navigationController.setViewControllers([resultViewController], animated: true)
-
         return navigationController
     }
-    
-//    func pushDetailViewController(records: Records) {
-//        let storage = CoreDataRecordStorage(coreDataStorage: self.coreDataStorage)
-//        storage.
-//        let resultDetailCoordinator = ResultDetailCoordinator(navigationController: self.navigationController, records: <#T##Records#>)
-//    }
 }
 
 extension ResultViewCoordinator {
@@ -47,5 +40,13 @@ extension ResultViewCoordinator {
                 )
             )
         )
+    }
+    
+    func presentResultDetailViewController(records: Records) {
+        let resultDetailViewCoordinator = ResultDetailViewCoordinator(navigationController: self.navigationController, coreDataStorage: self.coreDataStorage, records: records)
+        resultDetailViewCoordinator.parentCoordinator = self
+        self.childCoordinators.append(resultDetailViewCoordinator)
+        
+        resultDetailViewCoordinator.start()
     }
 }

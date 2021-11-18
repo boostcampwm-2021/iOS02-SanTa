@@ -132,7 +132,9 @@ extension ResultViewController:  UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        let indexPath = IndexPath(item: indexPath.item, section: indexPath.section - 1)
+        guard let records = viewModel?.selectedRecords(indexPath: indexPath) else { return }
+        coordinator?.presentResultDetailViewController(records: records)
     }
 }
 
