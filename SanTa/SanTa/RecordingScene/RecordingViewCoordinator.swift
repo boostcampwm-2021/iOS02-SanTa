@@ -16,13 +16,14 @@ class RecordingViewCoordinator: Coordinator {
     
     private let coreDataStorage: CoreDataStorage
     
-    init(navigationController: UINavigationController, coreDataStorage: CoreDataStorage) {
+    init(navigationController: UINavigationController, userDefaultsStorage: UserDefaultsStorage, coreDataStorage: CoreDataStorage) {
         self.navigationController = navigationController
         self.coreDataStorage = coreDataStorage
         self.recordingViewController = RecordingViewController(
             viewModel: RecordingViewModel(
                 recordingUseCase: DefaultRecordingUseCase(
                     recordRepository: DefaultRecordRepository(
+                        settingsStorage: userDefaultsStorage,
                         recordStorage: CoreDataRecordStorage(
                             coreDataStorage: self.coreDataStorage
                         )

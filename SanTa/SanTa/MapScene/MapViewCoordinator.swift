@@ -42,6 +42,7 @@ extension MapViewCoordinator {
         if self.childCoordinators.isEmpty {
             let recordingViewCoordinator = RecordingViewCoordinator(
                 navigationController: self.navigationController,
+                userDefaultsStorage: self.userDefaultsStorage,
                 coreDataStorage: self.coreDataStorage)
             self.childCoordinators.append(recordingViewCoordinator)
             recordingViewCoordinator.parentCoordinator = self
@@ -79,7 +80,7 @@ extension MapViewCoordinator {
         return MapViewModel(
             useCase: MapViewUseCase(
                 repository: DefaultMapViewRespository(
-                    mountainExtractor: mountainExtractor,
+                    mountainExtractor: self.mountainExtractor,
                     userDefaultsStorage: self.userDefaultsStorage
                 )
             )
