@@ -132,14 +132,13 @@ class MountainListViewController: UIViewController {
 extension MountainListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let mountains = self.viewModel?.mountains else { return }
-        let location = CLLocation(latitude: CLLocationDegrees(mountains[indexPath.item].latitude),
-                                  longitude: mountains[indexPath.item].longitude)
         self.coordinator?.pushMountainDetailViewController(mountainAnnotation: MountainAnnotation(
             title: mountains[indexPath.item].mountain.mountainName,
             subtitle: mountains[indexPath.item].mountain.mountainHeight,
             latitude: mountains[indexPath.item].latitude,
-            longitude: mountains[indexPath.item].longitude),
-                                                           location: location)
+            longitude: mountains[indexPath.item].longitude,
+            mountainDescription: mountains[indexPath.item].mountain.mountainShortDescription,
+            region: mountains[indexPath.item].mountain.mountainRegion))
     }
 }
 
