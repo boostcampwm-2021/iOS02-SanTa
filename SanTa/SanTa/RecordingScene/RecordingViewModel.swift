@@ -8,6 +8,16 @@
 import Foundation
 import Combine
 
+protocol RecordingUseCase {
+    var recording: RecordingModel { get set }
+    
+    func save(title: String, completion: @escaping (Result<Records, Error>) -> Void)
+    func fetchPhotos(startDate: Date?, endDate: Date?) -> [String]
+    func pause()
+    func resume()
+    func fetchOptions()
+}
+
 final class RecordingViewModel: ObservableObject {
     @Published private(set) var currentTime = ""
     @Published private(set) var kilometer = ""

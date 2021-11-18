@@ -7,12 +7,6 @@
 
 import Foundation
 
-protocol RecordRepository {
-    func save(records: Records,
-              completion: @escaping (Result<Records, Error>) -> Void)
-    func fetchRecordOption(key: Settings, completion: @escaping (Result<Bool, Error>) -> Void)
-}
-
 final class DefaultRecordRepository: RecordRepository {
     
     enum userDefaultsError: Error {

@@ -7,14 +7,14 @@
 
 import Foundation
 
-protocol RecordingUseCase {
-    var recording: RecordingModel { get set }
-    
-    func save(title: String, completion: @escaping (Result<Records, Error>) -> Void)
-    func fetchPhotos(startDate: Date?, endDate: Date?) -> [String]
-    func pause()
-    func resume()
-    func fetchOptions()
+protocol RecordRepository {
+    func save(records: Records,
+              completion: @escaping (Result<Records, Error>) -> Void)
+    func fetchRecordOption(key: Settings, completion: @escaping (Result<Bool, Error>) -> Void)
+}
+
+enum RecordingViewModelError: Error {
+    case FetchError
 }
 
 final class DefaultRecordingUseCase: RecordingUseCase, ObservableObject {
@@ -40,7 +40,7 @@ final class DefaultRecordingUseCase: RecordingUseCase, ObservableObject {
     func save(title: String, completion: @escaping (Result<Records, Error>) -> Void) {
         guard var records = recording.cancel() else {
             
-            completion(.failure(CoreDataError.coreDataError))
+            completion(.failure(RecordingViewModelError.FetchError))
             return
         }
         
