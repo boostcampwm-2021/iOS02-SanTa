@@ -86,10 +86,19 @@ extension ResultViewModel {
     }
     
     private func cellDateFormatter(_ date: Date?) -> String {
-        guard let date = date else { return "알 수 없는 날짜" }
+        guard let date = date,
+              let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: .now)
+        else { return "알 수 없는 날짜" }
+        let calender = Calendar.current
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier:"ko_KR")
-        dateFormatter.dateFormat = "M. d. (E) a h시 m분"
+        if calender.compare(date, to: .now, toGranularity: .day) == .orderedSame {
+            dateFormatter.dateFormat = "a h시 m분"
+        } else if calender.compare(date, to: yesterday, toGranularity: .day) == .orderedSame {
+            dateFormatter.dateFormat = "어제(E) a h시 m분"
+        } else {
+            dateFormatter.dateFormat = "M. d. (E) a h시 m분"
+        }
         return dateFormatter.string(from:date)
     }
     

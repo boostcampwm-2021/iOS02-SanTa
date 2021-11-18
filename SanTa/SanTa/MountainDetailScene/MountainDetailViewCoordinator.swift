@@ -27,9 +27,9 @@ class MountainDetailViewCoordinator: Coordinator {
     }
     
     
-    init(navigationController: UINavigationController, mountainAnnotation: MountainAnnotation, location: CLLocation?) {
+    init(navigationController: UINavigationController, mountainAnnotation: MountainAnnotation) {
         self.navigationController = navigationController
-        let viewModel = MountainDetailViewModel(useCase: MountainDetailUseCase(mountainAnnotation: mountainAnnotation, location: location))
+        let viewModel = MountainDetailViewModel(useCase: MountainDetailUseCase(mountainAnnotation: mountainAnnotation))
         self.mountainDetailViewController = MountainDetailViewController(viewModel: viewModel)
         self.mountainDetailViewController.coordinator = self
     }

@@ -50,12 +50,20 @@ extension MapViewCoordinator {
         childCoordinators.first?.start()
     }
     
-    func presentMountainDetailViewController(mountainAnnotation: MountainAnnotation, location: CLLocation?) {
-        let mountainDetailViewCoordinator = MountainDetailViewCoordinator(navigationController: self.navigationController, mountainAnnotation: mountainAnnotation, location: location)
+    func presentMountainDetailViewController(mountainAnnotation: MountainAnnotation) {
+        let mountainDetailViewCoordinator = MountainDetailViewCoordinator(navigationController: self.navigationController, mountainAnnotation: mountainAnnotation, location: nil) // we should change this shit
         mountainDetailViewCoordinator.parentCoordinator = self
         self.childCoordinators.append(mountainDetailViewCoordinator)
         
         mountainDetailViewCoordinator.start()
+    }
+    
+    func presentMountainAddingViewController() {
+        let mountainAddingViewCoordinator = MountainAddingViewCoordinator(navigationController: self.navigationController)
+        mountainAddingViewCoordinator.parentCoordinator = self
+        self.childCoordinators.append(mountainAddingViewCoordinator)
+        
+        mountainAddingViewCoordinator.start()
     }
     
     func recordingViewDidHide(){
