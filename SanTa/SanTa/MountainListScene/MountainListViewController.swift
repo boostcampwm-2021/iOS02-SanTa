@@ -121,6 +121,7 @@ class MountainListViewController: UIViewController {
                 return UICollectionViewCell() }
             guard let item = item as? MountainEntity else { return cell }
             cell.update(mountain: item)
+            cell.configureVoiceOverAccessibility()
             return cell
         })
         

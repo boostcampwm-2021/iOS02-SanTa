@@ -22,7 +22,7 @@ class SettingsViewController: UIViewController {
         let headerTitle = UILabel()
         headerTitle.translatesAutoresizingMaskIntoConstraints = false
         headerTitle.text = "설정"
-        headerTitle.accessibilityLabel = "설정 머리말"
+        headerTitle.accessibilityTraits = .header
         headerTitle.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         return headerTitle
     }()
