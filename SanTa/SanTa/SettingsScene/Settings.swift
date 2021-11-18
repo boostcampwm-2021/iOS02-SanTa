@@ -14,7 +14,6 @@ enum Settings: String, CaseIterable {
     case autoPauseResumeVoiceGuidance = "자동 일시정지, 재시작 음성 안내"
     case voiceGuidanceEveryOnekm = "1킬로미터 마다 음성 안내"
     case mapFormat = "지도 형식"
-    case markHikingTrailsOnTheMap = "지도에 등산로 표시"
     
     var title: String {
         return self.rawValue
@@ -34,8 +33,6 @@ enum Settings: String, CaseIterable {
             return true
         case .mapFormat:
             return "정보지도"
-        case .markHikingTrailsOnTheMap:
-            return true
         }
     }
 }

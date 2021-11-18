@@ -121,7 +121,7 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch self.viewModel?.settings[indexPath.section][indexPath.item] {
+        switch self.viewModel?.option(indexPath: indexPath) {
         case let option as ToggleOption:
             guard let cell = self.tableView.dequeueReusableCell(withIdentifier: ToggleOptionCell.identifier,
                                                                 for: indexPath) as? ToggleOptionCell
