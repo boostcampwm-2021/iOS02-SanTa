@@ -84,6 +84,7 @@ class MapViewController: UIViewController {
         self.view.addSubview(self.addAnnotationButton)
         self.view.addSubview(self.userTrackingButton)
         self.startButton.addTarget(self, action: #selector(presentRecordingViewController), for: .touchDown)
+        self.addAnnotationButton.addTarget(self, action: #selector(presentMountainAddingViewController), for: .touchUpInside)
         
         NSLayoutConstraint.activate([
             self.startButton.widthAnchor.constraint(equalToConstant: 100),
@@ -188,6 +189,10 @@ class MapViewController: UIViewController {
         } else {
             self.present(authAlert(), animated: false)
         }
+    }
+    
+    @objc private func presentMountainAddingViewController() {
+        self.coordinator?.presentMountainAddingViewController()
     }
 }
 
