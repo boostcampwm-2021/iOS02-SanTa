@@ -42,6 +42,7 @@ extension MapViewCoordinator {
         if self.childCoordinators.isEmpty {
             let recordingViewCoordinator = RecordingViewCoordinator(
                 navigationController: self.navigationController,
+                userDefaultsStorage: self.userDefaultsStorage,
                 coreDataStorage: self.coreDataStorage)
             self.childCoordinators.append(recordingViewCoordinator)
             recordingViewCoordinator.parentCoordinator = self
@@ -49,12 +50,20 @@ extension MapViewCoordinator {
         childCoordinators.first?.start()
     }
     
-    func presentMountainDetailViewController(mountainAnnotation: MountainAnnotation, location: CLLocation?) {
-        let mountainDetailViewCoordinator = MountainDetailViewCoordinator(navigationController: self.navigationController, mountainAnnotation: mountainAnnotation, location: location)
+    func presentMountainDetailViewController(mountainAnnotation: MountainAnnotation) {
+        let mountainDetailViewCoordinator = MountainDetailViewCoordinator(navigationController: self.navigationController, mountainAnnotation: mountainAnnotation, location: nil) // we should change this shit
         mountainDetailViewCoordinator.parentCoordinator = self
         self.childCoordinators.append(mountainDetailViewCoordinator)
         
         mountainDetailViewCoordinator.start()
+    }
+    
+    func presentMountainAddingViewController() {
+        let mountainAddingViewCoordinator = MountainAddingViewCoordinator(navigationController: self.navigationController)
+        mountainAddingViewCoordinator.parentCoordinator = self
+        self.childCoordinators.append(mountainAddingViewCoordinator)
+        
+        mountainAddingViewCoordinator.start()
     }
     
     func recordingViewDidHide(){
@@ -71,7 +80,7 @@ extension MapViewCoordinator {
         return MapViewModel(
             useCase: MapViewUseCase(
                 repository: DefaultMapViewRespository(
-                    mountainExtractor: mountainExtractor,
+                    mountainExtractor: self.mountainExtractor,
                     userDefaultsStorage: self.userDefaultsStorage
                 )
             )

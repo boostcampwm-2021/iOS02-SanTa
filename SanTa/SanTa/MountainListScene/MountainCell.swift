@@ -13,13 +13,15 @@ final class MountainCell: UICollectionViewCell {
     
     private var name: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 17, weight: .bold)
+        label.font = .preferredFont(forTextStyle: .headline)
+        label.adjustsFontForContentSizeCategory = true
         return label
     }()
     
     private var height: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 12, weight: .bold)
+        label.font = .preferredFont(forTextStyle: .subheadline)
+        label.adjustsFontForContentSizeCategory = true
         label.textColor = .systemGray2
         return label
     }()
@@ -27,7 +29,9 @@ final class MountainCell: UICollectionViewCell {
     private var location: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 12, weight: .light)
+        label.adjustsFontForContentSizeCategory = true
+        label.font = .preferredFont(forTextStyle: .callout)
+        label.numberOfLines = 5
         label.textColor = .systemGray2
         return label
     }()
@@ -54,7 +58,7 @@ final class MountainCell: UICollectionViewCell {
     func configureView() {
         self.addSubview(self.stackView)
         let stackViewConstrain = [
-            self.stackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
+            self.stackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
             self.stackView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 30),
         ]
         NSLayoutConstraint.activate(stackViewConstrain)
@@ -63,7 +67,8 @@ final class MountainCell: UICollectionViewCell {
         let locationConstrain = [
             self.location.topAnchor.constraint(equalTo: self.stackView.bottomAnchor, constant: 10),
             self.location.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 30),
-            self.location.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
+            self.location.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -30),
+            self.location.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -20),
         ]
         NSLayoutConstraint.activate(locationConstrain)
     }

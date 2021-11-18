@@ -118,7 +118,7 @@ extension ResultViewController:  UICollectionViewDataSource {
             cell.layer.shadowRadius = 2
             cell.layer.shadowOpacity = 0.8
             cell.layer.shadowOffset = CGSize(width: 0, height: 0.5)
-            cell.configure(date: cellInfo.date, distance: cellInfo.distance, time: cellInfo.time, altitude: cellInfo.altitudeDifference, steps: cellInfo.steps)
+            cell.configure(date: cellInfo.date, title: cellInfo.title, distance: cellInfo.distance, time: cellInfo.time, altitude: cellInfo.altitudeDifference, steps: cellInfo.steps)
             return cell
         }
     }
@@ -129,6 +129,10 @@ extension ResultViewController:  UICollectionViewDataSource {
         else { return UICollectionReusableView() }
         sectionHeader.configure(month: sectionInfo.date, count: sectionInfo.count, distance: sectionInfo.distance, time: sectionInfo.time)
         return sectionHeader
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
     }
 }
 

@@ -47,7 +47,7 @@ final class ResultUseCase {
             guard let record = self.makeRecord(recordEntityMO: recordEntityMO) else { return }
             records.append(record)
         }
-        return Records(title: title, records: records, assetIdentifiers: [String]())
+        return Records(title: title, records: records, assetIdentifiers: [String](), secondPerHighestSpeed: Int(), secondPerMinimumSpeed: Int())
     }
     
     private func makeRecord(recordEntityMO: RecordEntityMO) -> Record? {

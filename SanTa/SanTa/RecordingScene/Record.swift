@@ -96,6 +96,8 @@ struct Records {
     private(set) var title: String
     private(set) var records: [Record]
     private(set) var assetIdentifiers: [String]
+    private(set) var secondPerHighestSpeed: Int
+    private(set) var secondPerMinimumSpeed: Int
     
     var date: Date? {
         return records.last?.endTime
@@ -111,6 +113,20 @@ struct Records {
     
     var steps: Int {
         return records.reduce(0) { $0 + $1.step }
+    }
+    
+    var maxAltitude: Double {
+        guard let max = records.compactMap({ $0.maxAltitude }).max() else {
+            return 0
+        }
+        return max
+    }
+    
+    var minAltitude: Double {
+        guard let min = records.compactMap({ $0.minAltitude }).min() else {
+            return 0
+        }
+        return min
     }
     
     var maxAltitudeDifference: Double {

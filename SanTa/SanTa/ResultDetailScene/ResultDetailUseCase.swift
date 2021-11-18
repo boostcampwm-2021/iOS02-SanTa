@@ -8,9 +8,13 @@
 import Foundation
 
 class ResultDetailUseCase {
-    private var records: Records
+    private let model: ResultDetailData
     
-    init(records: Records) {
-        self.records = records
+    init(model: ResultDetailData) {
+        self.model = model
+    }
+    
+    func transferResultDetailData(completion: (ResultDetailData) -> Void) {
+        completion(self.model)
     }
 }

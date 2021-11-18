@@ -8,35 +8,44 @@
 import Foundation
 import CoreLocation
 import CoreMotion
+import AVFoundation
 import Combine
 
 final class RecordingModel: NSObject, ObservableObject {
     @Published private(set) var time = ""
-    @Published private(set) var kilometer = ""
-    @Published private(set) var altitude = ""
-    @Published private(set) var walk = ""
+    @Published private(set) var kilometer = "0.00"
+    @Published private(set) var altitude = "0"
+    @Published private(set) var walk = "0"
     @Published private(set) var gpsStatus = true
     
     private let pedoMeter = CMPedometer()
+    private let synthesizer = AVSpeechSynthesizer()
     private var locationManager = CLLocationManager()
+    
     private var timer: DispatchSourceTimer?
     private var timerIsRunning = false
     private var records: Records?
     private var startDate: Date?
+    private var oneKileDate: Date?
     private var currentWalk = 0
-    private var currentKilo: Double = 0
+    private var currentDistance: Double = 0
+    private var maxOneKiloTime = 0
+    private var minOneKiloTime = Int.max
+    private var sliceDistance: Double = 1
     private var location = [Location]()
+    
+    private var willSpeech = false
     
     private var currentTime = Date() {
         didSet {
             self.timeCalculation()
-            self.checkPedoMeter()
         }
     }
     
     override init() {
         super.init()
         self.startDate = Date()
+        self.oneKileDate = self.startDate
         self.configureTimer()
         self.configureLocationManager()
     }
@@ -89,8 +98,7 @@ final class RecordingModel: NSObject, ObservableObject {
     private func checkPedoMeter() {
         guard let date = self.startDate else { return }
         var dates = [Record]()
-        if records != nil {
-            guard let records = records else { return }
+        if let records = self.records {
             dates = records.records
         }
         
@@ -99,7 +107,7 @@ final class RecordingModel: NSObject, ObservableObject {
         let dispatchGroup = DispatchGroup()
         
         self.currentWalk = 0
-        self.currentKilo = 0
+        self.currentDistance = 0
         
         dispatchGroup.enter()
         dates.forEach {
@@ -116,21 +124,53 @@ final class RecordingModel: NSObject, ObservableObject {
                 
                 guard let distance = activityData.distance else { return }
                 let transformatKilometer = Double(truncating: distance) / 1000
-                self?.currentKilo += transformatKilometer
+                self?.currentDistance += transformatKilometer
                 dispatchGroup.leave()
             }
         }
         
         dispatchGroup.leave()
         dispatchGroup.notify(queue: .global()) { [weak self] in
-            guard let walk = self?.currentWalk else { return }
-            
+            guard let walk = self?.currentWalk,
+                  let currentKile = self?.currentDistance else { return }
+            self?.calculateSpeed()
             self?.walk = "\(walk)"
-            guard let currentKile = self?.currentKilo else { return }
             let distanceString = String(format: "%.2f", currentKile)
             
             self?.kilometer = "\(distanceString)"
         }
+    }
+    
+    private func calculateSpeed() {
+        if self.sliceDistance <= self.currentDistance {
+            guard let oneKileDate = self.oneKileDate else {
+                self.oneKileDate = self.currentTime
+                return
+            }
+            let elapsedTimeMinutes = Int(self.currentTime.timeIntervalSince(oneKileDate))
+            
+            if willSpeech { self.willSpeechCurrentStatus() }
+            
+            if elapsedTimeMinutes > self.maxOneKiloTime {
+                self.maxOneKiloTime = elapsedTimeMinutes
+                self.oneKileDate = self.currentTime
+                self.sliceDistance += 1
+            }
+            
+            if elapsedTimeMinutes < self.minOneKiloTime {
+                self.minOneKiloTime = elapsedTimeMinutes
+                self.oneKileDate = self.currentTime
+                self.sliceDistance += 1
+            }
+        }
+    }
+    
+    private func willSpeechCurrentStatus() {
+        let speech = "현재 총 거리는 \(self.kilometer)킬로미터 소요 시간은 \(self.time)초 현재 고도는 \(self.altitude)입니다."
+        let utterance = AVSpeechUtterance(string: speech)
+        utterance.voice = AVSpeechSynthesisVoice(language: "ko-KR")
+        utterance.rate = 0.4
+        self.synthesizer.speak(utterance)
     }
     
     private func appendRecord() {
@@ -138,11 +178,19 @@ final class RecordingModel: NSObject, ObservableObject {
         let record = Record(startTime: startdate,
                             endTime: self.currentTime,
                             step: self.currentWalk,
-                            distance: self.currentKilo,
+                            distance: self.currentDistance,
                             locations: self.location)
         
         guard self.records != nil else {
-            self.records = Records(title: "", records: [record], assetIdentifiers: [String]())
+            var minTime = 0
+            if minOneKiloTime != Int.max {
+                minTime = self.minOneKiloTime
+            }
+            self.records = Records(title: "",
+                                   records: [record],
+                                   assetIdentifiers: [String](),
+                                   secondPerHighestSpeed: minTime,
+                                   secondPerMinimumSpeed: self.maxOneKiloTime)
             return
         }
         
@@ -156,6 +204,10 @@ final class RecordingModel: NSObject, ObservableObject {
         default:
             self.gpsStatus = false
         }
+    }
+    
+    func changedWillSpeechStatus(status: Bool) {
+        self.willSpeech = status
     }
     
     func pause() {
@@ -203,6 +255,7 @@ extension RecordingModel: CLLocationManagerDelegate {
             location.append(Location(latitude: Double(lastLocation.coordinate.latitude),
                                      longitude: Double(lastLocation.coordinate.longitude),
                                      altitude: Double(lastLocation.altitude)))
+            self.checkPedoMeter()
             altitude = "\(Int(lastLocation.altitude))"
         }
     }

@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		49225C5E273CDB4F0021AD79 /* ResultDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49225C5D273CDB4F0021AD79 /* ResultDetailViewController.swift */; };
 		49225C60273CDB680021AD79 /* ResultDetailSmallerInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49225C5F273CDB680021AD79 /* ResultDetailSmallerInfoView.swift */; };
-		493178B42743992400B5FB88 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493178B32743992400B5FB88 /* CollectionViewCell.swift */; };
+		493178B42743992400B5FB88 /* DetailCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493178B32743992400B5FB88 /* DetailCell.swift */; };
 		493178B627439D0000B5FB88 /* ResultDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493178B527439D0000B5FB88 /* ResultDetailModel.swift */; };
 		494803822743748D002854B1 /* ResultDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494803812743748D002854B1 /* ResultDetailViewModel.swift */; };
 		4948038427437499002854B1 /* ResultDetailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4948038327437499002854B1 /* ResultDetailUseCase.swift */; };
@@ -23,6 +23,7 @@
 		49D5A9532738FBCD00937821 /* MountainDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D5A9522738FBCD00937821 /* MountainDetailModel.swift */; };
 		49D5A955273A5A5C00937821 /* MountainDetailTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D5A954273A5A5C00937821 /* MountainDetailTitleView.swift */; };
 		49D5A957273A62F800937821 /* MountainDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D5A956273A62F800937821 /* MountainDetailTableViewCell.swift */; };
+		49FC97682744E105008CE73A /* ResultDetailCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FC97672744E105008CE73A /* ResultDetailCoordinator.swift */; };
 		49FEEDB7273255DD00D37CCA /* MountainExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FEEDB6273255DD00D37CCA /* MountainExtractor.swift */; };
 		49FEEDB92732584000D37CCA /* MountainEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FEEDB82732584000D37CCA /* MountainEntity.swift */; };
 		5428FDB4272F894D002F9D40 /* MapViewRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5428FDB3272F894D002F9D40 /* MapViewRepository.swift */; };
@@ -49,6 +50,11 @@
 		5485128C272A6AD500407F28 /* SanTa.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5485128A272A6AD500407F28 /* SanTa.xcdatamodeld */; };
 		5485128E272A6AD600407F28 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5485128D272A6AD600407F28 /* Assets.xcassets */; };
 		54851291272A6AD600407F28 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5485128F272A6AD600407F28 /* LaunchScreen.storyboard */; };
+		54B32065274510D8002232BD /* MountainAddingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B32064274510D8002232BD /* MountainAddingViewController.swift */; };
+		54B3206727451169002232BD /* MountainAddingViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B3206627451169002232BD /* MountainAddingViewCoordinator.swift */; };
+		54B32069274536D1002232BD /* MountainAddingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B32068274536D1002232BD /* MountainAddingViewModel.swift */; };
+		54B3206B274536E3002232BD /* MountainAddingViewUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B3206A274536E3002232BD /* MountainAddingViewUseCase.swift */; };
+		54B3206D27453725002232BD /* MountainAddingViewRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B3206C27453725002232BD /* MountainAddingViewRepository.swift */; };
 		54F88EB727424C210004EAFD /* TotalRecordsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F88EB627424C210004EAFD /* TotalRecordsViewCell.swift */; };
 		54F88EB9274256FE0004EAFD /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F88EB8274256FE0004EAFD /* SectionHeaderView.swift */; };
 		54F88EBB274259950004EAFD /* RecordsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F88EBA274259950004EAFD /* RecordsViewCell.swift */; };
@@ -102,7 +108,7 @@
 /* Begin PBXFileReference section */
 		49225C5D273CDB4F0021AD79 /* ResultDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailViewController.swift; sourceTree = "<group>"; };
 		49225C5F273CDB680021AD79 /* ResultDetailSmallerInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailSmallerInfoView.swift; sourceTree = "<group>"; };
-		493178B32743992400B5FB88 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
+		493178B32743992400B5FB88 /* DetailCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailCell.swift; sourceTree = "<group>"; };
 		493178B527439D0000B5FB88 /* ResultDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailModel.swift; sourceTree = "<group>"; };
 		494803812743748D002854B1 /* ResultDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailViewModel.swift; sourceTree = "<group>"; };
 		4948038327437499002854B1 /* ResultDetailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailUseCase.swift; sourceTree = "<group>"; };
@@ -116,6 +122,7 @@
 		49D5A9522738FBCD00937821 /* MountainDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainDetailModel.swift; sourceTree = "<group>"; };
 		49D5A954273A5A5C00937821 /* MountainDetailTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainDetailTitleView.swift; sourceTree = "<group>"; };
 		49D5A956273A62F800937821 /* MountainDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainDetailTableViewCell.swift; sourceTree = "<group>"; };
+		49FC97672744E105008CE73A /* ResultDetailCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailCoordinator.swift; sourceTree = "<group>"; };
 		49FEEDB6273255DD00D37CCA /* MountainExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainExtractor.swift; sourceTree = "<group>"; };
 		49FEEDB82732584000D37CCA /* MountainEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainEntity.swift; sourceTree = "<group>"; };
 		5428FDB3272F894D002F9D40 /* MapViewRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewRepository.swift; sourceTree = "<group>"; };
@@ -144,6 +151,11 @@
 		5485128D272A6AD600407F28 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		54851290272A6AD600407F28 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		54851292272A6AD600407F28 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		54B32064274510D8002232BD /* MountainAddingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainAddingViewController.swift; sourceTree = "<group>"; };
+		54B3206627451169002232BD /* MountainAddingViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainAddingViewCoordinator.swift; sourceTree = "<group>"; };
+		54B32068274536D1002232BD /* MountainAddingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainAddingViewModel.swift; sourceTree = "<group>"; };
+		54B3206A274536E3002232BD /* MountainAddingViewUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainAddingViewUseCase.swift; sourceTree = "<group>"; };
+		54B3206C27453725002232BD /* MountainAddingViewRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainAddingViewRepository.swift; sourceTree = "<group>"; };
 		54F88EB627424C210004EAFD /* TotalRecordsViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalRecordsViewCell.swift; sourceTree = "<group>"; };
 		54F88EB8274256FE0004EAFD /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 		54F88EBA274259950004EAFD /* RecordsViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsViewCell.swift; sourceTree = "<group>"; };
@@ -232,13 +244,14 @@
 		5428FDB7272F8B34002F9D40 /* ResultDetailScene */ = {
 			isa = PBXGroup;
 			children = (
+				49FC97672744E105008CE73A /* ResultDetailCoordinator.swift */,
 				49225C5D273CDB4F0021AD79 /* ResultDetailViewController.swift */,
 				49225C5F273CDB680021AD79 /* ResultDetailSmallerInfoView.swift */,
 				49742D552740E1A0008F7DC2 /* ResultDetailLargerInfoView.swift */,
 				494803812743748D002854B1 /* ResultDetailViewModel.swift */,
 				4948038327437499002854B1 /* ResultDetailUseCase.swift */,
-				493178B32743992400B5FB88 /* CollectionViewCell.swift */,
 				493178B527439D0000B5FB88 /* ResultDetailModel.swift */,
+				493178B32743992400B5FB88 /* DetailCell.swift */,
 			);
 			path = ResultDetailScene;
 			sourceTree = "<group>";
@@ -371,6 +384,7 @@
 				5428FDBE272F8D43002F9D40 /* Entities */,
 				54731B62272F808300534097 /* Application */,
 				54731B61272F7F7600534097 /* MapScene */,
+				54B32063274510B7002232BD /* MountainAddingScene */,
 				5428FDB6272F8B2B002F9D40 /* ResultScene */,
 				5428FDB5272F89F0002F9D40 /* RecordingScene */,
 				DA9D7C9B273A42B90018AD45 /* RecordingTitleScene */,
@@ -381,6 +395,18 @@
 				5428FDBB272F8C32002F9D40 /* SettingsScene */,
 			);
 			path = SanTa;
+			sourceTree = "<group>";
+		};
+		54B32063274510B7002232BD /* MountainAddingScene */ = {
+			isa = PBXGroup;
+			children = (
+				54B3206627451169002232BD /* MountainAddingViewCoordinator.swift */,
+				54B32064274510D8002232BD /* MountainAddingViewController.swift */,
+				54B32068274536D1002232BD /* MountainAddingViewModel.swift */,
+				54B3206A274536E3002232BD /* MountainAddingViewUseCase.swift */,
+				54B3206C27453725002232BD /* MountainAddingViewRepository.swift */,
+			);
+			path = MountainAddingScene;
 			sourceTree = "<group>";
 		};
 		9826F42E273953FB0064FA85 /* SettingsSceneTests */ = {
@@ -528,6 +554,7 @@
 				985EEF63272FDA98002413D9 /* MountainCell.swift in Sources */,
 				5428FDBD272F8C5B002F9D40 /* MapViewUseCase.swift in Sources */,
 				DAFA9B5B2741131400BF168C /* RecordingPhotoViewController.swift in Sources */,
+				54B3206B274536E3002232BD /* MountainAddingViewUseCase.swift in Sources */,
 				49742D562740E1A0008F7DC2 /* ResultDetailLargerInfoView.swift in Sources */,
 				5428FDB4272F894D002F9D40 /* MapViewRepository.swift in Sources */,
 				5485128C272A6AD500407F28 /* SanTa.xcdatamodeld in Sources */,
@@ -539,17 +566,21 @@
 				98AEF1D727310759002E9C9A /* PaddingLabel.swift in Sources */,
 				54851282272A6AD500407F28 /* AppDelegate.swift in Sources */,
 				49D5A9532738FBCD00937821 /* MountainDetailModel.swift in Sources */,
+				49FC97682744E105008CE73A /* ResultDetailCoordinator.swift in Sources */,
 				DAFA9B5D27424C9A00BF168C /* RecordingPhotoModel.swift in Sources */,
 				49FEEDB92732584000D37CCA /* MountainEntity.swift in Sources */,
-				493178B42743992400B5FB88 /* CollectionViewCell.swift in Sources */,
+				493178B42743992400B5FB88 /* DetailCell.swift in Sources */,
 				98BCF4F92737A7120073E6FB /* SettingsViewModel.swift in Sources */,
 				54296949272FBFAB0070B362 /* RecordingViewController.swift in Sources */,
+				54B3206D27453725002232BD /* MountainAddingViewRepository.swift in Sources */,
 				984DDEC527325FB9003BE56B /* RecordRepository.swift in Sources */,
 				984DDEC327325DFC003BE56B /* RecordingUseCase.swift in Sources */,
 				984DDEC727327064003BE56B /* CoreDataRecordStorage.swift in Sources */,
 				49225C60273CDB680021AD79 /* ResultDetailSmallerInfoView.swift in Sources */,
 				98A913012736844E008AAE39 /* UserDefaultsStorage.swift in Sources */,
+				54B32069274536D1002232BD /* MountainAddingViewModel.swift in Sources */,
 				54F88EB727424C210004EAFD /* TotalRecordsViewCell.swift in Sources */,
+				54B3206727451169002232BD /* MountainAddingViewCoordinator.swift in Sources */,
 				9800821D273CB45D006A847A /* ResultRepository.swift in Sources */,
 				DAB37D50273256B900EC523F /* RecordingModel.swift in Sources */,
 				494803822743748D002854B1 /* ResultDetailViewModel.swift in Sources */,
@@ -568,6 +599,7 @@
 				5429695B273026B10070B362 /* MountainAnnotationView.swift in Sources */,
 				DA9D7C9D273A433E0018AD45 /* RecordingTitleViewController.swift in Sources */,
 				DAB37D4C2731166B00EC523F /* RecordingViewModel.swift in Sources */,
+				54B32065274510D8002232BD /* MountainAddingViewController.swift in Sources */,
 				54296951272FC3290070B362 /* MountainListViewController.swift in Sources */,
 				9826F3DF273904010064FA85 /* Settings.swift in Sources */,
 				49FEEDB7273255DD00D37CCA /* MountainExtractor.swift in Sources */,

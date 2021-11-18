@@ -28,6 +28,12 @@ class ResultViewCoordinator: Coordinator {
 
         return navigationController
     }
+    
+//    func pushDetailViewController(records: Records) {
+//        let storage = CoreDataRecordStorage(coreDataStorage: self.coreDataStorage)
+//        storage.
+//        let resultDetailCoordinator = ResultDetailCoordinator(navigationController: self.navigationController, records: <#T##Records#>)
+//    }
 }
 
 extension ResultViewCoordinator {

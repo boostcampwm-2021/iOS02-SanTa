@@ -106,6 +106,7 @@ class RecordingViewController: UIViewController {
         super.viewDidAppear(animated)
         
         self.configureAlbumPermission()
+        self.recordingViewModel?.fetchOptions()
     }
     
     private func configureBindings() {
