@@ -20,6 +20,20 @@
                ReferencedContainer = "container:SanTa.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "NO"
+            buildForRunning = "NO"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "9826F41A273925820064FA85"
+               BuildableName = "SanTaTests.xctest"
+               BlueprintName = "SanTaTests"
+               ReferencedContainer = "container:SanTa.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -32,9 +46,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9826F41A273925820064FA85"
-               BuildableName = "SanTaTests.xctest"
-               BlueprintName = "SanTaTests"
+               BlueprintIdentifier = "9826F42C273953FB0064FA85"
+               BuildableName = "SettingsSceneTests.xctest"
+               BlueprintName = "SettingsSceneTests"
                ReferencedContainer = "container:SanTa.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -42,9 +56,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "9826F42C273953FB0064FA85"
-               BuildableName = "SettingsSceneTests.xctest"
-               BlueprintName = "SettingsSceneTests"
+               BlueprintIdentifier = "DA854FC22746176A00E51E4B"
+               BuildableName = "RecordingSceneTest.xctest"
+               BlueprintName = "RecordingSceneTest"
                ReferencedContainer = "container:SanTa.xcodeproj">
             </BuildableReference>
          </TestableReference>

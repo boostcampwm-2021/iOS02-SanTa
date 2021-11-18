@@ -7,39 +7,40 @@
 
 import Foundation
 
-protocol RecordingUseCase {
-    var recording: RecordingModel { get set }
-    
-    func save(title: String, completion: @escaping (Result<Records, CoreDataError>) -> Void)
-    func fetchPhotos(startDate: Date?, endDate: Date?) -> [String]
-    func pause()
-    func resume()
-    func fetchOptions()
+protocol RecordRepository {
+    func save(records: Records,
+              completion: @escaping (Result<Records, Error>) -> Void)
+    func fetchRecordOption(key: Settings, completion: @escaping (Result<Bool, Error>) -> Void)
+}
+
+enum RecordingViewModelError: Error {
+    case FetchError
 }
 
 final class DefaultRecordingUseCase: RecordingUseCase, ObservableObject {
-    var recording: RecordingModel
+    var recording: RecordingModel?
     var recordingPhoto: RecordingPhotoModel
     
     private let recordRepository: RecordRepository
     
-    init(recordRepository: RecordRepository, recordingModel: RecordingModel, recordingPhoto: RecordingPhotoModel) {
+    init(recordRepository: RecordRepository, recordingModel: RecordingModel?, recordingPhoto: RecordingPhotoModel) {
         self.recordRepository = recordRepository
         self.recording = recordingModel
         self.recordingPhoto = recordingPhoto
     }
     
     func pause() {
-        self.recording.pause()
+        self.recording?.pause()
     }
     
     func resume() {
-        self.recording.resume()
+        self.recording?.resume()
     }
     
-    func save(title: String, completion: @escaping (Result<Records, CoreDataError>) -> Void) {
-        guard var records = recording.cancel() else {
-            completion(.failure(CoreDataError.coreDataError))
+    func save(title: String, completion: @escaping (Result<Records, Error>) -> Void) {
+        guard var records = recording?.cancel() else {
+            
+            completion(.failure(RecordingViewModelError.FetchError))
             return
         }
         
@@ -70,7 +71,7 @@ final class DefaultRecordingUseCase: RecordingUseCase, ObservableObject {
             case .failure(_):
                 return
             case .success(let status):
-                self.recording.changedWillSpeechStatus(status: status)
+                self.recording?.changedWillSpeechStatus(status: status)
             }
         }
         
