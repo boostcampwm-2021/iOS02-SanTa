@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 class MountainListViewCoordinator: Coordinator {
     weak var parentCoordinator: Coordinator?
@@ -43,6 +44,13 @@ extension MountainListViewCoordinator {
                     mountainExtractor: self.mountainExtractor,
                     userDefaultsStorage: self.userDefaultsStorage)))
 
+    }
+    
+    func pushMountainDetailViewController(mountainAnnotation: MountainAnnotation, location: CLLocation?) {
+        let mountainDetailViewCoordinator = MountainDetailViewCoordinator(navigationController: self.navigationController, mountainAnnotation: mountainAnnotation, location: location)
+        mountainDetailViewCoordinator.parentCoordinator = self
+        self.childCoordinators.append(mountainDetailViewCoordinator)
+        mountainDetailViewCoordinator.startPush()
     }
 }
 

@@ -7,6 +7,7 @@
 
 import UIKit
 import Combine
+import CoreLocation
 
 class MountainListViewController: UIViewController {
     enum MountainListSection: Int, CaseIterable {
@@ -102,12 +103,13 @@ class MountainListViewController: UIViewController {
     
     private func configureCompositionalLayout() -> UICollectionViewCompositionalLayout {
         return UICollectionViewCompositionalLayout { (sectionNumber, env) -> NSCollectionLayoutSection? in
-            let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(0.25)))
+            let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(500)))
             item.contentInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 0)
-            let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(180)),subitems: [item])
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(500)),subitems: [item])
             let section = NSCollectionLayoutSection(group: group)
             section.orthogonalScrollingBehavior = .none
             section.contentInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 0)
+            
             return section
         }
     }
@@ -129,7 +131,15 @@ class MountainListViewController: UIViewController {
 
 extension MountainListViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        collectionView.deselectItem(at: indexPath, animated: true)
+        guard let mountains = self.viewModel?.mountains else { return }
+        let location = CLLocation(latitude: CLLocationDegrees(mountains[indexPath.item].latitude),
+                                  longitude: mountains[indexPath.item].longitude)
+        self.coordinator?.pushMountainDetailViewController(mountainAnnotation: MountainAnnotation(
+            title: mountains[indexPath.item].mountain.mountainName,
+            subtitle: mountains[indexPath.item].mountain.mountainHeight,
+            latitude: mountains[indexPath.item].latitude,
+            longitude: mountains[indexPath.item].longitude),
+                                                           location: location)
     }
 }
 
