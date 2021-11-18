@@ -22,6 +22,7 @@ class SettingsViewController: UIViewController {
         let headerTitle = UILabel()
         headerTitle.translatesAutoresizingMaskIntoConstraints = false
         headerTitle.text = "설정"
+        headerTitle.accessibilityLabel = "설정 머리말"
         headerTitle.font = UIFont.systemFont(ofSize: 20, weight: .bold)
         return headerTitle
     }()
@@ -129,6 +130,7 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
             }
             cell.update(option: option)
             cell.delegate = self
+            cell.configureAccessibility()
             return cell
         case let option as MapOption:
             guard let cell = self.tableView.dequeueReusableCell(withIdentifier: MapOptionCell.identifier,
@@ -137,6 +139,7 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
                 return UITableViewCell()
             }
             cell.update(option: option)
+            cell.configureAccessibility()
             return cell
         default:
             return UITableViewCell()
@@ -144,6 +147,11 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if UIAccessibility.isVoiceOverRunning {
+            guard let cell = tableView.cellForRow(at: indexPath) as? ToggleOptionCell else { return }
+            cell.changeSwitch()
+        }
+        
         guard let cell = tableView.cellForRow(at: indexPath) as? MapOptionCell else { return }
         guard let title = cell.title.text else { return }
         self.showMapActionSheet(cellTitle: title)

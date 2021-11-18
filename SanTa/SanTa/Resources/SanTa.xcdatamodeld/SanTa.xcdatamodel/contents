@@ -15,6 +15,7 @@
         <relationship name="records" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="RecordsEntity" inverseName="records" inverseEntity="RecordsEntity"/>
     </entity>
     <entity name="RecordsEntity" representedClassName=".RecordsEntityMO" syncable="YES" codeGenerationType="class">
+
         <attribute name="assetIdentifiers" optional="YES" attributeType="Binary"/>
         <attribute name="secondPerHighestSpeed" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="secondPerMinimumSpeed" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
