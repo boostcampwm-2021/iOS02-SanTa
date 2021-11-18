@@ -26,6 +26,10 @@ final class SettingsViewModel {
         self.reloadSettings()
     }
     
+    func option(indexPath: IndexPath) -> Option {
+        return settings[indexPath.section][indexPath.item]
+    }
+    
     func change<T: Codable>(value: T, key: Settings) {
         self.settingsUseCase.save(value: value, key: key)
         if value is String {
