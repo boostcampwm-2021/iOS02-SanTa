@@ -49,9 +49,6 @@ final class DefaultSettingsUsecase: SettingsUsecase {
         self.settingsRepository.makeMapOption(key: Settings.mapFormat) { value in
             mapSetting.append(value)
         }
-        self.settingsRepository.makeToggleOption(key: Settings.markHikingTrailsOnTheMap) { value in
-            mapSetting.append(value)
-        }
         
         options.append(photoSettings)
         options.append(autoSettins)

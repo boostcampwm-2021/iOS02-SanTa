@@ -63,9 +63,5 @@ final class DefaultUserDefaultsStorage: UserDefaultsStorage {
             self.save(value: Settings.mapFormat.initValue as? String,
                       key: .mapFormat)
         }
-        if !self.exist(key: .markHikingTrailsOnTheMap) {
-            self.save(value: Settings.markHikingTrailsOnTheMap.initValue as? Bool,
-                      key: .markHikingTrailsOnTheMap)
-        }
     }
 }
