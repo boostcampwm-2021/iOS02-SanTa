@@ -23,7 +23,7 @@
 		49D5A9532738FBCD00937821 /* MountainDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D5A9522738FBCD00937821 /* MountainDetailModel.swift */; };
 		49D5A955273A5A5C00937821 /* MountainDetailTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D5A954273A5A5C00937821 /* MountainDetailTitleView.swift */; };
 		49D5A957273A62F800937821 /* MountainDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49D5A956273A62F800937821 /* MountainDetailTableViewCell.swift */; };
-		49FC97682744E105008CE73A /* ResultDetailCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FC97672744E105008CE73A /* ResultDetailCoordinator.swift */; };
+		49FC97682744E105008CE73A /* ResultDetailViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FC97672744E105008CE73A /* ResultDetailViewCoordinator.swift */; };
 		49FEEDB7273255DD00D37CCA /* MountainExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FEEDB6273255DD00D37CCA /* MountainExtractor.swift */; };
 		49FEEDB92732584000D37CCA /* MountainEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FEEDB82732584000D37CCA /* MountainEntity.swift */; };
 		5428FDB4272F894D002F9D40 /* MapViewRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5428FDB3272F894D002F9D40 /* MapViewRepository.swift */; };
@@ -122,7 +122,7 @@
 		49D5A9522738FBCD00937821 /* MountainDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainDetailModel.swift; sourceTree = "<group>"; };
 		49D5A954273A5A5C00937821 /* MountainDetailTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainDetailTitleView.swift; sourceTree = "<group>"; };
 		49D5A956273A62F800937821 /* MountainDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainDetailTableViewCell.swift; sourceTree = "<group>"; };
-		49FC97672744E105008CE73A /* ResultDetailCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailCoordinator.swift; sourceTree = "<group>"; };
+		49FC97672744E105008CE73A /* ResultDetailViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailViewCoordinator.swift; sourceTree = "<group>"; };
 		49FEEDB6273255DD00D37CCA /* MountainExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainExtractor.swift; sourceTree = "<group>"; };
 		49FEEDB82732584000D37CCA /* MountainEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainEntity.swift; sourceTree = "<group>"; };
 		5428FDB3272F894D002F9D40 /* MapViewRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewRepository.swift; sourceTree = "<group>"; };
@@ -244,7 +244,7 @@
 		5428FDB7272F8B34002F9D40 /* ResultDetailScene */ = {
 			isa = PBXGroup;
 			children = (
-				49FC97672744E105008CE73A /* ResultDetailCoordinator.swift */,
+				49FC97672744E105008CE73A /* ResultDetailViewCoordinator.swift */,
 				49225C5D273CDB4F0021AD79 /* ResultDetailViewController.swift */,
 				49225C5F273CDB680021AD79 /* ResultDetailSmallerInfoView.swift */,
 				49742D552740E1A0008F7DC2 /* ResultDetailLargerInfoView.swift */,
@@ -386,10 +386,10 @@
 				54731B61272F7F7600534097 /* MapScene */,
 				54B32063274510B7002232BD /* MountainAddingScene */,
 				5428FDB6272F8B2B002F9D40 /* ResultScene */,
+				5428FDB7272F8B34002F9D40 /* ResultDetailScene */,
 				5428FDB5272F89F0002F9D40 /* RecordingScene */,
 				DA9D7C9B273A42B90018AD45 /* RecordingTitleScene */,
 				DAFA9B55274112AB00BF168C /* RecordingPhotoScene */,
-				5428FDB7272F8B34002F9D40 /* ResultDetailScene */,
 				5428FDB9272F8BD9002F9D40 /* MountainListScene */,
 				5428FDBA272F8BF6002F9D40 /* MountainDetailScene */,
 				5428FDBB272F8C32002F9D40 /* SettingsScene */,
@@ -566,7 +566,7 @@
 				98AEF1D727310759002E9C9A /* PaddingLabel.swift in Sources */,
 				54851282272A6AD500407F28 /* AppDelegate.swift in Sources */,
 				49D5A9532738FBCD00937821 /* MountainDetailModel.swift in Sources */,
-				49FC97682744E105008CE73A /* ResultDetailCoordinator.swift in Sources */,
+				49FC97682744E105008CE73A /* ResultDetailViewCoordinator.swift in Sources */,
 				DAFA9B5D27424C9A00BF168C /* RecordingPhotoModel.swift in Sources */,
 				49FEEDB92732584000D37CCA /* MountainEntity.swift in Sources */,
 				493178B42743992400B5FB88 /* DetailCell.swift in Sources */,

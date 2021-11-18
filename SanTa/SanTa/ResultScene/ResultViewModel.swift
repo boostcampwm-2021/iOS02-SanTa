@@ -78,6 +78,10 @@ class ResultViewModel {
         let title = records.title
         return (dateString, distanceString, timeString, altitudeDifferenceString, stepsString, title)
     }
+    
+    func selectedRecords(indexPath: IndexPath) -> Records? {
+        return useCase.totalRecords?[indexPath.section]?[indexPath.item]
+    }
 }
 
 extension ResultViewModel {

@@ -9,7 +9,7 @@ import UIKit
 import MapKit
 
 class ResultDetailViewController: UIViewController {
-    weak var coordinator: ResultDetailCoordinator?
+    weak var coordinator: ResultDetailViewCoordinator?
     private var viewModel: ResultDetailViewModel?
     private var mapView: MKMapView?
     private var infoView: UIView?
