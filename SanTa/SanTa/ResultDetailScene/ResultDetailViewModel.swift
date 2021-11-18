@@ -11,16 +11,17 @@ import CoreLocation
 class ResultDetailViewModel {
     private let useCase: ResultDetailUseCase
     var resultDetailData: ResultDetailData?
-    var resultDetailDataReceived: (ResultDetailData) -> Void = { info in }
+    var recordDidFetch: () -> Void
     
     init(useCase: ResultDetailUseCase) {
         self.useCase = useCase
+        self.recordDidFetch = {}
     }
     
     func setUp() {
         self.useCase.transferResultDetailData { [weak self] dataModel in
             self?.resultDetailData = dataModel
-            self?.resultDetailDataReceived(dataModel)
+            self?.recordDidFetch()
         }
     }
     
@@ -75,6 +76,7 @@ extension ResultDetailViewModel {
         init(distanceData: ResultDistance) {
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
+            formatter.minimumFractionDigits = 2
             formatter.maximumFractionDigits = 2
             guard let total = formatter.string(from: NSNumber(value: distanceData.total)),
                   let steps = formatter.string(from: NSNumber(value: distanceData.steps)) else {

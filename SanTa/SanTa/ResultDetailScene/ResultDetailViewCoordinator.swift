@@ -16,11 +16,12 @@ class ResultDetailViewCoordinator: Coordinator {
     func start() {
         let resultDetailViewController = ResultDetailViewController(viewModel: injectDependencies())
         resultDetailViewController.coordinator = self
+        self.navigationController.setNavigationBarHidden(true, animated: false)
         self.navigationController.pushViewController(resultDetailViewController, animated: true)
     }
     
     func dismiss() {
-        self.navigationController.dismiss(animated: true)
+        self.navigationController.popViewController(animated: true)
         self.parentCoordinator?.childCoordinators.removeLast()
     }
     

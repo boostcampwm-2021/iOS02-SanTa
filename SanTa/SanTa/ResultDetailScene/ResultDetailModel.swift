@@ -132,7 +132,7 @@ struct ResultIncline {
             plainDistance += altitudeDelta == 0 ? abs(distanceDelta) : 0
         }
         
-        self.average = Int(totalIncline / Double(locations.count - 1))
+        self.average = Int(totalIncline)
         self.highest = Int(steepest)
         self.uphillKilometer = uphillDistance / 1000
         self.downhillKilometer = downHillDistance / 1000
