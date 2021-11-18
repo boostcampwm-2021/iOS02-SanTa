@@ -17,11 +17,13 @@ class MountainDetailViewCoordinator: Coordinator {
     
     func start() {
         if self.parentCoordinator is MapViewCoordinator {
+            self.mountainDetailViewController.backButton.isHidden = false
             self.navigationController.present(mountainDetailViewController, animated: true, completion: nil)
         }
     }
     
     func startPush() {
+        self.mountainDetailViewController.backButton.isHidden = true
         self.navigationController.pushViewController(self.mountainDetailViewController, animated: true)
     }
     

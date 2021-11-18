@@ -46,7 +46,7 @@ extension MountainListViewCoordinator {
 
     }
     
-    func pushMountainDetailViewController(mountainAnnotation: MountainAnnotation, location: CLLocation?) {
+    func pushMountainDetailViewController(mountainAnnotation: MountainAnnotation) {
         let mountainDetailViewCoordinator = MountainDetailViewCoordinator(navigationController: self.navigationController, mountainAnnotation: mountainAnnotation)
         mountainDetailViewCoordinator.parentCoordinator = self
         self.childCoordinators.append(mountainDetailViewCoordinator)

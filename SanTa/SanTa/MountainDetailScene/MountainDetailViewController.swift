@@ -14,6 +14,14 @@ class MountainDetailViewController: UIViewController {
     private var mutatingTopConstraint: NSLayoutConstraint?
     private let maxRollUpDistance: CGFloat = 50
     
+    lazy var backButton: UIImageView = {
+        let uiImage = UIImageView(image: .init(systemName: "xmark"))
+        uiImage.tintColor = .white
+        uiImage.translatesAutoresizingMaskIntoConstraints = false
+        uiImage.isUserInteractionEnabled = true
+        return uiImage
+    }()
+    
     convenience init(viewModel: MountainDetailViewModel) {
         self.init()
         self.viewModel = viewModel
@@ -93,13 +101,9 @@ extension MountainDetailViewController {
         ]
         NSLayoutConstraint.activate(tableViewConstraints)
         
-        let backButton = UIImageView(image: .init(systemName: "xmark"))
-        backButton.tintColor = .white
         backButton.tintColorDidChange()
         self.view.addSubview(backButton)
-        backButton.translatesAutoresizingMaskIntoConstraints = false
         backButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(close)))
-        backButton.isUserInteractionEnabled = true
         
         let backButtonConstraints = [
             backButton.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 10),
