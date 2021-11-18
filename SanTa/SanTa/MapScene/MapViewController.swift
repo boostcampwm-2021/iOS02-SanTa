@@ -13,12 +13,53 @@ protocol Animatable: AnyObject {
 
 class MapViewController: UIViewController {
     weak var coordinator: MapViewCoordinator?
-    private var mapView: MKMapView?
-    private var startButton = UIButton()
-    private var addAnnotationButton = UIButton()
-    private var manager = CLLocationManager()
-    private var userTrackingButton = MKUserTrackingButton()
     private var viewModel: MapViewModel?
+    private lazy var mapView: MKMapView = {
+        let mapView = MKMapView(frame: view.bounds)
+        mapView.showsUserLocation = true
+        mapView.showsScale = true
+        mapView.showsCompass = true
+        mapView.delegate = self
+        return mapView
+    }()
+    private lazy var startButton: UIButton = {
+        let button = UIButton()
+        button.backgroundColor = UIColor(named: "SantaColor")
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("시작", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = .boldSystemFont(ofSize: 25)
+        button.layer.cornerRadius = 50
+        button.layer.shadowColor = UIColor.gray.cgColor
+        button.layer.shadowOpacity = 1
+        button.layer.shadowRadius = 3
+        button.layer.shadowOffset = CGSize(width: 0, height: 3)
+        return button
+    }()
+    private lazy var addAnnotationButton: UIButton = {
+        let button = UIButton()
+        button.isHidden = true
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.backgroundColor = UIColor(named: "SantaColor")
+        button.setTitle("이곳을 알고 계시나요?", for: .normal)
+        button.setTitleColor(.white, for: .normal)
+        button.titleLabel?.font = .boldSystemFont(ofSize: 15)
+        button.layer.cornerRadius = 15
+        button.layer.shadowColor = UIColor.gray.cgColor
+        button.layer.shadowOpacity = 1
+        button.layer.shadowRadius = 3
+        button.layer.shadowOffset = CGSize(width: 0, height: 2)
+        return button
+    }()
+    private lazy var userTrackingButton: MKUserTrackingButton = {
+        let button = MKUserTrackingButton(mapView: self.mapView)
+        button.isHidden = true
+        button.backgroundColor = .white
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.layer.cornerRadius = 10
+        button.clipsToBounds = true
+        return button
+    }()
     
     convenience init(viewModel: MapViewModel) {
         self.init()
@@ -29,23 +70,57 @@ class MapViewController: UIViewController {
         super.viewDidLoad()
         self.configureViews()
         self.registerAnnotationView()
-        self.configureCoreLocationManager()
         self.configureViewModel()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         viewModel?.viewWillAppear()
-        switch self.manager.authorizationStatus {
-        case .authorizedAlways, .authorizedWhenInUse:
-            self.userTrackingButton.isHidden = false
-        default:
-            self.userTrackingButton.isHidden = true
-        }
+        self.configureUserTrackingButton()
+    }
+    
+    private func configureViews() {
+        self.view.addSubview(self.mapView)
+        self.view.addSubview(self.startButton)
+        self.view.addSubview(self.addAnnotationButton)
+        self.view.addSubview(self.userTrackingButton)
+        self.startButton.addTarget(self, action: #selector(presentRecordingViewController), for: .touchDown)
+        
+        NSLayoutConstraint.activate([
+            self.startButton.widthAnchor.constraint(equalToConstant: 100),
+            self.startButton.heightAnchor.constraint(equalToConstant: 100),
+            self.startButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -mapView.frame.height/6),
+            self.startButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
+        ])
+        NSLayoutConstraint.activate([
+            self.userTrackingButton.widthAnchor.constraint(equalToConstant: 50),
+            self.userTrackingButton.heightAnchor.constraint(equalToConstant: 50),
+            self.userTrackingButton.leftAnchor.constraint(equalTo: mapView.rightAnchor, constant: -100),
+            self.userTrackingButton.centerYAnchor.constraint(equalTo: self.startButton.centerYAnchor)
+        ])
+        NSLayoutConstraint.activate([
+            self.addAnnotationButton.widthAnchor.constraint(equalToConstant: 150),
+            self.addAnnotationButton.heightAnchor.constraint(equalToConstant: 30),
+            self.addAnnotationButton.bottomAnchor.constraint(equalTo: startButton.topAnchor, constant: -10),
+            self.addAnnotationButton.centerXAnchor.constraint(equalTo: self.startButton.centerXAnchor)
+        ])
+    }
+    
+    private func registerAnnotationView() {
+        self.mapView.register(
+            MountainAnnotationView.self,
+            forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier
+        )
+        self.mapView.register(
+            ClusterAnnotationView.self,
+            forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier
+        )
     }
     
     private func configureViewModel() {
         self.viewModel?.markersShouldUpdate = { self.configureMarkers() }
         self.viewModel?.mapShouldUpdate = { self.configureMap() }
+        self.viewModel?.initialLocationShouldUpdate = { self.configureLocation() }
+        self.viewModel?.locationPermissionDidChange = { self.configureUserTrackingButton() }
         self.viewModel?.viewDidLoad()
     }
     
@@ -59,7 +134,7 @@ class MapViewController: UIViewController {
                 mountainDescription: mountainEntity.mountain.mountainShortDescription,
                 region: mountainEntity.mountain.mountainRegion
             )
-            self.mapView?.addAnnotation(mountainAnnotation)
+            self.mapView.addAnnotation(mountainAnnotation)
         }
     }
     
@@ -67,109 +142,16 @@ class MapViewController: UIViewController {
         guard let map = viewModel?.map else { return }
         switch map {
         case .infomation:
-            mapView?.mapType = .mutedStandard
+            self.mapView.mapType = .mutedStandard
         case .normal:
-            mapView?.mapType = .standard
+            self.mapView.mapType = .standard
         case .satellite:
-            mapView?.mapType = .satellite
+            self.mapView.mapType = .hybrid
         }
     }
     
-    private func configureViews() {
-        self.mapView = MKMapView(frame: view.bounds)
-        guard let mapView = mapView else { return }
-        self.view.addSubview(mapView)
-        mapView.showsUserLocation = true
-        mapView.showsScale = true
-        mapView.showsCompass = true
-        mapView.delegate = self
-        
-        self.view.addSubview(self.startButton)
-        self.startButton.backgroundColor = UIColor(named: "SantaColor")
-        self.startButton.translatesAutoresizingMaskIntoConstraints = false
-        self.startButton.setTitle("시작", for: .normal)
-        self.startButton.setTitleColor(.white, for: .normal)
-        self.startButton.titleLabel?.font = .boldSystemFont(ofSize: 25)
-        self.startButton.layer.cornerRadius = 50
-        self.startButton.layer.shadowColor = UIColor.gray.cgColor
-        self.startButton.layer.shadowOpacity = 1
-        self.startButton.layer.shadowRadius = 3
-        self.startButton.layer.shadowOffset = CGSize(width: 0, height: 3)
-        
-        let startButtonConstraints = [
-            self.startButton.widthAnchor.constraint(equalToConstant: 100),
-            self.startButton.heightAnchor.constraint(equalToConstant: 100),
-            self.startButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -150),
-            self.startButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
-        ]
-        NSLayoutConstraint.activate(startButtonConstraints)
-        
-        self.startButton.addTarget(self, action: #selector(presentRecordingViewController), for: .touchDown)
-        
-        self.userTrackingButton = .init(mapView: mapView)
-        self.view.addSubview(self.userTrackingButton)
-        self.userTrackingButton.isHidden = true
-        self.userTrackingButton.backgroundColor = .white
-        self.userTrackingButton.translatesAutoresizingMaskIntoConstraints = false
-        self.userTrackingButton.layer.cornerRadius = 10
-        self.userTrackingButton.clipsToBounds = true
-        let userTrackingButtonConstraints = [
-            self.userTrackingButton.widthAnchor.constraint(equalToConstant: 50),
-            self.userTrackingButton.heightAnchor.constraint(equalToConstant: 50),
-            self.userTrackingButton.leftAnchor.constraint(
-                equalTo: mapView.rightAnchor,
-                constant: -100
-            ),
-            self.userTrackingButton.centerYAnchor.constraint(equalTo: self.startButton.centerYAnchor)
-        ]
-        NSLayoutConstraint.activate(userTrackingButtonConstraints)
-        
-        self.view.addSubview(self.addAnnotationButton)
-        self.addAnnotationButton.isHidden = true
-        self.addAnnotationButton.translatesAutoresizingMaskIntoConstraints = false
-        self.addAnnotationButton.backgroundColor = UIColor(named: "SantaColor")
-        self.addAnnotationButton.setTitle("이곳을 알고 계시나요?", for: .normal)
-        self.addAnnotationButton.setTitleColor(.white, for: .normal)
-        self.addAnnotationButton.titleLabel?.font = .boldSystemFont(ofSize: 15)
-        self.addAnnotationButton.layer.cornerRadius = 15
-        self.addAnnotationButton.layer.shadowColor = UIColor.gray.cgColor
-        self.addAnnotationButton.layer.shadowOpacity = 1
-        self.addAnnotationButton.layer.shadowRadius = 3
-        self.addAnnotationButton.layer.shadowOffset = CGSize(width: 0, height: 2)
-        let addAnnotationButtonConstraints = [
-            self.addAnnotationButton.widthAnchor.constraint(equalToConstant: 150),
-            self.addAnnotationButton.heightAnchor.constraint(equalToConstant: 30),
-            self.addAnnotationButton.bottomAnchor.constraint(
-                equalTo: startButton.topAnchor,
-                constant: -10
-            ),
-            self.addAnnotationButton.centerXAnchor.constraint(equalTo: self.startButton.centerXAnchor)
-        ]
-        NSLayoutConstraint.activate(addAnnotationButtonConstraints)
-    }
-    
-    private func registerAnnotationView() {
-        guard let mapView = mapView else { return }
-        mapView.register(
-            MountainAnnotationView.self,
-            forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier
-        )
-        mapView.register(
-            ClusterAnnotationView.self,
-            forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier
-        )
-    }
-    
-    private func configureCoreLocationManager() {
-        self.manager.requestWhenInUseAuthorization()
-        self.manager.requestAlwaysAuthorization()
-        self.manager.delegate = self
-        self.manager.desiredAccuracy = kCLLocationAccuracyBest
-        self.manager.startUpdatingLocation()
-    }
-    
-    private func render(_ location: CLLocation) {
-        guard let mapView = mapView else { return }
+    private func configureLocation() {
+        guard let location = viewModel?.initialLocation else { return }
         let coordinate = CLLocationCoordinate2D(
             latitude: location.coordinate.latitude,
             longitude: location.coordinate.longitude
@@ -180,6 +162,11 @@ class MapViewController: UIViewController {
         )
         let region = MKCoordinateRegion(center: coordinate, span: span)
         mapView.setRegion(region, animated: true)
+    }
+    
+    private func configureUserTrackingButton() {
+        guard let permission = viewModel?.locationPermission else { return }
+        self.userTrackingButton.isHidden = !permission
     }
     
     private func authAlert() -> UIAlertController {
@@ -196,10 +183,9 @@ class MapViewController: UIViewController {
 
     @objc private func presentRecordingViewController() {
         UINotificationFeedbackGenerator().notificationOccurred(.success)
-        switch self.manager.authorizationStatus{
-        case .authorizedWhenInUse, .authorizedAlways:
+        if let viewModel = self.viewModel, viewModel.locationPermission {
             self.coordinator?.presentRecordingViewController()
-        default:
+        } else {
             self.present(authAlert(), animated: false)
         }
     }
@@ -256,25 +242,6 @@ extension MapViewController: MKMapViewDelegate {
   
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         guard let annotation = view.annotation as? MountainAnnotation else { return }
-        
-        coordinator?.presentMountainDetailViewController(mountainAnnotation: annotation, location: self.manager.location)
-    }
-}
-
-extension MapViewController: CLLocationManagerDelegate {
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let location = locations.first {
-            manager.stopUpdatingLocation()
-            self.render(location)
-        }
-    }
-    
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        switch manager.authorizationStatus {
-        case .authorizedAlways, .authorizedWhenInUse:
-            self.userTrackingButton.isHidden = false
-        default:
-            self.userTrackingButton.isHidden = true
-        }
+        coordinator?.presentMountainDetailViewController(mountainAnnotation: annotation)
     }
 }
