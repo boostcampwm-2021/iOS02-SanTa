@@ -12,7 +12,16 @@ class ResultDetailViewModel {
     private let useCase: ResultDetailUseCase
     var resultDetailData: ResultDetailData?
     var recordDidFetch: () -> Void
-    
+    var distanceViewModel: DistanceViewModel {
+        return DistanceViewModel(distanceData: self.resultDetailData?.distance)
+    }
+    var timeViewModel: TimeViewModel {
+        print(self.resultDetailData?.time.spent, self.resultDetailData?.time.active, self.resultDetailData?.time.inactive)
+        return TimeViewModel(timeData: self.resultDetailData?.time)
+    }
+    var altitudeViewModel: AltitudeViewModel {
+        return AltitudeViewModel(altitudeData: self.resultDetailData?.altitude)
+    }
     init(useCase: ResultDetailUseCase) {
         self.useCase = useCase
         self.recordDidFetch = {}
@@ -23,6 +32,16 @@ class ResultDetailViewModel {
             self?.resultDetailData = dataModel
             self?.recordDidFetch()
         }
+    }
+    
+    func averageSpeed() -> String {
+        let formatter = NumberFormatter()
+        formatter.minimumFractionDigits = 2
+        formatter.maximumFractionDigits = 2
+        let totalDistance = self.resultDetailData?.distance.total ?? 0
+        let totalTimeSpent = self.resultDetailData?.time.spent ?? 1
+        print(totalTimeSpent)
+        return formatter.string(from: NSNumber(value: totalDistance / totalTimeSpent)) ?? ""
     }
     
     var recordDate: String {
@@ -67,22 +86,32 @@ protocol ResultDetailCellRepresentable {
 }
 
 extension ResultDetailViewModel {
-    
-    
     struct DistanceViewModel: ResultDetailCellRepresentable {
         let title: String = "거리"
+        let totalDistance: String
+        let steps: String
         let contents: [CellContentEntity]
         
-        init(distanceData: ResultDistance) {
+        init(distanceData: ResultDistance?) {
+            guard let distanceData = distanceData else {
+                self.totalDistance = ""
+                self.steps = ""
+                self.contents = []
+                return
+            }
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
-            formatter.minimumFractionDigits = 2
+            formatter.minimumFractionDigits = 0
             formatter.maximumFractionDigits = 2
             guard let total = formatter.string(from: NSNumber(value: distanceData.total)),
                   let steps = formatter.string(from: NSNumber(value: distanceData.steps)) else {
                       self.contents = []
+                      self.totalDistance = ""
+                      self.steps = ""
                       return
                   }
+            self.totalDistance = total
+            self.steps = steps
             self.contents = [
                 CellContentEntity(content: total, contentTitle: "전체"),
                 CellContentEntity(content: steps, contentTitle: "걸음수")
@@ -92,17 +121,26 @@ extension ResultDetailViewModel {
     
     struct TimeViewModel: ResultDetailCellRepresentable {
         var title: String = "시간"
+        let totalTimeSpent: String
         var contents: [CellContentEntity]
         
-        init(timeData: ResultTime) {
+        init(timeData: ResultTime?) {
+            guard let timeData = timeData else {
+                self.totalTimeSpent = ""
+                self.contents = []
+                return
+            }
             let formatter = DateComponentsFormatter()
             formatter.allowedUnits = [.hour, .minute]
+            formatter.zeroFormattingBehavior = .pad
             guard let spent = formatter.string(from: timeData.spent),
                   let active = formatter.string(from: timeData.active),
                   let inactive = formatter.string(from: timeData.inactive) else {
                       self.contents = []
+                      self.totalTimeSpent = ""
                       return
                   }
+            self.totalTimeSpent = spent
             self.contents = [
                 CellContentEntity(content: spent, contentTitle: "소요"),
                 CellContentEntity(content: active, contentTitle: "운동"),
@@ -120,9 +158,17 @@ extension ResultDetailViewModel {
     
     struct AltitudeViewModel: ResultDetailCellRepresentable {
         var title: String = "고도"
+        let highest: String
+        let lowest: String
         var contents: [CellContentEntity]
         
-        init(altitudeData: ResultAltitude) {
+        init(altitudeData: ResultAltitude?) {
+            guard let altitudeData = altitudeData else {
+                self.highest = ""
+                self.lowest = ""
+                self.contents = []
+                return
+            }
             self.contents = [
                 CellContentEntity(content: String(altitudeData.total), contentTitle: "누적"),
                 CellContentEntity(content: String(altitudeData.highest), contentTitle: "최고"),
@@ -130,6 +176,8 @@ extension ResultDetailViewModel {
                 CellContentEntity(content: String(altitudeData.starting), contentTitle: "시작"),
                 CellContentEntity(content: String(altitudeData.ending), contentTitle: "종료"),
             ]
+            self.highest = String(altitudeData.highest)
+            self.lowest = String(altitudeData.lowest)
         }
     }
     

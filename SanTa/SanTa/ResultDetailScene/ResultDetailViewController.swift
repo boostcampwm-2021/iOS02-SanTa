@@ -55,14 +55,14 @@ class ResultDetailViewController: UIViewController {
         super.viewDidLoad()
         self.configureViews()
         self.viewModel?.recordDidFetch = { [weak self] in
-            guard let data = self?.viewModel?.resultDetailData else { return }
+            guard let viewModel = self?.viewModel else { return }
             self?.informationView.configureLayout(
-                distance: "\(data.distance.total)",
-                time: "\(data.time.spent)",
-                steps: "\(data.distance.steps)",
-                maxAltitude: "\(data.altitude.highest)",
-                minAltitude: "\(data.altitude.lowest)",
-                averageSpeed: "0"
+                distance: viewModel.distanceViewModel.totalDistance,
+                time: viewModel.timeViewModel.totalTimeSpent,
+                steps: viewModel.distanceViewModel.steps,
+                maxAltitude: viewModel.altitudeViewModel.highest,
+                minAltitude: viewModel.altitudeViewModel.lowest,
+                averageSpeed: viewModel.averageSpeed()
             )
         }
         viewModel?.setUp()
