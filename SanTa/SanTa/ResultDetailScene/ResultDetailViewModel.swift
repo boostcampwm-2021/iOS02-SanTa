@@ -16,7 +16,6 @@ class ResultDetailViewModel {
         return DistanceViewModel(distanceData: self.resultDetailData?.distance)
     }
     var timeViewModel: TimeViewModel {
-        print(self.resultDetailData?.time.spent, self.resultDetailData?.time.active, self.resultDetailData?.time.inactive)
         return TimeViewModel(timeData: self.resultDetailData?.time)
     }
     var altitudeViewModel: AltitudeViewModel {
