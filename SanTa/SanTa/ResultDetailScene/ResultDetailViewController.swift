@@ -69,10 +69,7 @@ class ResultDetailViewController: UIViewController {
     }
     
     private func configureSmallerView() {
-        
-        print(informationView.bounds)
         self.informationView = ResultDetailSmallerInfoView(frame: self.informationView.bounds)
-        print(view.subviews)
     }
     
     private func configureViews() {
@@ -134,7 +131,6 @@ extension ResultDetailViewController {
         UIView.animate(withDuration: 0.25) {
             self.informationView.frame = CGRect(x: 0, y: newY, width: self.view.bounds.width, height: newHeight)
         }
-//        self.informationView.addSubview(ResultDetailLargerInfoView(frame: self.informationView.bounds CGRect.zero))
     }
     
     @objc private func showSmallInfoView() {
@@ -145,7 +141,6 @@ extension ResultDetailViewController {
         UIView.animate(withDuration: 0.25) {
             self.informationView.frame = CGRect(x: 0, y: newY, width: self.view.bounds.width, height: newHeight)
         }
-//        self.informationView.addSubview(ResultDetailSmallerInfoView(frame: self.informationView.bounds CGRect.zero))
     }
 }
 

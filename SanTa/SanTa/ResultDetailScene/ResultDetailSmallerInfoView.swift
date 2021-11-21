@@ -9,12 +9,36 @@ import UIKit
 
 class ResultDetailSmallerInfoView: UIView {
 
-    private let distance = UILabel()
-    private let time = UILabel()
-    private let steps = UILabel()
-    private let maxAltitude = UILabel()
-    private let minAltitude = UILabel()
-    private let averageSpeed = UILabel()
+    private let distance: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: label.font.pointSize, weight: .bold)
+        return label
+    }()
+    private let time: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: label.font.pointSize, weight: .bold)
+        return label
+    }()
+    private let steps: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: label.font.pointSize, weight: .bold)
+        return label
+    }()
+    private let maxAltitude: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: label.font.pointSize, weight: .bold)
+        return label
+    }()
+    private let minAltitude: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: label.font.pointSize, weight: .bold)
+        return label
+    }()
+    private let averageSpeed: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: label.font.pointSize, weight: .bold)
+        return label
+    }()
     
     private let distanceLabel: UILabel = {
         let label = UILabel()
@@ -56,7 +80,8 @@ class ResultDetailSmallerInfoView: UIView {
         let stackView = UIStackView(arrangedSubviews: [self.distance, self.distanceLabel])
         stackView.axis = .vertical
         stackView.alignment = .center
-        stackView.distribution = .fillEqually
+        stackView.spacing = 0
+//        stackView.distribution = .fillEqually
         return stackView
     }()
     
@@ -64,7 +89,8 @@ class ResultDetailSmallerInfoView: UIView {
         let stackView = UIStackView(arrangedSubviews: [self.time, self.timeLabel])
         stackView.axis = .vertical
         stackView.alignment = .center
-        stackView.distribution = .fillEqually
+        stackView.spacing = 0
+//        stackView.distribution = .fillEqually
         return stackView
     }()
     
@@ -72,7 +98,8 @@ class ResultDetailSmallerInfoView: UIView {
         let stackView = UIStackView(arrangedSubviews: [self.steps, self.stepsLabel])
         stackView.axis = .vertical
         stackView.alignment = .center
-        stackView.distribution = .fillEqually
+        stackView.spacing = 0
+//        stackView.distribution = .fillEqually
         return stackView
     }()
     
@@ -80,7 +107,8 @@ class ResultDetailSmallerInfoView: UIView {
         let stackView = UIStackView(arrangedSubviews: [self.maxAltitude, self.maxAltitudeLabel])
         stackView.axis = .vertical
         stackView.alignment = .center
-        stackView.distribution = .fillEqually
+        stackView.spacing = 0
+//        stackView.distribution = .fillEqually
         return stackView
     }()
     
@@ -88,7 +116,8 @@ class ResultDetailSmallerInfoView: UIView {
         let stackView = UIStackView(arrangedSubviews: [self.minAltitude, self.minAltitudeLabel])
         stackView.axis = .vertical
         stackView.alignment = .center
-        stackView.distribution = .fillEqually
+        stackView.spacing = 0
+//        stackView.distribution = .fillEqually
         return stackView
     }()
     
@@ -96,7 +125,8 @@ class ResultDetailSmallerInfoView: UIView {
         let stackView = UIStackView(arrangedSubviews: [self.averageSpeed, self.averageSpeedLabel])
         stackView.axis = .vertical
         stackView.alignment = .center
-        stackView.distribution = .fillEqually
+        stackView.spacing = 0
+//        stackView.distribution = .fillEqually
         return stackView
     }()
     
@@ -117,7 +147,7 @@ class ResultDetailSmallerInfoView: UIView {
     private lazy var compositionalStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [self.firstHorizontalStackView, self.secondHorizontalStackView])
         stackView.axis = .vertical
-        stackView.distribution = .fillEqually
+        stackView.distribution = .equalCentering
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
@@ -125,6 +155,7 @@ class ResultDetailSmallerInfoView: UIView {
     func configureLayout(distance: String, time: String, steps: String, maxAltitude: String, minAltitude: String, averageSpeed: String) {
         self.backgroundColor = .systemBackground
         self.distance.text = distance
+        self.distance.font = .systemFont(ofSize: self.distance.font.pointSize, weight: .bold)
         self.time.text = time
         self.steps.text = steps
         self.maxAltitude.text = maxAltitude
@@ -133,15 +164,17 @@ class ResultDetailSmallerInfoView: UIView {
         self.addSubview(self.compositionalStackView)
         NSLayoutConstraint.activate([
             self.compositionalStackView.leftAnchor.constraint(equalTo: self.leftAnchor),
-            self.compositionalStackView.topAnchor.constraint(equalTo: self.topAnchor),
+            self.compositionalStackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 30),
             self.compositionalStackView.rightAnchor.constraint(equalTo: self.rightAnchor),
-            self.compositionalStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+            self.compositionalStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -30)
         ])
+        self.displayArrowImage()
     }
     
     private func displayArrowImage() {
-        let arrow = UIImage(systemName: "chevron.compact.up")?.withTintColor(.black)
+        let arrow = UIImage(systemName: "chevron.compact.up")
         let imageView = UIImageView(image: arrow)
+        imageView.tintColor = .black
         self.addSubview(imageView)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         
