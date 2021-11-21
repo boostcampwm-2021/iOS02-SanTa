@@ -43,6 +43,7 @@ class ResultDetailViewController: UIViewController {
         button.setPreferredSymbolConfiguration(.init(pointSize: 25), forImageIn: .normal)
         button.tintColor = .label
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(presentModifyResultAlert), for: .touchUpInside)
         return button
     }()
     
@@ -103,14 +104,6 @@ class ResultDetailViewController: UIViewController {
         ])
     }
     
-    @objc func dismissViewController() {
-        coordinator?.dismiss()
-    }
-}
-
-
-
-extension ResultDetailViewController {
     private func registerRecognizers() {
         let swipeDownRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(showSmallInfoView))
         swipeDownRecognizer.direction = .down
@@ -141,6 +134,25 @@ extension ResultDetailViewController {
         UIView.animate(withDuration: 0.25) {
             self.informationView.frame = CGRect(x: 0, y: newY, width: self.view.bounds.width, height: newHeight)
         }
+    }
+    
+    @objc func dismissViewController() {
+        coordinator?.dismiss()
+    }
+    
+    @objc func presentModifyResultAlert() {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let changeTitle = UIAlertAction(title: "제목 변경", style: .default) { action in
+            
+        }
+        let delete = UIAlertAction(title: "삭제", style: .destructive) { action in
+            
+        }
+        let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        alert.addAction(changeTitle)
+        alert.addAction(delete)
+        alert.addAction(cancel)
+        self.present(alert, animated: true, completion: nil)
     }
 }
 
