@@ -20,6 +20,7 @@ protocol RecordingUseCase {
 
 final class RecordingViewModel: ObservableObject {
     @Published private(set) var currentTime = ""
+    @Published private(set) var accessibilityCurrentTime = ""
     @Published private(set) var kilometer = ""
     @Published private(set) var altitude = ""
     @Published private(set) var walk = ""
@@ -38,6 +39,13 @@ final class RecordingViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink (receiveValue: { [weak self] time in
                 self?.currentTime = time
+            })
+            .store(in: &self.subscriptions)
+        
+        self.recordingUseCase?.recording?.$accessibilityTime
+            .receive(on: DispatchQueue.main)
+            .sink (receiveValue: { [weak self] time in
+                self?.accessibilityCurrentTime = time
             })
             .store(in: &self.subscriptions)
         
