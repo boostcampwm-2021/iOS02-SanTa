@@ -43,6 +43,7 @@ class ResultDetailViewController: UIViewController {
         button.setPreferredSymbolConfiguration(.init(pointSize: 25), forImageIn: .normal)
         button.tintColor = .label
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(presentModifyResultAlert), for: .touchUpInside)
         return button
     }()
     
@@ -55,24 +56,21 @@ class ResultDetailViewController: UIViewController {
         super.viewDidLoad()
         self.configureViews()
         self.viewModel?.recordDidFetch = { [weak self] in
-            guard let data = self?.viewModel?.resultDetailData else { return }
+            guard let viewModel = self?.viewModel else { return }
             self?.informationView.configureLayout(
-                distance: "\(data.distance.total)",
-                time: "\(data.time.spent)",
-                steps: "\(data.distance.steps)",
-                maxAltitude: "\(data.altitude.highest)",
-                minAltitude: "\(data.altitude.lowest)",
-                averageSpeed: "0"
+                distance: viewModel.distanceViewModel.totalDistance,
+                time: viewModel.timeViewModel.totalTimeSpent,
+                steps: viewModel.distanceViewModel.steps,
+                maxAltitude: viewModel.altitudeViewModel.highest,
+                minAltitude: viewModel.altitudeViewModel.lowest,
+                averageSpeed: viewModel.averageSpeed()
             )
         }
         viewModel?.setUp()
     }
     
     private func configureSmallerView() {
-        
-        print(informationView.bounds)
         self.informationView = ResultDetailSmallerInfoView(frame: self.informationView.bounds)
-        print(view.subviews)
     }
     
     private func configureViews() {
@@ -106,14 +104,6 @@ class ResultDetailViewController: UIViewController {
         ])
     }
     
-    @objc func dismissViewController() {
-        coordinator?.dismiss()
-    }
-}
-
-
-
-extension ResultDetailViewController {
     private func registerRecognizers() {
         let swipeDownRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(showSmallInfoView))
         swipeDownRecognizer.direction = .down
@@ -134,7 +124,6 @@ extension ResultDetailViewController {
         UIView.animate(withDuration: 0.25) {
             self.informationView.frame = CGRect(x: 0, y: newY, width: self.view.bounds.width, height: newHeight)
         }
-//        self.informationView.addSubview(ResultDetailLargerInfoView(frame: self.informationView.bounds CGRect.zero))
     }
     
     @objc private func showSmallInfoView() {
@@ -145,7 +134,25 @@ extension ResultDetailViewController {
         UIView.animate(withDuration: 0.25) {
             self.informationView.frame = CGRect(x: 0, y: newY, width: self.view.bounds.width, height: newHeight)
         }
-//        self.informationView.addSubview(ResultDetailSmallerInfoView(frame: self.informationView.bounds CGRect.zero))
+    }
+    
+    @objc func dismissViewController() {
+        coordinator?.dismiss()
+    }
+    
+    @objc func presentModifyResultAlert() {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let changeTitle = UIAlertAction(title: "제목 변경", style: .default) { action in
+            
+        }
+        let delete = UIAlertAction(title: "삭제", style: .destructive) { action in
+            
+        }
+        let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
+        alert.addAction(changeTitle)
+        alert.addAction(delete)
+        alert.addAction(cancel)
+        self.present(alert, animated: true, completion: nil)
     }
 }
 

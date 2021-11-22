@@ -57,18 +57,13 @@ struct ResultTime {
     let inactive: TimeInterval
     
     init(records: Records) {
-        var active: TimeInterval = 0
         var inactive: TimeInterval = 0
         for index in 0..<records.records.count - 1 {
-            let startTime = records.records[index].startTime
-            let timeBeforeStop = records.records[index].endTime
-            let resumeTime = records.records[index+1].startTime
-            inactive += resumeTime.timeIntervalSince(timeBeforeStop)
-            active += timeBeforeStop.timeIntervalSince(startTime)
+            inactive += records.records[index].endTime.timeIntervalSince(records.records[index+1].startTime)
         }
-        self.active = active
+        self.active = records.records.map{$0.endTime.timeIntervalSince($0.startTime)}.reduce(0, +)
         self.inactive = inactive
-        self.spent = active + inactive
+        self.spent = records.times
     }
 }
 
