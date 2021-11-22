@@ -14,9 +14,9 @@ class ResultDetailViewController: UIViewController {
     
     private var viewModel: ResultDetailViewModel?
     
-    private var infoViewBottomConstraint: NSLayoutConstraint?
+    private var infoViewTopConstraint: NSLayoutConstraint?
     private var infoViewHight: CGFloat?
-    private var largeInfoView = false
+    private var isLargeInfoView = false
     
     private lazy var mapView: MKMapView = {
         let mapView = MKMapView()
@@ -122,9 +122,9 @@ class ResultDetailViewController: UIViewController {
             self.informationView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
         ])
         
-        infoViewBottomConstraint =
+        infoViewTopConstraint =
             self.informationView.topAnchor.constraint(equalTo: self.mapView.bottomAnchor)
-        guard let infoViewConstraint = infoViewBottomConstraint else { return }
+        guard let infoViewConstraint = infoViewTopConstraint else { return }
         NSLayoutConstraint.activate([infoViewConstraint])
         
         self.view.layoutIfNeeded()
@@ -141,8 +141,8 @@ class ResultDetailViewController: UIViewController {
         bottomConstraint?.constant = traslation
     }
     
-    private func changeInfoViewBottomConstraints(traslation: CGFloat) {
-        guard let infoViewConstraint = self.infoViewBottomConstraint else { return }
+    private func changeInfoViewTopConstraints(traslation: CGFloat) {
+        guard let infoViewConstraint = self.infoViewTopConstraint else { return }
         infoViewConstraint.constant = traslation
     }
     
@@ -158,7 +158,7 @@ class ResultDetailViewController: UIViewController {
             
         case .changed:
             var offset: CGFloat = 0
-            if largeInfoView {
+            if isLargeInfoView {
                 offset = self.backButton.frame.maxY - self.mapView.safeAreaLayoutGuide.layoutFrame.maxY
             }
             
@@ -168,18 +168,18 @@ class ResultDetailViewController: UIViewController {
                 return
             }
             
-            changeInfoViewBottomConstraints(traslation: translation.y + offset)
+            changeInfoViewTopConstraints(traslation: translation.y + offset)
 
         case .ended:
             if self.informationView.frame.minY <= self.view.frame.height/2 {
-                changeInfoViewBottomConstraints(traslation: self.backButton.frame.maxY - self.mapView.safeAreaLayoutGuide.layoutFrame.maxY)
-                largeInfoView = true
+                changeInfoViewTopConstraints(traslation: self.backButton.frame.maxY - self.mapView.safeAreaLayoutGuide.layoutFrame.maxY)
+                isLargeInfoView = true
             } else {
                 UIView.animate(withDuration: 0.2, animations: {
                     self.mapView.alpha = 1
                 })
-                largeInfoView = false
-                changeInfoViewBottomConstraints(traslation: 0)
+                isLargeInfoView = false
+                changeInfoViewTopConstraints(traslation: 0)
             }
             
             UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseInOut, animations: {
