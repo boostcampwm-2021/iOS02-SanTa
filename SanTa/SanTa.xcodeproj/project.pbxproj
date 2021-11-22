@@ -55,6 +55,8 @@
 		54B32069274536D1002232BD /* MountainAddingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B32068274536D1002232BD /* MountainAddingViewModel.swift */; };
 		54B3206B274536E3002232BD /* MountainAddingViewUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B3206A274536E3002232BD /* MountainAddingViewUseCase.swift */; };
 		54B3206D27453725002232BD /* MountainAddingViewRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B3206C27453725002232BD /* MountainAddingViewRepository.swift */; };
+		54B32073274B7E09002232BD /* MountainAddingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B32072274B7E09002232BD /* MountainAddingView.swift */; };
+		54B32075274BCCA2002232BD /* CoreDataMountainStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B32074274BCCA2002232BD /* CoreDataMountainStorage.swift */; };
 		54F88EB727424C210004EAFD /* TotalRecordsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F88EB627424C210004EAFD /* TotalRecordsViewCell.swift */; };
 		54F88EB9274256FE0004EAFD /* SectionHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F88EB8274256FE0004EAFD /* SectionHeaderView.swift */; };
 		54F88EBB274259950004EAFD /* RecordsViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54F88EBA274259950004EAFD /* RecordsViewCell.swift */; };
@@ -164,6 +166,8 @@
 		54B32068274536D1002232BD /* MountainAddingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainAddingViewModel.swift; sourceTree = "<group>"; };
 		54B3206A274536E3002232BD /* MountainAddingViewUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainAddingViewUseCase.swift; sourceTree = "<group>"; };
 		54B3206C27453725002232BD /* MountainAddingViewRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainAddingViewRepository.swift; sourceTree = "<group>"; };
+		54B32072274B7E09002232BD /* MountainAddingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainAddingView.swift; sourceTree = "<group>"; };
+		54B32074274BCCA2002232BD /* CoreDataMountainStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataMountainStorage.swift; sourceTree = "<group>"; };
 		54F88EB627424C210004EAFD /* TotalRecordsViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TotalRecordsViewCell.swift; sourceTree = "<group>"; };
 		54F88EB8274256FE0004EAFD /* SectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeaderView.swift; sourceTree = "<group>"; };
 		54F88EBA274259950004EAFD /* RecordsViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordsViewCell.swift; sourceTree = "<group>"; };
@@ -333,6 +337,7 @@
 				49FEEDB6273255DD00D37CCA /* MountainExtractor.swift */,
 				98A913002736844E008AAE39 /* UserDefaultsStorage.swift */,
 				984DDEC627327064003BE56B /* CoreDataRecordStorage.swift */,
+				54B32074274BCCA2002232BD /* CoreDataMountainStorage.swift */,
 			);
 			path = Persistences;
 			sourceTree = "<group>";
@@ -421,6 +426,7 @@
 			children = (
 				54B3206627451169002232BD /* MountainAddingViewCoordinator.swift */,
 				54B32064274510D8002232BD /* MountainAddingViewController.swift */,
+				54B32072274B7E09002232BD /* MountainAddingView.swift */,
 				54B32068274536D1002232BD /* MountainAddingViewModel.swift */,
 				54B3206A274536E3002232BD /* MountainAddingViewUseCase.swift */,
 				54B3206C27453725002232BD /* MountainAddingViewRepository.swift */,
@@ -593,6 +599,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				54296957272FC4380070B362 /* SettingsViewCoordinator.swift in Sources */,
+				54B32075274BCCA2002232BD /* CoreDataMountainStorage.swift in Sources */,
 				54F88EBB274259950004EAFD /* RecordsViewCell.swift in Sources */,
 				9889DA512730FFCD00F3C772 /* MapOptionCell.swift in Sources */,
 				4948038427437499002854B1 /* ResultDetailUseCase.swift in Sources */,
@@ -637,6 +644,7 @@
 				54F88EB727424C210004EAFD /* TotalRecordsViewCell.swift in Sources */,
 				54B3206727451169002232BD /* MountainAddingViewCoordinator.swift in Sources */,
 				9800821D273CB45D006A847A /* ResultRepository.swift in Sources */,
+				54B32073274B7E09002232BD /* MountainAddingView.swift in Sources */,
 				DAB37D50273256B900EC523F /* RecordingModel.swift in Sources */,
 				494803822743748D002854B1 /* ResultDetailViewModel.swift in Sources */,
 				5465237D2741F997007B2692 /* ResultViewModel.swift in Sources */,
