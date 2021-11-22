@@ -8,10 +8,15 @@
 import UIKit
 
 class ResultDetailLargerInfoView: UIView {
-    private var collectionView: UICollectionView
+    private lazy var collectionView: UICollectionView = {
+        let flowLayout = UICollectionViewFlowLayout()
+        let collectionView = UICollectionView(frame: .init(x: 0, y: 0, width: 0, height: 0), collectionViewLayout: flowLayout)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+
+        return collectionView
+    }
 
     override init(frame: CGRect) {
-        self.collectionView = UICollectionView(frame: frame)
         super.init(frame: frame)
         self.backgroundColor = .green
     }
