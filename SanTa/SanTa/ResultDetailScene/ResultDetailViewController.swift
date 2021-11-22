@@ -26,8 +26,14 @@ class ResultDetailViewController: UIViewController {
         return mapView
     }()
     
-    private var informationView: ResultDetailSmallerInfoView = {
+    private var smallerInformationView: ResultDetailSmallerInfoView = {
         let view = ResultDetailSmallerInfoView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    private var largerInformationView: ResultDetailLargerInfoView = {
+        let view = ResultDetailLargerInfoView()
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -61,7 +67,7 @@ class ResultDetailViewController: UIViewController {
         super.viewDidLoad()
         self.viewModel?.recordDidFetch = { [weak self] in
             guard let viewModel = self?.viewModel else { return }
-            self?.informationView.configureLayout(
+            self?.smallerInformationView.configureLayout(
                 distance: viewModel.distanceViewModel.totalDistance,
                 time: viewModel.timeViewModel.totalTimeSpent,
                 steps: viewModel.distanceViewModel.steps,
@@ -76,7 +82,7 @@ class ResultDetailViewController: UIViewController {
     }
     
     private func configureSmallerView() {
-        self.informationView = ResultDetailSmallerInfoView(frame: self.informationView.bounds)
+        self.smallerInformationView = ResultDetailSmallerInfoView(frame: self.smallerInformationView.bounds)
     }
     
     private func configurePanGesture() {
@@ -92,13 +98,13 @@ class ResultDetailViewController: UIViewController {
         self.view.addSubview(self.mapView)
         self.view.addSubview(self.backButton)
         self.view.addSubview(self.changeButton)
-        self.view.addSubview(self.informationView)
+        self.view.addSubview(self.smallerInformationView)
         
         NSLayoutConstraint.activate([
             self.mapView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
             self.mapView.topAnchor.constraint(equalTo: self.view.topAnchor),
             self.mapView.rightAnchor.constraint(equalTo: self.view.rightAnchor),
-            self.mapView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant:  -(self.informationView.compositionalStackView.frame.height + tabBar.frame.height))
+            self.mapView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant:  -(self.smallerInformationView.compositionalStackView.frame.height + tabBar.frame.height))
         ])
         
         NSLayoutConstraint.activate([
@@ -116,23 +122,23 @@ class ResultDetailViewController: UIViewController {
         ])
         
         NSLayoutConstraint.activate([
-            self.informationView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
-            self.informationView.rightAnchor.constraint(equalTo: self.view.rightAnchor),
-            self.informationView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
+            self.smallerInformationView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
+            self.smallerInformationView.rightAnchor.constraint(equalTo: self.view.rightAnchor),
+            self.smallerInformationView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
         ])
         
         infoViewTopConstraint =
-            self.informationView.topAnchor.constraint(equalTo: self.mapView.bottomAnchor)
+            self.smallerInformationView.topAnchor.constraint(equalTo: self.mapView.bottomAnchor)
         guard let infoViewConstraint = infoViewTopConstraint else { return }
         NSLayoutConstraint.activate([infoViewConstraint])
         
         self.view.layoutIfNeeded()
-        self.infoViewHight = self.informationView.frame.height
+        self.infoViewHight = self.smallerInformationView.frame.height
     }
     
     private func findInfoViewBottomConstraints(traslation: CGFloat) {
         var bottomConstraint: NSLayoutConstraint?
-        self.informationView.constraints.forEach {
+        self.smallerInformationView.constraints.forEach {
             if $0.firstAttribute == .bottom {
                 bottomConstraint = $0
             }
@@ -146,8 +152,8 @@ class ResultDetailViewController: UIViewController {
     }
     
     @objc private func informationViewPanPanned(_ panGestureRecognizer: UIPanGestureRecognizer) {
-        let translation = panGestureRecognizer.translation(in: self.informationView)
-        let informationViewHeight = self.informationView.frame.height
+        let translation = panGestureRecognizer.translation(in: self.smallerInformationView)
+        let informationViewHeight = self.smallerInformationView.frame.height
         
         switch panGestureRecognizer.state {
         case .began:
@@ -166,18 +172,18 @@ class ResultDetailViewController: UIViewController {
                   infoViewHight < (informationViewHeight - (translation.y + offset)) else {
                 return
             }
-            self.informationView.layer.cornerRadius = 10
+            self.smallerInformationView.layer.cornerRadius = 10
             changeInfoViewTopConstraints(traslation: translation.y + offset)
 
         case .ended:
-            if self.informationView.frame.minY <= self.view.frame.height/2 {
+            if self.smallerInformationView.frame.minY <= self.view.frame.height/2 {
                 changeInfoViewTopConstraints(traslation: self.backButton.frame.maxY - self.mapView.safeAreaLayoutGuide.layoutFrame.maxY)
                 isLargeInfoView = true
             } else {
                 UIView.animate(withDuration: 0.2, animations: {
                     self.mapView.alpha = 1
                 })
-                self.informationView.layer.cornerRadius = 0
+                self.smallerInformationView.layer.cornerRadius = 0
                 isLargeInfoView = false
                 changeInfoViewTopConstraints(traslation: 0)
             }
