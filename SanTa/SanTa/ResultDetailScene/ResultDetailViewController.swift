@@ -17,6 +17,7 @@ class ResultDetailViewController: UIViewController {
     private lazy var mapView: MKMapView = {
         let mapView = MKMapView()
         mapView.mapType = .mutedStandard
+        mapView.backgroundColor = .black
         mapView.translatesAutoresizingMaskIntoConstraints = false
         return mapView
     }()
@@ -130,22 +131,9 @@ class ResultDetailViewController: UIViewController {
         
         switch panGestureRecognizer.state {
         case .began:
-            let blackView = UIView()
-//            blackView.backgroundColor = .black
-//            blackView.alpha = 0.5
-//
-//            self.mapView.addSubview(blackView)
-//
-//            NSLayoutConstraint.activate([
-//                blackView.leftAnchor.constraint(equalTo: self.mapView.leftAnchor),
-//                blackView.topAnchor.constraint(equalTo: self.mapView.bottomAnchor),
-//                blackView.rightAnchor.constraint(equalTo: self.mapView.rightAnchor),
-//                blackView.bottomAnchor.constraint(equalTo: self.mapView.bottomAnchor)
-//            ])
-//
-//            UIView.animate(withDuration: 0.2, animations: {
-//                self.view.layoutIfNeeded()
-//            })
+            UIView.animate(withDuration: 0.2, animations: {
+                self.mapView.alpha = 0.8
+            })
         case .changed:
             guard (self.view.frame.height - informationViewHeight) >= (self.backButton.frame.height + 10) else {
                 return
@@ -161,11 +149,12 @@ class ResultDetailViewController: UIViewController {
                     self.informationView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: self.backButton.frame.height + 10)
                 ])
             } else {
+                self.mapView.alpha = 1
                 NSLayoutConstraint.activate([
                     self.informationView.topAnchor.constraint(equalTo: self.mapView.safeAreaLayoutGuide.bottomAnchor)
                 ])
             }
-            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut, animations: {
+            UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseInOut, animations: {
                 self.view.layoutIfNeeded()
             }, completion: nil)
             
