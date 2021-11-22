@@ -33,6 +33,13 @@ class ResultDetailViewModel {
         }
     }
     
+    func delete(completion: @escaping () -> Void) {
+        guard let id = self.resultDetailData?.id else {
+            return
+        }
+        self.useCase.delete(id: id, completion: completion)
+    }
+    
     func averageSpeed() -> String {
         let formatter = NumberFormatter()
         formatter.minimumFractionDigits = 2

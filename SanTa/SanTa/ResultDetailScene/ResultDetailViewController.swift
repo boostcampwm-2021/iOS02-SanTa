@@ -146,7 +146,11 @@ extension ResultDetailViewController {
             
         }
         let delete = UIAlertAction(title: "삭제", style: .destructive) { action in
-            
+            self.viewModel?.delete {
+                DispatchQueue.main.async {
+                    self.coordinator?.dismiss()
+                }
+            }
         }
         let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
         alert.addAction(changeTitle)

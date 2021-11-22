@@ -38,6 +38,11 @@ extension ResultDetailViewCoordinator {
             useCase: ResultDetailUseCase(
                 model: ResultDetailData(
                     records: self.records
+                ),
+                repository: DefaultResultDetailRepository(
+                    recordStorage: CoreDataRecordStorage(
+                        coreDataStorage: self.coreDataStorage
+                    )
                 )
             )
         )

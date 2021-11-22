@@ -71,6 +71,7 @@ class MapViewController: UIViewController {
         self.configureViews()
         self.registerAnnotationView()
         self.configureViewModel()
+        print("Documents Directory: ", FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last ?? "Not Found!")
     }
     
     override func viewWillAppear(_ animated: Bool) {

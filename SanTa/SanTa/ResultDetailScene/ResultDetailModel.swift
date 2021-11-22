@@ -15,6 +15,7 @@ struct ResultDetailData {
 //    let pace: ResultPace
     let altitude: ResultAltitude
     let incline: ResultIncline
+    let id: String
     
     init(records: Records) {
         self.timeStamp = ResultTimeStamp(records: records)
@@ -22,6 +23,7 @@ struct ResultDetailData {
         self.time = ResultTime(records: records)
         self.altitude = ResultAltitude(records: records)
         self.incline = ResultIncline(records: records)
+        self.id = records.id
     }
 }
 

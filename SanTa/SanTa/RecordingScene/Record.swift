@@ -98,6 +98,9 @@ struct Records {
     private(set) var assetIdentifiers: [String]
     private(set) var secondPerHighestSpeed: Int
     private(set) var secondPerMinimumSpeed: Int
+    private(set) var id: String
+    
+    
     
     var date: Date? {
         return records.last?.endTime
