@@ -24,6 +24,7 @@ class MapViewController: UIViewController {
         mapView.showsScale = true
         mapView.showsCompass = true
         mapView.delegate = self
+        mapView.accessibilityElementsHidden = true
         return mapView
     }()
     
@@ -40,6 +41,7 @@ class MapViewController: UIViewController {
         button.layer.shadowRadius = 3
         button.layer.shadowOffset = CGSize(width: 0, height: 3)
         button.addTarget(self, action: #selector(presentRecordingViewController), for: .touchDown)
+        button.accessibilityHint = "측정을 시작하려면 이중탭 하십시오"
         return button
     }()
     
