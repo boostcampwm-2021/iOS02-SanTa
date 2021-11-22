@@ -8,7 +8,7 @@
 import Foundation
 
 protocol ResultDetailRepository {
-//    func update(id: UUID, title: String, completion: @escaping (Result<>))
+    func update(title: String, id: String, completion: @escaping (Result<Void, Error>) -> Void)
     func delete(id: String, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
@@ -18,8 +18,12 @@ class DefaultResultDetailRepository: ResultDetailRepository {
     init(recordStorage: CoreDataRecordStorage) {
         self.recordStorage = recordStorage
     }
+    
     func delete(id: String, completion: @escaping (Result<Void, Error>) -> Void) {
         self.recordStorage.delete(id: id, completion: completion)
-        
+    }
+    
+    func update(title: String, id: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        self.recordStorage.update(title: title, id: id, completion: completion)
     }
 }

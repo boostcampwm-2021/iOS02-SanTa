@@ -12,6 +12,7 @@ class ResultDetailViewCoordinator: Coordinator {
     var navigationController: UINavigationController
     var coreDataStorage: CoreDataStorage
     var records: Records
+//    let viewController: ResultDetailViewController = .init(viewModel: self.injectDependencies())
     
     func start() {
         let resultDetailViewController = ResultDetailViewController(viewModel: injectDependencies())
@@ -46,5 +47,17 @@ extension ResultDetailViewCoordinator {
                 )
             )
         )
+    }
+    
+    func presentRecordingTitleViewController() {
+        guard let viewController = self.navigationController.viewControllers.last as? ResultDetailViewController else {
+            print("뷰컨 없음")
+            return
+        }
+        let recordingTitleViewCoordinator = RecordingTitleViewCoordinator(delegate: viewController)
+        self.childCoordinators.append(recordingTitleViewCoordinator)
+        recordingTitleViewCoordinator.parentCoordinator = self
+        
+        recordingTitleViewCoordinator.start()
     }
 }

@@ -20,15 +20,11 @@ class ResultDetailUseCase {
         completion(self.model)
     }
     
-    func delete(id: String, completion: @escaping () -> Void) {
-        self.repository.delete(id: id) { result in
-            switch result {
-            case .success():
-                completion()
-            case .failure(let error):
-                print(error)
-                
-            }
-        }
+    func delete(id: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        self.repository.delete(id: id, completion: completion)
+    }
+    
+    func update(title: String, id: String, completion: @escaping (Result<Void, Error>) -> Void) {
+        self.repository.update(title: title, id: id, completion: completion)
     }
 }

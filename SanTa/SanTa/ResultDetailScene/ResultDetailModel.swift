@@ -16,6 +16,7 @@ struct ResultDetailData {
     let altitude: ResultAltitude
     let incline: ResultIncline
     let id: String
+    private(set) var title: String
     
     init(records: Records) {
         self.timeStamp = ResultTimeStamp(records: records)
@@ -24,6 +25,11 @@ struct ResultDetailData {
         self.altitude = ResultAltitude(records: records)
         self.incline = ResultIncline(records: records)
         self.id = records.id
+        self.title = records.title
+    }
+    
+    mutating func change(title: String) {
+        self.title = title
     }
 }
 

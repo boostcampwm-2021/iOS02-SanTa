@@ -47,6 +47,13 @@ class ResultDetailViewController: UIViewController {
         return button
     }()
     
+    private var titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: label.font.pointSize, weight: .bold)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     convenience init(viewModel: ResultDetailViewModel) {
         self.init()
         self.viewModel = viewModel
@@ -57,6 +64,7 @@ class ResultDetailViewController: UIViewController {
         self.configureViews()
         self.viewModel?.recordDidFetch = { [weak self] in
             guard let viewModel = self?.viewModel else { return }
+            self?.titleLabel.text = viewModel.resultDetailData?.title
             self?.informationView.configureLayout(
                 distance: viewModel.distanceViewModel.totalDistance,
                 time: viewModel.timeViewModel.totalTimeSpent,
@@ -77,6 +85,7 @@ class ResultDetailViewController: UIViewController {
         self.view.addSubview(self.mapView)
         self.view.addSubview(self.backButton)
         self.view.addSubview(self.changeButton)
+        self.view.addSubview(self.titleLabel)
         self.view.addSubview(self.informationView)
         NSLayoutConstraint.activate([
             self.mapView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
@@ -95,6 +104,10 @@ class ResultDetailViewController: UIViewController {
             self.changeButton.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 10),
             self.changeButton.widthAnchor.constraint(equalToConstant: 40),
             self.changeButton.heightAnchor.constraint(equalToConstant: 40),
+        ])
+        NSLayoutConstraint.activate([
+            self.titleLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            self.titleLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 10),
         ])
         NSLayoutConstraint.activate([
             self.informationView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
@@ -143,12 +156,23 @@ extension ResultDetailViewController {
     @objc func presentModifyResultAlert() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let changeTitle = UIAlertAction(title: "제목 변경", style: .default) { action in
-            
+            // TODO: 입력창 띄우고 텍스트 입력 받아서 update 호출
+            self.coordinator?.presentRecordingTitleViewController()
+//            self.viewModel?.update(title: "타이트을", completion: { title in
+//                DispatchQueue.main.async {
+//                    self.titleLabel.text = title
+//                }
+//            })
         }
         let delete = UIAlertAction(title: "삭제", style: .destructive) { action in
-            self.viewModel?.delete {
-                DispatchQueue.main.async {
-                    self.coordinator?.dismiss()
+            self.viewModel?.delete { result in
+                switch result {
+                case .success():
+                    DispatchQueue.main.async {
+                        self.coordinator?.dismiss()
+                    }
+                case .failure(let error):
+                    print(error)
                 }
             }
         }
@@ -160,4 +184,15 @@ extension ResultDetailViewController {
     }
 }
 
+extension ResultDetailViewController: SetTitleDelegate {
+    func didTitleWriteDone(title: String) {
+        self.viewModel?.update(title: title, completion: { title in
+            DispatchQueue.main.async {
+                self.titleLabel.text = title
+            }
+        })
+    }
+    
+    
+}
 
