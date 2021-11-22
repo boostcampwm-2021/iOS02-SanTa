@@ -81,13 +81,17 @@ class DetailHeader: UICollectionReusableView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.configureStackView()
-        self.configureViews()
+        self.configure()
     }
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         
+    }
+    
+    private func configure() {
+        self.configureStackView()
+        self.configureViews()
     }
     
     private func configureViews() {
@@ -96,18 +100,18 @@ class DetailHeader: UICollectionReusableView {
         self.addSubview(self.timeStackView)
         
         NSLayoutConstraint.activate([
-            self.dateLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
-            self.dateLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            self.dateLabel.topAnchor.constraint(equalTo: self.layoutMarginsGuide.topAnchor, constant: 20),
+            self.dateLabel.centerXAnchor.constraint(equalTo: self.layoutMarginsGuide.centerXAnchor),
         ])
         
         NSLayoutConstraint.activate([
             self.labelStackView.topAnchor.constraint(equalTo: self.dateLabel.bottomAnchor, constant: 20),
-            self.labelStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            self.labelStackView.centerXAnchor.constraint(equalTo: self.layoutMarginsGuide.centerXAnchor),
         ])
         
         NSLayoutConstraint.activate([
             self.timeStackView.topAnchor.constraint(equalTo: self.labelStackView.bottomAnchor, constant: 20),
-            self.timeStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            self.timeStackView.centerXAnchor.constraint(equalTo: self.layoutMarginsGuide.centerXAnchor),
         ])
     }
     
