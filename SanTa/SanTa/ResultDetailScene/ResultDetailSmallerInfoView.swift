@@ -144,10 +144,11 @@ class ResultDetailSmallerInfoView: UIView {
         return stackView
     }()
     
-    private lazy var compositionalStackView: UIStackView = {
+    lazy var compositionalStackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [self.firstHorizontalStackView, self.secondHorizontalStackView])
         stackView.axis = .vertical
         stackView.distribution = .equalCentering
+        stackView.spacing = 10
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
@@ -165,8 +166,7 @@ class ResultDetailSmallerInfoView: UIView {
         NSLayoutConstraint.activate([
             self.compositionalStackView.leftAnchor.constraint(equalTo: self.leftAnchor),
             self.compositionalStackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 30),
-            self.compositionalStackView.rightAnchor.constraint(equalTo: self.rightAnchor),
-            self.compositionalStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -30)
+            self.compositionalStackView.rightAnchor.constraint(equalTo: self.rightAnchor)
         ])
         self.displayArrowImage()
     }

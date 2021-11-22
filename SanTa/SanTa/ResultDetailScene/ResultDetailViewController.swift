@@ -59,8 +59,6 @@ class ResultDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.configureViews()
-        self.configurePanGesture()
         self.viewModel?.recordDidFetch = { [weak self] in
             guard let viewModel = self?.viewModel else { return }
             self?.informationView.configureLayout(
@@ -71,6 +69,9 @@ class ResultDetailViewController: UIViewController {
                 minAltitude: viewModel.altitudeViewModel.lowest,
                 averageSpeed: viewModel.averageSpeed()
             )
+            self?.informationView.layoutIfNeeded()
+            self?.configureViews()
+            self?.configurePanGesture()
         }
         viewModel?.setUp()
     }
@@ -88,22 +89,26 @@ class ResultDetailViewController: UIViewController {
     }
     
     private func configureViews() {
+        guard let tabBar = self.navigationController?.tabBarController?.tabBar else { return }
         self.view.addSubview(self.mapView)
         self.view.addSubview(self.backButton)
         self.view.addSubview(self.changeButton)
         self.view.addSubview(self.informationView)
+        
         NSLayoutConstraint.activate([
             self.mapView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
             self.mapView.topAnchor.constraint(equalTo: self.view.topAnchor),
             self.mapView.rightAnchor.constraint(equalTo: self.view.rightAnchor),
-            self.mapView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -self.view.frame.height * 0.2)
+            self.mapView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant:  -(self.informationView.compositionalStackView.frame.height + tabBar.frame.height))
         ])
+        
         NSLayoutConstraint.activate([
             self.backButton.leftAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leftAnchor, constant: 10),
             self.backButton.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 10),
             self.backButton.widthAnchor.constraint(equalToConstant: 40),
             self.backButton.heightAnchor.constraint(equalToConstant: 40),
         ])
+        
         NSLayoutConstraint.activate([
             self.changeButton.rightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.rightAnchor, constant: -10),
             self.changeButton.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 10),
