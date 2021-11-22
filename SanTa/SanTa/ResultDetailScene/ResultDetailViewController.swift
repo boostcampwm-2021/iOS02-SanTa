@@ -156,17 +156,17 @@ class ResultDetailViewController: UIViewController {
             ])
 
         case .ended:
-            UIView.animate(withDuration: 1.2, delay: 0.3, options: .curveEaseInOut, animations: {
-                if self.informationView.frame.minY <= self.view.frame.height/2 {
-                    NSLayoutConstraint.activate([
-                        self.informationView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: self.backButton.frame.height + 10)
-                    ])
-                } else {
-                    NSLayoutConstraint.activate([
-                        self.informationView.topAnchor.constraint(equalTo: self.mapView.safeAreaLayoutGuide.bottomAnchor)
-                    ])
-                }
-                self.view.setNeedsLayout()
+            if self.informationView.frame.minY <= self.view.frame.height/2 {
+                NSLayoutConstraint.activate([
+                    self.informationView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: self.backButton.frame.height + 10)
+                ])
+            } else {
+                NSLayoutConstraint.activate([
+                    self.informationView.topAnchor.constraint(equalTo: self.mapView.safeAreaLayoutGuide.bottomAnchor)
+                ])
+            }
+            UIView.animate(withDuration: 0.2, delay: 0, options: .curveEaseInOut, animations: {
+                self.view.layoutIfNeeded()
             }, completion: nil)
             
         default:
