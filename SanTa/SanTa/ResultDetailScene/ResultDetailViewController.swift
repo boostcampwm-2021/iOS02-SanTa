@@ -124,9 +124,54 @@ class ResultDetailViewController: UIViewController {
     }
     
     @objc private func informationViewPanPanned(_ panGestureRecognizer: UIPanGestureRecognizer) {
-        let translation = panGestureRecognizer.translation(in: self.view)
+        let translation = panGestureRecognizer.translation(in: self.informationView)
         
-        print("유저가 위아래로 \(translation.y)만큼 드래그하였습니다.")
+        let informationViewHeight = self.informationView.frame.height
+        
+        switch panGestureRecognizer.state {
+        case .began:
+            let blackView = UIView()
+//            blackView.backgroundColor = .black
+//            blackView.alpha = 0.5
+//
+//            self.mapView.addSubview(blackView)
+//
+//            NSLayoutConstraint.activate([
+//                blackView.leftAnchor.constraint(equalTo: self.mapView.leftAnchor),
+//                blackView.topAnchor.constraint(equalTo: self.mapView.bottomAnchor),
+//                blackView.rightAnchor.constraint(equalTo: self.mapView.rightAnchor),
+//                blackView.bottomAnchor.constraint(equalTo: self.mapView.bottomAnchor)
+//            ])
+//
+//            UIView.animate(withDuration: 0.2, animations: {
+//                self.view.layoutIfNeeded()
+//            })
+        case .changed:
+            guard (self.view.frame.height - informationViewHeight) >= (self.backButton.frame.height + 10) else {
+                return
+            }
+
+            NSLayoutConstraint.activate([
+                self.informationView.topAnchor.constraint(equalTo: self.mapView.bottomAnchor, constant: translation.y)
+            ])
+
+        case .ended:
+            UIView.animate(withDuration: 1.2, delay: 0.3, options: .curveEaseInOut, animations: {
+                if self.informationView.frame.minY <= self.view.frame.height/2 {
+                    NSLayoutConstraint.activate([
+                        self.informationView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: self.backButton.frame.height + 10)
+                    ])
+                } else {
+                    NSLayoutConstraint.activate([
+                        self.informationView.topAnchor.constraint(equalTo: self.mapView.safeAreaLayoutGuide.bottomAnchor)
+                    ])
+                }
+                self.view.setNeedsLayout()
+            }, completion: nil)
+            
+        default:
+            break
+        }
     }
 }
 
