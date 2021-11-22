@@ -13,7 +13,7 @@ class MapViewUseCase: NSObject {
     private let repository: MapViewRepository
     private let manager = CLLocationManager()
     var initialLocation: (CLLocation) -> Void
-    var locationPermissionDidChanged: () -> Void
+    var locationPermissionDidChangeTo: (Bool) -> Void
     var locationPermission: Bool {
         switch self.manager.authorizationStatus {
         case .authorizedAlways, .authorizedWhenInUse:
@@ -26,7 +26,7 @@ class MapViewUseCase: NSObject {
     init(repository: MapViewRepository) {
         self.repository = repository
         self.initialLocation = { _ in }
-        self.locationPermissionDidChanged = {}
+        self.locationPermissionDidChangeTo = { _ in }
     }
     
     func prepareMountainMarkers(completion: @escaping ([MountainEntity]?) -> Void) {
@@ -53,6 +53,10 @@ class MapViewUseCase: NSObject {
         }
     }
     
+    func preparePermission() {
+        self.locationPermissionDidChangeTo(self.locationPermission)
+    }
+    
     func prepareLocacationManager() {
         self.manager.requestWhenInUseAuthorization()
         self.manager.requestAlwaysAuthorization()
@@ -71,6 +75,6 @@ extension MapViewUseCase: CLLocationManagerDelegate {
     }
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        self.locationPermissionDidChanged()
+        self.locationPermissionDidChangeTo(self.locationPermission)
     }
 }

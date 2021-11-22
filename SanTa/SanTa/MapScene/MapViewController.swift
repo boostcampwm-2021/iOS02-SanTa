@@ -5,6 +5,7 @@
 //  Created by shin jae ung on 2021/10/28.
 //
 import MapKit
+import Combine
 
 protocol Animatable: AnyObject {
     func shouldAnimate()
@@ -14,6 +15,9 @@ protocol Animatable: AnyObject {
 class MapViewController: UIViewController {
     weak var coordinator: MapViewCoordinator?
     private var viewModel: MapViewModel?
+    private var observers: [AnyCancellable] = []
+    private let mapDictionary: [Map:MKMapType] = [.infomation:.mutedStandard, .normal: .standard, .satellite: .hybrid]
+    
     private lazy var mapView: MKMapView = {
         let mapView = MKMapView(frame: view.bounds)
         mapView.showsUserLocation = true
@@ -22,6 +26,7 @@ class MapViewController: UIViewController {
         mapView.delegate = self
         return mapView
     }()
+    
     private lazy var startButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = UIColor(named: "SantaColor")
@@ -34,9 +39,11 @@ class MapViewController: UIViewController {
         button.layer.shadowOpacity = 1
         button.layer.shadowRadius = 3
         button.layer.shadowOffset = CGSize(width: 0, height: 3)
+        button.addTarget(self, action: #selector(presentRecordingViewController), for: .touchDown)
         return button
     }()
-    private lazy var addAnnotationButton: UIButton = {
+    
+    private lazy var newPlaceButton: UIButton = {
         let button = UIButton()
         button.isHidden = true
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -49,8 +56,10 @@ class MapViewController: UIViewController {
         button.layer.shadowOpacity = 1
         button.layer.shadowRadius = 3
         button.layer.shadowOffset = CGSize(width: 0, height: 2)
+        button.addTarget(self, action: #selector(presentMountainAddingViewController), for: .touchUpInside)
         return button
     }()
+    
     private lazy var userTrackingButton: MKUserTrackingButton = {
         let button = MKUserTrackingButton(mapView: self.mapView)
         button.isHidden = true
@@ -75,21 +84,18 @@ class MapViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         viewModel?.viewWillAppear()
-        self.configureUserTrackingButton()
     }
     
     private func configureViews() {
         self.view.addSubview(self.mapView)
         self.view.addSubview(self.startButton)
-        self.view.addSubview(self.addAnnotationButton)
+        self.view.addSubview(self.newPlaceButton)
         self.view.addSubview(self.userTrackingButton)
-        self.startButton.addTarget(self, action: #selector(presentRecordingViewController), for: .touchDown)
-        self.addAnnotationButton.addTarget(self, action: #selector(presentMountainAddingViewController), for: .touchUpInside)
         
         NSLayoutConstraint.activate([
             self.startButton.widthAnchor.constraint(equalToConstant: 100),
             self.startButton.heightAnchor.constraint(equalToConstant: 100),
-            self.startButton.bottomAnchor.constraint(equalTo: mapView.bottomAnchor, constant: -mapView.frame.height/6),
+            self.startButton.bottomAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.bottomAnchor, constant: -mapView.frame.height/15),
             self.startButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
         ])
         NSLayoutConstraint.activate([
@@ -99,10 +105,10 @@ class MapViewController: UIViewController {
             self.userTrackingButton.centerYAnchor.constraint(equalTo: self.startButton.centerYAnchor)
         ])
         NSLayoutConstraint.activate([
-            self.addAnnotationButton.widthAnchor.constraint(equalToConstant: 150),
-            self.addAnnotationButton.heightAnchor.constraint(equalToConstant: 30),
-            self.addAnnotationButton.bottomAnchor.constraint(equalTo: startButton.topAnchor, constant: -10),
-            self.addAnnotationButton.centerXAnchor.constraint(equalTo: self.startButton.centerXAnchor)
+            self.newPlaceButton.widthAnchor.constraint(equalToConstant: 150),
+            self.newPlaceButton.heightAnchor.constraint(equalToConstant: 30),
+            self.newPlaceButton.bottomAnchor.constraint(equalTo: startButton.topAnchor, constant: -10),
+            self.newPlaceButton.centerXAnchor.constraint(equalTo: self.startButton.centerXAnchor)
         ])
     }
     
@@ -118,15 +124,32 @@ class MapViewController: UIViewController {
     }
     
     private func configureViewModel() {
-        self.viewModel?.markersShouldUpdate = { self.configureMarkers() }
-        self.viewModel?.mapShouldUpdate = { self.configureMap() }
-        self.viewModel?.initialLocationShouldUpdate = { self.configureLocation() }
-        self.viewModel?.locationPermissionDidChange = { self.configureUserTrackingButton() }
-        self.viewModel?.viewDidLoad()
+        self.viewModel?.configureBindings()
+        self.viewModel?.$mountains
+            .sink(receiveValue: { [weak self] mountains in
+                self?.configureMarkers(mountains)
+            })
+            .store(in: &self.observers)
+        self.viewModel?.$map
+            .sink(receiveValue: { [weak self] map in
+                self?.configureMap(map)
+            })
+            .store(in: &self.observers)
+        self.viewModel?.$initialLocation
+            .sink(receiveValue: { [weak self] location in
+                self?.configureLocation(location)
+            })
+            .store(in: &self.observers)
+        self.viewModel?.$locationPermission
+            .sink(receiveValue: { [weak self] bool in
+                self?.configureUserTrackingButton(bool)
+            })
+            .store(in: &self.observers)
     }
     
-    private func configureMarkers() {
-        self.viewModel?.mountains?.forEach{ mountainEntity in
+    private func configureMarkers(_ mountains: [MountainEntity]?) {
+        guard let mountains = mountains else { return }
+        mountains.forEach{ mountainEntity in
             let mountainAnnotation = MountainAnnotation(
                 title: mountainEntity.mountain.mountainName,
                 subtitle: mountainEntity.mountain.mountainHeight + "m",
@@ -139,20 +162,14 @@ class MapViewController: UIViewController {
         }
     }
     
-    private func configureMap() {
-        guard let map = viewModel?.map else { return }
-        switch map {
-        case .infomation:
-            self.mapView.mapType = .mutedStandard
-        case .normal:
-            self.mapView.mapType = .standard
-        case .satellite:
-            self.mapView.mapType = .hybrid
-        }
+    private func configureMap(_ map: Map?) {
+        guard let map = map,
+              let mapType = mapDictionary[map] else { return }
+        self.mapView.mapType = mapType
     }
     
-    private func configureLocation() {
-        guard let location = viewModel?.initialLocation else { return }
+    private func configureLocation(_ location: CLLocation?) {
+        guard let location = location else { return }
         let coordinate = CLLocationCoordinate2D(
             latitude: location.coordinate.latitude,
             longitude: location.coordinate.longitude
@@ -165,8 +182,8 @@ class MapViewController: UIViewController {
         mapView.setRegion(region, animated: true)
     }
     
-    private func configureUserTrackingButton() {
-        guard let permission = viewModel?.locationPermission else { return }
+    private func configureUserTrackingButton(_ permission: Bool?) {
+        guard let permission = permission else { return }
         self.userTrackingButton.isHidden = !permission
     }
     
@@ -184,7 +201,7 @@ class MapViewController: UIViewController {
 
     @objc private func presentRecordingViewController() {
         UINotificationFeedbackGenerator().notificationOccurred(.success)
-        if let viewModel = self.viewModel, viewModel.locationPermission {
+        if let viewModel = self.viewModel, viewModel.locationPermission == true {
             self.coordinator?.presentRecordingViewController()
         } else {
             self.present(authAlert(), animated: false)
@@ -219,27 +236,27 @@ extension MapViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, didChange mode: MKUserTrackingMode, animated: Bool) {
         switch mode {
         case .follow, .followWithHeading:
-            if addAnnotationButton.isHidden {
-                self.addAnnotationButton.isHidden = false
-                self.addAnnotationButton.alpha = 0
+            if newPlaceButton.isHidden {
+                self.newPlaceButton.isHidden = false
+                self.newPlaceButton.alpha = 0
                 UIView.transition(
-                    with: addAnnotationButton,
+                    with: newPlaceButton,
                     duration: 0.5,
                     options: [],
                     animations: { [weak self] in
-                        self?.addAnnotationButton.alpha = 1
+                        self?.newPlaceButton.alpha = 1
                     }
                 )
             }
         default:
             UIView.transition(
-                with: addAnnotationButton,
+                with: newPlaceButton,
                 duration: 0.5,
                 options: [],
                 animations: { [weak self] in
-                    self?.addAnnotationButton.alpha = 0
+                    self?.newPlaceButton.alpha = 0
                 }, completion: { [weak self] _ in
-                    self?.addAnnotationButton.isHidden = true
+                    self?.newPlaceButton.isHidden = true
                 }
             )
         }
