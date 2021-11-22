@@ -192,26 +192,6 @@ class ResultDetailViewController: UIViewController {
 }
 
 extension ResultDetailViewController {
-    @objc private func showLargeInfoView() {
-        self.informationView.subviews.forEach { $0.removeFromSuperview() }
-        let newY = self.view.bounds.height * 0.1
-        let newHeight = self.view.bounds.height * 0.9
-        self.mapView.isUserInteractionEnabled = false
-        UIView.animate(withDuration: 0.25) {
-            self.informationView.frame = CGRect(x: 0, y: newY, width: self.view.bounds.width, height: newHeight)
-        }
-    }
-    
-    @objc private func showSmallInfoView() {
-        self.informationView.subviews.forEach { $0.removeFromSuperview() }
-        let newY = self.view.bounds.height * 0.75
-        let newHeight = self.view.bounds.height * 0.25
-        self.mapView.isUserInteractionEnabled = true
-        UIView.animate(withDuration: 0.25) {
-            self.informationView.frame = CGRect(x: 0, y: newY, width: self.view.bounds.width, height: newHeight)
-        }
-    }
-    
     @objc func dismissViewController() {
         coordinator?.dismiss()
     }
