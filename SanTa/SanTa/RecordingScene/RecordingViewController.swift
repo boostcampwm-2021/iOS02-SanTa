@@ -104,7 +104,7 @@ class RecordingViewController: UIViewController {
         self.configureButton()
         self.configureBindings()
         self.configureTarget()
-        setAccessibility()
+        self.configureAccessibilty()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -195,6 +195,8 @@ class RecordingViewController: UIViewController {
             pauseConfiguration.image = UIImage(systemName: "play.fill")
             pauseConfiguration.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
             self.pauseButton.configuration = pauseConfiguration
+            self.pauseButton.accessibilityLabel = "재시작"
+            self.pauseButton.accessibilityHint = "측정을 재시작 하시려면 이중탭하십시오"
             self.recordingViewModel?.pause()
             self.currentState = false
         } else {
@@ -203,6 +205,8 @@ class RecordingViewController: UIViewController {
             pauseConfiguration.image = UIImage(systemName: "pause.fill")
             pauseConfiguration.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
             self.pauseButton.configuration = pauseConfiguration
+            self.pauseButton.accessibilityLabel = "일시정지"
+            self.pauseButton.accessibilityHint = "측정을 일시정지 하시려면 이중탭하십시오"
             self.recordingViewModel?.resume()
             self.currentState = true
         }
@@ -244,11 +248,6 @@ class RecordingViewController: UIViewController {
     deinit {
         print("😇RecordingViewController is deinit \(Date())!!😇")
     }
-    
-    func setAccessibility() {
-        
-    }
-
 }
 
 extension RecordingViewController: RecordingViewDelegate {
