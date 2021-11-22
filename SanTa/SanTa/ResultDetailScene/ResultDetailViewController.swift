@@ -75,6 +75,7 @@ class ResultDetailViewController: UIViewController {
                 minAltitude: viewModel.altitudeViewModel.lowest,
                 averageSpeed: viewModel.averageSpeed()
             )
+            self?.largerInformationView.configure()
             self?.configureViews()
             self?.configurePanGesture()
         }
@@ -98,6 +99,7 @@ class ResultDetailViewController: UIViewController {
         self.view.addSubview(self.mapView)
         self.view.addSubview(self.backButton)
         self.view.addSubview(self.changeButton)
+        self.view.addSubview(self.largerInformationView)
         self.view.addSubview(self.smallerInformationView)
         
         NSLayoutConstraint.activate([
@@ -125,6 +127,13 @@ class ResultDetailViewController: UIViewController {
             self.smallerInformationView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
             self.smallerInformationView.rightAnchor.constraint(equalTo: self.view.rightAnchor),
             self.smallerInformationView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
+        ])
+        
+        NSLayoutConstraint.activate([
+            self.largerInformationView.topAnchor.constraint(equalTo: self.smallerInformationView.topAnchor),
+            self.largerInformationView.leadingAnchor.constraint(equalTo: self.smallerInformationView.leadingAnchor),
+            self.largerInformationView.trailingAnchor.constraint(equalTo: self.smallerInformationView.trailingAnchor),
+            self.largerInformationView.bottomAnchor.constraint(equalTo: self.smallerInformationView.bottomAnchor)
         ])
         
         infoViewTopConstraint =
@@ -172,20 +181,24 @@ class ResultDetailViewController: UIViewController {
                   infoViewHight < (informationViewHeight - (translation.y + offset)) else {
                 return
             }
-            self.smallerInformationView.layer.cornerRadius = 10
-            changeInfoViewTopConstraints(traslation: translation.y + offset)
+            self.smallerInformationView.layer.cornerRadius = 13
+            self.largerInformationView.layer.cornerRadius = 13
+            self.changeInfoViewTopConstraints(traslation: translation.y + offset)
 
         case .ended:
             if self.smallerInformationView.frame.minY <= self.view.frame.height/2 {
-                changeInfoViewTopConstraints(traslation: self.backButton.frame.maxY - self.mapView.safeAreaLayoutGuide.layoutFrame.maxY)
-                isLargeInfoView = true
+                self.smallerInformationView.alpha = 0
+                self.changeInfoViewTopConstraints(traslation: self.backButton.frame.maxY - self.mapView.safeAreaLayoutGuide.layoutFrame.maxY)
+                self.isLargeInfoView = true
             } else {
                 UIView.animate(withDuration: 0.2, animations: {
                     self.mapView.alpha = 1
                 })
                 self.smallerInformationView.layer.cornerRadius = 0
-                isLargeInfoView = false
-                changeInfoViewTopConstraints(traslation: 0)
+                self.largerInformationView.layer.cornerRadius = 0
+                self.isLargeInfoView = false
+                self.smallerInformationView.alpha = 1
+                self.changeInfoViewTopConstraints(traslation: 0)
             }
             
             UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseInOut, animations: {

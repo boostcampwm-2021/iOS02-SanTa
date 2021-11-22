@@ -22,79 +22,9 @@ class ResultDetailLargerInfoView: UIView {
 
         return collectionView
     }()
-    
-    private lazy var dateLabel: UILabel = {
-        let label = UILabel()
-        label.backgroundColor = .label
-        label.textColor = .systemBackground
-        label.text = "2021. 11. 16(화)"
-        label.font = .preferredFont(forTextStyle: .caption1)
-        label.adjustsFontForContentSizeCategory = true
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    private lazy var startLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = UIColor(named: "SanTaColor")
-        label.text = "시작"
-        label.font = .preferredFont(forTextStyle: .title2)
-        label.adjustsFontForContentSizeCategory = true
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    private lazy var endLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = UIColor(named: "SanTaColor")
-        label.text = "종료"
-        label.font = .preferredFont(forTextStyle: .title2)
-        label.adjustsFontForContentSizeCategory = true
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    private lazy var startTime: UILabel = {
-        let label = UILabel()
-        label.textColor = .label
-        label.text = "오후 6시 0분"
-        label.font = .preferredFont(forTextStyle: .title1)
-        label.adjustsFontForContentSizeCategory = true
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    private lazy var endTime: UILabel = {
-        let label = UILabel()
-        label.textColor = .label
-        label.text = "오후 7시 38분"
-        label.font = .preferredFont(forTextStyle: .title1)
-        label.adjustsFontForContentSizeCategory = true
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-    
-    private lazy var labelStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.spacing = 20
-        stackView.alignment = .center
-        stackView.axis = .horizontal
-        stackView.distribution = .fill
-        return stackView
-    }()
-    
-    private lazy var timeStackView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.spacing = 20
-        stackView.alignment = .center
-        stackView.axis = .horizontal
-        stackView.distribution = .fill
-        return stackView
-    }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.backgroundColor = .green
     }
     
     required init?(coder: NSCoder) {
@@ -120,39 +50,23 @@ extension ResultDetailLargerInfoView {
         NSLayoutConstraint.activate(upDownConstraints)
     }
     
-    private func configureViews(collectionView: UICollectionView) {
-        configureStackView()
-        self.addSubview(self.dateLabel)
-        self.addSubview(self.labelStackView)
-        self.addSubview(self.timeStackView)
+    func configure() {
+        self.configureCollectionView()
+        self.configureViews()
+        self.displayUpDownMark()
+    }
+    
+    private func configureViews() {
+        self.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         self.addSubview(self.collectionView)
         
         NSLayoutConstraint.activate([
-            self.dateLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
-            self.dateLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-        ])
-        
-        NSLayoutConstraint.activate([
-            self.labelStackView.topAnchor.constraint(equalTo: self.dateLabel.bottomAnchor, constant: 20),
-            self.labelStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-        ])
-        
-        NSLayoutConstraint.activate([
-            self.timeStackView.topAnchor.constraint(equalTo: self.labelStackView.bottomAnchor, constant: 20),
-            self.timeStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-        ])
-        
-        NSLayoutConstraint.activate([
-            self.collectionView.topAnchor.constraint(equalTo: self.timeStackView.bottomAnchor, constant: 50),
-            self.collectionView.leftAnchor.constraint(equalTo: self.leftAnchor),
-            self.collectionView.rightAnchor.constraint(equalTo: self.rightAnchor),
+            self.collectionView.topAnchor.constraint(equalTo: self.bottomAnchor, constant: 5),
+            self.collectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            self.collectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             self.collectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
-    }
-    
-    private func configureStackView() {
-        [self.startLabel, self.endLabel].forEach { self.labelStackView.addArrangedSubview($0) }
-        [self.startTime, self.endTime].forEach { self.timeStackView.addArrangedSubview($0) }
+        self.layoutIfNeeded()
     }
     
     private func configureCollectionView() {
