@@ -22,14 +22,21 @@ class ResultDetailLargerInfoView: UIView {
 }
 
 extension ResultDetailLargerInfoView {
-    private func configureDownArrow() {
-        let downArrow:UIImageView = .init(image: UIImage(systemName: "chevron.compact.down")?.withTintColor(.black))
-        downArrow.translatesAutoresizingMaskIntoConstraints = false
-        let downArrowConstraints = [
-            downArrow.topAnchor.constraint(equalTo: self.topAnchor),
-            downArrow.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+    private func displayUpDownMark() {
+        let upDownView = UIView()
+        upDownView.backgroundColor = .label
+        upDownView.translatesAutoresizingMaskIntoConstraints = false
+        upDownView.layer.cornerRadius = 2
+        upDownView.layer.masksToBounds = true
+        
+        self.addSubview(upDownView)
+        let upDownConstraints = [
+            upDownView.topAnchor.constraint(equalTo: self.topAnchor, constant: 5),
+            upDownView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            upDownView.heightAnchor.constraint(equalToConstant: 4),
+            upDownView.widthAnchor.constraint(equalToConstant: self.frame.width/2)
         ]
-        NSLayoutConstraint.activate(downArrowConstraints)
+        NSLayoutConstraint.activate(upDownConstraints)
     }
     
     private func configure(collectionView: UICollectionView) {
