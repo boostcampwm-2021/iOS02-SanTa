@@ -219,10 +219,12 @@ extension MapViewController: Animatable {
     func shouldAnimate() {
         let image = UIImage.gifImage(named: "walkingManAnimation", withTintColor: .white)
         self.startButton.setImage(image, for: .normal)
+        self.startButton.accessibilityHint = "현재 측정 중입니다. 측정화면으로 돌아가려면 이중탭 하십시오"
     }
     
     func shouldStopAnimate() {
         self.startButton.setImage(nil, for: .normal)
+        self.startButton.accessibilityHint = "측정을 시작하려면 이중탭 하십시오"
     }
 }
 
