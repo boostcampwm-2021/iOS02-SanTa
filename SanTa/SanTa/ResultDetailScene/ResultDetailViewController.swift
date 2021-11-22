@@ -172,11 +172,13 @@ class ResultDetailViewController: UIViewController {
         case .ended:
             if self.informationView.frame.minY <= self.view.frame.height/2 {
                 changeInfoViewTopConstraints(traslation: self.backButton.frame.maxY - self.mapView.safeAreaLayoutGuide.layoutFrame.maxY)
+                self.informationView.layer.cornerRadius = 10
                 isLargeInfoView = true
             } else {
                 UIView.animate(withDuration: 0.2, animations: {
                     self.mapView.alpha = 1
                 })
+                self.informationView.layer.cornerRadius = 0
                 isLargeInfoView = false
                 changeInfoViewTopConstraints(traslation: 0)
             }

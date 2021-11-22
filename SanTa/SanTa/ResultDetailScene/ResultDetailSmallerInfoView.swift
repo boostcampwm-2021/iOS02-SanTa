@@ -162,6 +162,7 @@ class ResultDetailSmallerInfoView: UIView {
         self.maxAltitude.text = maxAltitude
         self.minAltitude.text = minAltitude
         self.averageSpeed.text = averageSpeed
+        self.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         self.addSubview(self.compositionalStackView)
         NSLayoutConstraint.activate([
             self.compositionalStackView.leftAnchor.constraint(equalTo: self.leftAnchor),
