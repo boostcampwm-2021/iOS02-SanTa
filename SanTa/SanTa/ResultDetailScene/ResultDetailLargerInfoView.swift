@@ -51,7 +51,7 @@ extension ResultDetailLargerInfoView {
         NSLayoutConstraint.activate(upDownConstraints)
     }
     
-    private func configure(collectionView: UICollectionView) {
+    private func configureViews(collectionView: UICollectionView) {
         self.addSubview(collectionView)
         
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -62,5 +62,23 @@ extension ResultDetailLargerInfoView {
             collectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ]
         NSLayoutConstraint.activate(constraints)
+    }
+    
+    private func configureCollectionView() {
+        self.collectionView.collectionViewLayout = configureCompositionalLayout()
+        self.collectionView.register(DetailCell.self, forCellWithReuseIdentifier: DetailCell.identifier)
+    }
+    
+    private func configureCompositionalLayout() -> UICollectionViewCompositionalLayout {
+        return UICollectionViewCompositionalLayout { (sectionNumber, env) -> NSCollectionLayoutSection? in
+            let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(0.5), heightDimension: .estimated(500)))
+            item.contentInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 0)
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(500)), subitems: [item])
+            let section = NSCollectionLayoutSection(group: group)
+            section.orthogonalScrollingBehavior = .none
+            section.contentInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 0)
+            
+            return section
+        }
     }
 }

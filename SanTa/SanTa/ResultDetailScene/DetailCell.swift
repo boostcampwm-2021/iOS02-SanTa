@@ -8,6 +8,8 @@
 import UIKit
 
 class DetailCell: UICollectionViewCell {
+    static let identifier = "DetailCell"
+    
     private let title: UILabel = UILabel()
     
     func layout(data: ResultDetailCellRepresentable) {
