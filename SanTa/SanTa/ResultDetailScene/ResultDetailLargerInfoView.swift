@@ -123,10 +123,8 @@ extension ResultDetailLargerInfoView {
     private func configureViews(collectionView: UICollectionView) {
         configureStackView()
         self.addSubview(self.dateLabel)
-        self.addSubview(self.startLabel)
-        self.addSubview(self.endLabel)
-        self.addSubview(self.startTime)
-        self.addSubview(self.endTime)
+        self.addSubview(self.labelStackView)
+        self.addSubview(self.timeStackView)
         self.addSubview(self.collectionView)
         
         NSLayoutConstraint.activate([
@@ -135,17 +133,17 @@ extension ResultDetailLargerInfoView {
         ])
         
         NSLayoutConstraint.activate([
-            self.dateLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
-            self.dateLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            self.labelStackView.topAnchor.constraint(equalTo: self.dateLabel.bottomAnchor, constant: 20),
+            self.labelStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
         ])
         
         NSLayoutConstraint.activate([
-            self.dateLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
-            self.dateLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            self.timeStackView.topAnchor.constraint(equalTo: self.labelStackView.bottomAnchor, constant: 20),
+            self.timeStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
         ])
         
         NSLayoutConstraint.activate([
-            self.collectionView.topAnchor.constraint(equalTo: self.topAnchor, constant: 50),
+            self.collectionView.topAnchor.constraint(equalTo: self.timeStackView.bottomAnchor, constant: 50),
             self.collectionView.leftAnchor.constraint(equalTo: self.leftAnchor),
             self.collectionView.rightAnchor.constraint(equalTo: self.rightAnchor),
             self.collectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
@@ -167,7 +165,7 @@ extension ResultDetailLargerInfoView {
             let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(0.5), heightDimension: .estimated(500)))
             item.contentInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 0)
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(500)), subitems: [item])
-            let section = NSCogllectionLayoutSection(group: group)
+            let section = NSCollectionLayoutSection(group: group)
             section.orthogonalScrollingBehavior = .none
             section.contentInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 0)
             
