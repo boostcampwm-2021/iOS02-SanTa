@@ -80,7 +80,7 @@ class ResultDetailSmallerInfoView: UIView {
         let stackView = UIStackView(arrangedSubviews: [self.distance, self.distanceLabel])
         stackView.axis = .vertical
         stackView.alignment = .center
-        stackView.spacing = 0
+        stackView.spacing = 5
 //        stackView.distribution = .fillEqually
         return stackView
     }()
@@ -89,7 +89,7 @@ class ResultDetailSmallerInfoView: UIView {
         let stackView = UIStackView(arrangedSubviews: [self.time, self.timeLabel])
         stackView.axis = .vertical
         stackView.alignment = .center
-        stackView.spacing = 0
+        stackView.spacing = 5
 //        stackView.distribution = .fillEqually
         return stackView
     }()
@@ -98,7 +98,7 @@ class ResultDetailSmallerInfoView: UIView {
         let stackView = UIStackView(arrangedSubviews: [self.steps, self.stepsLabel])
         stackView.axis = .vertical
         stackView.alignment = .center
-        stackView.spacing = 0
+        stackView.spacing = 5
 //        stackView.distribution = .fillEqually
         return stackView
     }()
@@ -107,7 +107,7 @@ class ResultDetailSmallerInfoView: UIView {
         let stackView = UIStackView(arrangedSubviews: [self.maxAltitude, self.maxAltitudeLabel])
         stackView.axis = .vertical
         stackView.alignment = .center
-        stackView.spacing = 0
+        stackView.spacing = 5
 //        stackView.distribution = .fillEqually
         return stackView
     }()
@@ -116,7 +116,7 @@ class ResultDetailSmallerInfoView: UIView {
         let stackView = UIStackView(arrangedSubviews: [self.minAltitude, self.minAltitudeLabel])
         stackView.axis = .vertical
         stackView.alignment = .center
-        stackView.spacing = 0
+        stackView.spacing = 5
 //        stackView.distribution = .fillEqually
         return stackView
     }()
@@ -125,7 +125,7 @@ class ResultDetailSmallerInfoView: UIView {
         let stackView = UIStackView(arrangedSubviews: [self.averageSpeed, self.averageSpeedLabel])
         stackView.axis = .vertical
         stackView.alignment = .center
-        stackView.spacing = 0
+        stackView.spacing = 5
 //        stackView.distribution = .fillEqually
         return stackView
     }()

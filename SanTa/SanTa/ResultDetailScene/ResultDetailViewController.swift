@@ -96,7 +96,7 @@ class ResultDetailViewController: UIViewController {
             self.mapView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
             self.mapView.topAnchor.constraint(equalTo: self.view.topAnchor),
             self.mapView.rightAnchor.constraint(equalTo: self.view.rightAnchor),
-            self.mapView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -self.view.frame.height * 0.25)
+            self.mapView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor, constant: -self.view.frame.height * 0.2)
         ])
         NSLayoutConstraint.activate([
             self.backButton.leftAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leftAnchor, constant: 10),
@@ -124,16 +124,6 @@ class ResultDetailViewController: UIViewController {
         
         self.view.layoutIfNeeded()
         self.infoViewHight = self.informationView.frame.height
-    }
-    
-    private func registerRecognizers() {
-        let swipeDownRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(showSmallInfoView))
-        swipeDownRecognizer.direction = .down
-        self.informationView.addGestureRecognizer(swipeDownRecognizer)
-        
-        let swipeUpRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(showLargeInfoView))
-        swipeUpRecognizer.direction = .up
-        self.informationView.addGestureRecognizer(swipeUpRecognizer)
     }
     
     private func findInfoViewBottomConstraints(traslation: CGFloat) {
