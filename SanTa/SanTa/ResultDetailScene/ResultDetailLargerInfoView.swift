@@ -47,7 +47,7 @@ extension ResultDetailLargerInfoView {
             upDownView.topAnchor.constraint(equalTo: self.topAnchor, constant: 5),
             upDownView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             upDownView.heightAnchor.constraint(equalToConstant: 4),
-            upDownView.widthAnchor.constraint(equalToConstant: self.frame.width/2)
+            upDownView.widthAnchor.constraint(equalToConstant: self.frame.width/3)
         ]
         NSLayoutConstraint.activate(upDownConstraints)
     }
@@ -80,7 +80,6 @@ extension ResultDetailLargerInfoView {
             self.collectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             self.collectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
-        self.layoutIfNeeded()
     }
     
     private func configuareDataSource() {

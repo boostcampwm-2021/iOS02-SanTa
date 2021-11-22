@@ -26,19 +26,25 @@ class ResultDetailViewController: UIViewController {
         return mapView
     }()
     
-    private var smallerInformationView: ResultDetailSmallerInfoView = {
-        let view = ResultDetailSmallerInfoView()
+    private lazy var smallerInformationView: ResultDetailSmallerInfoView = {
+        let view = ResultDetailSmallerInfoView(frame: CGRect(x: 0,
+                                                             y: 0,
+                                                             width: self.view.frame.width,
+                                                             height: self.view.frame.height))
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    private var largerInformationView: ResultDetailLargerInfoView = {
-        let view = ResultDetailLargerInfoView()
+    private lazy var largerInformationView: ResultDetailLargerInfoView = {
+        let view = ResultDetailLargerInfoView(frame: CGRect(x: 0,
+                                                            y: 0,
+                                                            width: self.view.frame.width,
+                                                            height: self.view.frame.height))
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
-    private var backButton: UIButton = {
+    private lazy var backButton: UIButton = {
         let button = UIButton()
         button.setImage(.init(systemName: "chevron.backward"), for: .normal)
         button.setPreferredSymbolConfiguration(.init(pointSize: 25), forImageIn: .normal)
@@ -48,7 +54,7 @@ class ResultDetailViewController: UIViewController {
         return button
     }()
     
-    private var changeButton: UIButton = {
+    private lazy var changeButton: UIButton = {
         let button = UIButton()
         button.setImage(.init(systemName: "ellipsis.circle"), for: .normal)
         button.setPreferredSymbolConfiguration(.init(pointSize: 25), forImageIn: .normal)

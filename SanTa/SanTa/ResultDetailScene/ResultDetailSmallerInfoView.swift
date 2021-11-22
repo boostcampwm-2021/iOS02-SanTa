@@ -169,8 +169,8 @@ class ResultDetailSmallerInfoView: UIView {
             self.compositionalStackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 30),
             self.compositionalStackView.rightAnchor.constraint(equalTo: self.rightAnchor)
         ])
-        self.layoutIfNeeded()
         self.displayUpDownMark()
+        self.layoutIfNeeded()
     }
     
     private func displayUpDownMark() {
@@ -185,7 +185,7 @@ class ResultDetailSmallerInfoView: UIView {
             upDownView.topAnchor.constraint(equalTo: self.topAnchor, constant: 5),
             upDownView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             upDownView.heightAnchor.constraint(equalToConstant: 4),
-            upDownView.widthAnchor.constraint(equalToConstant: self.frame.width/2)
+            upDownView.widthAnchor.constraint(equalToConstant: self.frame.width/3)
         ]
         NSLayoutConstraint.activate(upDownConstraints)
     }
