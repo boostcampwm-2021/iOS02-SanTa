@@ -8,13 +8,20 @@
 import UIKit
 
 class ResultDetailLargerInfoView: UIView {
+    enum DetailLargerInfoSection: Int, CaseIterable {
+        case main
+    }
+    
+    typealias DetailLargerInfoDataSource = UICollectionViewDiffableDataSource<ResultDetailLargerInfoView, AnyHashable>
+    typealias DetailLargerInfoSnapshot = NSDiffableDataSourceSnapshot<ResultDetailLargerInfoView, AnyHashable>
+    
     private lazy var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .init(x: 0, y: 0, width: 0, height: 0), collectionViewLayout: flowLayout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
 
         return collectionView
-    }
+    }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -46,9 +53,6 @@ extension ResultDetailLargerInfoView {
     
     private func configure(collectionView: UICollectionView) {
         self.addSubview(collectionView)
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.collectionViewLayout = UICollectionViewFlowLayout()
         
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         let constraints = [
@@ -58,15 +62,5 @@ extension ResultDetailLargerInfoView {
             collectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ]
         NSLayoutConstraint.activate(constraints)
-    }
-}
-
-extension ResultDetailLargerInfoView: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        section == 0 ? 3 : 2
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return UICollectionViewCell()
     }
 }
