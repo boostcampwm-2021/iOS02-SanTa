@@ -14,6 +14,8 @@ class ResultDetailViewController: UIViewController {
     
     private var viewModel: ResultDetailViewModel?
     
+    private var infoViewBottomConstraint: NSLayoutConstraint?
+    
     private lazy var mapView: MKMapView = {
         let mapView = MKMapView()
         mapView.mapType = .mutedStandard
@@ -106,12 +108,17 @@ class ResultDetailViewController: UIViewController {
             self.changeButton.widthAnchor.constraint(equalToConstant: 40),
             self.changeButton.heightAnchor.constraint(equalToConstant: 40),
         ])
+        
         NSLayoutConstraint.activate([
             self.informationView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
-            self.informationView.topAnchor.constraint(equalTo: self.mapView.bottomAnchor),
             self.informationView.rightAnchor.constraint(equalTo: self.view.rightAnchor),
             self.informationView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor)
         ])
+        
+        infoViewBottomConstraint =
+            self.informationView.topAnchor.constraint(equalTo: self.mapView.bottomAnchor)
+        guard let infoViewConstraint = infoViewBottomConstraint else { return }
+        NSLayoutConstraint.activate([infoViewConstraint])
     }
     
     private func registerRecognizers() {
@@ -124,9 +131,23 @@ class ResultDetailViewController: UIViewController {
         self.informationView.addGestureRecognizer(swipeUpRecognizer)
     }
     
+    private func findInfoViewBottomConstraints(traslation: CGFloat) {
+        var bottomConstraint: NSLayoutConstraint?
+        self.informationView.constraints.forEach {
+            if $0.firstAttribute == .bottom {
+                bottomConstraint = $0
+            }
+        }
+        bottomConstraint?.constant = traslation
+    }
+    
+    private func changeInfoViewBottomConstraints(traslation: CGFloat) {
+        guard let infoViewConstraint = self.infoViewBottomConstraint else { return }
+        infoViewConstraint.constant = traslation
+    }
+    
     @objc private func informationViewPanPanned(_ panGestureRecognizer: UIPanGestureRecognizer) {
         let translation = panGestureRecognizer.translation(in: self.informationView)
-        
         let informationViewHeight = self.informationView.frame.height
         
         switch panGestureRecognizer.state {
@@ -134,26 +155,24 @@ class ResultDetailViewController: UIViewController {
             UIView.animate(withDuration: 0.2, animations: {
                 self.mapView.alpha = 0.8
             })
+            
         case .changed:
             guard (self.view.frame.height - informationViewHeight) >= (self.backButton.frame.height + 10) else {
                 return
             }
-
-            NSLayoutConstraint.activate([
-                self.informationView.topAnchor.constraint(equalTo: self.mapView.bottomAnchor, constant: translation.y)
-            ])
+            
+            changeInfoViewBottomConstraints(traslation: translation.y)
 
         case .ended:
             if self.informationView.frame.minY <= self.view.frame.height/2 {
-                NSLayoutConstraint.activate([
-                    self.informationView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: self.backButton.frame.height + 10)
-                ])
+                changeInfoViewBottomConstraints(traslation: self.backButton.frame.maxY - self.mapView.safeAreaLayoutGuide.layoutFrame.maxY)
             } else {
-                self.mapView.alpha = 1
-                NSLayoutConstraint.activate([
-                    self.informationView.topAnchor.constraint(equalTo: self.mapView.safeAreaLayoutGuide.bottomAnchor)
-                ])
+                UIView.animate(withDuration: 0.2, animations: {
+                    self.mapView.alpha = 1
+                })
+                changeInfoViewBottomConstraints(traslation: 0)
             }
+            
             UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseInOut, animations: {
                 self.view.layoutIfNeeded()
             }, completion: nil)
