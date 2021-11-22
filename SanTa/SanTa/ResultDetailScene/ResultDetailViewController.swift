@@ -55,6 +55,7 @@ class ResultDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureViews()
+        self.configurePanGesture()
         self.viewModel?.recordDidFetch = { [weak self] in
             guard let viewModel = self?.viewModel else { return }
             self?.informationView.configureLayout(
@@ -71,6 +72,14 @@ class ResultDetailViewController: UIViewController {
     
     private func configureSmallerView() {
         self.informationView = ResultDetailSmallerInfoView(frame: self.informationView.bounds)
+    }
+    
+    private func configurePanGesture() {
+        let informationViewPan = UIPanGestureRecognizer(target: self, action: #selector(informationViewPanPanned(_:)))
+        
+        informationViewPan.delaysTouchesBegan = false
+        informationViewPan.delaysTouchesEnded = false
+        view.addGestureRecognizer(informationViewPan)
     }
     
     private func configureViews() {
@@ -112,6 +121,12 @@ class ResultDetailViewController: UIViewController {
         let swipeUpRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(showLargeInfoView))
         swipeUpRecognizer.direction = .up
         self.informationView.addGestureRecognizer(swipeUpRecognizer)
+    }
+    
+    @objc private func informationViewPanPanned(_ panGestureRecognizer: UIPanGestureRecognizer) {
+        let translation = panGestureRecognizer.translation(in: self.view)
+        
+        print("유저가 위아래로 \(translation.y)만큼 드래그하였습니다.")
     }
 }
 
