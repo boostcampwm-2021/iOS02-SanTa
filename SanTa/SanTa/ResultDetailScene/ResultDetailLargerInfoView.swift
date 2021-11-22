@@ -22,6 +22,52 @@ class ResultDetailLargerInfoView: UIView {
 
         return collectionView
     }()
+    
+    private lazy var dateLabel: UILabel = {
+        let label = UILabel()
+        label.backgroundColor = .label
+        label.textColor = .systemBackground
+        label.text = "2021. 11. 16(화)"
+        label.font = .preferredFont(forTextStyle: .caption1)
+        label.adjustsFontForContentSizeCategory = true
+        return label
+    }()
+    
+    private lazy var startLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor(named: "SanTaColor")
+        label.text = "시작"
+        label.font = .preferredFont(forTextStyle: .title2)
+        label.adjustsFontForContentSizeCategory = true
+        return label
+    }()
+    
+    private lazy var endLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = UIColor(named: "SanTaColor")
+        label.text = "종료"
+        label.font = .preferredFont(forTextStyle: .title2)
+        label.adjustsFontForContentSizeCategory = true
+        return label
+    }()
+    
+    private lazy var startTime: UILabel = {
+        let label = UILabel()
+        label.textColor = .label
+        label.text = "오후 6시 0분"
+        label.font = .preferredFont(forTextStyle: .title1)
+        label.adjustsFontForContentSizeCategory = true
+        return label
+    }()
+    
+    private lazy var endTime: UILabel = {
+        let label = UILabel()
+        label.textColor = .label
+        label.text = "오후 7시 38분"
+        label.font = .preferredFont(forTextStyle: .title1)
+        label.adjustsFontForContentSizeCategory = true
+        return label
+    }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
