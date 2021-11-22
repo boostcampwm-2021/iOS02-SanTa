@@ -92,6 +92,17 @@ class ResultDetailViewController: UIViewController {
 
             mapView.setVisibleMapRect(mapRect, animated: true)
         print(pointSets.count)
+        let startAnnotation = MKPointAnnotation()
+        let endAnnotation = MKPointAnnotation()
+        guard let startPoint = pointSets.first?.first,
+              let endPoint = pointSets.last?.last else {
+                  return
+              }
+        startAnnotation.coordinate = startPoint
+        startAnnotation.title = "start"
+        endAnnotation.coordinate = endPoint
+        endAnnotation.title = "end"
+        self.mapView.addAnnotations([startAnnotation, endAnnotation])
     }
     
     private func configureSmallerView() {
@@ -222,5 +233,21 @@ extension ResultDetailViewController: MKMapViewDelegate {
             return renderer
         }
         return MKOverlayRenderer()
+    }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard annotation is MKPointAnnotation else {
+            return nil
+        }
+        
+        let identifier = "PointAnnotation"
+        let annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+        if annotation.title == "start" {
+            annotationView.markerTintColor = .init(named: "SantaColor")
+        } else {
+            annotationView.markerTintColor = .red
+        }
+        annotationView.animatesWhenAdded = true
+        return annotationView
     }
 }
