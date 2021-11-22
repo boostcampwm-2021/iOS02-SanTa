@@ -18,6 +18,7 @@ class ResultDetailViewController: UIViewController {
         let mapView = MKMapView()
         mapView.mapType = .mutedStandard
         mapView.translatesAutoresizingMaskIntoConstraints = false
+        
         return mapView
     }()
     
@@ -62,6 +63,7 @@ class ResultDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureViews()
+        self.mapView.delegate = self
         self.viewModel?.recordDidFetch = { [weak self] in
             guard let viewModel = self?.viewModel else { return }
             self?.titleLabel.text = viewModel.resultDetailData?.title
@@ -75,6 +77,21 @@ class ResultDetailViewController: UIViewController {
             )
         }
         viewModel?.setUp()
+        
+        guard let pointSets: [[CLLocationCoordinate2D]] = self.viewModel?.resultDetailData?.coordinates else {
+            return
+        }
+        for pointSet in pointSets {
+            mapView.addOverlay(MKPolyline(coordinates: pointSet, count: pointSet.count))
+        }
+        guard let initial = mapView.overlays.first?.boundingMapRect else { return }
+
+            let mapRect = mapView.overlays
+                .dropFirst()
+                .reduce(initial) { $0.union($1.boundingMapRect) }
+
+            mapView.setVisibleMapRect(mapRect, animated: true)
+        print(pointSets.count)
     }
     
     private func configureSmallerView() {
@@ -107,7 +124,7 @@ class ResultDetailViewController: UIViewController {
         ])
         NSLayoutConstraint.activate([
             self.titleLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            self.titleLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 10),
+            self.titleLabel.centerYAnchor.constraint(equalTo: self.changeButton.centerYAnchor),
         ])
         NSLayoutConstraint.activate([
             self.informationView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
@@ -192,7 +209,18 @@ extension ResultDetailViewController: SetTitleDelegate {
             }
         })
     }
-    
-    
 }
 
+extension ResultDetailViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        if let polyline = overlay as? MKPolyline {
+            print("is polyline")
+            let renderer = MKPolylineRenderer(overlay: polyline)
+            renderer.lineWidth = 5
+            renderer.alpha = 1
+            renderer.strokeColor = .init(named: "SantaColor")
+            return renderer
+        }
+        return MKOverlayRenderer()
+    }
+}

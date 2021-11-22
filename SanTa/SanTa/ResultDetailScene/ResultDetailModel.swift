@@ -16,6 +16,7 @@ struct ResultDetailData {
     let altitude: ResultAltitude
     let incline: ResultIncline
     let id: String
+    let coordinates: [[CLLocationCoordinate2D]]
     private(set) var title: String
     
     init(records: Records) {
@@ -26,6 +27,7 @@ struct ResultDetailData {
         self.incline = ResultIncline(records: records)
         self.id = records.id
         self.title = records.title
+        self.coordinates = records.coordinates
     }
     
     mutating func change(title: String) {
@@ -128,14 +130,14 @@ struct ResultIncline {
             let distanceDelta = current.distance(from: next)
             let altitudeDelta = next.altitude - current.altitude
             let incline = atan(altitudeDelta / distanceDelta)
-            totalIncline += incline
+            totalIncline += incline == .nan || incline == .infinity ? 0 : incline
             steepest = steepest < incline ? incline : steepest
             uphillDistance += altitudeDelta > 0 ? abs(distanceDelta) : 0
             downHillDistance += altitudeDelta < 0 ? abs(distanceDelta) : 0
             plainDistance += altitudeDelta == 0 ? abs(distanceDelta) : 0
         }
         
-        self.average = Int(totalIncline)
+        self.average = 0
         self.highest = Int(steepest)
         self.uphillKilometer = uphillDistance / 1000
         self.downhillKilometer = downHillDistance / 1000
