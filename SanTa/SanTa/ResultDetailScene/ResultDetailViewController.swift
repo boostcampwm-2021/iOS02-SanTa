@@ -203,6 +203,7 @@ class ResultDetailViewController: UIViewController {
             
             UIView.animate(withDuration: 0.1, delay: 0, options: .curveEaseInOut, animations: {
                 self.view.layoutIfNeeded()
+                self.largerInformationView.collectionView.setNeedsLayout()
             }, completion: nil)
             
         default:

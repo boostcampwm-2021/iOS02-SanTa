@@ -12,10 +12,12 @@ class ResultDetailLargerInfoView: UIView {
         case main
     }
     
-    typealias DetailLargerInfoDataSource = UICollectionViewDiffableDataSource<ResultDetailLargerInfoView, AnyHashable>
-    typealias DetailLargerInfoSnapshot = NSDiffableDataSourceSnapshot<ResultDetailLargerInfoView, AnyHashable>
+    typealias DetailLargerInfoDataSource = UICollectionViewDiffableDataSource<DetailLargerInfoSection, AnyHashable>
+    typealias DetailLargerInfoSnapshot = NSDiffableDataSourceSnapshot<DetailLargerInfoSection, AnyHashable>
     
-    private lazy var collectionView: UICollectionView = {
+    private var dataSource: DetailLargerInfoDataSource?
+    
+    lazy var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .init(x: 0, y: 0, width: 0, height: 0), collectionViewLayout: flowLayout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -53,11 +55,23 @@ extension ResultDetailLargerInfoView {
     func configure() {
         self.configureCollectionView()
         self.configureViews()
+        self.configuareDataSource()
         self.displayUpDownMark()
+        self.bindSnapShotApply(section: .main, item: ["test"])
+    }
+    
+    private func bindSnapShotApply(section: DetailLargerInfoSection, item: [AnyHashable]) {
+        var snapshot = DetailLargerInfoSnapshot()
+        snapshot.appendSections([.main])
+        item.forEach {
+            snapshot.appendItems([$0], toSection: section)
+        }
+        self.dataSource?.apply(snapshot, animatingDifferences: true)
     }
     
     private func configureViews() {
         self.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        self.backgroundColor = .systemBackground
         self.addSubview(self.collectionView)
         
         NSLayoutConstraint.activate([
@@ -69,9 +83,26 @@ extension ResultDetailLargerInfoView {
         self.layoutIfNeeded()
     }
     
+    private func configuareDataSource() {
+        let datasource = DetailLargerInfoDataSource (collectionView: self.collectionView, cellProvider: { (collectionView, indexPath, item) -> UICollectionViewCell in
+            
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailCell.identifier, for: indexPath) as? DetailCell else  {
+                return UICollectionViewCell() }
+            
+            return cell
+        })
+        
+        self.dataSource = datasource
+        self.collectionView.dataSource = dataSource
+    }
+    
     private func configureCollectionView() {
+        self.collectionView.delegate = self
         self.collectionView.collectionViewLayout = configureCompositionalLayout()
         self.collectionView.register(DetailCell.self, forCellWithReuseIdentifier: DetailCell.identifier)
+        self.collectionView.register(DetailHeader.self,
+                                     forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                                     withReuseIdentifier: DetailHeader.identifier)
     }
     
     private func configureCompositionalLayout() -> UICollectionViewCompositionalLayout {
@@ -83,7 +114,26 @@ extension ResultDetailLargerInfoView {
             section.orthogonalScrollingBehavior = .none
             section.contentInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 0)
             
+            let headerSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .estimated(500))
+            let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+                layoutSize: headerSize,
+                elementKind: UICollectionView.elementKindSectionHeader,
+                alignment: .top)
+
+            section.boundarySupplementaryItems = [sectionHeader]
             return section
         }
+    }
+}
+
+extension ResultDetailLargerInfoView: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard let header = collectionView.dequeueReusableSupplementaryView(ofKind: DetailHeader.identifier, withReuseIdentifier: DetailHeader.identifier, for: indexPath) as? DetailHeader else {
+            return DetailHeader()
+        }
+
+        return header
     }
 }

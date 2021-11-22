@@ -81,6 +81,8 @@ class DetailHeader: UICollectionReusableView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        self.configureStackView()
+        self.configureViews()
     }
     
     required init?(coder aDecoder: NSCoder) {
