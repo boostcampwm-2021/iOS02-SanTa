@@ -168,21 +168,24 @@ class ResultDetailSmallerInfoView: UIView {
             self.compositionalStackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 30),
             self.compositionalStackView.rightAnchor.constraint(equalTo: self.rightAnchor)
         ])
-        self.displayArrowImage()
+        self.layoutIfNeeded()
+        self.displayUpDownMark()
     }
     
-    private func displayArrowImage() {
-        let arrow = UIImage(systemName: "chevron.compact.up")
-        let imageView = UIImageView(image: arrow)
-        imageView.tintColor = .black
-        self.addSubview(imageView)
-        imageView.translatesAutoresizingMaskIntoConstraints = false
+    private func displayUpDownMark() {
+        let upDownView = UIView()
+        upDownView.backgroundColor = .label
+        upDownView.translatesAutoresizingMaskIntoConstraints = false
+        upDownView.layer.cornerRadius = 2
+        upDownView.layer.masksToBounds = true
         
-        let arrowConstraints = [
-            imageView.topAnchor.constraint(equalTo: self.topAnchor),
-            imageView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            imageView.heightAnchor.constraint(equalToConstant: 20)
+        self.addSubview(upDownView)
+        let upDownConstraints = [
+            upDownView.topAnchor.constraint(equalTo: self.topAnchor, constant: 5),
+            upDownView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            upDownView.heightAnchor.constraint(equalToConstant: 4),
+            upDownView.widthAnchor.constraint(equalToConstant: self.frame.width/2)
         ]
-        NSLayoutConstraint.activate(arrowConstraints)
+        NSLayoutConstraint.activate(upDownConstraints)
     }
 }

@@ -69,7 +69,6 @@ class ResultDetailViewController: UIViewController {
                 minAltitude: viewModel.altitudeViewModel.lowest,
                 averageSpeed: viewModel.averageSpeed()
             )
-            self?.informationView.layoutIfNeeded()
             self?.configureViews()
             self?.configurePanGesture()
         }
