@@ -79,6 +79,7 @@ class MountainAddingViewController: UIViewController {
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] result in
                 self?.showResult(result)
+                NotificationCenter.default.post(name: NSNotification.Name.init(rawValue: "save"), object: nil)
             })
             .store(in: &observers)
         self.mapView.showsUserLocation = true

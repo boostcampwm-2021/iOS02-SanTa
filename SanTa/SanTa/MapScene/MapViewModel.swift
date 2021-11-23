@@ -40,4 +40,10 @@ final class MapViewModel {
             self?.map = map
         }
     }
+    
+    func updateMarker() {
+        self.useCase.prepareMountainMarkers { [weak self] mountains in
+            self?.mountains = mountains
+        }
+    }
 }
