@@ -79,7 +79,6 @@ class ResultDetailViewController: UIViewController {
         button.setTitleColor(.label, for: .normal)
         button.contentHorizontalAlignment = .center
         button.semanticContentAttribute = .forceLeftToRight
-        button.addTarget(self, action: #selector(pushDetailImagesViewController), for: .touchUpInside)
         button.layer.cornerRadius = 5
         button.layer.masksToBounds = false
         button.layer.shadowColor = UIColor.black.cgColor
@@ -87,6 +86,26 @@ class ResultDetailViewController: UIViewController {
         button.layer.shadowOffset = CGSize.zero
         button.layer.shadowRadius = 2
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(pushDetailImagesViewController), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var imagesVisibilityButton: UIButton = {
+        let button = UIButton()
+        button.setImage(.init(systemName: "eye"), for: .normal)
+        //eye.slash
+        button.setPreferredSymbolConfiguration(.init(pointSize: 14), forImageIn: .normal)
+        button.backgroundColor = .systemBackground
+        button.tintColor = .label
+        button.contentHorizontalAlignment = .center
+        button.layer.cornerRadius = 5
+        button.layer.masksToBounds = false
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOpacity = 0.7
+        button.layer.shadowOffset = CGSize.zero
+        button.layer.shadowRadius = 2
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(imagesVisibilityButtonAction), for: .touchUpInside)
         return button
     }()
     
@@ -205,6 +224,7 @@ class ResultDetailViewController: UIViewController {
         guard let tabBar = self.navigationController?.tabBarController?.tabBar else { return }
         self.view.addSubview(self.mapView)
         self.view.addSubview(self.detailImagesButton)
+        self.view.addSubview(self.imagesVisibilityButton)
         self.view.addSubview(self.backButton)
         self.view.addSubview(self.changeButton)
         self.view.addSubview(self.largerInformationView)
@@ -252,6 +272,13 @@ class ResultDetailViewController: UIViewController {
             self.detailImagesButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -15),
             self.detailImagesButton.widthAnchor.constraint(equalToConstant: 55),
             self.detailImagesButton.heightAnchor.constraint(equalToConstant: 30)
+        ])
+        
+        NSLayoutConstraint.activate([
+            self.imagesVisibilityButton.topAnchor.constraint(equalTo: self.detailImagesButton.topAnchor),
+            self.imagesVisibilityButton.trailingAnchor.constraint(equalTo: self.detailImagesButton.leadingAnchor, constant: -15),
+            self.imagesVisibilityButton.widthAnchor.constraint(equalToConstant: 55),
+            self.imagesVisibilityButton.heightAnchor.constraint(equalToConstant: 30)
         ])
         
         infoViewTopConstraint =
@@ -337,6 +364,10 @@ extension ResultDetailViewController {
     
     @objc func pushDetailImagesViewController() {
         coordinator?.pushResultDetailImagesViewController()
+    }
+    
+    @objc func imagesVisibilityButtonAction() {
+        
     }
     
     @objc func presentModifyResultAlert() {
