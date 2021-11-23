@@ -135,6 +135,7 @@ class ResultDetailViewController: UIViewController {
         let allMedia = PHAsset.fetchAssets(with: .image, options: nil)
         var identifierIndex = 0
         for i in stride(from: allMedia.count - 1, through: 0, by: -1) {
+            guard identifierIndex < assetIdentifiers.count else { return }
             if allMedia[i].localIdentifier == assetIdentifiers[identifierIndex] {
                 requestAssetIamge(with: allMedia[i]) { [weak self] image in
                     guard let image = image else { return }
@@ -142,7 +143,6 @@ class ResultDetailViewController: UIViewController {
                     self?.appendImageAnnotation(image: image)
                 }
                 identifierIndex += 1
-                guard identifierIndex < assetIdentifiers.count else { return }
             }
         }
     }

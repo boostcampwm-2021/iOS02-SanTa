@@ -12,31 +12,37 @@ class DetailHeader: UICollectionReusableView {
     
     private lazy var dateLabel: UILabel = {
         let label = UILabel()
-        label.backgroundColor = .label
         label.textColor = .systemBackground
+        label.backgroundColor = .label
+        label.textAlignment = .center
         label.text = "2021. 11. 16(화)"
         label.font = .preferredFont(forTextStyle: .caption1)
         label.adjustsFontForContentSizeCategory = true
+        label.adjustsFontSizeToFitWidth = true
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     private lazy var startLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor(named: "SanTaColor")
+        label.textColor = UIColor(named: "SantaColor")
         label.text = "시작"
-        label.font = .preferredFont(forTextStyle: .title2)
+        label.textAlignment = .right
+        label.font = .preferredFont(forTextStyle: .title3)
         label.adjustsFontForContentSizeCategory = true
+        label.adjustsFontSizeToFitWidth = true
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     private lazy var endLabel: UILabel = {
         let label = UILabel()
-        label.textColor = UIColor(named: "SanTaColor")
+        label.textColor = UIColor(named: "SantaColor")
         label.text = "종료"
-        label.font = .preferredFont(forTextStyle: .title2)
+        label.textAlignment = .left
+        label.font = .preferredFont(forTextStyle: .title3)
         label.adjustsFontForContentSizeCategory = true
+        label.adjustsFontSizeToFitWidth = true
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -45,8 +51,11 @@ class DetailHeader: UICollectionReusableView {
         let label = UILabel()
         label.textColor = .label
         label.text = "오후 6시 0분"
-        label.font = .preferredFont(forTextStyle: .title1)
+        label.textAlignment = .right
+        label.numberOfLines = 2
+        label.font = .preferredFont(forTextStyle: .title2)
         label.adjustsFontForContentSizeCategory = true
+        label.adjustsFontSizeToFitWidth = true
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -55,8 +64,11 @@ class DetailHeader: UICollectionReusableView {
         let label = UILabel()
         label.textColor = .label
         label.text = "오후 7시 38분"
-        label.font = .preferredFont(forTextStyle: .title1)
+        label.textAlignment = .left
+        label.numberOfLines = 2
+        label.font = .preferredFont(forTextStyle: .title2)
         label.adjustsFontForContentSizeCategory = true
+        label.adjustsFontSizeToFitWidth = true
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -64,9 +76,8 @@ class DetailHeader: UICollectionReusableView {
     private lazy var labelStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.spacing = 20
-        stackView.alignment = .center
         stackView.axis = .horizontal
-        stackView.distribution = .fill
+        stackView.distribution = .fillEqually
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
@@ -74,9 +85,8 @@ class DetailHeader: UICollectionReusableView {
     private lazy var timeStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.spacing = 20
-        stackView.alignment = .center
         stackView.axis = .horizontal
-        stackView.distribution = .fill
+        stackView.distribution = .fillEqually
         stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
@@ -102,17 +112,21 @@ class DetailHeader: UICollectionReusableView {
         self.addSubview(self.timeStackView)
         
         NSLayoutConstraint.activate([
-            self.dateLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
+            self.dateLabel.topAnchor.constraint(equalTo: self.topAnchor),
             self.dateLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
         ])
         
         NSLayoutConstraint.activate([
             self.labelStackView.topAnchor.constraint(equalTo: self.dateLabel.bottomAnchor, constant: 20),
+            self.labelStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            self.labelStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             self.labelStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
         ])
         
         NSLayoutConstraint.activate([
-            self.timeStackView.topAnchor.constraint(equalTo: self.labelStackView.bottomAnchor, constant: 20),
+            self.timeStackView.topAnchor.constraint(equalTo: self.labelStackView.bottomAnchor, constant: 8),
+            self.timeStackView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            self.timeStackView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             self.timeStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
         ])
     }
