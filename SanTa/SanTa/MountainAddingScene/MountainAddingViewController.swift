@@ -18,6 +18,7 @@ class MountainAddingViewController: UIViewController {
         mapView.delegate = self
         mapView.mapType = .mutedStandard
         mapView.isUserInteractionEnabled = false
+        mapView.accessibilityElementsHidden = true
         return mapView
     }()
     
@@ -28,6 +29,8 @@ class MountainAddingViewController: UIViewController {
         button.tintColor = .label
         button.addTarget(self, action: #selector(dismissViewController), for: .touchUpInside)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.accessibilityLabel = "닫기"
+        button.accessibilityHint = "장소등록을 종료하려면 이중 탭 하십시오"
         return button
     }()
     
