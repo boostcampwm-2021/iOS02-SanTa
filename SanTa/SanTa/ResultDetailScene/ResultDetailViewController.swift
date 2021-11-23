@@ -122,7 +122,6 @@ class ResultDetailViewController: UIViewController {
                 .reduce(initial) { $0.union($1.boundingMapRect) }
 
             mapView.setVisibleMapRect(mapRect, animated: true)
-        print(pointSets.count)
         let startAnnotation = MKPointAnnotation()
         let endAnnotation = MKPointAnnotation()
         guard let startPoint = pointSets.first?.first,

@@ -14,12 +14,28 @@ class DetailCell: UICollectionViewCell {
         let title: UILabel = UILabel()
         self.addSubview(title)
         title.text = data.title
+        title.font = .preferredFont(for: .body, weight: .bold)
+        title.adjustsFontSizeToFitWidth = true
         title.textColor = .init(named: "SantaColor")
         title.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            title.topAnchor.constraint(equalTo: self.topAnchor),
-            title.leftAnchor.constraint(equalTo: self.leftAnchor)
+            title.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
+            title.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10)
         ])
+        
+        let line = UIView()
+        self.addSubview(line)
+
+        line.backgroundColor = .init(named: "SantaColor")
+        line.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            line.heightAnchor.constraint(equalToConstant: 1),
+            line.leftAnchor.constraint(equalTo: title.rightAnchor, constant: 5),
+            line.centerYAnchor.constraint(equalTo: title.centerYAnchor),
+            line.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -15),
+        ])
+        
+        
         
         var contentLabels: [UILabel] = []
         var contentTitleLabels: [UILabel] = []
@@ -27,8 +43,11 @@ class DetailCell: UICollectionViewCell {
         for content in data.contents {
             let contentLabel = UILabel()
             contentLabel.text = content.content
+            contentLabel.font = .preferredFont(for: .title1, weight: .bold)
+
             let contentTitleLabel = UILabel()
             contentTitleLabel.text = content.contentTitle
+            contentTitleLabel.font = .preferredFont(forTextStyle: .body)
             contentLabels.append(contentLabel)
             contentTitleLabels.append(contentTitleLabel)
         }
@@ -40,6 +59,7 @@ class DetailCell: UICollectionViewCell {
         for index in 0..<data.contents.count {
             let horizontalStack = UIStackView()
             horizontalStack.axis = .horizontal
+            horizontalStack.distribution = .equalCentering
             horizontalStack.addArrangedSubview(contentLabels[index])
             horizontalStack.addArrangedSubview(contentTitleLabels[index])
             stack.addArrangedSubview(horizontalStack)
@@ -47,14 +67,22 @@ class DetailCell: UICollectionViewCell {
         
         stack.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            stack.topAnchor.constraint(equalTo: title.bottomAnchor),
-            stack.leftAnchor.constraint(equalTo: self.leftAnchor),
-            stack.rightAnchor.constraint(equalTo: self.rightAnchor),
+            stack.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 30),
+            stack.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10),
+            stack.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -15),
             stack.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
     }
 }
 
+extension UIFont {
+    static func preferredFont(for style: TextStyle, weight: Weight) -> UIFont {
+        let metrics = UIFontMetrics(forTextStyle: style)
+        let desc = UIFontDescriptor.preferredFontDescriptor(withTextStyle: style)
+        let font = UIFont.systemFont(ofSize: desc.pointSize, weight: weight)
+        return metrics.scaledFont(for: font)
+    }
+}
 //extension DetailCell {
 //    override func draw(_ rect: CGRect) {
 //        let path = UIBezierPath()
