@@ -24,7 +24,7 @@ class ResultDetailImagesViewCoordinator: Coordinator {
         self.parentCoordinator?.childCoordinators.removeLast()
     }
     
-    init(navigationController: UINavigationController, coreDataStorage: CoreDataStorage, records: Records) {
+    init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
 }
