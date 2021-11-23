@@ -32,6 +32,7 @@ class RecordingViewController: UIViewController {
         let label = UILabel()
         label.font = .preferredFont(forTextStyle: .title3)
         label.text = "킬로미터"
+        label.isAccessibilityElement = false
         return label
     }()
     
@@ -60,6 +61,7 @@ class RecordingViewController: UIViewController {
         let label = UILabel()
         label.font = .preferredFont(forTextStyle: .title3)
         label.text = "시간"
+        label.isAccessibilityElement = false
         return label
     }()
     
@@ -67,6 +69,7 @@ class RecordingViewController: UIViewController {
         let label = UILabel()
         label.font = .preferredFont(forTextStyle: .title3)
         label.text = "고도"
+        label.isAccessibilityElement = false
         return label
     }()
     
@@ -74,6 +77,7 @@ class RecordingViewController: UIViewController {
         let label = UILabel()
         label.font = .preferredFont(forTextStyle: .title3)
         label.text = "걸음"
+        label.isAccessibilityElement = false
         return label
     }()
     
@@ -103,6 +107,7 @@ class RecordingViewController: UIViewController {
         self.configureButton()
         self.configureBindings()
         self.configureTarget()
+        self.configureAccessibilty()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -120,10 +125,18 @@ class RecordingViewController: UIViewController {
             })
             .store(in: &self.subscriptions)
         
+        self.recordingViewModel?.$accessibilityCurrentTime
+            .receive(on: DispatchQueue.main)
+            .sink (receiveValue: { [weak self] time in
+                self?.timeLabel.accessibilityLabel = "현재시간 \(time)"
+            })
+            .store(in: &self.subscriptions)
+        
         self.recordingViewModel?.$kilometer
             .receive(on: DispatchQueue.main)
             .sink (receiveValue: { [weak self] kilometer in
                 self?.kilometerLabel.text = kilometer
+                self?.kilometerLabel.accessibilityLabel = "현재 \(kilometer) 킬로미터"
             })
             .store(in: &self.subscriptions)
         
@@ -131,6 +144,7 @@ class RecordingViewController: UIViewController {
             .receive(on: DispatchQueue.main)
             .sink (receiveValue: { [weak self] altitude in
                 self?.altitudeLabel.text = altitude
+                self?.altitudeLabel.accessibilityLabel = "현재 고도 \(altitude)"
             })
             .store(in: &self.subscriptions)
         
@@ -138,6 +152,7 @@ class RecordingViewController: UIViewController {
             .receive(on: DispatchQueue.main)
             .sink (receiveValue: { [weak self] walk in
                 self?.walkLabel.text = walk
+                self?.walkLabel.accessibilityLabel = "현재 \(walk) 걸음"
             })
             .store(in: &self.subscriptions)
         
@@ -183,6 +198,8 @@ class RecordingViewController: UIViewController {
             pauseConfiguration.image = UIImage(systemName: "play.fill")
             pauseConfiguration.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
             self.pauseButton.configuration = pauseConfiguration
+            self.pauseButton.accessibilityLabel = "재시작"
+            self.pauseButton.accessibilityHint = "측정을 재시작 하시려면 이중탭하십시오"
             self.recordingViewModel?.pause()
             self.currentState = false
         } else {
@@ -191,6 +208,8 @@ class RecordingViewController: UIViewController {
             pauseConfiguration.image = UIImage(systemName: "pause.fill")
             pauseConfiguration.contentInsets = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
             self.pauseButton.configuration = pauseConfiguration
+            self.pauseButton.accessibilityLabel = "일시정지"
+            self.pauseButton.accessibilityHint = "측정을 일시정지 하시려면 이중탭하십시오"
             self.recordingViewModel?.resume()
             self.currentState = true
         }
