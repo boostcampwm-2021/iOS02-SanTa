@@ -139,6 +139,7 @@ class ResultDetailViewController: UIViewController {
                 requestAssetIamge(with: allMedia[i]) { [weak self] image in
                     guard let image = image else { return }
                     self?.uiImages.append(image)
+                    self?.appendAnnotationimage(image: image)
                 }
                 identifierIndex += 1
                 guard identifierIndex < assetIdentifiers.count else { return }
@@ -155,6 +156,17 @@ class ResultDetailViewController: UIViewController {
         self.imageManager.requestImage(for: asset, targetSize: thumbnailSize, contentMode: .aspectFill, options: nil, resultHandler: { image, _ in
             completion(image)
         })
+    }
+    
+    private func appendAnnotationimage(image: UIImage) {
+        let annotationView = MKAnnotationView()
+        
+        let annotationimageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 25, height: 25))
+        annotationimageView.image = image
+        
+        annotationView.addSubview(annotationimageView)
+        
+        mapView.addSubview(annotationView)
     }
     
     private func configureSmallerView() {
