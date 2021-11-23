@@ -136,7 +136,7 @@ class RecordingViewController: UIViewController {
             .receive(on: DispatchQueue.main)
             .sink (receiveValue: { [weak self] kilometer in
                 self?.kilometerLabel.text = kilometer
-                self?.kilometerLabel.accessibilityLabel = "현재 \(kilometer) 킬로미터"
+                self?.kilometerLabel.accessibilityLabel = "현재 \(kilometer)km"
             })
             .store(in: &self.subscriptions)
         

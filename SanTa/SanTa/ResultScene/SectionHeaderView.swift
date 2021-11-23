@@ -40,10 +40,10 @@ class SectionHeaderView: UICollectionReusableView {
     }
     
     private func configureSubviews(){
-        self.addSubview(monthLabel)
-        self.addSubview(countLabel)
-        self.addSubview(distanceLabel)
-        self.addSubview(timeLabel)
+        self.addSubview(self.monthLabel)
+        self.addSubview(self.countLabel)
+        self.addSubview(self.distanceLabel)
+        self.addSubview(self.timeLabel)
     }
     
     private func configureLayout() {
@@ -69,9 +69,9 @@ class SectionHeaderView: UICollectionReusableView {
 extension SectionHeaderView {
     
     func configureVoiceOverAccessibility(date: String) {
-        guard let countLabel = countLabel.text else { return }
-        guard let distanceLabel = distanceLabel.text else { return }
-        guard let timeLabel = timeLabel.text else { return }
+        guard let countLabel = self.countLabel.text else { return }
+        guard let distanceLabel = self.distanceLabel.text else { return }
+        guard let timeLabel = self.timeLabel.text else { return }
         self.isAccessibilityElement = true
         self.accessibilityLabel = "\(date) 등산기록 정보"
         self.accessibilityTraits = .none

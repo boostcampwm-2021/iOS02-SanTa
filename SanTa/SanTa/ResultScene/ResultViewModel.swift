@@ -109,7 +109,7 @@ extension ResultViewModel {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier:"ko_KR")
         if calender.compare(date, to: .now, toGranularity: .day) == .orderedSame {
-            dateFormatter.dateFormat = "a h시 m분"
+            dateFormatter.dateFormat = "오늘(E) a h시 m분"
         } else if calender.compare(date, to: yesterday, toGranularity: .day) == .orderedSame {
             dateFormatter.dateFormat = "어제(E) a h시 m분"
         } else {
