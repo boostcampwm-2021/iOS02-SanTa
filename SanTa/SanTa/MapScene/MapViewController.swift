@@ -24,6 +24,7 @@ class MapViewController: UIViewController {
         mapView.showsScale = true
         mapView.showsCompass = true
         mapView.delegate = self
+        mapView.accessibilityElementsHidden = true
         return mapView
     }()
     
@@ -40,6 +41,7 @@ class MapViewController: UIViewController {
         button.layer.shadowRadius = 3
         button.layer.shadowOffset = CGSize(width: 0, height: 3)
         button.addTarget(self, action: #selector(presentRecordingViewController), for: .touchDown)
+        button.accessibilityHint = "측정을 시작하려면 이중탭 하십시오"
         return button
     }()
     
@@ -80,6 +82,7 @@ class MapViewController: UIViewController {
         self.configureViews()
         self.registerAnnotationView()
         self.configureViewModel()
+        print("Documents Directory: ", FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last ?? "Not Found!")
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -217,10 +220,12 @@ extension MapViewController: Animatable {
     func shouldAnimate() {
         let image = UIImage.gifImage(named: "walkingManAnimation", withTintColor: .white)
         self.startButton.setImage(image, for: .normal)
+        self.startButton.accessibilityHint = "현재 측정 중입니다. 측정화면으로 돌아가려면 이중탭 하십시오"
     }
     
     func shouldStopAnimate() {
         self.startButton.setImage(nil, for: .normal)
+        self.startButton.accessibilityHint = "측정을 시작하려면 이중탭 하십시오"
     }
 }
 

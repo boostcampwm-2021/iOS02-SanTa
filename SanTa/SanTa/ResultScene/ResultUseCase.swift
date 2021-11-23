@@ -40,14 +40,15 @@ final class ResultUseCase {
     }
     
     private func makeRecords(recordsEntityMO: RecordsEntityMO) -> Records? {
-        guard let title = recordsEntityMO.title else { return nil }
+        guard let title = recordsEntityMO.title,
+              let id = recordsEntityMO.id else { return nil }
         var records: [Record] = []
         recordsEntityMO.records?.forEach {
             guard let recordEntityMO = $0 as? RecordEntityMO else { return }
             guard let record = self.makeRecord(recordEntityMO: recordEntityMO) else { return }
             records.append(record)
         }
-        return Records(title: title, records: records, assetIdentifiers: [String](), secondPerHighestSpeed: Int(), secondPerMinimumSpeed: Int())
+        return Records(title: title, records: records, assetIdentifiers: [String](), secondPerHighestSpeed: Int(), secondPerMinimumSpeed: Int(), id: id)
     }
     
     private func makeRecord(recordEntityMO: RecordEntityMO) -> Record? {

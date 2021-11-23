@@ -13,6 +13,7 @@ import Combine
 
 final class RecordingModel: NSObject, ObservableObject {
     @Published private(set) var time = ""
+    @Published private(set) var accessibilityTime = ""
     @Published private(set) var kilometer = "0.00"
     @Published private(set) var altitude = "0"
     @Published private(set) var walk = "0"
@@ -93,6 +94,7 @@ final class RecordingModel: NSObject, ObservableObject {
         let hours = (elapsedTimeSeconds / 3600)
         
         self.time = String(format: "%0.2d:%0.2d %0.2d\"", hours, minutes, seconds)
+        self.accessibilityTime = String(format: "%0.2d:%0.2d:%0.2d", hours, minutes, seconds)
     }
     
     private func checkPedoMeter() {
@@ -190,7 +192,8 @@ final class RecordingModel: NSObject, ObservableObject {
                                    records: [record],
                                    assetIdentifiers: [String](),
                                    secondPerHighestSpeed: minTime,
-                                   secondPerMinimumSpeed: self.maxOneKiloTime)
+                                   secondPerMinimumSpeed: self.maxOneKiloTime,
+                                   id: UUID().uuidString)
             return
         }
         

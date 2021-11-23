@@ -9,7 +9,7 @@ import UIKit
 
 class RecordingTitleViewController: UIViewController {
     weak var coordinator: RecordingTitleViewCoordinator?
-    weak var delegate: RecordingViewDelegate?
+    weak var delegate: SetTitleDelegate?
      
     private var displayView: UIView = {
         let view = UIView()

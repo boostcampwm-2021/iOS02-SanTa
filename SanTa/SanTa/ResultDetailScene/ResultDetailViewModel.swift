@@ -33,6 +33,28 @@ class ResultDetailViewModel {
         }
     }
     
+    func delete(completion: @escaping (Result<Void, Error>) -> Void) {
+        guard let id = self.resultDetailData?.id else {
+            return
+        }
+        self.useCase.delete(id: id, completion: completion)
+    }
+    
+    func update(title: String, completion: @escaping (String) -> Void) {
+        guard let id = self.resultDetailData?.id else {
+            return
+        }
+        self.useCase.update(title: title, id: id) { result in
+            switch result {
+            case .success():
+                self.resultDetailData?.change(title: title)
+                completion(title)
+            case .failure(let error):
+                print(error)
+            }
+        }
+    }
+    
     func averageSpeed() -> String {
         let formatter = NumberFormatter()
         formatter.minimumFractionDigits = 2

@@ -139,6 +139,7 @@ extension MountainDetailViewController {
         mapView.register(MountainAnnotationView.self, forAnnotationViewWithReuseIdentifier: MountainAnnotationView.ReuseID)
         mapView.addAnnotation(annotation)
         mapView.selectAnnotation(annotation, animated: true)
+        mapView.accessibilityElementsHidden = true
         
         return mapView
     }
