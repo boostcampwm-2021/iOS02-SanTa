@@ -67,6 +67,7 @@ class DetailHeader: UICollectionReusableView {
         stackView.alignment = .center
         stackView.axis = .horizontal
         stackView.distribution = .fill
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
     
@@ -76,6 +77,7 @@ class DetailHeader: UICollectionReusableView {
         stackView.alignment = .center
         stackView.axis = .horizontal
         stackView.distribution = .fill
+        stackView.translatesAutoresizingMaskIntoConstraints = false
         return stackView
     }()
     
@@ -100,18 +102,18 @@ class DetailHeader: UICollectionReusableView {
         self.addSubview(self.timeStackView)
         
         NSLayoutConstraint.activate([
-            self.dateLabel.topAnchor.constraint(equalTo: self.layoutMarginsGuide.topAnchor, constant: 20),
-            self.dateLabel.centerXAnchor.constraint(equalTo: self.layoutMarginsGuide.centerXAnchor),
+            self.dateLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
+            self.dateLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
         ])
         
         NSLayoutConstraint.activate([
             self.labelStackView.topAnchor.constraint(equalTo: self.dateLabel.bottomAnchor, constant: 20),
-            self.labelStackView.centerXAnchor.constraint(equalTo: self.layoutMarginsGuide.centerXAnchor),
+            self.labelStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
         ])
         
         NSLayoutConstraint.activate([
             self.timeStackView.topAnchor.constraint(equalTo: self.labelStackView.bottomAnchor, constant: 20),
-            self.timeStackView.centerXAnchor.constraint(equalTo: self.layoutMarginsGuide.centerXAnchor),
+            self.timeStackView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
         ])
     }
     
