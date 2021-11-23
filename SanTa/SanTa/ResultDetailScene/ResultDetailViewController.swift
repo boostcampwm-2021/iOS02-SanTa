@@ -20,7 +20,7 @@ class ResultDetailViewController: UIViewController {
     private var isLargeInfoView = false
     
     private let imageManager = PHCachingImageManager()
-    private var uiImages = [UIImage]()
+    private var uiImages = [String: UIImage]()
     
     private lazy var mapView: MKMapView = {
         let mapView = MKMapView()
@@ -137,36 +137,34 @@ class ResultDetailViewController: UIViewController {
         for i in stride(from: allMedia.count - 1, through: 0, by: -1) {
             guard identifierIndex < assetIdentifiers.count else { return }
             if allMedia[i].localIdentifier == assetIdentifiers[identifierIndex] {
-                requestAssetIamge(with: allMedia[i]) { [weak self] image in
-                    guard let image = image else { return }
-                    self?.uiImages.append(image)
-                    self?.appendImageAnnotation(image: image)
+                requestAssetIamge(with: allMedia[i]) { [weak self] (image, asset) in
+                    guard let image = image,
+                          let identifier = asset?.localIdentifier,
+                          let coordinate = asset?.location?.coordinate else { return }
+                    self?.uiImages[identifier] = image
+                    self?.appendImageAnnotation(identifier: identifier, location: coordinate)
                 }
                 identifierIndex += 1
             }
         }
     }
     
-    private func requestAssetIamge(with asset: PHAsset?, completion: @escaping (UIImage?) -> Void) {
+    private func requestAssetIamge(with asset: PHAsset?, completion: @escaping (UIImage?, PHAsset?) -> Void) {
         guard let asset = asset else {
-            completion(nil)
+            completion(nil, nil)
             return
         }
         let thumbnailSize = CGSize(width: 1000, height: 1000)
         self.imageManager.requestImage(for: asset, targetSize: thumbnailSize, contentMode: .aspectFill, options: nil, resultHandler: { image, _ in
-            completion(image)
+            completion(image, asset)
         })
     }
     
-    private func appendImageAnnotation(image: UIImage) {
-        let annotationView = MKAnnotationView()
-        
-        let annotationimageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 25, height: 25))
-        annotationimageView.image = image
-        
-        annotationView.addSubview(annotationimageView)
-        
-        mapView.addSubview(annotationView)
+    private func appendImageAnnotation(identifier: String, location: CLLocationCoordinate2D) {
+        let imageAnnotation = MKPointAnnotation()
+        imageAnnotation.coordinate = location
+        imageAnnotation.title = identifier
+        mapView.addAnnotation(imageAnnotation)
     }
     
     private func configureSmallerView() {
@@ -367,10 +365,12 @@ extension ResultDetailViewController: MKMapViewDelegate {
         }
         
         let identifier = "PointAnnotation"
+        
+        
         let annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
         if annotation.title == "start" {
             annotationView.markerTintColor = .init(named: "SantaColor")
-        } else {
+        } else if annotation.title = "end" {
             annotationView.markerTintColor = .red
         }
         annotationView.animatesWhenAdded = true
