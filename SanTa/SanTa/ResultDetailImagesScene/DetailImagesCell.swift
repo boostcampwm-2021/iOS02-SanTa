@@ -13,6 +13,7 @@ class DetailImagesCell: UICollectionViewCell {
     private let imageView = UIImageView()
     
     func update(image: UIImage) {
+        self.imageView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(imageView)
         
         self.imageView.image = image

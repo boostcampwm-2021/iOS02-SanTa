@@ -50,6 +50,7 @@ class ResultDetailImagesViewController: UIViewController {
     private func configureViews() {
         self.view.backgroundColor = .systemBackground
         self.navigationController?.navigationBar.tintColor = .label
+        self.title = "사진 모아보기 (\(uiImages.count)장)"
         self.view.addSubview(self.collectionView)
         
         NSLayoutConstraint.activate([
@@ -89,8 +90,12 @@ class ResultDetailImagesViewController: UIViewController {
     private func configuareDataSource() {
         let datasource = DetailImagesDataSource(collectionView: self.collectionView, cellProvider: { (collectionView, indexPath, item) -> UICollectionViewCell in
             
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailImagesCell.identifier, for: indexPath) as? DetailImagesCell else  {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailImagesCell.identifier, for: indexPath) as? DetailImagesCell,
+                  let item = item as? String,
+                  let image = self.uiImages[item] else  {
                 return UICollectionViewCell() }
+            
+            cell.update(image: image)
             return cell
         })
         
@@ -99,6 +104,13 @@ class ResultDetailImagesViewController: UIViewController {
     }
     
     private func configureImages() {
+        var identifiers = [String]()
+        
+        for (key, _) in self.uiImages {
+            identifiers.append(key)
+        }
+        
+        self.bindSnapShotApply(section: .main, item: identifiers)
     }
 }
 
