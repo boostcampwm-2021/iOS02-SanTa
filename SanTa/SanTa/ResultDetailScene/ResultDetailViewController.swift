@@ -363,7 +363,7 @@ extension ResultDetailViewController {
     }
     
     @objc func pushDetailImagesViewController() {
-        coordinator?.pushResultDetailImagesViewController()
+        coordinator?.pushResultDetailImagesViewController(uiImages: uiImages)
     }
     
     @objc func imagesVisibilityButtonAction() {

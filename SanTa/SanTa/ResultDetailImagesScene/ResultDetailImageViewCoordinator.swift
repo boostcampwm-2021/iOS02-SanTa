@@ -12,10 +12,12 @@ class ResultDetailImagesViewCoordinator: Coordinator {
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
     
+    let uiImages: [String: UIImage]
+    
     func start() {
         let resultDetailImagesViewController = ResultDetailImagesViewController()
+        resultDetailImagesViewController.uiImages = self.uiImages
         resultDetailImagesViewController.coordinator = self
-        self.navigationController.setNavigationBarHidden(true, animated: false)
         self.navigationController.pushViewController(resultDetailImagesViewController, animated: true)
     }
     
@@ -24,7 +26,8 @@ class ResultDetailImagesViewCoordinator: Coordinator {
         self.parentCoordinator?.childCoordinators.removeLast()
     }
     
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController, uiImages: [String: UIImage]) {
         self.navigationController = navigationController
+        self.uiImages = uiImages
     }
 }

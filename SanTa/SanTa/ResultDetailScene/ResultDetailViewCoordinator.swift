@@ -60,8 +60,8 @@ extension ResultDetailViewCoordinator {
         recordingTitleViewCoordinator.start()
     }
     
-    func pushResultDetailImagesViewController() {
-        let resultDetailImagesViewCoordinator = ResultDetailImagesViewCoordinator(navigationController: navigationController)
+    func pushResultDetailImagesViewController(uiImages: [String: UIImage]) {
+        let resultDetailImagesViewCoordinator = ResultDetailImagesViewCoordinator(navigationController: navigationController, uiImages: uiImages)
         self.childCoordinators.append(resultDetailImagesViewCoordinator)
         resultDetailImagesViewCoordinator.parentCoordinator = self
         
