@@ -73,8 +73,7 @@ extension SectionHeaderView {
         guard let distanceLabel = self.distanceLabel.text else { return }
         guard let timeLabel = self.timeLabel.text else { return }
         self.isAccessibilityElement = true
-        self.accessibilityLabel = "\(date) 등산기록 정보"
+        self.accessibilityLabel = "\(date) 등산기록 정보, 총 등산횟수: \(countLabel), 총 거리: \(distanceLabel), 총 시간: \(timeLabel)"
         self.accessibilityTraits = .none
-        self.accessibilityHint = "총 등산횟수: \(countLabel), 총 거리: \(distanceLabel), 총 시간: \(timeLabel)"
     }
 }

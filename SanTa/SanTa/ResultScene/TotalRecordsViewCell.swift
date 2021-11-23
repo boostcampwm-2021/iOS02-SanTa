@@ -103,7 +103,6 @@ extension TotalRecordsViewCell {
         guard let timeNumber = timeNumber.text else { return }
         guard let stepsNumber = stepsNumber.text else { return }
         self.isAccessibilityElement = true
-        self.accessibilityLabel = "전체 등산기록 정보"
-        self.accessibilityHint = "총 거리: \(kilometerNumber)km, 총 등산횟수: \(countNumber), 총 시간: \(timeNumber), 총 걸음: \(stepsNumber)"
+        self.accessibilityLabel = "전체 등산기록 정보, 총 거리: \(kilometerNumber)km, 총 등산횟수: \(countNumber), 총 시간: \(timeNumber), 총 걸음: \(stepsNumber)"
     }
 }

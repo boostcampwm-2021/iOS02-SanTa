@@ -128,9 +128,9 @@ extension RecordsViewCell {
         }
         
         self.isAccessibilityElement = true
-        self.accessibilityLabel = "\(date) 등산기록 정보"
+        self.accessibilityLabel = "\(date) 등산기록 정보, 제목: \(title), 거리: \(distance)km, 시간: \(time), 고도차: \(altitude), 걸음: \(steps)"
         self.accessibilityTraits = .none
-        self.accessibilityHint = "제목: \(title), 거리: \(distance)km, 시간: \(time), 고도차: \(altitude), 걸음: \(steps)"
+        self.accessibilityHint = "등산기록 상세화면으로 넘어가려면 이중 탭 하십시오"
     }
 }
 
