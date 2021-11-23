@@ -41,14 +41,21 @@ final class ResultUseCase {
     
     private func makeRecords(recordsEntityMO: RecordsEntityMO) -> Records? {
         guard let title = recordsEntityMO.title,
-              let id = recordsEntityMO.id else { return nil }
+              let archiveAssetIdentifiers = recordsEntityMO.assetIdentifiers,
+              let assetIdentifiers = try? NSKeyedUnarchiver.unarchivedObject(ofClasses: [NSArray.self], from: archiveAssetIdentifiers) as? [String] else { return nil }
+        let secondPerHighestSpeed = Int(recordsEntityMO.secondPerHighestSpeed)
+        let secondPerMinimumSpeed = Int(recordsEntityMO.secondPerMinimumSpeed)
+
+        let id = recordsEntityMO.id else { return nil }
+
         var records: [Record] = []
         recordsEntityMO.records?.forEach {
             guard let recordEntityMO = $0 as? RecordEntityMO else { return }
             guard let record = self.makeRecord(recordEntityMO: recordEntityMO) else { return }
             records.append(record)
         }
-        return Records(title: title, records: records, assetIdentifiers: [String](), secondPerHighestSpeed: Int(), secondPerMinimumSpeed: Int(), id: id)
+        return Records(title: title, records: records, assetIdentifiers: assetIdentifiers, secondPerHighestSpeed: secondPerHighestSpeed, secondPerMinimumSpeed: secondPerMinimumSpeed, id: id)
+
     }
     
     private func makeRecord(recordEntityMO: RecordEntityMO) -> Record? {

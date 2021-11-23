@@ -104,6 +104,7 @@
 		DAFA9B59274112D800BF168C /* RecordingPhotoCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFA9B58274112D800BF168C /* RecordingPhotoCoordinator.swift */; };
 		DAFA9B5B2741131400BF168C /* RecordingPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFA9B5A2741131400BF168C /* RecordingPhotoViewController.swift */; };
 		DAFA9B5D27424C9A00BF168C /* RecordingPhotoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFA9B5C27424C9A00BF168C /* RecordingPhotoModel.swift */; };
+		DAFF214E274BD6460061A555 /* DetailHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFF214D274BD6460061A555 /* DetailHeader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -206,6 +207,7 @@
 		DAFA9B58274112D800BF168C /* RecordingPhotoCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingPhotoCoordinator.swift; sourceTree = "<group>"; };
 		DAFA9B5A2741131400BF168C /* RecordingPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingPhotoViewController.swift; sourceTree = "<group>"; };
 		DAFA9B5C27424C9A00BF168C /* RecordingPhotoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingPhotoModel.swift; sourceTree = "<group>"; };
+		DAFF214D274BD6460061A555 /* DetailHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailHeader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -275,6 +277,7 @@
 				4948038327437499002854B1 /* ResultDetailUseCase.swift */,
 				493178B527439D0000B5FB88 /* ResultDetailModel.swift */,
 				493178B32743992400B5FB88 /* DetailCell.swift */,
+				DAFF214D274BD6460061A555 /* DetailHeader.swift */,
 				49921D88274B3B440091112C /* ResultDetailRepository.swift */,
 			);
 			path = ResultDetailScene;
@@ -664,6 +667,7 @@
 				54296955272FC3EC0070B362 /* SettingsViewController.swift in Sources */,
 				98BCF4F52737A3480073E6FB /* SettingsRepository.swift in Sources */,
 				5429695B273026B10070B362 /* MountainAnnotationView.swift in Sources */,
+				DAFF214E274BD6460061A555 /* DetailHeader.swift in Sources */,
 				DA9D7C9D273A433E0018AD45 /* RecordingTitleViewController.swift in Sources */,
 				DAB37D4C2731166B00EC523F /* RecordingViewModel.swift in Sources */,
 				54B32065274510D8002232BD /* MountainAddingViewController.swift in Sources */,

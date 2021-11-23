@@ -8,12 +8,26 @@
 import UIKit
 
 class ResultDetailLargerInfoView: UIView {
-    private var collectionView: UICollectionView
+    enum DetailLargerInfoSection: Int, CaseIterable {
+        case main
+    }
+    
+    typealias DetailLargerInfoDataSource = UICollectionViewDiffableDataSource<DetailLargerInfoSection, AnyHashable>
+    typealias DetailLargerInfoSnapshot = NSDiffableDataSourceSnapshot<DetailLargerInfoSection, AnyHashable>
+    
+    private var dataSource: DetailLargerInfoDataSource?
+    private var currentSnapshot: DetailLargerInfoSnapshot?
+    
+    lazy var collectionView: UICollectionView = {
+        let flowLayout = UICollectionViewFlowLayout()
+        let collectionView = UICollectionView(frame: .init(x: 0, y: 0, width: 0, height: 0), collectionViewLayout: flowLayout)
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+
+        return collectionView
+    }()
 
     override init(frame: CGRect) {
-        self.collectionView = UICollectionView(frame: frame)
         super.init(frame: frame)
-        self.backgroundColor = .green
     }
     
     required init?(coder: NSCoder) {
@@ -22,39 +36,105 @@ class ResultDetailLargerInfoView: UIView {
 }
 
 extension ResultDetailLargerInfoView {
-    private func configureDownArrow() {
-        let downArrow:UIImageView = .init(image: UIImage(systemName: "chevron.compact.down")?.withTintColor(.black))
-        downArrow.translatesAutoresizingMaskIntoConstraints = false
-        let downArrowConstraints = [
-            downArrow.topAnchor.constraint(equalTo: self.topAnchor),
-            downArrow.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-        ]
-        NSLayoutConstraint.activate(downArrowConstraints)
-    }
-    
-    private func configure(collectionView: UICollectionView) {
-        self.addSubview(collectionView)
-        collectionView.delegate = self
-        collectionView.dataSource = self
-        collectionView.collectionViewLayout = UICollectionViewFlowLayout()
+    private func displayUpDownMark() {
+        let upDownView = UIView()
+        upDownView.backgroundColor = .label
+        upDownView.translatesAutoresizingMaskIntoConstraints = false
+        upDownView.layer.cornerRadius = 2
+        upDownView.layer.masksToBounds = true
         
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        let constraints = [
-            collectionView.topAnchor.constraint(equalTo: self.topAnchor, constant: 50),
-            collectionView.leftAnchor.constraint(equalTo: self.leftAnchor),
-            collectionView.rightAnchor.constraint(equalTo: self.rightAnchor),
-            collectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+        self.addSubview(upDownView)
+        let upDownConstraints = [
+            upDownView.topAnchor.constraint(equalTo: self.topAnchor, constant: 5),
+            upDownView.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            upDownView.heightAnchor.constraint(equalToConstant: 4),
+            upDownView.widthAnchor.constraint(equalToConstant: self.frame.width/3)
         ]
-        NSLayoutConstraint.activate(constraints)
-    }
-}
-
-extension ResultDetailLargerInfoView: UICollectionViewDelegate, UICollectionViewDataSource {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        section == 0 ? 3 : 2
+        NSLayoutConstraint.activate(upDownConstraints)
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return UICollectionViewCell()
+    func configure() {
+        self.configureCollectionView()
+        self.configureViews()
+        self.configuareDataSource()
+        self.displayUpDownMark()
+        self.bindSnapShotApply(section: .main, item: [AnyHashable]())
+    }
+    
+    private func bindSnapShotApply(section: DetailLargerInfoSection, item: [AnyHashable]) {
+        var snapshot = DetailLargerInfoSnapshot()
+        snapshot.appendSections([.main])
+        item.forEach {
+            snapshot.appendItems([$0], toSection: section)
+        }
+        self.dataSource?.apply(snapshot, animatingDifferences: true)
+        self.currentSnapshot = snapshot
+        self.configureHeader()
+    }
+    
+    private func configureViews() {
+        self.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
+        self.backgroundColor = .systemBackground
+        self.addSubview(self.collectionView)
+        
+        NSLayoutConstraint.activate([
+            self.collectionView.topAnchor.constraint(equalTo: self.topAnchor, constant: 30),
+            self.collectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            self.collectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            self.collectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+        ])
+    }
+    
+    private func configuareDataSource() {
+        let datasource = DetailLargerInfoDataSource (collectionView: self.collectionView, cellProvider: { (collectionView, indexPath, item) -> UICollectionViewCell in
+            
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailCell.identifier, for: indexPath) as? DetailCell else  {
+                return UICollectionViewCell() }
+            return cell
+        })
+        
+        self.dataSource = datasource
+        self.collectionView.dataSource = dataSource
+    }
+    
+    private func configureCollectionView() {
+        self.collectionView.collectionViewLayout = configureCompositionalLayout()
+        self.collectionView.register(DetailCell.self, forCellWithReuseIdentifier: DetailCell.identifier)
+        self.collectionView.register(DetailHeader.self,
+                                     forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader,
+                                     withReuseIdentifier: DetailHeader.identifier)
+    }
+    
+    private func configureHeader() {
+        self.dataSource?.supplementaryViewProvider = { (
+            collectionView: UICollectionView,
+            kind: String,
+            indexPath: IndexPath) -> UICollectionReusableView? in
+            guard let header: DetailHeader = self.collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: DetailHeader.identifier, for: indexPath) as? DetailHeader else { return DetailHeader() }
+            
+            return header
+        }
+    }
+    
+    private func configureCompositionalLayout() -> UICollectionViewCompositionalLayout {
+        return UICollectionViewCompositionalLayout { (sectionNumber, env) -> NSCollectionLayoutSection? in
+            let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(0.5), heightDimension: .estimated(500)))
+            item.contentInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 0)
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(500)), subitems: [item])
+            let section = NSCollectionLayoutSection(group: group)
+            section.orthogonalScrollingBehavior = .none
+            section.contentInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 0)
+            
+            let headerSize = NSCollectionLayoutSize(
+                widthDimension: .fractionalWidth(1.0),
+                heightDimension: .estimated(200))
+            let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
+                layoutSize: headerSize,
+                elementKind: UICollectionView.elementKindSectionHeader,
+                alignment: .top)
+
+            section.boundarySupplementaryItems = [sectionHeader]
+            return section
+        }
     }
 }
