@@ -103,6 +103,7 @@
 		DAB37D50273256B900EC523F /* RecordingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB37D4F273256B900EC523F /* RecordingModel.swift */; };
 		DAE7540E274D2A25004A19C3 /* ResultDetailImagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE7540D274D2A25004A19C3 /* ResultDetailImagesViewController.swift */; };
 		DAE75410274D2A32004A19C3 /* ResultDetailImageViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE7540F274D2A32004A19C3 /* ResultDetailImageViewCoordinator.swift */; };
+		DAE75412274D3AFA004A19C3 /* DetailImagesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE75411274D3AFA004A19C3 /* DetailImagesCell.swift */; };
 		DAFA9B59274112D800BF168C /* RecordingPhotoCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFA9B58274112D800BF168C /* RecordingPhotoCoordinator.swift */; };
 		DAFA9B5B2741131400BF168C /* RecordingPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFA9B5A2741131400BF168C /* RecordingPhotoViewController.swift */; };
 		DAFA9B5D27424C9A00BF168C /* RecordingPhotoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFA9B5C27424C9A00BF168C /* RecordingPhotoModel.swift */; };
@@ -208,6 +209,7 @@
 		DAB37D4F273256B900EC523F /* RecordingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingModel.swift; sourceTree = "<group>"; };
 		DAE7540D274D2A25004A19C3 /* ResultDetailImagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailImagesViewController.swift; sourceTree = "<group>"; };
 		DAE7540F274D2A32004A19C3 /* ResultDetailImageViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailImageViewCoordinator.swift; sourceTree = "<group>"; };
+		DAE75411274D3AFA004A19C3 /* DetailImagesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailImagesCell.swift; sourceTree = "<group>"; };
 		DAFA9B58274112D800BF168C /* RecordingPhotoCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingPhotoCoordinator.swift; sourceTree = "<group>"; };
 		DAFA9B5A2741131400BF168C /* RecordingPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingPhotoViewController.swift; sourceTree = "<group>"; };
 		DAFA9B5C27424C9A00BF168C /* RecordingPhotoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingPhotoModel.swift; sourceTree = "<group>"; };
@@ -476,6 +478,7 @@
 			children = (
 				DAE7540D274D2A25004A19C3 /* ResultDetailImagesViewController.swift */,
 				DAE7540F274D2A32004A19C3 /* ResultDetailImageViewCoordinator.swift */,
+				DAE75411274D3AFA004A19C3 /* DetailImagesCell.swift */,
 			);
 			path = ResultDetailImagesScene;
 			sourceTree = "<group>";
@@ -650,6 +653,7 @@
 				49D5A9532738FBCD00937821 /* MountainDetailModel.swift in Sources */,
 				49FC97682744E105008CE73A /* ResultDetailViewCoordinator.swift in Sources */,
 				DAFA9B5D27424C9A00BF168C /* RecordingPhotoModel.swift in Sources */,
+				DAE75412274D3AFA004A19C3 /* DetailImagesCell.swift in Sources */,
 				49FEEDB92732584000D37CCA /* MountainEntity.swift in Sources */,
 				493178B42743992400B5FB88 /* DetailCell.swift in Sources */,
 				98BCF4F92737A7120073E6FB /* SettingsViewModel.swift in Sources */,
