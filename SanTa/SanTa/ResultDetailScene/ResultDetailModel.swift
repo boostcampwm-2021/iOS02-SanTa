@@ -16,6 +16,7 @@ struct ResultDetailData {
     let altitude: ResultAltitude
     let incline: ResultIncline
     let id: String
+    let assetIdentifiers: [String]
     let coordinates: [[CLLocationCoordinate2D]]
     private(set) var title: String
     
@@ -28,6 +29,7 @@ struct ResultDetailData {
         self.id = records.id
         self.title = records.title
         self.coordinates = records.coordinates
+        self.assetIdentifiers = records.assetIdentifiers
     }
     
     mutating func change(title: String) {

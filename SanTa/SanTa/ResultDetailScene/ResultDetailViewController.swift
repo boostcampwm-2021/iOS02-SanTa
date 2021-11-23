@@ -7,6 +7,7 @@
 
 import UIKit
 import MapKit
+import Photos
 
 class ResultDetailViewController: UIViewController {
     
@@ -122,7 +123,15 @@ class ResultDetailViewController: UIViewController {
         startAnnotation.title = "start"
         endAnnotation.coordinate = endPoint
         endAnnotation.title = "end"
+        self.fetchAssetImage()
         self.mapView.addAnnotations([startAnnotation, endAnnotation])
+    }
+    
+    private func fetchAssetImage() {
+        guard let reusltDetailData = self.viewModel?.resultDetailData else { return }
+        let allMedia = PHAsset.fetchAssets(with: .image, options: nil)
+        
+        let assetIdentifiers = reusltDetailData
     }
     
     private func configureSmallerView() {
