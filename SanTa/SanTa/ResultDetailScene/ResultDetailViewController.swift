@@ -367,19 +367,25 @@ extension ResultDetailViewController: MKMapViewDelegate {
         let identifier = "PointAnnotation"
         
         
-        let annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+        let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
         if annotation.title == "start" {
-            annotationView.markerTintColor = .init(named: "SantaColor")
+            annotationView.tintColor = .init(named: "SantaColor")
         } else if annotation.title == "end" {
-            annotationView.markerTintColor = .red
+            annotationView.tintColor = .red
         } else {
             guard let identifider = annotation.title,
-                  let image = self.uiImages[identifider] else {
+                  let image = self.uiImages[identifider ?? "None"] else {
                 return nil
             }
-            annotationView.image = image
+            
+            let size = CGSize(width: 30, height: 30)
+            UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
+            image.draw(in: CGRect(origin: CGPoint.zero, size: size))
+            let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            
+            annotationView.image = resizedImage
         }
-        annotationView.animatesWhenAdded = true
         return annotationView
     }
 }
