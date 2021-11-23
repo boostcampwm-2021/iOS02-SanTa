@@ -69,6 +69,18 @@ class ResultDetailViewController: UIViewController {
         return button
     }()
     
+    private lazy var detailImagesButton: UIButton = {
+        let button = UIButton()
+        button.setImage(.init(systemName: "photo.on.rectangle.angled"), for: .normal)
+        button.imageView?.contentMode = .scaleAspectFit
+        button.titleLabel?.font = .boldSystemFont(ofSize: 12)
+        button.contentHorizontalAlignment = .center
+        button.semanticContentAttribute = .forceLeftToRight
+        button.imageEdgeInsets = .init(top: 0, left: 15, bottom: 0, right: 15)
+        button.addTarget(self, action: #selector(pushDetailImagesViewController), for: .touchUpInside)
+        return button
+    }()g
+    
     private var titleLabel: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: label.font.pointSize, weight: .bold)
@@ -187,6 +199,7 @@ class ResultDetailViewController: UIViewController {
         self.view.addSubview(self.largerInformationView)
         self.view.addSubview(self.smallerInformationView)
         self.view.addSubview(self.titleLabel)
+        self.view.addSubview(self.detailImagesButton)
       
         NSLayoutConstraint.activate([
             self.mapView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
@@ -303,6 +316,10 @@ class ResultDetailViewController: UIViewController {
 extension ResultDetailViewController {
     @objc func dismissViewController() {
         coordinator?.dismiss()
+    }
+    
+    @objc func pushDetailImagesViewController() {
+        
     }
     
     @objc func presentModifyResultAlert() {
