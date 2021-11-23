@@ -128,10 +128,17 @@ class ResultDetailViewController: UIViewController {
     }
     
     private func fetchAssetImage() {
-        guard let reusltDetailData = self.viewModel?.resultDetailData else { return }
+        guard let assetIdentifiers = self.viewModel?.resultDetailData?.assetIdentifiers else { return }
         let allMedia = PHAsset.fetchAssets(with: .image, options: nil)
-        
-        let assetIdentifiers = reusltDetailData
+        var identifierIndex = 0
+        for i in stride(from: allMedia.count - 1, through: 0, by: -1) {
+            if allMedia[i].localIdentifier == assetIdentifiers[identifierIndex] {
+                
+                
+                identifierIndex += 1
+                guard identifierIndex < assetIdentifiers.count else { return }
+            }
+        }
     }
     
     private func configureSmallerView() {
