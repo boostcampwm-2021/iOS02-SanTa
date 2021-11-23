@@ -114,12 +114,14 @@ class ResultDetailViewController: UIViewController {
     }
     
     private func drawPathOnMap() {
-        guard let pointSets: [[CLLocationCoordinate2D]] = self.viewModel?.resultDetailData?.coordinates,
-              let initial = mapView.overlays.first?.boundingMapRect else {
+        guard let pointSets: [[CLLocationCoordinate2D]] = self.viewModel?.resultDetailData?.coordinates else {
             return
         }
         for pointSet in pointSets {
             mapView.addOverlay(MKPolyline(coordinates: pointSet, count: pointSet.count))
+        }
+        guard let initial = mapView.overlays.first?.boundingMapRect else {
+            return
         }
         
         let mapRect = mapView.overlays.dropFirst().reduce(initial) { $0.union($1.boundingMapRect) }
@@ -131,7 +133,7 @@ class ResultDetailViewController: UIViewController {
               let endingLocation = self.viewModel?.resultDetailData?.timeStamp.endLocation else {
                   return
               }
-        
+        print(startingLocation, endingLocation)
         let startAnnotation = MKPointAnnotation()
         let endAnnotation = MKPointAnnotation()
         let startingPoint = CLLocationCoordinate2D(latitude: startingLocation.latitude, longitude: startingLocation.longitude)
