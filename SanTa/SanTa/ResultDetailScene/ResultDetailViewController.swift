@@ -139,7 +139,7 @@ class ResultDetailViewController: UIViewController {
                 requestAssetIamge(with: allMedia[i]) { [weak self] image in
                     guard let image = image else { return }
                     self?.uiImages.append(image)
-                    self?.appendAnnotationimage(image: image)
+                    self?.appendImageAnnotation(image: image)
                 }
                 identifierIndex += 1
                 guard identifierIndex < assetIdentifiers.count else { return }
@@ -158,7 +158,7 @@ class ResultDetailViewController: UIViewController {
         })
     }
     
-    private func appendAnnotationimage(image: UIImage) {
+    private func appendImageAnnotation(image: UIImage) {
         let annotationView = MKAnnotationView()
         
         let annotationimageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 25, height: 25))
