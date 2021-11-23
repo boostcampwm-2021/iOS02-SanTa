@@ -27,7 +27,13 @@ class MountainAddingViewCoordinator: Coordinator {
 extension MountainAddingViewCoordinator {
     private func injectDependencies() -> MountainAddingViewModel {
         return MountainAddingViewModel(
-            useCase: MountainAddingViewUseCase()
+            useCase: MountainAddingViewUseCase(
+                repository: DefaultMountainAddingRepository(
+                    coreDataMountainStorage: CoreDataMountainStorage(
+                        coreDataStorage: CoreDataStorage() // TODO - 변경필요
+                    )
+                )
+            )
         )
     }
     

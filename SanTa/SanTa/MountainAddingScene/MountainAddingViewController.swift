@@ -6,10 +6,13 @@
 //
 
 import MapKit
+import Combine
 
 class MountainAddingViewController: UIViewController {
     weak var coordinator: MountainAddingViewCoordinator?
     private var viewModel: MountainAddingViewModel?
+    private var observers: [AnyCancellable] = []
+    
     private lazy var mapView: MKMapView = {
         let mapView = MKMapView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height * 2/5))
         mapView.delegate = self
@@ -17,6 +20,7 @@ class MountainAddingViewController: UIViewController {
         mapView.isUserInteractionEnabled = false
         return mapView
     }()
+    
     private lazy var backButton: UIButton = {
         let button = UIButton(frame: .zero)
         button.setImage(.init(systemName: "xmark"), for: .normal)
@@ -27,6 +31,12 @@ class MountainAddingViewController: UIViewController {
         return button
     }()
     
+    private lazy var mountainAddingView: MountainAddingView = {
+        let view = MountainAddingView()
+        view.configure()
+        return view
+    }()
+    
     convenience init(viewModel: MountainAddingViewModel) {
         self.init()
         self.viewModel = viewModel
@@ -34,6 +44,7 @@ class MountainAddingViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.mountainAddingView.newPlaceDelegate = self
         self.configureViews()
         self.configureViewModel()
     }
@@ -41,34 +52,42 @@ class MountainAddingViewController: UIViewController {
     private func configureViews() {
         self.view.addSubview(mapView)
         self.view.addSubview(backButton)
+        self.view.addSubview(mountainAddingView)
         NSLayoutConstraint.activate([
             self.backButton.leftAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leftAnchor, constant: 10),
             self.backButton.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 10),
             self.backButton.widthAnchor.constraint(equalToConstant: 30),
             self.backButton.heightAnchor.constraint(equalToConstant: 30)
         ])
+        NSLayoutConstraint.activate([
+            self.mountainAddingView.topAnchor.constraint(equalTo: self.mapView.bottomAnchor),
+            self.mountainAddingView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
+            self.mountainAddingView.rightAnchor.constraint(equalTo: self.view.rightAnchor),
+            self.mountainAddingView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+        ])
     }
     
     private func configureViewModel() {
-        self.viewModel?.locationDidUpdate = { [weak self] in
-            self?.mapView.showsUserLocation = false
-            self?.configureLocation()
-            self?.configureAnnotation()
-        }
+        self.viewModel?.$coordinate
+            .sink(receiveValue: { [weak self] coordinate in
+                self?.mapView.showsUserLocation = false
+                self?.configureLocation(coordinate)
+                self?.configureAnnotation(coordinate)
+            })
+            .store(in: &observers)
         mapView.showsUserLocation = true
     }
     
-    private func configureLocation() {
-        guard let userLocation = self.viewModel?.userLocation else { return }
-        let location = CLLocationCoordinate2D(latitude: userLocation.latitude, longitude: userLocation.longitude)
+    private func configureLocation(_ coordinate: CLLocationCoordinate2D?) {
+        guard let coordinate = coordinate else { return }
         let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
-        let region = MKCoordinateRegion(center: location, span: span)
+        let region = MKCoordinateRegion(center: coordinate, span: span)
         self.mapView.setRegion(region, animated: false)
     }
     
-    private func configureAnnotation() {
-        guard let userLocation = self.viewModel?.userLocation else { return }
-        let mountainAnnotation = MountainAnnotation(latitude: userLocation.latitude, longitude: userLocation.longitude)
+    private func configureAnnotation(_ coordinate: CLLocationCoordinate2D?) {
+        guard let coordinate = coordinate else { return }
+        let mountainAnnotation = MountainAnnotation(latitude: coordinate.latitude, longitude: coordinate.longitude)
         self.mapView.addAnnotation(mountainAnnotation)
     }
     
@@ -87,7 +106,19 @@ extension MountainAddingViewController: MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
-        self.viewModel?.userLocation = (userLocation.coordinate.latitude, userLocation.coordinate.longitude)
+        self.viewModel?.updateUserLocation(coordinate: userLocation.coordinate, altitude: userLocation.location?.altitude)
     }
 }
 
+extension MountainAddingViewController: NewPlaceAddable {
+    func userDidTypeWrong() {
+        let alert = UIAlertController(title: "올바르지 않은 입력", message: "산 이름과 설명이 입력되지 않았습니다", preferredStyle: .alert)
+        let confirm = UIAlertAction(title: "확인", style: .default)
+        alert.addAction(confirm)
+        self.present(alert, animated: true)
+    }
+    
+    func newPlaceShouldAdd(title: String, description: String) {
+        viewModel?.addMountain(title: title, description: description)
+    }
+}
