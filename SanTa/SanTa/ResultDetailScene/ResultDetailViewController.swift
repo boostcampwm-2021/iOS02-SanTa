@@ -84,7 +84,7 @@ class ResultDetailViewController: UIViewController {
         self.viewModel?.recordDidFetch = { [weak self] in
             guard let viewModel = self?.viewModel else { return }
             self?.titleLabel.text = viewModel.resultDetailData?.title
-            self?.informationView.configureLayout(
+            self?.smallerInformationView.configureLayout(
                 distance: viewModel.distanceViewModel.totalDistance,
                 time: viewModel.timeViewModel.totalTimeSpent,
                 steps: viewModel.distanceViewModel.steps,
@@ -145,7 +145,6 @@ class ResultDetailViewController: UIViewController {
         self.view.addSubview(self.largerInformationView)
         self.view.addSubview(self.smallerInformationView)
         self.view.addSubview(self.titleLabel)
-        self.view.addSubview(self.informationView)
       
         NSLayoutConstraint.activate([
             self.mapView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
