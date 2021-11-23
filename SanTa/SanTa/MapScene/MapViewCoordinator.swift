@@ -85,7 +85,10 @@ extension MapViewCoordinator {
             useCase: MapViewUseCase(
                 repository: DefaultMapViewRespository(
                     mountainExtractor: self.mountainExtractor,
-                    userDefaultsStorage: self.userDefaultsStorage
+                    userDefaultsStorage: self.userDefaultsStorage,
+                    coreDataMountainStorage: CoreDataMountainStorage(
+                        coreDataStorage: self.coreDataStorage
+                    )
                 )
             )
         )

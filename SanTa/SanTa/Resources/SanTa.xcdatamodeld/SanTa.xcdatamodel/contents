@@ -13,6 +13,7 @@
         <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="region" optional="YES" attributeType="String"/>
     </entity>
     <entity name="RecordEntity" representedClassName=".RecordEntityMO" syncable="YES" codeGenerationType="class">
         <attribute name="distance" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
@@ -32,8 +33,8 @@
     </entity>
     <elements>
         <element name="LocationEntity" positionX="-50350.43591308594" positionY="-6695.536254882812" width="128" height="103"/>
+        <element name="MountainEntity" positionX="-50537.20703125" positionY="-6524.73828125" width="128" height="134"/>
         <element name="RecordEntity" positionX="-50540.45288085938" positionY="-6705.159729003906" width="128" height="133"/>
         <element name="RecordsEntity" positionX="-50725.08505249023" positionY="-6673.378601074219" width="128" height="104"/>
-        <element name="MountainEntity" positionX="-50537.20703125" positionY="-6524.73828125" width="128" height="133"/>
     </elements>
 </model>
