@@ -75,7 +75,13 @@ class MountainAddingViewController: UIViewController {
                 self?.configureAnnotation(coordinate)
             })
             .store(in: &observers)
-        mapView.showsUserLocation = true
+        self.viewModel?.addMountainResult
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] result in
+                self?.showResult(result)
+            })
+            .store(in: &observers)
+        self.mapView.showsUserLocation = true
     }
     
     private func configureLocation(_ coordinate: CLLocationCoordinate2D?) {
@@ -89,6 +95,15 @@ class MountainAddingViewController: UIViewController {
         guard let coordinate = coordinate else { return }
         let mountainAnnotation = MountainAnnotation(latitude: coordinate.latitude, longitude: coordinate.longitude)
         self.mapView.addAnnotation(mountainAnnotation)
+    }
+    
+    private func showResult(_ result: MountainAddingViewModel.AddMountainResult) {
+        let alert = UIAlertController(title: "산 추가하기", message: result.rawValue, preferredStyle: .alert)
+        let confirm = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
+            self?.dismissViewController()
+        }
+        alert.addAction(confirm)
+        self.present(alert, animated: true)
     }
     
     @objc func dismissViewController() {
@@ -119,6 +134,6 @@ extension MountainAddingViewController: NewPlaceAddable {
     }
     
     func newPlaceShouldAdd(title: String, description: String) {
-        viewModel?.addMountain(title: title, description: description)
+        self.viewModel?.addMountain(title: title, description: description)
     }
 }

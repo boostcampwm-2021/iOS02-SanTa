@@ -11,9 +11,11 @@ class MountainAddingViewCoordinator: Coordinator {
     weak var parentCoordinator: Coordinator?
     var navigationController: UINavigationController
     var childCoordinators: [Coordinator] = []
+    var coreDataStorage: CoreDataStorage
     
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController, coreDataStorage: CoreDataStorage) {
         self.navigationController = navigationController
+        self.coreDataStorage = coreDataStorage
     }
     
     func start() {
@@ -30,7 +32,7 @@ extension MountainAddingViewCoordinator {
             useCase: MountainAddingViewUseCase(
                 repository: DefaultMountainAddingRepository(
                     coreDataMountainStorage: CoreDataMountainStorage(
-                        coreDataStorage: CoreDataStorage() // TODO - 변경필요
+                        coreDataStorage: self.coreDataStorage
                     )
                 )
             )
