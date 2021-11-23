@@ -36,6 +36,7 @@ class RecordingPhotoViewController: UIViewController {
         label.textAlignment = .center
         label.textColor = .systemGray
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.accessibilityTraits = .header
         return label
     }()
     
@@ -58,6 +59,7 @@ class RecordingPhotoViewController: UIViewController {
         button.layer.masksToBounds = true
         button.layer.cornerRadius = 6
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.accessibilityHint = "사진 기록하기를 허용하려면 이중 탭 하십시오"
         return button
     }()
     
