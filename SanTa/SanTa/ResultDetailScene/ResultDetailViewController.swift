@@ -93,6 +93,17 @@ class ResultDetailViewController: UIViewController {
                 averageSpeed: viewModel.averageSpeed()
             )
             self?.largerInformationView.configure()
+            guard let distanceViewModel = self?.viewModel?.distanceViewModel,
+                  let timeViewModel = self?.viewModel?.timeViewModel,
+                  let paceViewModel = self?.viewModel?.paceViewModel,
+                  let altitudeViewModel = self?.viewModel?.altitudeViewModel,
+                  let inclineViewModel = self?.viewModel?.inclineViewMedel else {
+                      return
+                  }
+            let largeInfoModel: [LargeViewModel] = [
+                distanceViewModel, timeViewModel, paceViewModel, altitudeViewModel, inclineViewModel
+            ]
+            self?.largerInformationView.bindSnapShotApply(section: .main, item: largeInfoModel)
             self?.configureViews()
             self?.configurePanGesture()
         }
@@ -266,13 +277,7 @@ extension ResultDetailViewController {
     @objc func presentModifyResultAlert() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let changeTitle = UIAlertAction(title: "제목 변경", style: .default) { action in
-            // TODO: 입력창 띄우고 텍스트 입력 받아서 update 호출
             self.coordinator?.presentRecordingTitleViewController()
-//            self.viewModel?.update(title: "타이트을", completion: { title in
-//                DispatchQueue.main.async {
-//                    self.titleLabel.text = title
-//                }
-//            })
         }
         let delete = UIAlertAction(title: "삭제", style: .destructive) { action in
             self.viewModel?.delete { result in
@@ -307,7 +312,6 @@ extension ResultDetailViewController: SetTitleDelegate {
 extension ResultDetailViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         if let polyline = overlay as? MKPolyline {
-            print("is polyline")
             let renderer = MKPolylineRenderer(overlay: polyline)
             renderer.lineWidth = 5
             renderer.alpha = 1

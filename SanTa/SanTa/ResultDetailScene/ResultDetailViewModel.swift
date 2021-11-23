@@ -21,6 +21,13 @@ class ResultDetailViewModel {
     var altitudeViewModel: AltitudeViewModel {
         return AltitudeViewModel(altitudeData: self.resultDetailData?.altitude)
     }
+    var paceViewModel: PaceViewModel {
+        return PaceViewModel(paceData: self.resultDetailData?.pace)
+    }
+    var inclineViewMedel: InclineViewModel {
+        return InclineViewModel(inclineData: self.resultDetailData?.incline)
+    }
+    
     init(useCase: ResultDetailUseCase) {
         self.useCase = useCase
         self.recordDidFetch = {}
@@ -101,34 +108,42 @@ struct CellContentEntity {
     let contentTitle: String
 }
 
-protocol ResultDetailCellRepresentable {
+protocol ResultDetailCellRepresentable: Hashable {
     var title: String { get }
     var contents: [CellContentEntity] { get }
 }
 
+class LargeViewModel: Hashable {
+    var id: UUID = UUID()
+    var title: String = ""
+    var contents: [CellContentEntity] = []
+    
+    func hash(into hasher: inout Hasher) {
+      hasher.combine(id)
+    }
+
+    static func == (lhs: LargeViewModel, rhs: LargeViewModel) -> Bool {
+      lhs.id == rhs.id
+    }
+}
+
 extension ResultDetailViewModel {
-    struct DistanceViewModel: ResultDetailCellRepresentable {
-        let title: String = "거리"
-        let totalDistance: String
-        let steps: String
-        let contents: [CellContentEntity]
+    class DistanceViewModel: LargeViewModel {
+        var totalDistance: String = ""
+        var steps: String = ""
         
         init(distanceData: ResultDistance?) {
+            super.init()
             guard let distanceData = distanceData else {
-                self.totalDistance = ""
-                self.steps = ""
-                self.contents = []
                 return
             }
+            self.title = "거리"
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
             formatter.minimumFractionDigits = 0
             formatter.maximumFractionDigits = 2
             guard let total = formatter.string(from: NSNumber(value: distanceData.total)),
                   let steps = formatter.string(from: NSNumber(value: distanceData.steps)) else {
-                      self.contents = []
-                      self.totalDistance = ""
-                      self.steps = ""
                       return
                   }
             self.totalDistance = total
@@ -140,25 +155,21 @@ extension ResultDetailViewModel {
         }
     }
     
-    struct TimeViewModel: ResultDetailCellRepresentable {
-        var title: String = "시간"
-        let totalTimeSpent: String
-        var contents: [CellContentEntity]
+    class TimeViewModel: LargeViewModel {
+        var totalTimeSpent: String = ""
         
         init(timeData: ResultTime?) {
+            super.init()
             guard let timeData = timeData else {
-                self.totalTimeSpent = ""
-                self.contents = []
                 return
             }
+            self.title = "시간"
             let formatter = DateComponentsFormatter()
             formatter.allowedUnits = [.hour, .minute]
             formatter.zeroFormattingBehavior = .pad
             guard let spent = formatter.string(from: timeData.spent),
                   let active = formatter.string(from: timeData.active),
                   let inactive = formatter.string(from: timeData.inactive) else {
-                      self.contents = []
-                      self.totalTimeSpent = ""
                       return
                   }
             self.totalTimeSpent = spent
@@ -170,26 +181,39 @@ extension ResultDetailViewModel {
         }
     }
     
-    struct PaceViewModel: ResultDetailCellRepresentable {
-        var title: String = "페이스(1km당 소요시간)"
-        var contents: [CellContentEntity]
-        
-        
-    }
-    
-    struct AltitudeViewModel: ResultDetailCellRepresentable {
-        var title: String = "고도"
-        let highest: String
-        let lowest: String
-        var contents: [CellContentEntity]
-        
-        init(altitudeData: ResultAltitude?) {
-            guard let altitudeData = altitudeData else {
-                self.highest = ""
-                self.lowest = ""
-                self.contents = []
+    class PaceViewModel: LargeViewModel {
+        init(paceData: ResultPace?) {
+            super.init()
+            guard let pace = paceData else {
                 return
             }
+            self.title = "페이스(1km당 소요시간)"
+            let formatter = DateComponentsFormatter()
+            formatter.allowedUnits = [.hour, .minute]
+            formatter.zeroFormattingBehavior = .pad
+            guard let averagePace = formatter.string(from: pace.timePerKilometer),
+                  let fastest = formatter.string(from: pace.fastestPace),
+                  let slowest = formatter.string(from: pace.slowestPace) else {
+                      return
+                  }
+            self.contents = [
+                CellContentEntity(content: averagePace, contentTitle: "평균"),
+                CellContentEntity(content: fastest, contentTitle: "최고"),
+                CellContentEntity(content: slowest, contentTitle: "최저"),
+            ]
+        }
+    }
+    
+    class AltitudeViewModel: LargeViewModel {
+        var highest: String = ""
+        var lowest: String = ""
+        
+        init(altitudeData: ResultAltitude?) {
+            super.init()
+            guard let altitudeData = altitudeData else {
+                return
+            }
+            self.title = "고도"
             self.contents = [
                 CellContentEntity(content: String(altitudeData.total), contentTitle: "누적"),
                 CellContentEntity(content: String(altitudeData.highest), contentTitle: "최고"),
@@ -202,18 +226,19 @@ extension ResultDetailViewModel {
         }
     }
     
-    struct InclineViewModel: ResultDetailCellRepresentable {
-        var title: String = "경사도"
-        var contents: [CellContentEntity]
-        
-        init(inclineData: ResultIncline) {
+    class InclineViewModel: LargeViewModel {
+        init(inclineData: ResultIncline?) {
+            super.init()
+            guard let inclineData = inclineData else {
+                return
+            }
+            self.title = "경사도"
             let formatter = NumberFormatter()
             formatter.numberStyle = .decimal
             formatter.maximumFractionDigits = 2
             guard let uphill = formatter.string(from: NSNumber(value: inclineData.uphillKilometer)),
                   let downhill = formatter.string(from: NSNumber(value: inclineData.downhillKilometer)),
                   let plain = formatter.string(from: NSNumber(value: inclineData.plainKilometer)) else {
-                      self.contents = []
                       return
                   }
             self.contents = [

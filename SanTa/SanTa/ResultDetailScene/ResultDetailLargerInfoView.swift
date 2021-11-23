@@ -58,10 +58,9 @@ extension ResultDetailLargerInfoView {
         self.configureViews()
         self.configuareDataSource()
         self.displayUpDownMark()
-        self.bindSnapShotApply(section: .main, item: [AnyHashable]())
     }
     
-    private func bindSnapShotApply(section: DetailLargerInfoSection, item: [AnyHashable]) {
+    func bindSnapShotApply(section: DetailLargerInfoSection, item: [AnyHashable]) {
         var snapshot = DetailLargerInfoSnapshot()
         snapshot.appendSections([.main])
         item.forEach {
@@ -88,8 +87,10 @@ extension ResultDetailLargerInfoView {
     private func configuareDataSource() {
         let datasource = DetailLargerInfoDataSource (collectionView: self.collectionView, cellProvider: { (collectionView, indexPath, item) -> UICollectionViewCell in
             
-            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailCell.identifier, for: indexPath) as? DetailCell else  {
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailCell.identifier, for: indexPath) as? DetailCell,
+                let item = item as? LargeViewModel else  {
                 return UICollectionViewCell() }
+            cell.layout(data: item)
             return cell
         })
         

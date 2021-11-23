@@ -12,7 +12,7 @@ struct ResultDetailData {
     let timeStamp: ResultTimeStamp
     let distance: ResultDistance
     let time: ResultTime
-//    let pace: ResultPace
+    let pace: ResultPace
     let altitude: ResultAltitude
     let incline: ResultIncline
     let id: String
@@ -23,6 +23,7 @@ struct ResultDetailData {
         self.timeStamp = ResultTimeStamp(records: records)
         self.distance = ResultDistance(records: records)
         self.time = ResultTime(records: records)
+        self.pace = ResultPace(records: records)
         self.altitude = ResultAltitude(records: records)
         self.incline = ResultIncline(records: records)
         self.id = records.id
@@ -81,6 +82,12 @@ struct ResultPace {
     let timePerKilometer: TimeInterval
     let fastestPace: TimeInterval
     let slowestPace: TimeInterval
+    
+    init(records: Records) {
+        self.timePerKilometer = records.distances / records.times / 1000
+        self.fastestPace = TimeInterval(records.secondPerHighestSpeed)
+        self.slowestPace = TimeInterval(records.secondPerMinimumSpeed)
+    }
 }
 
 struct ResultAltitude {
