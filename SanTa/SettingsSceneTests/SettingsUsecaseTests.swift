@@ -40,7 +40,6 @@ class SettingsUsecaseTests: XCTestCase {
         let option4 = options[1][1] as? ToggleOption
         let option5 = options[2][0] as? ToggleOption
         let option6 = options[3][0] as? MapOption
-        let option7 = options[3][1] as? ToggleOption
         
         XCTAssertNotNil(option1)
         XCTAssertNotNil(option2)
@@ -48,7 +47,6 @@ class SettingsUsecaseTests: XCTestCase {
         XCTAssertNotNil(option4)
         XCTAssertNotNil(option5)
         XCTAssertNotNil(option6)
-        XCTAssertNotNil(option7)
     }
 }
 
