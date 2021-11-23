@@ -9,8 +9,11 @@ import UIKit
 import Combine
 import Photos
 
-protocol RecordingViewDelegate: AnyObject {
+protocol SetTitleDelegate: AnyObject {
     func didTitleWriteDone(title: String)
+}
+
+protocol RecordingViewDelegate: SetTitleDelegate {
     func didAgreeButtonTouchDone()
 }
 

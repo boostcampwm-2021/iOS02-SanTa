@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreLocation
 
 class TotalRecords {
     private(set) var totalRecords: [DateSeperateRecords] = []
@@ -98,6 +99,9 @@ struct Records {
     private(set) var assetIdentifiers: [String]
     private(set) var secondPerHighestSpeed: Int
     private(set) var secondPerMinimumSpeed: Int
+    private(set) var id: String
+    
+    
     
     var date: Date? {
         return records.last?.endTime
@@ -138,6 +142,12 @@ struct Records {
         return max - min
     }
     
+    var coordinates: [[CLLocationCoordinate2D]] {
+        var coordinates: [[Location]] = []
+        self.records.forEach{coordinates.append($0.locations)}
+        return coordinates.map{$0.map{$0.inCoordinates()}}
+    }
+    
     mutating func configureTitle(title: String) {
         self.title = title
     }
@@ -175,4 +185,8 @@ struct Location {
     let latitude: Double
     let longitude: Double
     let altitude: Double
+    
+    func inCoordinates() -> CLLocationCoordinate2D {
+        return CLLocationCoordinate2D(latitude: self.latitude, longitude: self.longitude)
+    }
 }

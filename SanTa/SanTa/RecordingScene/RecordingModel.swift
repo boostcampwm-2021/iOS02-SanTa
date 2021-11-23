@@ -190,7 +190,8 @@ final class RecordingModel: NSObject, ObservableObject {
                                    records: [record],
                                    assetIdentifiers: [String](),
                                    secondPerHighestSpeed: minTime,
-                                   secondPerMinimumSpeed: self.maxOneKiloTime)
+                                   secondPerMinimumSpeed: self.maxOneKiloTime,
+                                   id: UUID().uuidString)
             return
         }
         
