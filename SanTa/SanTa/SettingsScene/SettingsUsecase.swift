@@ -7,12 +7,7 @@
 
 import Foundation
 
-protocol SettingsUsecase {
-    func save<T: Codable>(value: T, key: Settings)
-    func makeSettings() -> [[Option]]
-}
-
-final class DefaultSettingsUsecase: SettingsUsecase {
+final class SettingsUsecase {
     
     let settingsRepository: SettingsRepository
     
