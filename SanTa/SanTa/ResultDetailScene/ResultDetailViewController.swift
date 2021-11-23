@@ -370,8 +370,14 @@ extension ResultDetailViewController: MKMapViewDelegate {
         let annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
         if annotation.title == "start" {
             annotationView.markerTintColor = .init(named: "SantaColor")
-        } else if annotation.title = "end" {
+        } else if annotation.title == "end" {
             annotationView.markerTintColor = .red
+        } else {
+            guard let identifider = annotation.title,
+                  let image = self.uiImages[identifider] else {
+                return nil
+            }
+            annotationView.image = image
         }
         annotationView.animatesWhenAdded = true
         return annotationView
