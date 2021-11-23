@@ -28,7 +28,9 @@ struct ResultDetailData {
         self.incline = ResultIncline(records: records)
         self.id = records.id
         self.title = records.title
-        self.coordinates = records.coordinates
+        var locations: [[CLLocationCoordinate2D]] = []
+        records.records.forEach { locations.append($0.locations.map {CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude) }) }
+        self.coordinates = locations
     }
     
     mutating func change(title: String) {

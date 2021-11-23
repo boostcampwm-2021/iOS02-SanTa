@@ -109,28 +109,36 @@ class ResultDetailViewController: UIViewController {
         }
         viewModel?.setUp()
         
-        guard let pointSets: [[CLLocationCoordinate2D]] = self.viewModel?.resultDetailData?.coordinates else {
+        self.drawPathOnMap()
+        self.markEndPoints()
+    }
+    
+    private func drawPathOnMap() {
+        guard let pointSets: [[CLLocationCoordinate2D]] = self.viewModel?.resultDetailData?.coordinates,
+              let initial = mapView.overlays.first?.boundingMapRect else {
             return
         }
         for pointSet in pointSets {
             mapView.addOverlay(MKPolyline(coordinates: pointSet, count: pointSet.count))
         }
-        guard let initial = mapView.overlays.first?.boundingMapRect else { return }
-
-            let mapRect = mapView.overlays
-                .dropFirst()
-                .reduce(initial) { $0.union($1.boundingMapRect) }
-
-            mapView.setVisibleMapRect(mapRect, animated: true)
-        let startAnnotation = MKPointAnnotation()
-        let endAnnotation = MKPointAnnotation()
-        guard let startPoint = pointSets.first?.first,
-              let endPoint = pointSets.last?.last else {
+        
+        let mapRect = mapView.overlays.dropFirst().reduce(initial) { $0.union($1.boundingMapRect) }
+        mapView.setVisibleMapRect(mapRect, animated: true)
+    }
+    
+    private func markEndPoints() {
+        guard let startingLocation = self.viewModel?.resultDetailData?.timeStamp.startLocation,
+              let endingLocation = self.viewModel?.resultDetailData?.timeStamp.endLocation else {
                   return
               }
-        startAnnotation.coordinate = startPoint
+        
+        let startAnnotation = MKPointAnnotation()
+        let endAnnotation = MKPointAnnotation()
+        let startingPoint = CLLocationCoordinate2D(latitude: startingLocation.latitude, longitude: startingLocation.longitude)
+        let endingPoint = CLLocationCoordinate2D(latitude: endingLocation.latitude, longitude: endingLocation.longitude)
+        startAnnotation.coordinate = startingPoint
         startAnnotation.title = "start"
-        endAnnotation.coordinate = endPoint
+        endAnnotation.coordinate = endingPoint
         endAnnotation.title = "end"
         self.mapView.addAnnotations([startAnnotation, endAnnotation])
     }
@@ -155,7 +163,7 @@ class ResultDetailViewController: UIViewController {
         self.view.addSubview(self.largerInformationView)
         self.view.addSubview(self.smallerInformationView)
         self.view.addSubview(self.titleLabel)
-      
+        
         NSLayoutConstraint.activate([
             self.mapView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
             self.mapView.topAnchor.constraint(equalTo: self.view.topAnchor),
@@ -193,7 +201,7 @@ class ResultDetailViewController: UIViewController {
         ])
         
         infoViewTopConstraint =
-            self.smallerInformationView.topAnchor.constraint(equalTo: self.mapView.bottomAnchor)
+        self.smallerInformationView.topAnchor.constraint(equalTo: self.mapView.bottomAnchor)
         guard let infoViewConstraint = infoViewTopConstraint else { return }
         NSLayoutConstraint.activate([infoViewConstraint])
         
@@ -235,12 +243,12 @@ class ResultDetailViewController: UIViewController {
             guard (self.view.frame.height - informationViewHeight) >= (self.backButton.frame.height + 10),
                   let infoViewHight = self.infoViewHight,
                   infoViewHight < (informationViewHeight - (translation.y + offset)) else {
-                return
-            }
+                      return
+                  }
             self.smallerInformationView.layer.cornerRadius = 13
             self.largerInformationView.layer.cornerRadius = 13
             self.changeInfoViewTopConstraints(traslation: translation.y + offset)
-
+            
         case .ended:
             if self.smallerInformationView.frame.minY <= self.view.frame.height/2 {
                 self.smallerInformationView.alpha = 0
