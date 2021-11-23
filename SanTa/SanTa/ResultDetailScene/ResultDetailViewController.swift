@@ -81,6 +81,12 @@ class ResultDetailViewController: UIViewController {
         super.viewDidLoad()
         self.configureViews()
         self.mapView.delegate = self
+        self.configureViewModel()
+        self.drawPathOnMap()
+        self.markEndPoints()
+    }
+    
+    private func configureViewModel() {
         self.viewModel?.recordDidFetch = { [weak self] in
             guard let viewModel = self?.viewModel else { return }
             self?.titleLabel.text = viewModel.resultDetailData?.title
@@ -108,9 +114,6 @@ class ResultDetailViewController: UIViewController {
             self?.configurePanGesture()
         }
         viewModel?.setUp()
-        
-        self.drawPathOnMap()
-        self.markEndPoints()
     }
     
     private func drawPathOnMap() {
@@ -133,7 +136,6 @@ class ResultDetailViewController: UIViewController {
               let endingLocation = self.viewModel?.resultDetailData?.timeStamp.endLocation else {
                   return
               }
-        print(startingLocation, endingLocation)
         let startAnnotation = MKPointAnnotation()
         let endAnnotation = MKPointAnnotation()
         let startingPoint = CLLocationCoordinate2D(latitude: startingLocation.latitude, longitude: startingLocation.longitude)

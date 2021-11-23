@@ -15,6 +15,7 @@ class DetailCell: UICollectionViewCell {
         self.addSubview(title)
         title.text = data.title
         title.font = .preferredFont(for: .body, weight: .bold)
+        title.numberOfLines = 0
         title.adjustsFontSizeToFitWidth = true
         title.textColor = .init(named: "SantaColor")
         title.translatesAutoresizingMaskIntoConstraints = false
@@ -25,7 +26,7 @@ class DetailCell: UICollectionViewCell {
         
         let line = UIView()
         self.addSubview(line)
-
+        
         line.backgroundColor = .init(named: "SantaColor")
         line.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
@@ -44,10 +45,12 @@ class DetailCell: UICollectionViewCell {
             let contentLabel = UILabel()
             contentLabel.text = content.content
             contentLabel.font = .preferredFont(for: .title1, weight: .bold)
+            contentLabel.numberOfLines = 0
 
             let contentTitleLabel = UILabel()
             contentTitleLabel.text = content.contentTitle
             contentTitleLabel.font = .preferredFont(forTextStyle: .body)
+            contentTitleLabel.numberOfLines = 0
             contentLabels.append(contentLabel)
             contentTitleLabels.append(contentTitleLabel)
         }
