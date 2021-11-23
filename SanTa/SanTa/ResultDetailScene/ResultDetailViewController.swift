@@ -19,6 +19,9 @@ class ResultDetailViewController: UIViewController {
     private var infoViewHight: CGFloat?
     private var isLargeInfoView = false
     
+    private let imageManager = PHCachingImageManager()
+    private var uiImages = [UIImage]()
+    
     private lazy var mapView: MKMapView = {
         let mapView = MKMapView()
         mapView.mapType = .mutedStandard
@@ -133,12 +136,25 @@ class ResultDetailViewController: UIViewController {
         var identifierIndex = 0
         for i in stride(from: allMedia.count - 1, through: 0, by: -1) {
             if allMedia[i].localIdentifier == assetIdentifiers[identifierIndex] {
-                
-                
+                requestAssetIamge(with: allMedia[i]) { [weak self] image in
+                    guard let image = image else { return }
+                    self?.uiImages.append(image)
+                }
                 identifierIndex += 1
                 guard identifierIndex < assetIdentifiers.count else { return }
             }
         }
+    }
+    
+    private func requestAssetIamge(with asset: PHAsset?, completion: @escaping (UIImage?) -> Void) {
+        guard let asset = asset else {
+            completion(nil)
+            return
+        }
+        let thumbnailSize = CGSize(width: 1000, height: 1000)
+        self.imageManager.requestImage(for: asset, targetSize: thumbnailSize, contentMode: .aspectFill, options: nil, resultHandler: { image, _ in
+            completion(image)
+        })
     }
     
     private func configureSmallerView() {
