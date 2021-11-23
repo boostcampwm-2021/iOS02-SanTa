@@ -23,6 +23,7 @@ class ResultDetailViewController: UIViewController {
         mapView.mapType = .mutedStandard
         mapView.backgroundColor = .black
         mapView.translatesAutoresizingMaskIntoConstraints = false
+        
         return mapView
     }()
     
@@ -64,6 +65,13 @@ class ResultDetailViewController: UIViewController {
         return button
     }()
     
+    private var titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: label.font.pointSize, weight: .bold)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     convenience init(viewModel: ResultDetailViewModel) {
         self.init()
         self.viewModel = viewModel
@@ -71,9 +79,12 @@ class ResultDetailViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.configureViews()
+        self.mapView.delegate = self
         self.viewModel?.recordDidFetch = { [weak self] in
             guard let viewModel = self?.viewModel else { return }
-            self?.smallerInformationView.configureLayout(
+            self?.titleLabel.text = viewModel.resultDetailData?.title
+            self?.informationView.configureLayout(
                 distance: viewModel.distanceViewModel.totalDistance,
                 time: viewModel.timeViewModel.totalTimeSpent,
                 steps: viewModel.distanceViewModel.steps,
@@ -86,6 +97,32 @@ class ResultDetailViewController: UIViewController {
             self?.configurePanGesture()
         }
         viewModel?.setUp()
+        
+        guard let pointSets: [[CLLocationCoordinate2D]] = self.viewModel?.resultDetailData?.coordinates else {
+            return
+        }
+        for pointSet in pointSets {
+            mapView.addOverlay(MKPolyline(coordinates: pointSet, count: pointSet.count))
+        }
+        guard let initial = mapView.overlays.first?.boundingMapRect else { return }
+
+            let mapRect = mapView.overlays
+                .dropFirst()
+                .reduce(initial) { $0.union($1.boundingMapRect) }
+
+            mapView.setVisibleMapRect(mapRect, animated: true)
+        print(pointSets.count)
+        let startAnnotation = MKPointAnnotation()
+        let endAnnotation = MKPointAnnotation()
+        guard let startPoint = pointSets.first?.first,
+              let endPoint = pointSets.last?.last else {
+                  return
+              }
+        startAnnotation.coordinate = startPoint
+        startAnnotation.title = "start"
+        endAnnotation.coordinate = endPoint
+        endAnnotation.title = "end"
+        self.mapView.addAnnotations([startAnnotation, endAnnotation])
     }
     
     private func configureSmallerView() {
@@ -107,7 +144,9 @@ class ResultDetailViewController: UIViewController {
         self.view.addSubview(self.changeButton)
         self.view.addSubview(self.largerInformationView)
         self.view.addSubview(self.smallerInformationView)
-        
+        self.view.addSubview(self.titleLabel)
+        self.view.addSubview(self.informationView)
+      
         NSLayoutConstraint.activate([
             self.mapView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
             self.mapView.topAnchor.constraint(equalTo: self.view.topAnchor),
@@ -139,7 +178,9 @@ class ResultDetailViewController: UIViewController {
             self.largerInformationView.topAnchor.constraint(equalTo: self.smallerInformationView.topAnchor),
             self.largerInformationView.leadingAnchor.constraint(equalTo: self.smallerInformationView.leadingAnchor),
             self.largerInformationView.trailingAnchor.constraint(equalTo: self.smallerInformationView.trailingAnchor),
-            self.largerInformationView.bottomAnchor.constraint(equalTo: self.smallerInformationView.bottomAnchor)
+            self.largerInformationView.bottomAnchor.constraint(equalTo: self.smallerInformationView.bottomAnchor),
+            self.titleLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            self.titleLabel.centerYAnchor.constraint(equalTo: self.changeButton.centerYAnchor),
         ])
         
         infoViewTopConstraint =
@@ -226,10 +267,25 @@ extension ResultDetailViewController {
     @objc func presentModifyResultAlert() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let changeTitle = UIAlertAction(title: "제목 변경", style: .default) { action in
-            
+            // TODO: 입력창 띄우고 텍스트 입력 받아서 update 호출
+            self.coordinator?.presentRecordingTitleViewController()
+//            self.viewModel?.update(title: "타이트을", completion: { title in
+//                DispatchQueue.main.async {
+//                    self.titleLabel.text = title
+//                }
+//            })
         }
         let delete = UIAlertAction(title: "삭제", style: .destructive) { action in
-            
+            self.viewModel?.delete { result in
+                switch result {
+                case .success():
+                    DispatchQueue.main.async {
+                        self.coordinator?.dismiss()
+                    }
+                case .failure(let error):
+                    print(error)
+                }
+            }
         }
         let cancel = UIAlertAction(title: "취소", style: .cancel, handler: nil)
         alert.addAction(changeTitle)
@@ -239,4 +295,42 @@ extension ResultDetailViewController {
     }
 }
 
+extension ResultDetailViewController: SetTitleDelegate {
+    func didTitleWriteDone(title: String) {
+        self.viewModel?.update(title: title, completion: { title in
+            DispatchQueue.main.async {
+                self.titleLabel.text = title
+            }
+        })
+    }
+}
 
+extension ResultDetailViewController: MKMapViewDelegate {
+    func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
+        if let polyline = overlay as? MKPolyline {
+            print("is polyline")
+            let renderer = MKPolylineRenderer(overlay: polyline)
+            renderer.lineWidth = 5
+            renderer.alpha = 1
+            renderer.strokeColor = .init(named: "SantaColor")
+            return renderer
+        }
+        return MKOverlayRenderer()
+    }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        guard annotation is MKPointAnnotation else {
+            return nil
+        }
+        
+        let identifier = "PointAnnotation"
+        let annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+        if annotation.title == "start" {
+            annotationView.markerTintColor = .init(named: "SantaColor")
+        } else {
+            annotationView.markerTintColor = .red
+        }
+        annotationView.animatesWhenAdded = true
+        return annotationView
+    }
+}

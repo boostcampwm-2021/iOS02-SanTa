@@ -12,22 +12,34 @@ class RecordingTitleViewCoordinator: Coordinator {
     var childCoordinators: [Coordinator] = []
     var recordingTitleViewController: RecordingTitleViewController
     
-    init(delegate: RecordingViewDelegate) {
+    init(delegate: SetTitleDelegate) {
         self.recordingTitleViewController = RecordingTitleViewController()
         self.recordingTitleViewController.delegate = delegate
         self.recordingTitleViewController.coordinator = self
     }
 
     func start() {
-        guard let recordingCoordinator = parentCoordinator as? RecordingViewCoordinator else { return }
+        if let recordingCoordinator = parentCoordinator as? RecordingViewCoordinator {
+            recordingCoordinator.recordingViewController.present(recordingTitleViewController, animated: true)
+        } else if let resultDetailCoordinator = parentCoordinator as? ResultDetailViewCoordinator {
+            resultDetailCoordinator.navigationController.viewControllers.last?.present(recordingTitleViewController, animated: true)
+        }
+//        guard let recordingCoordinator = parentCoordinator as? RecordingViewCoordinator else {return}
         
-        recordingCoordinator.recordingViewController.present(recordingTitleViewController, animated: true)
+//        recordingCoordinator.recordingViewController.present(recordingTitleViewController, animated: true)
     }
     
     func dismiss() {
-        guard let recordingCoordinator = parentCoordinator as? RecordingViewCoordinator else { return }
+        if let recordingCoordinator = parentCoordinator as? RecordingViewCoordinator {
+            recordingCoordinator.recordingViewController.dismiss(animated: true, completion: nil)
+            
+        } else if let resultDetailViewCoordinator = parentCoordinator as? ResultDetailViewCoordinator {
+            resultDetailViewCoordinator.navigationController.viewControllers.last?.dismiss(animated: true, completion: nil)
+        }
         
-        recordingCoordinator.recordingViewController.dismiss(animated: true)
+//        guard let recordingCoordinator = parentCoordinator as? RecordingViewCoordinator else { return }
+//        recordingCoordinator.recordingViewController.dismiss(animated: true)
+        
         self.parentCoordinator?.childCoordinators.removeLast()
     }
     

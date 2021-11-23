@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19206" systemVersion="20G165" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="19206" systemVersion="20F71" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="LocationEntity" representedClassName=".LocationEntityMO" syncable="YES" codeGenerationType="class">
         <attribute name="altitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <relationship name="record" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="RecordEntity" inverseName="locations" inverseEntity="RecordEntity"/>
+    </entity>
+    <entity name="MountainEntity" representedClassName="MountainEntityMO" syncable="YES" codeGenerationType="class">
+        <attribute name="altitude" optional="YES" attributeType="String"/>
+        <attribute name="descript" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
     </entity>
     <entity name="RecordEntity" representedClassName=".RecordEntityMO" syncable="YES" codeGenerationType="class">
         <attribute name="distance" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
@@ -16,6 +24,7 @@
     </entity>
     <entity name="RecordsEntity" representedClassName=".RecordsEntityMO" syncable="YES" codeGenerationType="class">
         <attribute name="assetIdentifiers" optional="YES" attributeType="Binary"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="secondPerHighestSpeed" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="secondPerMinimumSpeed" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="title" optional="YES" attributeType="String"/>
@@ -24,6 +33,7 @@
     <elements>
         <element name="LocationEntity" positionX="-50350.43591308594" positionY="-6695.536254882812" width="128" height="103"/>
         <element name="RecordEntity" positionX="-50540.45288085938" positionY="-6705.159729003906" width="128" height="133"/>
-        <element name="RecordsEntity" positionX="-50725.08505249023" positionY="-6673.378601074219" width="128" height="14"/>
+        <element name="RecordsEntity" positionX="-50725.08505249023" positionY="-6673.378601074219" width="128" height="104"/>
+        <element name="MountainEntity" positionX="-50537.20703125" positionY="-6524.73828125" width="128" height="133"/>
     </elements>
 </model>

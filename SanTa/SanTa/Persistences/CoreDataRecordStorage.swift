@@ -28,6 +28,7 @@ final class CoreDataRecordStorage: RecordsStorage {
                                                                     into: context)
             
             recordsObject.setValue(records.title, forKey: "title")
+            recordsObject.setValue(records.id, forKey: "id")
             recordsObject.setValue(records.secondPerHighestSpeed, forKey: "secondPerHighestSpeed")
             recordsObject.setValue(records.secondPerMinimumSpeed, forKey: "secondPerMinimumSpeed")
             
@@ -83,4 +84,36 @@ final class CoreDataRecordStorage: RecordsStorage {
             }
         }
     }
+    
+    func delete(id: String, completion: @escaping (Result<Void, Error>) -> Void) {
+            let request = NSFetchRequest<RecordsEntityMO>(entityName: "RecordsEntity")
+            request.predicate = NSPredicate(format: "id = %@", id)
+            self.coreDataStorage.performBackgroundTask { context in
+                do {
+                    let result = try context.fetch(request)
+                    print(result)
+                    context.delete(result[0])
+                    try context.save()
+                    completion(.success(Void()))
+                } catch {
+                    print(error)
+                    completion(.failure(error))
+                }
+            }
+        }
+        
+    func update(title: String, id: String, completion: @escaping (Result<Void, Error>) -> Void) {
+            let request = NSFetchRequest<RecordsEntityMO>(entityName: "RecordsEntity")
+            request.predicate = NSPredicate(format: "id = %@", id)
+            self.coreDataStorage.performBackgroundTask { context in
+                do {
+                    let result = try context.fetch(request)
+                    result[0].setValue(title, forKey: "title")
+                    try context.save()
+                    completion(.success(Void()))
+                } catch {
+                    completion(.failure(error))
+                }
+            }
+        }
 }

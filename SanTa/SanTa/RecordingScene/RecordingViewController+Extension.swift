@@ -133,4 +133,13 @@ extension RecordingViewController {
         
         self.view.layoutIfNeeded()
     }
+    
+    func configureAccessibilty() {
+        self.pauseButton.accessibilityLabel = "일시정지"
+        self.pauseButton.accessibilityHint = "측정을 일시정지 하시려면 이중탭하십시오"
+        self.stopButton.accessibilityLabel = "종료"
+        self.stopButton.accessibilityHint = "측정을 종료 하시려면 이중탭하십시오"
+        self.locationButton.accessibilityLabel = "현재위치"
+        self.locationButton.accessibilityHint = "시작화면에서 현재위치를 보시려면 이중탭하십시오"
+    }
 }
