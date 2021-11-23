@@ -151,9 +151,10 @@ class MapViewController: UIViewController {
     }
     
     private func configureMarkers(_ mountains: [MountainEntity]?) {
+        self.mapView.removeAnnotations(self.mapView.annotations)
         guard let mountains = mountains else { return }
-        mountains.forEach{ mountainEntity in
-            let mountainAnnotation = MountainAnnotation(
+        let annotations = mountains.map{ mountainEntity in
+            return MountainAnnotation(
                 title: mountainEntity.mountain.mountainName,
                 subtitle: mountainEntity.mountain.mountainHeight + "m",
                 latitude: mountainEntity.latitude,
@@ -161,8 +162,8 @@ class MapViewController: UIViewController {
                 mountainDescription: mountainEntity.mountain.mountainShortDescription,
                 region: mountainEntity.mountain.mountainRegion
             )
-            self.mapView.addAnnotation(mountainAnnotation)
         }
+        self.mapView.addAnnotations(annotations)
     }
     
     private func configureMap(_ map: Map?) {
