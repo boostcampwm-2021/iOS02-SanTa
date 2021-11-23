@@ -72,14 +72,23 @@ class ResultDetailViewController: UIViewController {
     private lazy var detailImagesButton: UIButton = {
         let button = UIButton()
         button.setImage(.init(systemName: "photo.on.rectangle.angled"), for: .normal)
-        button.imageView?.contentMode = .scaleAspectFit
-        button.titleLabel?.font = .boldSystemFont(ofSize: 12)
+        button.setPreferredSymbolConfiguration(.init(pointSize: 14), forImageIn: .normal)
+        button.titleLabel?.font = .boldSystemFont(ofSize: 15)
+        button.backgroundColor = .systemBackground
+        button.tintColor = .label
+        button.setTitleColor(.label, for: .normal)
         button.contentHorizontalAlignment = .center
         button.semanticContentAttribute = .forceLeftToRight
-        button.imageEdgeInsets = .init(top: 0, left: 15, bottom: 0, right: 15)
         button.addTarget(self, action: #selector(pushDetailImagesViewController), for: .touchUpInside)
+        button.layer.cornerRadius = 5
+        button.layer.masksToBounds = false
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOpacity = 0.7
+        button.layer.shadowOffset = CGSize.zero
+        button.layer.shadowRadius = 2
+        button.translatesAutoresizingMaskIntoConstraints = false
         return button
-    }()g
+    }()
     
     private var titleLabel: UILabel = {
         let label = UILabel()
@@ -146,6 +155,7 @@ class ResultDetailViewController: UIViewController {
         guard let assetIdentifiers = self.viewModel?.resultDetailData?.assetIdentifiers else { return }
         let allMedia = PHAsset.fetchAssets(with: .image, options: nil)
         var identifierIndex = 0
+        self.detailImagesButton.setTitle("\(assetIdentifiers.count)", for: .normal)
         for i in stride(from: allMedia.count - 1, through: 0, by: -1) {
             guard identifierIndex < assetIdentifiers.count else { return }
             if allMedia[i].localIdentifier == assetIdentifiers[identifierIndex] {
@@ -194,12 +204,12 @@ class ResultDetailViewController: UIViewController {
     private func configureViews() {
         guard let tabBar = self.navigationController?.tabBarController?.tabBar else { return }
         self.view.addSubview(self.mapView)
+        self.view.addSubview(self.detailImagesButton)
         self.view.addSubview(self.backButton)
         self.view.addSubview(self.changeButton)
         self.view.addSubview(self.largerInformationView)
         self.view.addSubview(self.smallerInformationView)
         self.view.addSubview(self.titleLabel)
-        self.view.addSubview(self.detailImagesButton)
       
         NSLayoutConstraint.activate([
             self.mapView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
@@ -235,6 +245,13 @@ class ResultDetailViewController: UIViewController {
             self.largerInformationView.bottomAnchor.constraint(equalTo: self.smallerInformationView.bottomAnchor),
             self.titleLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
             self.titleLabel.centerYAnchor.constraint(equalTo: self.changeButton.centerYAnchor),
+        ])
+        
+        NSLayoutConstraint.activate([
+            self.detailImagesButton.topAnchor.constraint(equalTo: self.mapView.bottomAnchor, constant: -45),
+            self.detailImagesButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -15),
+            self.detailImagesButton.widthAnchor.constraint(equalToConstant: 55),
+            self.detailImagesButton.heightAnchor.constraint(equalToConstant: 30)
         ])
         
         infoViewTopConstraint =
@@ -319,7 +336,7 @@ extension ResultDetailViewController {
     }
     
     @objc func pushDetailImagesViewController() {
-        
+        coordinator?.pushResultDetailImagesViewController()
     }
     
     @objc func presentModifyResultAlert() {
