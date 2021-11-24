@@ -128,6 +128,7 @@ class ResultDetailViewController: UIViewController {
         self.configureViewModel()
         self.drawPathOnMap()
         self.markEndPoints()
+        self.registerAnnotationView()
     }
     
     private func configureViewModel() {
@@ -158,6 +159,13 @@ class ResultDetailViewController: UIViewController {
             self?.configurePanGesture()
         }
         viewModel?.setUp()
+    }
+    
+    private func registerAnnotationView() {
+        self.mapView.register(
+            ThumbnailView.self,
+            forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier
+        )
     }
     
     private func drawPathOnMap() {
@@ -467,5 +475,10 @@ extension ResultDetailViewController: MKMapViewDelegate {
             annotationView.image = resizedImage
         }
         return annotationView
+    }
+    
+    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        guard let annotation = view.annotation as? MountainAnnotation else { return }
+        coordinator?.presentMountainDetailViewController(mountainAnnotation: annotation)
     }
 }
