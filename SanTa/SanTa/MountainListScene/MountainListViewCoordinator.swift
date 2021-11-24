@@ -50,7 +50,7 @@ extension MountainListViewCoordinator {
         let mountainDetailViewCoordinator = MountainDetailViewCoordinator(navigationController: self.navigationController, mountainAnnotation: mountainAnnotation)
         mountainDetailViewCoordinator.parentCoordinator = self
         self.childCoordinators.append(mountainDetailViewCoordinator)
-        mountainDetailViewCoordinator.startPush()
+        mountainDetailViewCoordinator.start()
     }
 }
 
