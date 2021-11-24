@@ -6,10 +6,10 @@
 //
 
 import Foundation
+import Photos
 
 final class SettingsUsecase {
-    
-    let settingsRepository: SettingsRepository
+    private let settingsRepository: SettingsRepository
     
     init(settingsRepository: SettingsRepository) {
         self.settingsRepository = settingsRepository
@@ -17,6 +17,16 @@ final class SettingsUsecase {
     
     func save<T: Codable>(value: T, key: Settings) {
         self.settingsRepository.save(value: value, key: key)
+    }
+    
+    func photoPermission(completion: @escaping (Bool) -> Void) {
+        let photoPermission = PHPhotoLibrary.authorizationStatus(for: .readWrite)
+        switch photoPermission {
+        case .authorized:
+            completion(true)
+        default:
+            completion(false)
+        }
     }
     
     func makeSettings() -> [[Option]] {
