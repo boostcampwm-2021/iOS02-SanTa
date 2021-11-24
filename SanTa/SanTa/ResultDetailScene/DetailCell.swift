@@ -11,6 +11,7 @@ class DetailCell: UICollectionViewCell {
     static let identifier = "DetailCell"
     
     func layout(data: LargeViewModel) {
+        self.subviews.forEach{$0.removeFromSuperview()}
         let title: UILabel = UILabel()
         self.addSubview(title)
         title.text = data.title
