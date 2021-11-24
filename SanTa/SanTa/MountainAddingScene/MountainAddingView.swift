@@ -19,6 +19,7 @@ class MountainAddingView: UIScrollView {
         label.text = "장소 등록하기"
         label.font = .boldSystemFont(ofSize: 25)
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.accessibilityTraits = .header
         return label
     }()
 
@@ -31,6 +32,7 @@ class MountainAddingView: UIScrollView {
         label.font = .boldSystemFont(ofSize: 13)
         label.clipsToBounds = true
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.isAccessibilityElement = false
         return label
     }()
     
@@ -38,6 +40,7 @@ class MountainAddingView: UIScrollView {
         let textField = UITextField()
         textField.placeholder = "산 이름(10글자 제한)"
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.accessibilityHint = "산 이름을 입력하십시오"
         return textField
     }()
     
@@ -50,6 +53,7 @@ class MountainAddingView: UIScrollView {
         label.font = .boldSystemFont(ofSize: 13)
         label.clipsToBounds = true
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.isAccessibilityElement = false
         return label
     }()
     
@@ -62,6 +66,7 @@ class MountainAddingView: UIScrollView {
         textView.layer.cornerRadius = 5
         textView.layer.borderWidth = 1
         textView.layer.borderColor = UIColor.systemGray3.cgColor
+        textView.accessibilityHint = "산 설명을 입력하십시오"
         return textView
     }()
     
@@ -74,6 +79,7 @@ class MountainAddingView: UIScrollView {
         button.clipsToBounds = true
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(registerTouched), for: .touchUpInside)
+        button.accessibilityHint = "장소 등록을 하려면 이중 탭 하십시오"
         return button
     }()
     

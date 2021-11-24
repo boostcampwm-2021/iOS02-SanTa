@@ -24,7 +24,7 @@ class ResultViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.isHidden = true
-        viewModel?.viewWillAppear() { [weak self] in
+        self.viewModel?.viewWillAppear() { [weak self] in
             DispatchQueue.main.async {
                 self?.navigationController?.navigationBar.topItem?.title = self?.viewModel?.totalDistance
                 self?.collectionView?.reloadData()
@@ -33,8 +33,8 @@ class ResultViewController: UIViewController {
     }
     
     private func configureCollectionView() {
-        self.collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: createCompositionalLayout())
-        guard let collectionView = collectionView else { return }
+        self.collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: self.createCompositionalLayout())
+        guard let collectionView = self.collectionView else { return }
         view.addSubview(collectionView)
         collectionView.register(TotalRecordsViewCell.self, forCellWithReuseIdentifier: TotalRecordsViewCell.identifier)
         collectionView.register(RecordsViewCell.self, forCellWithReuseIdentifier: RecordsViewCell.identifier)
@@ -83,14 +83,14 @@ class ResultViewController: UIViewController {
 
 extension ResultViewController:  UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        guard let viewModel = viewModel else { return 0}
+        guard let viewModel = self.viewModel else { return 0}
         return viewModel.totalSections + 1
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
         case 0: return 1
-        default : return viewModel?.itemsInSection(section: section - 1) ?? 0
+        default : return self.viewModel?.itemsInSection(section: section - 1) ?? 0
         }
     }
     
@@ -101,16 +101,17 @@ extension ResultViewController:  UICollectionViewDataSource {
                 withReuseIdentifier: TotalRecordsViewCell.identifier,
                 for: indexPath
             ) as? TotalRecordsViewCell,
-                  let totalInfo = viewModel?.totalInfo()
+                  let totalInfo = self.viewModel?.totalInfo()
             else { return UICollectionViewCell() }
             cell.configure(distance: totalInfo.distance, count: totalInfo.count, time: totalInfo.time, steps: totalInfo.steps)
+            cell.configureVoiceOverAccessibility()
             return cell
         default:
             guard let cell = collectionView.dequeueReusableCell(
                 withReuseIdentifier: RecordsViewCell.identifier,
                 for: indexPath
             ) as? RecordsViewCell,
-                  let cellInfo = viewModel?.cellInfo(indexPath: IndexPath(item: indexPath.item, section: indexPath.section - 1))
+                  let cellInfo = self.viewModel?.cellInfo(indexPath: IndexPath(item: indexPath.item, section: indexPath.section - 1))
             else { return UICollectionViewCell() }
             cell.layer.cornerRadius = 10
             cell.backgroundColor = .white
@@ -119,22 +120,27 @@ extension ResultViewController:  UICollectionViewDataSource {
             cell.layer.shadowOpacity = 0.8
             cell.layer.shadowOffset = CGSize(width: 0, height: 0.5)
             cell.configure(date: cellInfo.date, title: cellInfo.title, distance: cellInfo.distance, time: cellInfo.time, altitude: cellInfo.altitudeDifference, steps: cellInfo.steps)
+            cell.configureVoiceOverAccessibility()
             return cell
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.identifier, for: indexPath) as? SectionHeaderView,
-              let sectionInfo = viewModel?.sectionInfo(section: indexPath.section - 1)
+              let sectionInfo = self.viewModel?.sectionInfo(section: indexPath.section - 1)
         else { return UICollectionReusableView() }
-        sectionHeader.configure(month: sectionInfo.date, count: sectionInfo.count, distance: sectionInfo.distance, time: sectionInfo.time)
+        sectionHeader.configure(month: sectionInfo.date,
+                                count: sectionInfo.count,
+                                distance: sectionInfo.distance,
+                                time: sectionInfo.time)
+        sectionHeader.configureVoiceOverAccessibility(date: sectionInfo.accessibiltyDate)
         return sectionHeader
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let indexPath = IndexPath(item: indexPath.item, section: indexPath.section - 1)
-        guard let records = viewModel?.selectedRecords(indexPath: indexPath) else { return }
-        coordinator?.presentResultDetailViewController(records: records)
+        guard let records = self.viewModel?.selectedRecords(indexPath: indexPath) else { return }
+        self.coordinator?.presentResultDetailViewController(records: records)
     }
 }
 
