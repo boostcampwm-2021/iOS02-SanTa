@@ -38,15 +38,20 @@ class ResultDetailThumbnailViewController: UIViewController {
         self.configureImages()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.coordinator?.dismiss()
+    }
+    
     private func configureViews() {
         self.view.backgroundColor = .systemBackground
         self.view.addSubview(self.collectionView)
         
         NSLayoutConstraint.activate([
-            self.collectionView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             self.collectionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             self.collectionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            self.collectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+            self.collectionView.heightAnchor.constraint(equalTo: self.view.widthAnchor),
+            self.collectionView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
         ])
     }
     

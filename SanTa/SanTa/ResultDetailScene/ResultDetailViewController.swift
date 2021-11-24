@@ -477,6 +477,6 @@ extension ResultDetailViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         guard let annotation = view as? ThumbnailView else { return }
         
-        print(annotation.imageIdentifier)
+        self.coordinator?.presentResultDetailThumbnailViewController(uiImages: uiImages, id: annotation.imageIdentifier)
     }
 }
