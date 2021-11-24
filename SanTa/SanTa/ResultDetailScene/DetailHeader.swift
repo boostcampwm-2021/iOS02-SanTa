@@ -10,10 +10,10 @@ import UIKit
 class DetailHeader: UICollectionReusableView {
     static let identifier = "DetailHeader"
     
-    private lazy var dateLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .systemBackground
+    private lazy var dateLabel: PaddingLabel = {
+        let label = PaddingLabel(insets: UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3))
         label.backgroundColor = .label
+        label.textColor = .systemBackground
         label.textAlignment = .center
         label.text = "2021. 11. 16(화)"
         label.font = .preferredFont(forTextStyle: .caption1)

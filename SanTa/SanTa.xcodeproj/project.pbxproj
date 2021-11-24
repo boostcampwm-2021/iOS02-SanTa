@@ -65,8 +65,7 @@
 		9800821F273CE16E006A847A /* ResultUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9800821E273CE16E006A847A /* ResultUseCase.swift */; };
 		9826F3DD2739035E0064FA85 /* Option.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9826F3DC2739035E0064FA85 /* Option.swift */; };
 		9826F3DF273904010064FA85 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9826F3DE273904010064FA85 /* Settings.swift */; };
-		9826F436273954020064FA85 /* SettingsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9826F425273925BF0064FA85 /* SettingsViewModelTests.swift */; };
-		9826F437273954030064FA85 /* SettingsUsecaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9826F427273926720064FA85 /* SettingsUsecaseTests.swift */; };
+		9826F436273954020064FA85 /* SettingsSceneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9826F425273925BF0064FA85 /* SettingsSceneTests.swift */; };
 		9826F4382739546E0064FA85 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BCF4F82737A7120073E6FB /* SettingsViewModel.swift */; };
 		9826F4392739546E0064FA85 /* SettingsUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BCF4F62737A66E0073E6FB /* SettingsUsecase.swift */; };
 		9826F43A2739546E0064FA85 /* SettingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BCF4F42737A3480073E6FB /* SettingsRepository.swift */; };
@@ -181,8 +180,7 @@
 		9800821E273CE16E006A847A /* ResultUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultUseCase.swift; sourceTree = "<group>"; };
 		9826F3DC2739035E0064FA85 /* Option.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Option.swift; sourceTree = "<group>"; };
 		9826F3DE273904010064FA85 /* Settings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Settings.swift; sourceTree = "<group>"; };
-		9826F425273925BF0064FA85 /* SettingsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModelTests.swift; sourceTree = "<group>"; };
-		9826F427273926720064FA85 /* SettingsUsecaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsUsecaseTests.swift; sourceTree = "<group>"; };
+		9826F425273925BF0064FA85 /* SettingsSceneTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSceneTests.swift; sourceTree = "<group>"; };
 		9826F42D273953FB0064FA85 /* SettingsSceneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SettingsSceneTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		984DDEC027325D67003BE56B /* Record.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Record.swift; sourceTree = "<group>"; };
 		984DDEC227325DFC003BE56B /* RecordingUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingUseCase.swift; sourceTree = "<group>"; };
@@ -450,8 +448,7 @@
 		9826F42E273953FB0064FA85 /* SettingsSceneTests */ = {
 			isa = PBXGroup;
 			children = (
-				9826F425273925BF0064FA85 /* SettingsViewModelTests.swift */,
-				9826F427273926720064FA85 /* SettingsUsecaseTests.swift */,
+				9826F425273925BF0064FA85 /* SettingsSceneTests.swift */,
 			);
 			path = SettingsSceneTests;
 			sourceTree = "<group>";
@@ -717,8 +714,7 @@
 				9826F43A2739546E0064FA85 /* SettingsRepository.swift in Sources */,
 				9826F43C2739546E0064FA85 /* Settings.swift in Sources */,
 				9826F43D2739546E0064FA85 /* Option.swift in Sources */,
-				9826F437273954030064FA85 /* SettingsUsecaseTests.swift in Sources */,
-				9826F436273954020064FA85 /* SettingsViewModelTests.swift in Sources */,
+				9826F436273954020064FA85 /* SettingsSceneTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

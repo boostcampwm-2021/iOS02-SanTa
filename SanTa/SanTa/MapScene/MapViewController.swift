@@ -41,7 +41,7 @@ class MapViewController: UIViewController {
         button.layer.shadowRadius = 3
         button.layer.shadowOffset = CGSize(width: 0, height: 3)
         button.addTarget(self, action: #selector(presentRecordingViewController), for: .touchDown)
-        button.accessibilityHint = "측정을 시작하려면 이중탭 하십시오"
+        button.accessibilityHint = "측정을 시작하려면 이중 탭 하십시오"
         return button
     }()
     
@@ -82,7 +82,7 @@ class MapViewController: UIViewController {
         self.configureViews()
         self.registerAnnotationView()
         self.configureViewModel()
-        print("Documents Directory: ", FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last ?? "Not Found!")
+        self.configureNotification()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -150,10 +150,19 @@ class MapViewController: UIViewController {
             .store(in: &self.observers)
     }
     
+    private func configureNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(shouldUpdateMarkers), name: NSNotification.Name.init(rawValue: "save"), object: nil)
+    }
+    
+    @objc func shouldUpdateMarkers() {
+        self.viewModel?.updateMarker()
+    }
+    
     private func configureMarkers(_ mountains: [MountainEntity]?) {
+        self.mapView.removeAnnotations(self.mapView.annotations)
         guard let mountains = mountains else { return }
-        mountains.forEach{ mountainEntity in
-            let mountainAnnotation = MountainAnnotation(
+        let annotations = mountains.map{ mountainEntity in
+            return MountainAnnotation(
                 title: mountainEntity.mountain.mountainName,
                 subtitle: mountainEntity.mountain.mountainHeight + "m",
                 latitude: mountainEntity.latitude,
@@ -161,8 +170,8 @@ class MapViewController: UIViewController {
                 mountainDescription: mountainEntity.mountain.mountainShortDescription,
                 region: mountainEntity.mountain.mountainRegion
             )
-            self.mapView.addAnnotation(mountainAnnotation)
         }
+        self.mapView.addAnnotations(annotations)
     }
     
     private func configureMap(_ map: Map?) {
@@ -220,12 +229,12 @@ extension MapViewController: Animatable {
     func shouldAnimate() {
         let image = UIImage.gifImage(named: "walkingManAnimation", withTintColor: .white)
         self.startButton.setImage(image, for: .normal)
-        self.startButton.accessibilityHint = "현재 측정 중입니다. 측정화면으로 돌아가려면 이중탭 하십시오"
+        self.startButton.accessibilityHint = "현재 측정 중입니다. 측정화면으로 돌아가려면 이중 탭 하십시오"
     }
     
     func shouldStopAnimate() {
         self.startButton.setImage(nil, for: .normal)
-        self.startButton.accessibilityHint = "측정을 시작하려면 이중탭 하십시오"
+        self.startButton.accessibilityHint = "측정을 시작하려면 이중 탭 하십시오"
     }
 }
 

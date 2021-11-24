@@ -13,6 +13,12 @@ class MountainAddingViewModel {
     private var useCase: MountainAddingViewUseCase?
     @Published private(set) var coordinate: CLLocationCoordinate2D?
     private(set) var altitude: CLLocationDistance?
+    let addMountainResult = PassthroughSubject<AddMountainResult, Never>()
+    
+    enum AddMountainResult: String {
+        case success = "저장에 성공하였습니다."
+        case failure = "저장에 실패하였습니다."
+    }
     
     init(useCase: MountainAddingViewUseCase) {
         self.useCase = useCase
@@ -27,19 +33,12 @@ class MountainAddingViewModel {
         guard let coordinate = coordinate,
               let altitude = altitude
         else { return }
-        self.useCase?.saveMountain(
-            name: title,
-            altitude: altitude,
-            latitude: coordinate.latitude,
-            longitude: coordinate.longitude,
-            description: description,
-            completion: { result in
-                guard result != nil else {
-                    print("저장안됨")
-                    return
-                }
-                print("저장됨")
+        self.useCase?.saveMountain(name: title, altitude: altitude, latitude: coordinate.latitude, longitude: coordinate.longitude, description: description) { [weak self] result in
+            guard result != nil else {
+                self?.addMountainResult.send(.failure)
+                return
             }
-        )
+            self?.addMountainResult.send(.success)
+        }
     }
 }

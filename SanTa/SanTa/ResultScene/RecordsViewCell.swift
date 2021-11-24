@@ -111,3 +111,26 @@ class RecordsViewCell: UICollectionViewCell {
         ])
     }
 }
+
+// MARK: - Accessibility
+
+extension RecordsViewCell {
+    
+    func configureVoiceOverAccessibility() {
+        guard let date = self.date.text else { return }
+        guard var title = self.title.text else { return }
+        guard let distance = self.distance.text else { return }
+        guard let time = self.time.text else { return }
+        guard let altitude = self.altitude.text else { return }
+        guard let steps = self.steps.text else { return }
+        if title.isEmpty {
+            title = "없음"
+        }
+        
+        self.isAccessibilityElement = true
+        self.accessibilityLabel = "\(date) 등산기록 정보, 제목: \(title), 거리: \(distance)km, 시간: \(time), 고도차: \(altitude), 걸음: \(steps)"
+        self.accessibilityTraits = .none
+        self.accessibilityHint = "등산기록 상세화면으로 넘어가려면 이중 탭 하십시오"
+    }
+}
+

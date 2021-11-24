@@ -32,7 +32,7 @@ class SettingsViewCoordinator: Coordinator {
 extension SettingsViewCoordinator {
     private func injectDependencies() -> SettingsViewModel {
         return SettingsViewModel(
-            settingsUseCase: DefaultSettingsUsecase(
+            settingsUseCase: SettingsUsecase(
                 settingsRepository: DefaultSettingsRepository(
                     settingsStorage: self.userDefaultsStorage
                 )

@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol NewPlaceAddable {
+protocol NewPlaceAddable: AnyObject {
     func userDidTypeWrong()
     func newPlaceShouldAdd(title: String, description: String)
 }
@@ -19,6 +19,7 @@ class MountainAddingView: UIScrollView {
         label.text = "장소 등록하기"
         label.font = .boldSystemFont(ofSize: 25)
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.accessibilityTraits = .header
         return label
     }()
 
@@ -31,6 +32,7 @@ class MountainAddingView: UIScrollView {
         label.font = .boldSystemFont(ofSize: 13)
         label.clipsToBounds = true
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.isAccessibilityElement = false
         return label
     }()
     
@@ -38,6 +40,7 @@ class MountainAddingView: UIScrollView {
         let textField = UITextField()
         textField.placeholder = "산 이름(10글자 제한)"
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.accessibilityHint = "산 이름을 입력하십시오"
         return textField
     }()
     
@@ -50,6 +53,7 @@ class MountainAddingView: UIScrollView {
         label.font = .boldSystemFont(ofSize: 13)
         label.clipsToBounds = true
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.isAccessibilityElement = false
         return label
     }()
     
@@ -62,6 +66,7 @@ class MountainAddingView: UIScrollView {
         textView.layer.cornerRadius = 5
         textView.layer.borderWidth = 1
         textView.layer.borderColor = UIColor.systemGray3.cgColor
+        textView.accessibilityHint = "산 설명을 입력하십시오"
         return textView
     }()
     
@@ -74,19 +79,39 @@ class MountainAddingView: UIScrollView {
         button.clipsToBounds = true
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(registerTouched), for: .touchUpInside)
+        button.accessibilityHint = "장소 등록을 하려면 이중 탭 하십시오"
         return button
     }()
     
-    var newPlaceDelegate: NewPlaceAddable?
+    weak var newPlaceDelegate: NewPlaceAddable?
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        self.endEditing(true)
+    }
     
     func configure() {
-        self.isScrollEnabled = true
         self.backgroundColor = .systemBackground
         self.translatesAutoresizingMaskIntoConstraints = false
         self.configureSubViews()
         self.configureLayout()
+        self.configureNotification()
     }
     
+    private func configureNotification() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardDidShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+    }
     
     private func configureSubViews() {
         self.addSubview(titleLabel)
@@ -95,19 +120,20 @@ class MountainAddingView: UIScrollView {
         self.addSubview(descriptionLabel)
         self.addSubview(descriptionTextView)
         self.addSubview(registerButton)
+        self.delegate = self
         self.nameTextField.delegate = self
         self.descriptionTextView.delegate = self
     }
     
     private func configureLayout() {
         NSLayoutConstraint.activate([
-            self.titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
-            self.titleLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20),
+            self.titleLabel.topAnchor.constraint(equalTo: self.contentLayoutGuide.topAnchor, constant: 20),
+            self.titleLabel.leftAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leftAnchor, constant: 20),
         ])
         
         NSLayoutConstraint.activate([
             self.nameLabel.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: 20),
-            self.nameLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20),
+            self.nameLabel.leftAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leftAnchor, constant: 20),
         ])
         
         NSLayoutConstraint.activate([
@@ -118,7 +144,7 @@ class MountainAddingView: UIScrollView {
         
         NSLayoutConstraint.activate([
             self.descriptionLabel.topAnchor.constraint(equalTo: self.nameTextField.bottomAnchor, constant: 20),
-            self.descriptionLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20),
+            self.descriptionLabel.leftAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leftAnchor, constant: 20),
         ])
         
         NSLayoutConstraint.activate([
@@ -137,13 +163,31 @@ class MountainAddingView: UIScrollView {
     }
     
     @objc private func registerTouched() {
-        guard let title = nameTextField.text, !title.isEmpty,
-              let description = descriptionTextView.text, descriptionTextView.textColor != .systemGray3, !description.isEmpty
+        guard let title = self.nameTextField.text,
+              let description = self.descriptionTextView.text,
+              descriptionTextView.textColor != .systemGray3,
+              !description.isEmpty,
+              !title.isEmpty
         else {
             self.newPlaceDelegate?.userDidTypeWrong()
             return
         }
         self.newPlaceDelegate?.newPlaceShouldAdd(title: title, description: description)
+    }
+    
+    @objc private func keyboardWillShow(_ notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
+        else { return }
+        let contentInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardFrame.size.height, right: 0.0)
+        self.contentInset = contentInset
+        self.scrollIndicatorInsets = contentInset
+    }
+    
+    @objc private func keyboardWillHide(_ notification: Notification) {
+        let contentInset = UIEdgeInsets.zero
+        self.contentInset = contentInset
+        self.scrollIndicatorInsets = contentInset
     }
 }
 
@@ -152,6 +196,11 @@ extension MountainAddingView: UITextFieldDelegate, UITextViewDelegate {
         guard let text = textField.text else { return true }
         let newLength = text.count + string.count
         return newLength <= 10
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.descriptionTextView.becomeFirstResponder()
+        return true
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {

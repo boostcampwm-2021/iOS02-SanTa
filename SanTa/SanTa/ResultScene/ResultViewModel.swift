@@ -47,20 +47,28 @@ class ResultViewModel {
         return (distanceString, countString, timeString, stepsString)
     }
     
-    func sectionInfo(section: Int) -> (date: String, count: String, distance: String, time: String) {
+    func sectionInfo(section: Int) -> (date: String,
+                                       accessibiltyDate: String,
+                                       count: String,
+                                       distance: String,
+                                       time: String) {
         guard let totalRecords = useCase.totalRecords,
               let dateSeperateRecords = totalRecords[section]
         else {
-            return ("", "", "", "")
+            return ("", "", "", "", "")
         }
         let dateString = self.headerDateFormatter(
+            year: dateSeperateRecords.year,
+            month: dateSeperateRecords.month
+        )
+        let accessibiltyDateString = self.headerAccessibiltyDateFormatter(
             year: dateSeperateRecords.year,
             month: dateSeperateRecords.month
         )
         let countString = "\(dateSeperateRecords.count)회"
         let distanceString = self.doubleFormatter(dateSeperateRecords.distances) + "km"
         let timeString = self.timeFormatter(dateSeperateRecords.times)
-        return (dateString, countString, distanceString, timeString)
+        return (dateString, accessibiltyDateString, countString, distanceString, timeString)
     }
     
     func cellInfo(indexPath: IndexPath)
@@ -89,6 +97,10 @@ extension ResultViewModel {
         return "\(year). \(month)."
     }
     
+    private func headerAccessibiltyDateFormatter(year: Int, month: Int) -> String {
+        return "\(year)년 \(month)월"
+    }
+    
     private func cellDateFormatter(_ date: Date?) -> String {
         guard let date = date,
               let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: .now)
@@ -97,7 +109,7 @@ extension ResultViewModel {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier:"ko_KR")
         if calender.compare(date, to: .now, toGranularity: .day) == .orderedSame {
-            dateFormatter.dateFormat = "a h시 m분"
+            dateFormatter.dateFormat = "오늘(E) a h시 m분"
         } else if calender.compare(date, to: yesterday, toGranularity: .day) == .orderedSame {
             dateFormatter.dateFormat = "어제(E) a h시 m분"
         } else {

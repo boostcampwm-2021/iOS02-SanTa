@@ -28,7 +28,7 @@ class SectionHeaderView: UICollectionReusableView {
     let distanceLabel = UILabel(normalFontWithSize: 15, withTextColor: .systemGray)
     let timeLabel = UILabel(normalFontWithSize: 15, withTextColor: .systemGray)
     
-    func configure(month: String, count: String, distance: String, time: String){
+    func configure(month: String, count: String, distance: String, time: String) {
         self.backgroundColor = .systemBackground
         self.monthLabel.text = month
         self.countLabel.text = count
@@ -40,10 +40,10 @@ class SectionHeaderView: UICollectionReusableView {
     }
     
     private func configureSubviews(){
-        self.addSubview(monthLabel)
-        self.addSubview(countLabel)
-        self.addSubview(distanceLabel)
-        self.addSubview(timeLabel)
+        self.addSubview(self.monthLabel)
+        self.addSubview(self.countLabel)
+        self.addSubview(self.distanceLabel)
+        self.addSubview(self.timeLabel)
     }
     
     private func configureLayout() {
@@ -61,5 +61,19 @@ class SectionHeaderView: UICollectionReusableView {
             self.countLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             self.countLabel.rightAnchor.constraint(equalTo: self.distanceLabel.leftAnchor, constant: -10)
         ])
+    }
+}
+
+// MARK: - Accessibility
+
+extension SectionHeaderView {
+    
+    func configureVoiceOverAccessibility(date: String) {
+        guard let countLabel = self.countLabel.text else { return }
+        guard let distanceLabel = self.distanceLabel.text else { return }
+        guard let timeLabel = self.timeLabel.text else { return }
+        self.isAccessibilityElement = true
+        self.accessibilityLabel = "\(date) 등산기록 정보, 총 등산횟수: \(countLabel), 총 거리: \(distanceLabel), 총 시간: \(timeLabel)"
+        self.accessibilityTraits = .none
     }
 }

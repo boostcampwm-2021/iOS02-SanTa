@@ -43,7 +43,8 @@ extension MapViewCoordinator {
             let recordingViewCoordinator = RecordingViewCoordinator(
                 navigationController: self.navigationController,
                 userDefaultsStorage: self.userDefaultsStorage,
-                coreDataStorage: self.coreDataStorage)
+                coreDataStorage: self.coreDataStorage
+            )
             self.childCoordinators.append(recordingViewCoordinator)
             recordingViewCoordinator.parentCoordinator = self
         }
@@ -59,7 +60,10 @@ extension MapViewCoordinator {
     }
     
     func presentMountainAddingViewController() {
-        let mountainAddingViewCoordinator = MountainAddingViewCoordinator(navigationController: self.navigationController)
+        let mountainAddingViewCoordinator = MountainAddingViewCoordinator(
+            navigationController: self.navigationController,
+            coreDataStorage: self.coreDataStorage
+        )
         mountainAddingViewCoordinator.parentCoordinator = self
         self.childCoordinators.append(mountainAddingViewCoordinator)
         
@@ -81,7 +85,10 @@ extension MapViewCoordinator {
             useCase: MapViewUseCase(
                 repository: DefaultMapViewRespository(
                     mountainExtractor: self.mountainExtractor,
-                    userDefaultsStorage: self.userDefaultsStorage
+                    userDefaultsStorage: self.userDefaultsStorage,
+                    coreDataMountainStorage: CoreDataMountainStorage(
+                        coreDataStorage: self.coreDataStorage
+                    )
                 )
             )
         )
