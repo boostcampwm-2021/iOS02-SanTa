@@ -47,14 +47,6 @@ final class DefaultUserDefaultsStorage: UserDefaultsStorage {
             self.save(value: Settings.photosOnMap.initValue as? Bool,
                       key: .photosOnMap)
         }
-        if !self.exist(key: .autoPauseResume) {
-            self.save(value: Settings.autoPauseResume.initValue as? Bool,
-                      key: .autoPauseResume)
-        }
-        if !self.exist(key: .autoPauseResumeVoiceGuidance) {
-            self.save(value: Settings.autoPauseResumeVoiceGuidance.initValue as? Bool,
-                      key: .autoPauseResumeVoiceGuidance)
-        }
         if !self.exist(key: .voiceGuidanceEveryOnekm) {
             self.save(value: Settings.voiceGuidanceEveryOnekm.initValue as? Bool,
                       key: .voiceGuidanceEveryOnekm)
