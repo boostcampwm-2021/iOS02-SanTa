@@ -474,7 +474,7 @@ extension ResultDetailViewController: MKMapViewDelegate {
         return annotationView
     }
     
-    func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         guard let annotation = view as? ThumbnailView else { return }
         
         print(annotation.imageIdentifier)

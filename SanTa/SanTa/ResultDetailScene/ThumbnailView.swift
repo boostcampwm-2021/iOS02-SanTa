@@ -36,8 +36,7 @@ final class ThumbnailView: MKAnnotationView {
     
     override func prepareForDisplay() {
         super.prepareForDisplay()
-        displayPriority = .defaultHigh
-        self.frame = CGRect(x: 33, y: 33, width: 33, height: 33)
+        self.frame = CGRect(x: 0, y: 0, width: 38, height: 38)
         self.configure()
     }
     
