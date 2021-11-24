@@ -18,6 +18,7 @@ class ResultDetailThumbnailViewController: UIViewController {
     typealias DetailThumbnailSnapshot = NSDiffableDataSourceSnapshot<DetailThumbnailSection, AnyHashable>
     
     private var dataSource: DetailThumbnailDataSource?
+    private var firetShowIndex = 0
     private var showIndex = 0
     
     var uiImages = [String: UIImage]()
@@ -54,6 +55,11 @@ class ResultDetailThumbnailViewController: UIViewController {
         self.coordinator?.dismiss()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.collectionView.scrollToItem(at: IndexPath(row: self.firetShowIndex, section: 0), at: .right, animated: true)
+    }
+    
     private func configureViews() {
         self.view.backgroundColor = .systemBackground
         self.view.addSubview(self.collectionView)
@@ -85,10 +91,7 @@ class ResultDetailThumbnailViewController: UIViewController {
         item.forEach {
             snapshot.appendItems([$0], toSection: section)
         }
-        self.dataSource?.apply(snapshot, animatingDifferences: true) { [weak self] in
-            guard let index = self?.showIndex else { return }
-            self?.collectionView.scrollToItem(at: IndexPath(row: index, section: 0), at: .right, animated: true)
-        }
+        self.dataSource?.apply(snapshot, animatingDifferences: true)
     }
     
     private func configureCompositionalLayout() -> UICollectionViewCompositionalLayout {
@@ -111,7 +114,7 @@ class ResultDetailThumbnailViewController: UIViewController {
                   let image = self.uiImages[item] else  {
                 return UICollectionViewCell() }
             
-            cell.update(image: image)
+            cell.update(image: image, id: item)
             return cell
         })
         
@@ -129,7 +132,7 @@ class ResultDetailThumbnailViewController: UIViewController {
             
             if key == currentIdentifier {
                 findImage = true
-                self.showIndex = index
+                self.firetShowIndex = index
                 self.titleLabel.text = "\(index + 1) / \(self.uiImages.count)"
             }
             if !findImage { index += 1 }

@@ -104,7 +104,7 @@
 		DAB751BA274E7DEA00C39266 /* ResultDetailThumbnailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB751B9274E7DEA00C39266 /* ResultDetailThumbnailViewController.swift */; };
 		DAB751BC274E7DFB00C39266 /* ResultDetailThumbnailViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB751BB274E7DFA00C39266 /* ResultDetailThumbnailViewCoordinator.swift */; };
 		DAE7540E274D2A25004A19C3 /* ResultDetailImagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE7540D274D2A25004A19C3 /* ResultDetailImagesViewController.swift */; };
-		DAE75410274D2A32004A19C3 /* ResultDetailImageViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE7540F274D2A32004A19C3 /* ResultDetailImageViewCoordinator.swift */; };
+		DAE75410274D2A32004A19C3 /* ResultDetailImagesViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE7540F274D2A32004A19C3 /* ResultDetailImagesViewCoordinator.swift */; };
 		DAE75412274D3AFA004A19C3 /* DetailImagesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE75411274D3AFA004A19C3 /* DetailImagesCell.swift */; };
 		DAFA9B59274112D800BF168C /* RecordingPhotoCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFA9B58274112D800BF168C /* RecordingPhotoCoordinator.swift */; };
 		DAFA9B5B2741131400BF168C /* RecordingPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFA9B5A2741131400BF168C /* RecordingPhotoViewController.swift */; };
@@ -212,7 +212,7 @@
 		DAB751B9274E7DEA00C39266 /* ResultDetailThumbnailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailThumbnailViewController.swift; sourceTree = "<group>"; };
 		DAB751BB274E7DFA00C39266 /* ResultDetailThumbnailViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailThumbnailViewCoordinator.swift; sourceTree = "<group>"; };
 		DAE7540D274D2A25004A19C3 /* ResultDetailImagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailImagesViewController.swift; sourceTree = "<group>"; };
-		DAE7540F274D2A32004A19C3 /* ResultDetailImageViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailImageViewCoordinator.swift; sourceTree = "<group>"; };
+		DAE7540F274D2A32004A19C3 /* ResultDetailImagesViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailImagesViewCoordinator.swift; sourceTree = "<group>"; };
 		DAE75411274D3AFA004A19C3 /* DetailImagesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailImagesCell.swift; sourceTree = "<group>"; };
 		DAFA9B58274112D800BF168C /* RecordingPhotoCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingPhotoCoordinator.swift; sourceTree = "<group>"; };
 		DAFA9B5A2741131400BF168C /* RecordingPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingPhotoViewController.swift; sourceTree = "<group>"; };
@@ -491,7 +491,7 @@
 			isa = PBXGroup;
 			children = (
 				DAE7540D274D2A25004A19C3 /* ResultDetailImagesViewController.swift */,
-				DAE7540F274D2A32004A19C3 /* ResultDetailImageViewCoordinator.swift */,
+				DAE7540F274D2A32004A19C3 /* ResultDetailImagesViewCoordinator.swift */,
 				DAE75411274D3AFA004A19C3 /* DetailImagesCell.swift */,
 			);
 			path = ResultDetailImagesScene;
@@ -673,7 +673,7 @@
 				493178B42743992400B5FB88 /* DetailCell.swift in Sources */,
 				98BCF4F92737A7120073E6FB /* SettingsViewModel.swift in Sources */,
 				54296949272FBFAB0070B362 /* RecordingViewController.swift in Sources */,
-				DAE75410274D2A32004A19C3 /* ResultDetailImageViewCoordinator.swift in Sources */,
+				DAE75410274D2A32004A19C3 /* ResultDetailImagesViewCoordinator.swift in Sources */,
 				54B3206D27453725002232BD /* MountainAddingViewRepository.swift in Sources */,
 				984DDEC527325FB9003BE56B /* RecordRepository.swift in Sources */,
 				984DDEC327325DFC003BE56B /* RecordingUseCase.swift in Sources */,

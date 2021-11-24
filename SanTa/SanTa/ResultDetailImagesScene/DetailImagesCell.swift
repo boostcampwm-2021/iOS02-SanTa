@@ -11,6 +11,7 @@ class DetailImagesCell: UICollectionViewCell {
     static let identifier = "DetailImagesCell"
     
     private let imageView = UIImageView()
+    var id = String()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -33,7 +34,8 @@ class DetailImagesCell: UICollectionViewCell {
         ])
     }
     
-    func update(image: UIImage) {
+    func update(image: UIImage, id: String) {
         self.imageView.image = image
+        self.id = id
     }
 }
