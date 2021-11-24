@@ -65,6 +65,7 @@ class MapViewController: UIViewController {
     private lazy var userTrackingButton: MKUserTrackingButton = {
         let button = MKUserTrackingButton(mapView: self.mapView)
         button.isHidden = true
+        button.tintColor = UIColor(named: "SantaColor")
         button.backgroundColor = .white
         button.translatesAutoresizingMaskIntoConstraints = false
         button.layer.cornerRadius = 10
