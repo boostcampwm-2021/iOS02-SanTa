@@ -18,16 +18,27 @@ class ResultDetailThumbnailViewController: UIViewController {
     typealias DetailThumbnailSnapshot = NSDiffableDataSourceSnapshot<DetailThumbnailSection, AnyHashable>
     
     private var dataSource: DetailThumbnailDataSource?
+    private var showIndex = 0
     
     var uiImages = [String: UIImage]()
     var currentIdentifier = String()
     
-    lazy var collectionView: UICollectionView = {
+    private lazy var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .init(x: 0, y: 0, width: 0, height: 0), collectionViewLayout: flowLayout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
 
         return collectionView
+    }()
+    
+    private lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.backgroundColor = .systemBackground
+        label.tintColor = .label
+        label.textAlignment = .center
+        label.font = .preferredFont(for: .body, weight: .bold)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
     }()
     
     override func viewDidLoad() {
@@ -46,6 +57,7 @@ class ResultDetailThumbnailViewController: UIViewController {
     private func configureViews() {
         self.view.backgroundColor = .systemBackground
         self.view.addSubview(self.collectionView)
+        self.view.addSubview(self.titleLabel)
         
         NSLayoutConstraint.activate([
             self.collectionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
@@ -53,9 +65,16 @@ class ResultDetailThumbnailViewController: UIViewController {
             self.collectionView.heightAnchor.constraint(equalTo: self.view.widthAnchor),
             self.collectionView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor)
         ])
+        
+        NSLayoutConstraint.activate([
+            self.titleLabel.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 15),
+            self.titleLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            self.titleLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+        ])
     }
     
     private func configureCollectionView() {
+        self.collectionView.delegate = self
         self.collectionView.collectionViewLayout = configureCompositionalLayout()
         self.collectionView.register(DetailImagesCell.self, forCellWithReuseIdentifier: DetailImagesCell.identifier)
     }
@@ -66,7 +85,10 @@ class ResultDetailThumbnailViewController: UIViewController {
         item.forEach {
             snapshot.appendItems([$0], toSection: section)
         }
-        self.dataSource?.apply(snapshot, animatingDifferences: true)
+        self.dataSource?.apply(snapshot, animatingDifferences: true) { [weak self] in
+            guard let index = self?.showIndex else { return }
+            self?.collectionView.scrollToItem(at: IndexPath(row: index, section: 0), at: .right, animated: true)
+        }
     }
     
     private func configureCompositionalLayout() -> UICollectionViewCompositionalLayout {
@@ -99,11 +121,27 @@ class ResultDetailThumbnailViewController: UIViewController {
     
     private func configureImages() {
         var identifiers = [String]()
+        var index = 0
+        var findImage = false
         
         for (key, _) in self.uiImages {
             identifiers.append(key)
+            
+            if key == currentIdentifier {
+                findImage = true
+                self.showIndex = index
+                self.titleLabel.text = "\(index + 1) / \(self.uiImages.count)"
+            }
+            if !findImage { index += 1 }
         }
         
         self.bindSnapShotApply(section: .main, item: identifiers)
+    }
+}
+
+extension ResultDetailThumbnailViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt index: IndexPath) {
+        self.showIndex = index.row
+        self.titleLabel.text = "\(showIndex + 1) / \(self.uiImages.count)"
     }
 }
