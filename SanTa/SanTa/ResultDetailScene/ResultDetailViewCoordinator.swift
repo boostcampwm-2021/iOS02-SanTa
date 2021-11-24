@@ -51,7 +51,6 @@ extension ResultDetailViewCoordinator {
     
     func presentRecordingTitleViewController() {
         guard let viewController = self.navigationController.viewControllers.last as? ResultDetailViewController else {
-            print("뷰컨 없음")
             return
         }
         let recordingTitleViewCoordinator = RecordingTitleViewCoordinator(delegate: viewController)
@@ -59,5 +58,13 @@ extension ResultDetailViewCoordinator {
         recordingTitleViewCoordinator.parentCoordinator = self
         
         recordingTitleViewCoordinator.start()
+    }
+    
+    func pushResultDetailImagesViewController(uiImages: [String: UIImage]) {
+        let resultDetailImagesViewCoordinator = ResultDetailImagesViewCoordinator(navigationController: navigationController, uiImages: uiImages)
+        self.childCoordinators.append(resultDetailImagesViewCoordinator)
+        resultDetailImagesViewCoordinator.parentCoordinator = self
+        
+        resultDetailImagesViewCoordinator.start()
     }
 }

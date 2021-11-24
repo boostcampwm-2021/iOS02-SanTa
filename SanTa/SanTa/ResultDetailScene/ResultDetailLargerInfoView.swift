@@ -77,7 +77,7 @@ extension ResultDetailLargerInfoView {
         self.addSubview(self.collectionView)
         
         NSLayoutConstraint.activate([
-            self.collectionView.topAnchor.constraint(equalTo: self.topAnchor, constant: 30),
+            self.collectionView.topAnchor.constraint(equalTo: self.topAnchor, constant: 50),
             self.collectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.collectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             self.collectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor)

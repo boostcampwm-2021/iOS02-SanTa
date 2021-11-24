@@ -7,6 +7,7 @@
 
 import UIKit
 import MapKit
+import Photos
 
 class ResultDetailViewController: UIViewController {
     
@@ -17,6 +18,9 @@ class ResultDetailViewController: UIViewController {
     private var infoViewTopConstraint: NSLayoutConstraint?
     private var infoViewHight: CGFloat?
     private var isLargeInfoView = false
+    
+    private let imageManager = PHCachingImageManager()
+    private var uiImages = [String: UIImage]()
     
     private lazy var mapView: MKMapView = {
         let mapView = MKMapView()
@@ -62,6 +66,46 @@ class ResultDetailViewController: UIViewController {
         button.tintColor = .label
         button.translatesAutoresizingMaskIntoConstraints = false
         button.addTarget(self, action: #selector(presentModifyResultAlert), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var detailImagesButton: UIButton = {
+        let button = UIButton()
+        button.setImage(.init(systemName: "photo.on.rectangle.angled"), for: .normal)
+        button.setPreferredSymbolConfiguration(.init(pointSize: 14), forImageIn: .normal)
+        button.titleLabel?.font = .boldSystemFont(ofSize: 15)
+        button.backgroundColor = .systemBackground
+        button.tintColor = .label
+        button.setTitleColor(.label, for: .normal)
+        button.contentHorizontalAlignment = .center
+        button.semanticContentAttribute = .forceLeftToRight
+        button.layer.cornerRadius = 5
+        button.layer.masksToBounds = false
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOpacity = 0.7
+        button.layer.shadowOffset = CGSize.zero
+        button.layer.shadowRadius = 2
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(pushDetailImagesViewController), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var imagesVisibilityButton: UIButton = {
+        let button = UIButton()
+        button.setImage(.init(systemName: "eye"), for: .normal)
+        //eye.slash
+        button.setPreferredSymbolConfiguration(.init(pointSize: 14), forImageIn: .normal)
+        button.backgroundColor = .systemBackground
+        button.tintColor = .label
+        button.contentHorizontalAlignment = .center
+        button.layer.cornerRadius = 5
+        button.layer.masksToBounds = false
+        button.layer.shadowColor = UIColor.black.cgColor
+        button.layer.shadowOpacity = 0.7
+        button.layer.shadowOffset = CGSize.zero
+        button.layer.shadowRadius = 2
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(imagesVisibilityButtonAction), for: .touchUpInside)
         return button
     }()
     
@@ -144,7 +188,46 @@ class ResultDetailViewController: UIViewController {
         startAnnotation.title = "start"
         endAnnotation.coordinate = endingPoint
         endAnnotation.title = "end"
+        self.fetchAssetImage()
         self.mapView.addAnnotations([startAnnotation, endAnnotation])
+    }
+    
+    private func fetchAssetImage() {
+        guard let assetIdentifiers = self.viewModel?.resultDetailData?.assetIdentifiers else { return }
+        let allMedia = PHAsset.fetchAssets(with: .image, options: nil)
+        var identifierIndex = 0
+        self.detailImagesButton.setTitle("\(assetIdentifiers.count)", for: .normal)
+        for i in stride(from: allMedia.count - 1, through: 0, by: -1) {
+            guard identifierIndex < assetIdentifiers.count else { return }
+            if allMedia[i].localIdentifier == assetIdentifiers[identifierIndex] {
+                requestAssetIamge(with: allMedia[i]) { [weak self] (image, asset) in
+                    guard let image = image,
+                          let identifier = asset?.localIdentifier,
+                          let coordinate = asset?.location?.coordinate else { return }
+                    self?.uiImages[identifier] = image
+                    self?.appendImageAnnotation(identifier: identifier, location: coordinate)
+                }
+                identifierIndex += 1
+            }
+        }
+    }
+    
+    private func requestAssetIamge(with asset: PHAsset?, completion: @escaping (UIImage?, PHAsset?) -> Void) {
+        guard let asset = asset else {
+            completion(nil, nil)
+            return
+        }
+        let thumbnailSize = CGSize(width: 1000, height: 1000)
+        self.imageManager.requestImage(for: asset, targetSize: thumbnailSize, contentMode: .aspectFill, options: nil, resultHandler: { image, _ in
+            completion(image, asset)
+        })
+    }
+    
+    private func appendImageAnnotation(identifier: String, location: CLLocationCoordinate2D) {
+        let imageAnnotation = MKPointAnnotation()
+        imageAnnotation.coordinate = location
+        imageAnnotation.title = identifier
+        mapView.addAnnotation(imageAnnotation)
     }
     
     private func configureSmallerView() {
@@ -162,6 +245,8 @@ class ResultDetailViewController: UIViewController {
     private func configureViews() {
         guard let tabBar = self.navigationController?.tabBarController?.tabBar else { return }
         self.view.addSubview(self.mapView)
+        self.view.addSubview(self.detailImagesButton)
+        self.view.addSubview(self.imagesVisibilityButton)
         self.view.addSubview(self.backButton)
         self.view.addSubview(self.changeButton)
         self.view.addSubview(self.largerInformationView)
@@ -202,6 +287,20 @@ class ResultDetailViewController: UIViewController {
             self.largerInformationView.bottomAnchor.constraint(equalTo: self.smallerInformationView.bottomAnchor),
             self.titleLabel.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
             self.titleLabel.centerYAnchor.constraint(equalTo: self.changeButton.centerYAnchor),
+        ])
+        
+        NSLayoutConstraint.activate([
+            self.detailImagesButton.topAnchor.constraint(equalTo: self.mapView.bottomAnchor, constant: -45),
+            self.detailImagesButton.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -15),
+            self.detailImagesButton.widthAnchor.constraint(equalToConstant: 55),
+            self.detailImagesButton.heightAnchor.constraint(equalToConstant: 30)
+        ])
+        
+        NSLayoutConstraint.activate([
+            self.imagesVisibilityButton.topAnchor.constraint(equalTo: self.detailImagesButton.topAnchor),
+            self.imagesVisibilityButton.trailingAnchor.constraint(equalTo: self.detailImagesButton.leadingAnchor, constant: -15),
+            self.imagesVisibilityButton.widthAnchor.constraint(equalToConstant: 55),
+            self.imagesVisibilityButton.heightAnchor.constraint(equalToConstant: 30)
         ])
         
         infoViewTopConstraint =
@@ -285,6 +384,14 @@ extension ResultDetailViewController {
         coordinator?.dismiss()
     }
     
+    @objc func pushDetailImagesViewController() {
+        coordinator?.pushResultDetailImagesViewController(uiImages: uiImages)
+    }
+    
+    @objc func imagesVisibilityButtonAction() {
+        
+    }
+    
     @objc func presentModifyResultAlert() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let changeTitle = UIAlertAction(title: "제목 변경", style: .default) { action in
@@ -338,13 +445,27 @@ extension ResultDetailViewController: MKMapViewDelegate {
         }
         
         let identifier = "PointAnnotation"
-        let annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+        
+        
+        let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
         if annotation.title == "start" {
-            annotationView.markerTintColor = .init(named: "SantaColor")
+            annotationView.tintColor = .init(named: "SantaColor")
+        } else if annotation.title == "end" {
+            annotationView.tintColor = .red
         } else {
-            annotationView.markerTintColor = .red
+            guard let identifider = annotation.title,
+                  let image = self.uiImages[identifider ?? "None"] else {
+                return nil
+            }
+            
+            let size = CGSize(width: 30, height: 30)
+            UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
+            image.draw(in: CGRect(origin: CGPoint.zero, size: size))
+            let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
+            UIGraphicsEndImageContext()
+            
+            annotationView.image = resizedImage
         }
-        annotationView.animatesWhenAdded = true
         return annotationView
     }
 }

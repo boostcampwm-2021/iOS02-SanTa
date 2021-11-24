@@ -16,6 +16,7 @@ struct ResultDetailData {
     let altitude: ResultAltitude
     let incline: ResultIncline
     let id: String
+    let assetIdentifiers: [String]
     let coordinates: [[CLLocationCoordinate2D]]
     private(set) var title: String
     
@@ -28,6 +29,7 @@ struct ResultDetailData {
         self.incline = ResultIncline(records: records)
         self.id = records.id
         self.title = records.title
+        self.assetIdentifiers = records.assetIdentifiers
         var locations: [[CLLocationCoordinate2D]] = []
         records.records.forEach { locations.append($0.locations.map {CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude) }) }
         self.coordinates = locations
