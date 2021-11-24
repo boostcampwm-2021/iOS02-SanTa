@@ -38,21 +38,30 @@ class DefaultMapViewRespository {
 
 extension DefaultMapViewRespository: MapViewRepository {
     func fetchMountains(completion: @escaping (Result<[MountainEntity], Error>) -> Void) {
+        let group = DispatchGroup()
+        group.enter()
+        group.enter()
+        var jsonMountains = [MountainEntity]()
+        var coreMountains = [MountainEntity]()
         self.mountainExtractor.extract { result in
             switch result {
             case .failure(let error):
+                group.leave()
                 return completion(.failure(error))
             case .success(let dataAsset):
                 guard let decodedObjects = try? JSONDecoder().decode([MountainEntity].self, from: dataAsset.data) else {
+                    group.leave()
                     return completion(.failure(JSONDecodeError.decodingFailed))
                 }
-                completion(.success(decodedObjects))
+                jsonMountains = decodedObjects
+                group.leave()
             }
         }
         
         self.coreDataMountainStorage.fetch { result in
             switch result {
             case .failure(let error):
+                group.leave()
                 return completion(.failure(error))
             case .success(let mountainEntityMOs):
                 var mountainEntities: [MountainEntity] = []
@@ -71,8 +80,12 @@ extension DefaultMapViewRespository: MapViewRepository {
                     )
                     mountainEntities.append(mountainEntity)
                 }
-                completion(.success(mountainEntities))
+                coreMountains = mountainEntities
+                group.leave()
             }
+        }
+        group.notify(queue: .main) {
+            completion(.success(jsonMountains + coreMountains))
         }
     }
     

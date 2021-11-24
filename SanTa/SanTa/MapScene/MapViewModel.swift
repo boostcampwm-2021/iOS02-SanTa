@@ -22,8 +22,7 @@ final class MapViewModel {
     
     func configureBindings() {
         self.useCase.prepareMountainMarkers { [weak self] mountains in
-            guard let mountains = mountains else { return }
-            self?.mountains?.append(contentsOf: mountains)
+            self?.mountains = mountains
         }
         self.useCase.initialLocation = { [weak self] initialLocation in
             self?.initialLocation = initialLocation
@@ -31,7 +30,6 @@ final class MapViewModel {
         self.useCase.locationPermissionDidChangeTo = { [weak self] bool in
             self?.locationPermission = bool
         }
-        
         self.useCase.preparePermission()
         self.useCase.prepareLocacationManager()
     }
