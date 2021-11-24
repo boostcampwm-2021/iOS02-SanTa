@@ -17,11 +17,13 @@ final class MapViewModel {
     
     init(useCase: MapViewUseCase) {
         self.useCase = useCase
+        self.mountains = []
     }
     
     func configureBindings() {
         self.useCase.prepareMountainMarkers { [weak self] mountains in
-            self?.mountains = mountains
+            guard let mountains = mountains else { return }
+            self?.mountains?.append(contentsOf: mountains)
         }
         self.useCase.initialLocation = { [weak self] initialLocation in
             self?.initialLocation = initialLocation

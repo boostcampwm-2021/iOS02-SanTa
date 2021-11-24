@@ -16,7 +16,7 @@ class MountainAddingViewModel {
     let addMountainResult = PassthroughSubject<AddMountainResult, Never>()
     
     enum AddMountainResult: String {
-        case success = "저장에 성공하였습니다."
+        case success = "저장에 성공하였습니다.\n앱 종료 및 재시작 시 적용됩니다."
         case failure = "저장에 실패하였습니다."
     }
     

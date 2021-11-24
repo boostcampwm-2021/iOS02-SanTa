@@ -29,10 +29,11 @@ final class CoreDataMountainStorage: MountainStorage {
         self.coreDataStroage.performBackgroundTask { context in
             let object = NSEntityDescription.insertNewObject(forEntityName: "MountainEntity", into: context)
             object.setValue(mountainEntity.id, forKey: "id")
-            object.setValue(mountainEntity.mountain.mountainName, forKey: "name")
-            object.setValue(mountainEntity.mountain.mountainHeight, forKey: "altitude")
             object.setValue(mountainEntity.latitude, forKey: "latitude")
             object.setValue(mountainEntity.longitude, forKey: "longitude")
+            object.setValue(mountainEntity.mountain.mountainName, forKey: "name")
+            object.setValue(mountainEntity.mountain.mountainRegion, forKey: "region")
+            object.setValue(mountainEntity.mountain.mountainHeight, forKey: "altitude")
             object.setValue(mountainEntity.mountain.mountainShortDescription, forKey: "descript")
             
             do {
