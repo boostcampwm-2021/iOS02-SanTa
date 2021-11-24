@@ -85,13 +85,33 @@ class MountainAddingView: UIScrollView {
     
     weak var newPlaceDelegate: NewPlaceAddable?
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        super.touchesBegan(touches, with: event)
+        self.endEditing(true)
+    }
+    
     func configure() {
         self.backgroundColor = .systemBackground
         self.translatesAutoresizingMaskIntoConstraints = false
         self.configureSubViews()
         self.configureLayout()
+        self.configureNotification()
     }
     
+    private func configureNotification() {
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillShow),
+            name: UIResponder.keyboardDidShowNotification,
+            object: nil
+        )
+        NotificationCenter.default.addObserver(
+            self,
+            selector: #selector(keyboardWillHide),
+            name: UIResponder.keyboardWillHideNotification,
+            object: nil
+        )
+    }
     
     private func configureSubViews() {
         self.addSubview(titleLabel)
@@ -100,6 +120,7 @@ class MountainAddingView: UIScrollView {
         self.addSubview(descriptionLabel)
         self.addSubview(descriptionTextView)
         self.addSubview(registerButton)
+        self.delegate = self
         self.nameTextField.delegate = self
         self.descriptionTextView.delegate = self
     }
@@ -153,6 +174,21 @@ class MountainAddingView: UIScrollView {
         }
         self.newPlaceDelegate?.newPlaceShouldAdd(title: title, description: description)
     }
+    
+    @objc private func keyboardWillShow(_ notification: Notification) {
+        guard let userInfo = notification.userInfo,
+              let keyboardFrame = userInfo[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect
+        else { return }
+        let contentInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardFrame.size.height, right: 0.0)
+        self.contentInset = contentInset
+        self.scrollIndicatorInsets = contentInset
+    }
+    
+    @objc private func keyboardWillHide(_ notification: Notification) {
+        let contentInset = UIEdgeInsets.zero
+        self.contentInset = contentInset
+        self.scrollIndicatorInsets = contentInset
+    }
 }
 
 extension MountainAddingView: UITextFieldDelegate, UITextViewDelegate {
@@ -160,6 +196,11 @@ extension MountainAddingView: UITextFieldDelegate, UITextViewDelegate {
         guard let text = textField.text else { return true }
         let newLength = text.count + string.count
         return newLength <= 10
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        self.descriptionTextView.becomeFirstResponder()
+        return true
     }
     
     func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
