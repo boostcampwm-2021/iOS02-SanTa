@@ -7,7 +7,7 @@
 
 import UIKit
 
-protocol NewPlaceAddable {
+protocol NewPlaceAddable: AnyObject {
     func userDidTypeWrong()
     func newPlaceShouldAdd(title: String, description: String)
 }
@@ -83,10 +83,9 @@ class MountainAddingView: UIScrollView {
         return button
     }()
     
-    var newPlaceDelegate: NewPlaceAddable?
+    weak var newPlaceDelegate: NewPlaceAddable?
     
     func configure() {
-        self.isScrollEnabled = true
         self.backgroundColor = .systemBackground
         self.translatesAutoresizingMaskIntoConstraints = false
         self.configureSubViews()
@@ -107,13 +106,13 @@ class MountainAddingView: UIScrollView {
     
     private func configureLayout() {
         NSLayoutConstraint.activate([
-            self.titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
-            self.titleLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20),
+            self.titleLabel.topAnchor.constraint(equalTo: self.contentLayoutGuide.topAnchor, constant: 20),
+            self.titleLabel.leftAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leftAnchor, constant: 20),
         ])
         
         NSLayoutConstraint.activate([
             self.nameLabel.topAnchor.constraint(equalTo: self.titleLabel.bottomAnchor, constant: 20),
-            self.nameLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20),
+            self.nameLabel.leftAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leftAnchor, constant: 20),
         ])
         
         NSLayoutConstraint.activate([
@@ -124,7 +123,7 @@ class MountainAddingView: UIScrollView {
         
         NSLayoutConstraint.activate([
             self.descriptionLabel.topAnchor.constraint(equalTo: self.nameTextField.bottomAnchor, constant: 20),
-            self.descriptionLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20),
+            self.descriptionLabel.leftAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leftAnchor, constant: 20),
         ])
         
         NSLayoutConstraint.activate([
@@ -143,8 +142,11 @@ class MountainAddingView: UIScrollView {
     }
     
     @objc private func registerTouched() {
-        guard let title = nameTextField.text, !title.isEmpty,
-              let description = descriptionTextView.text, descriptionTextView.textColor != .systemGray3, !description.isEmpty
+        guard let title = self.nameTextField.text,
+              let description = self.descriptionTextView.text,
+              descriptionTextView.textColor != .systemGray3,
+              !description.isEmpty,
+              !title.isEmpty
         else {
             self.newPlaceDelegate?.userDidTypeWrong()
             return
