@@ -82,7 +82,7 @@ class MapViewController: UIViewController {
         self.configureViews()
         self.registerAnnotationView()
         self.configureViewModel()
-        print("Documents Directory: ", FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last ?? "Not Found!")
+        self.configureNotification()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -148,6 +148,14 @@ class MapViewController: UIViewController {
                 self?.configureUserTrackingButton(bool)
             })
             .store(in: &self.observers)
+    }
+    
+    private func configureNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(shouldUpdateMarkers), name: NSNotification.Name.init(rawValue: "save"), object: nil)
+    }
+    
+    @objc func shouldUpdateMarkers() {
+        self.viewModel?.updateMarker()
     }
     
     private func configureMarkers(_ mountains: [MountainEntity]?) {
