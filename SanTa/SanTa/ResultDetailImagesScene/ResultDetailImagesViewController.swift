@@ -44,6 +44,7 @@ class ResultDetailImagesViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        self.coordinator?.dismiss()
         self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
     

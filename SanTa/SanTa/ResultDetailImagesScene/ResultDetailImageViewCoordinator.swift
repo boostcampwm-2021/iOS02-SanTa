@@ -22,7 +22,6 @@ class ResultDetailImagesViewCoordinator: Coordinator {
     }
     
     func dismiss() {
-        self.navigationController.popViewController(animated: true)
         self.parentCoordinator?.childCoordinators.removeLast()
     }
     
