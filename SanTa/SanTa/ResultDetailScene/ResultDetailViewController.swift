@@ -81,6 +81,12 @@ class ResultDetailViewController: UIViewController {
         super.viewDidLoad()
         self.configureViews()
         self.mapView.delegate = self
+        self.configureViewModel()
+        self.drawPathOnMap()
+        self.markEndPoints()
+    }
+    
+    private func configureViewModel() {
         self.viewModel?.recordDidFetch = { [weak self] in
             guard let viewModel = self?.viewModel else { return }
             self?.titleLabel.text = viewModel.resultDetailData?.title
@@ -93,34 +99,50 @@ class ResultDetailViewController: UIViewController {
                 averageSpeed: viewModel.averageSpeed()
             )
             self?.largerInformationView.configure()
+            guard let distanceViewModel = self?.viewModel?.distanceViewModel,
+                  let timeViewModel = self?.viewModel?.timeViewModel,
+                  let paceViewModel = self?.viewModel?.paceViewModel,
+                  let altitudeViewModel = self?.viewModel?.altitudeViewModel,
+                  let inclineViewModel = self?.viewModel?.inclineViewMedel else {
+                      return
+                  }
+            let largeInfoModel: [LargeViewModel] = [
+                distanceViewModel, timeViewModel, paceViewModel, altitudeViewModel, inclineViewModel
+            ]
+            self?.largerInformationView.bindSnapShotApply(section: .main, item: largeInfoModel)
             self?.configureViews()
             self?.configurePanGesture()
         }
         viewModel?.setUp()
-        
+    }
+    
+    private func drawPathOnMap() {
         guard let pointSets: [[CLLocationCoordinate2D]] = self.viewModel?.resultDetailData?.coordinates else {
             return
         }
         for pointSet in pointSets {
             mapView.addOverlay(MKPolyline(coordinates: pointSet, count: pointSet.count))
         }
-        guard let initial = mapView.overlays.first?.boundingMapRect else { return }
-
-            let mapRect = mapView.overlays
-                .dropFirst()
-                .reduce(initial) { $0.union($1.boundingMapRect) }
-
-            mapView.setVisibleMapRect(mapRect, animated: true)
-        print(pointSets.count)
-        let startAnnotation = MKPointAnnotation()
-        let endAnnotation = MKPointAnnotation()
-        guard let startPoint = pointSets.first?.first,
-              let endPoint = pointSets.last?.last else {
+        guard let initial = mapView.overlays.first?.boundingMapRect else {
+            return
+        }
+        
+        let mapRect = mapView.overlays.dropFirst().reduce(initial) { $0.union($1.boundingMapRect) }
+        mapView.setVisibleMapRect(mapRect, animated: true)
+    }
+    
+    private func markEndPoints() {
+        guard let startingLocation = self.viewModel?.resultDetailData?.timeStamp.startLocation,
+              let endingLocation = self.viewModel?.resultDetailData?.timeStamp.endLocation else {
                   return
               }
-        startAnnotation.coordinate = startPoint
+        let startAnnotation = MKPointAnnotation()
+        let endAnnotation = MKPointAnnotation()
+        let startingPoint = CLLocationCoordinate2D(latitude: startingLocation.latitude, longitude: startingLocation.longitude)
+        let endingPoint = CLLocationCoordinate2D(latitude: endingLocation.latitude, longitude: endingLocation.longitude)
+        startAnnotation.coordinate = startingPoint
         startAnnotation.title = "start"
-        endAnnotation.coordinate = endPoint
+        endAnnotation.coordinate = endingPoint
         endAnnotation.title = "end"
         self.mapView.addAnnotations([startAnnotation, endAnnotation])
     }
@@ -145,7 +167,7 @@ class ResultDetailViewController: UIViewController {
         self.view.addSubview(self.largerInformationView)
         self.view.addSubview(self.smallerInformationView)
         self.view.addSubview(self.titleLabel)
-      
+        
         NSLayoutConstraint.activate([
             self.mapView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
             self.mapView.topAnchor.constraint(equalTo: self.view.topAnchor),
@@ -183,7 +205,7 @@ class ResultDetailViewController: UIViewController {
         ])
         
         infoViewTopConstraint =
-            self.smallerInformationView.topAnchor.constraint(equalTo: self.mapView.bottomAnchor)
+        self.smallerInformationView.topAnchor.constraint(equalTo: self.mapView.bottomAnchor)
         guard let infoViewConstraint = infoViewTopConstraint else { return }
         NSLayoutConstraint.activate([infoViewConstraint])
         
@@ -225,12 +247,12 @@ class ResultDetailViewController: UIViewController {
             guard (self.view.frame.height - informationViewHeight) >= (self.backButton.frame.height + 10),
                   let infoViewHight = self.infoViewHight,
                   infoViewHight < (informationViewHeight - (translation.y + offset)) else {
-                return
-            }
+                      return
+                  }
             self.smallerInformationView.layer.cornerRadius = 13
             self.largerInformationView.layer.cornerRadius = 13
             self.changeInfoViewTopConstraints(traslation: translation.y + offset)
-
+            
         case .ended:
             if self.smallerInformationView.frame.minY <= self.view.frame.height/2 {
                 self.smallerInformationView.alpha = 0
@@ -266,13 +288,7 @@ extension ResultDetailViewController {
     @objc func presentModifyResultAlert() {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         let changeTitle = UIAlertAction(title: "제목 변경", style: .default) { action in
-            // TODO: 입력창 띄우고 텍스트 입력 받아서 update 호출
             self.coordinator?.presentRecordingTitleViewController()
-//            self.viewModel?.update(title: "타이트을", completion: { title in
-//                DispatchQueue.main.async {
-//                    self.titleLabel.text = title
-//                }
-//            })
         }
         let delete = UIAlertAction(title: "삭제", style: .destructive) { action in
             self.viewModel?.delete { result in
@@ -307,7 +323,6 @@ extension ResultDetailViewController: SetTitleDelegate {
 extension ResultDetailViewController: MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, rendererFor overlay: MKOverlay) -> MKOverlayRenderer {
         if let polyline = overlay as? MKPolyline {
-            print("is polyline")
             let renderer = MKPolylineRenderer(overlay: polyline)
             renderer.lineWidth = 5
             renderer.alpha = 1
