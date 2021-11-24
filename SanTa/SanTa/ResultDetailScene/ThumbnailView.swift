@@ -13,7 +13,7 @@ final class ThumbnailView: MKAnnotationView {
     
     private lazy var displayView: UIView = {
         let view = UIView()
-        view.backgroundColor = .systemBackground
+        view.backgroundColor = .white
         view.layer.cornerRadius = 5
         view.layer.masksToBounds = false
         view.layer.shadowColor = UIColor.black.cgColor
@@ -24,6 +24,7 @@ final class ThumbnailView: MKAnnotationView {
     }()
     
     private lazy var imageView = UIImageView()
+    private(set) var imageIdentifier = String()
     
     override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
@@ -55,14 +56,15 @@ final class ThumbnailView: MKAnnotationView {
         ])
         
         NSLayoutConstraint.activate([
-            self.imageView.leftAnchor.constraint(equalTo: self.displayView.leftAnchor, constant: 3),
-            self.imageView.topAnchor.constraint(equalTo: self.displayView.topAnchor, constant: 3),
-            self.imageView.rightAnchor.constraint(equalTo: self.displayView.rightAnchor, constant: -3),
-            self.imageView.bottomAnchor.constraint(equalTo: self.displayView.bottomAnchor, constant: -3)
+            self.imageView.leftAnchor.constraint(equalTo: self.displayView.leftAnchor, constant: 2),
+            self.imageView.topAnchor.constraint(equalTo: self.displayView.topAnchor, constant: 2),
+            self.imageView.rightAnchor.constraint(equalTo: self.displayView.rightAnchor, constant: -2),
+            self.imageView.bottomAnchor.constraint(equalTo: self.displayView.bottomAnchor, constant: -2)
         ])
     }
     
-    func configureImage(uiImage: UIImage) {
-        
+    func configureImage(uiImage: UIImage, id: String) {
+        self.imageView.image = uiImage
+        self.imageIdentifier = id
     }
 }

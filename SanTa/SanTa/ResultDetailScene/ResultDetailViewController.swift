@@ -466,19 +466,17 @@ extension ResultDetailViewController: MKMapViewDelegate {
                 return nil
             }
             
-            let size = CGSize(width: 30, height: 30)
-            UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
-            image.draw(in: CGRect(origin: CGPoint.zero, size: size))
-            let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
-            UIGraphicsEndImageContext()
+            let thumbnailView = ThumbnailView(annotation: annotation, reuseIdentifier: identifier)
+            thumbnailView.configureImage(uiImage: image, id: identifider ?? "")
             
-            annotationView.image = resizedImage
+            return thumbnailView
         }
         return annotationView
     }
     
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        guard let annotation = view.annotation as? MountainAnnotation else { return }
-        coordinator?.presentMountainDetailViewController(mountainAnnotation: annotation)
+        guard let annotation = view as? ThumbnailView else { return }
+        
+        print(annotation.imageIdentifier)
     }
 }
