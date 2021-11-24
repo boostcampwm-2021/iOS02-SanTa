@@ -13,20 +13,24 @@ class ResultDetailThumbnailViewCoordinator: Coordinator {
     var navigationController: UINavigationController
     
     let uiImages: [String: UIImage]
+    let id: String
     
     func start() {
         let resultDetailThumbnailViewController = ResultDetailThumbnailViewController()
         resultDetailThumbnailViewController.uiImages = self.uiImages
+        resultDetailThumbnailViewController.currentIdentifier = self.id
         resultDetailThumbnailViewController.coordinator = self
-        self.navigationController.pushViewController(resultDetailThumbnailViewController, animated: true)
+        
+        self.navigationController.present(resultDetailThumbnailViewController, animated: true)
     }
     
     func dismiss() {
         self.parentCoordinator?.childCoordinators.removeLast()
     }
     
-    init(navigationController: UINavigationController, uiImages: [String: UIImage]) {
+    init(navigationController: UINavigationController, uiImages: [String: UIImage], id: String) {
         self.navigationController = navigationController
         self.uiImages = uiImages
+        self.id = id
     }
 }

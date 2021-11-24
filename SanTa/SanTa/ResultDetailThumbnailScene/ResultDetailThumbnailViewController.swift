@@ -20,6 +20,7 @@ class ResultDetailThumbnailViewController: UIViewController {
     private var dataSource: DetailThumbnailDataSource?
     
     var uiImages = [String: UIImage]()
+    var currentIdentifier = String()
     
     lazy var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
