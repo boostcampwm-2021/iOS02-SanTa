@@ -21,7 +21,7 @@ class MountainAddingViewUseCase {
             let mountainDetail = MountainEntity.MountainDetail(
                 mountainName: name,
                 mountainRegion: region,
-                mountainHeight: String(altitude),
+                mountainHeight: String(format: "%.f", altitude),
                 mountainShortDescription: description
             )
             let mountainEntity = MountainEntity(mountain: mountainDetail, latitude: latitude, longitude: longitude)
