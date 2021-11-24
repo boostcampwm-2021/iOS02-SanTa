@@ -1,23 +1,23 @@
 //
-//  ResultDetailImagesViewController.swift
+//  ResultDetailThumbnailViewController.swift
 //  SanTa
 //
-//  Created by 김민창 on 2021/11/23.
+//  Created by 김민창 on 2021/11/24.
 //
 
 import UIKit
 
-class ResultDetailImagesViewController: UIViewController {
-    weak var coordinator: ResultDetailImagesViewCoordinator?
+class ResultDetailThumbnailViewController: UIViewController {
+    weak var coordinator: ResultDetailThumbnailViewCoordinator?
     
-    enum DetailImagesSection: Int, CaseIterable {
+    enum DetailThumbnailSection: Int, CaseIterable {
         case main
     }
     
-    typealias DetailImagesDataSource = UICollectionViewDiffableDataSource<DetailImagesSection, AnyHashable>
-    typealias DetailImagesSnapshot = NSDiffableDataSourceSnapshot<DetailImagesSection, AnyHashable>
+    typealias DetailThumbnailDataSource = UICollectionViewDiffableDataSource<DetailThumbnailSection, AnyHashable>
+    typealias DetailThumbnailSnapshot = NSDiffableDataSourceSnapshot<DetailThumbnailSection, AnyHashable>
     
-    private var dataSource: DetailImagesDataSource?
+    private var dataSource: DetailThumbnailDataSource?
     
     var uiImages = [String: UIImage]()
     
@@ -37,21 +37,8 @@ class ResultDetailImagesViewController: UIViewController {
         self.configureImages()
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(false, animated: false)
-    }
-    
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        self.coordinator?.dismiss()
-        self.navigationController?.setNavigationBarHidden(true, animated: false)
-    }
-    
     private func configureViews() {
         self.view.backgroundColor = .systemBackground
-        self.navigationController?.navigationBar.tintColor = .label
-        self.title = "사진 모아보기 (\(uiImages.count)장)"
         self.view.addSubview(self.collectionView)
         
         NSLayoutConstraint.activate([
@@ -67,8 +54,8 @@ class ResultDetailImagesViewController: UIViewController {
         self.collectionView.register(DetailImagesCell.self, forCellWithReuseIdentifier: DetailImagesCell.identifier)
     }
     
-    private func bindSnapShotApply(section: DetailImagesSection, item: [AnyHashable]) {
-        var snapshot = DetailImagesSnapshot()
+    private func bindSnapShotApply(section: DetailThumbnailSection, item: [AnyHashable]) {
+        var snapshot = DetailThumbnailSnapshot()
         snapshot.appendSections([.main])
         item.forEach {
             snapshot.appendItems([$0], toSection: section)
@@ -78,18 +65,18 @@ class ResultDetailImagesViewController: UIViewController {
     
     private func configureCompositionalLayout() -> UICollectionViewCompositionalLayout {
         return UICollectionViewCompositionalLayout { (sectionNumber, env) -> NSCollectionLayoutSection? in
-            let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1/3), heightDimension: .fractionalWidth(1/3)))
+            let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(1)))
             item.contentInsets = .init(top: 3, leading: 3, bottom: 3, trailing: 3)
-            let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(1/3)), subitems: [item])
+            let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .fractionalWidth(1)), subitems: [item])
             let section = NSCollectionLayoutSection(group: group)
-            section.orthogonalScrollingBehavior = .none
+            section.orthogonalScrollingBehavior = .paging
             section.contentInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 0)
             return section
         }
     }
     
     private func configuareDataSource() {
-        let datasource = DetailImagesDataSource(collectionView: self.collectionView, cellProvider: { (collectionView, indexPath, item) -> UICollectionViewCell in
+        let datasource = DetailThumbnailDataSource(collectionView: self.collectionView, cellProvider: { (collectionView, indexPath, item) -> UICollectionViewCell in
             
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailImagesCell.identifier, for: indexPath) as? DetailImagesCell,
                   let item = item as? String,
