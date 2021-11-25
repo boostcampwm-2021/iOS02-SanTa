@@ -287,6 +287,8 @@ extension RecordingViewController: RecordingViewDelegate {
                 self.recordingViewModel?.saveRecordPhotoOption(value: true)
             case .notDetermined, .restricted, .denied, .limited:
                 self.recordingViewModel?.saveRecordPhotoOption(value: false)
+            @unknown default:
+                self.recordingViewModel?.saveRecordPhotoOption(value: false)
             }
         }
     }

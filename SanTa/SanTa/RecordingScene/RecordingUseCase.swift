@@ -10,6 +10,7 @@ import Foundation
 protocol RecordRepository {
     func save(records: Records,
               completion: @escaping (Result<Records, Error>) -> Void)
+    func saveRecordPhotoOption(value: Bool)
     func fetchRecordOption(key: Settings, completion: @escaping (Result<Bool, Error>) -> Void)
 }
 
@@ -53,7 +54,8 @@ final class DefaultRecordingUseCase: RecordingUseCase, ObservableObject {
     }
     
     func saveRecordPhotoOption(value: Bool) {
-        
+        self.recording?.changedWillSpeechStatus(status: value)
+        self.recordRepository.saveRecordPhotoOption(value: value)
     }
     
     func fetchPhotos(startDate: Date?, endDate: Date?) -> [String] {

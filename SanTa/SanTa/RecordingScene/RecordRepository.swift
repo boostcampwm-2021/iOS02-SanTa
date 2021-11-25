@@ -29,6 +29,10 @@ final class DefaultRecordRepository: RecordRepository {
         self.recordStorage.save(records: records, completion: completion)
     }
     
+    func saveRecordPhotoOption(value: Bool) {
+        
+    }
+    
     func fetchRecordOption(key: Settings, completion: @escaping (Result<Bool, Error>) -> Void) {
         self.settingsStorage.string(key: key) { value in
             guard let value = value else {
