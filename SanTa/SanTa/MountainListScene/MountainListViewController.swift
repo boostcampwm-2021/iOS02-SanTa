@@ -135,7 +135,7 @@ extension MountainListViewController: UICollectionViewDelegate {
         guard let mountains = self.viewModel?.mountains else { return }
         self.coordinator?.pushMountainDetailViewController(mountainAnnotation: MountainAnnotation(
             title: mountains[indexPath.item].mountain.mountainName,
-            subtitle: mountains[indexPath.item].mountain.mountainHeight,
+            subtitle: mountains[indexPath.item].mountain.mountainHeight + "m",
             latitude: mountains[indexPath.item].latitude,
             longitude: mountains[indexPath.item].longitude,
             mountainDescription: mountains[indexPath.item].mountain.mountainShortDescription,
