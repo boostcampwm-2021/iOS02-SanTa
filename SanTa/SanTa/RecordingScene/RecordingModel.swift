@@ -28,7 +28,7 @@ final class RecordingModel: NSObject, ObservableObject {
     private var timerIsRunning = false
     private var records: Records?
     private var startDate: Date?
-    private var oneKileDate: Date?
+    private var g: Date?
     private var currentWalk = 0
     private var currentDistance: Double = 0
     private var maxOneKiloTime = 0
@@ -47,7 +47,7 @@ final class RecordingModel: NSObject, ObservableObject {
     override init() {
         super.init()
         self.startDate = Date()
-        self.oneKileDate = self.startDate
+        self.oneKiloDate = self.startDate
         self.configureTimer()
         self.configureLocationManager()
         self.checkMotionAuthorizationStatus()
@@ -148,8 +148,8 @@ final class RecordingModel: NSObject, ObservableObject {
     
     private func calculateSpeed() {
         if self.sliceDistance <= self.currentDistance {
-            guard let oneKileDate = self.oneKileDate else {
-                self.oneKileDate = self.currentTime
+            guard let oneKileDate = self.oneKiloDate else {
+                self.oneKiloDate = self.currentTime
                 return
             }
             let elapsedTimeMinutes = Int(self.currentTime.timeIntervalSince(oneKileDate))
@@ -158,13 +158,13 @@ final class RecordingModel: NSObject, ObservableObject {
             
             if elapsedTimeMinutes > self.maxOneKiloTime {
                 self.maxOneKiloTime = elapsedTimeMinutes
-                self.oneKileDate = self.currentTime
+                self.oneKiloDate = self.currentTime
                 self.sliceDistance += 1
             }
             
             if elapsedTimeMinutes < self.minOneKiloTime {
                 self.minOneKiloTime = elapsedTimeMinutes
-                self.oneKileDate = self.currentTime
+                self.oneKiloDate = self.currentTime
                 self.sliceDistance += 1
             }
         }
