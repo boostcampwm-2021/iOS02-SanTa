@@ -29,25 +29,18 @@ final class SettingsUsecase {
         }
     }
     
-    func makeSettings() -> [[Option]] {
-        var options: [[Option]] = []
-        var photoSettings: [Option] = []
-        var voiceSettings: [Option] = []
-        var mapSetting: [Option] = []
+    func makeSettings() -> [Option] {
+        var options: [Option] = []
         
         self.settingsRepository.makeToggleOption(key: Settings.recordPhoto) { value in
-            photoSettings.append(value)
+            options.append(value)
         }
         self.settingsRepository.makeToggleOption(key: Settings.voiceGuidanceEveryOnekm) { value in
-            voiceSettings.append(value)
+            options.append(value)
         }
         self.settingsRepository.makeMapOption(key: Settings.mapFormat) { value in
-            mapSetting.append(value)
+            options.append(value)
         }
-        
-        options.append(photoSettings)
-        options.append(voiceSettings)
-        options.append(mapSetting)
         
         return options
     }

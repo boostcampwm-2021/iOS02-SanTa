@@ -87,7 +87,7 @@ class MapViewController: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        viewModel?.viewWillAppear()
+        self.viewModel?.viewWillAppear()
     }
     
     private func configureViews() {

@@ -10,12 +10,12 @@ import Combine
 
 final class SettingsViewModel {
     
-    @Published var settings: [[Option]] = []
+    @Published var settings: [Option] = []
     
     let settingsUseCase: SettingsUsecase
     let isPhotoRecordAvailable = PassthroughSubject<Bool, Never>()
     
-    var sectionCount: Int {
+    var settingsCount: Int {
         return settings.count
     }
     
@@ -34,10 +34,6 @@ final class SettingsViewModel {
                 self?.reloadSettings()
             }
         }
-    }
-    
-    func option(indexPath: IndexPath) -> Option {
-        return settings[indexPath.section][indexPath.item]
     }
     
     func change<T: Codable>(value: T, key: Settings) {
