@@ -29,13 +29,6 @@ class ResultDetailLargerInfoView: UIView {
 
         return collectionView
     }()
-
-    init(frame: CGRect, date: String, start: String, end: String) {
-        super.init(frame: frame)
-        self.date = date
-        self.startTime = start
-        self.endTime = end
-    }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
