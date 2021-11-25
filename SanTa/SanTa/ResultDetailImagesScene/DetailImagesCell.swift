@@ -11,12 +11,20 @@ class DetailImagesCell: UICollectionViewCell {
     static let identifier = "DetailImagesCell"
     
     private let imageView = UIImageView()
+    var id = String()
     
-    func update(image: UIImage) {
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.configureView()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func configureView() {
         self.imageView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(imageView)
-        
-        self.imageView.image = image
         
         NSLayoutConstraint.activate([
             self.imageView.topAnchor.constraint(equalTo: self.topAnchor),
@@ -24,5 +32,10 @@ class DetailImagesCell: UICollectionViewCell {
             self.imageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             self.imageView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
+    }
+    
+    func update(image: UIImage, id: String) {
+        self.imageView.image = image
+        self.id = id
     }
 }

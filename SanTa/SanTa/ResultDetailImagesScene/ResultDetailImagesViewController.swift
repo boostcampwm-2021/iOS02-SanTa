@@ -20,6 +20,7 @@ class ResultDetailImagesViewController: UIViewController {
     private var dataSource: DetailImagesDataSource?
     
     var uiImages = [String: UIImage]()
+    var identifiers = [String]()
     
     lazy var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
@@ -44,6 +45,7 @@ class ResultDetailImagesViewController: UIViewController {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        self.coordinator?.dismiss()
         self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
@@ -62,6 +64,7 @@ class ResultDetailImagesViewController: UIViewController {
     }
     
     private func configureCollectionView() {
+        self.collectionView.delegate = self
         self.collectionView.collectionViewLayout = configureCompositionalLayout()
         self.collectionView.register(DetailImagesCell.self, forCellWithReuseIdentifier: DetailImagesCell.identifier)
     }
@@ -95,7 +98,7 @@ class ResultDetailImagesViewController: UIViewController {
                   let image = self.uiImages[item] else  {
                 return UICollectionViewCell() }
             
-            cell.update(image: image)
+            cell.update(image: image, id: item)
             return cell
         })
         
@@ -104,18 +107,16 @@ class ResultDetailImagesViewController: UIViewController {
     }
     
     private func configureImages() {
-        var identifiers = [String]()
-        
         for (key, _) in self.uiImages {
-            identifiers.append(key)
+            self.identifiers.append(key)
         }
         
-        self.bindSnapShotApply(section: .main, item: identifiers)
+        self.bindSnapShotApply(section: .main, item: self.identifiers)
     }
 }
 
-extension ResultDetailImagesViewController {
-    @objc func dismissViewController() {
-        coordinator?.dismiss()
+extension ResultDetailImagesViewController: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt index: IndexPath) {
+        self.coordinator?.presentResultDetailThumbnailViewController(uiImages: self.uiImages, id: self.identifiers[index.item])
     }
 }

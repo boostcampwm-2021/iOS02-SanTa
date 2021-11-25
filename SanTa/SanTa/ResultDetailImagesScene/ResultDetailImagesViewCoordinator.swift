@@ -22,12 +22,21 @@ class ResultDetailImagesViewCoordinator: Coordinator {
     }
     
     func dismiss() {
-        self.navigationController.popViewController(animated: true)
         self.parentCoordinator?.childCoordinators.removeLast()
     }
     
     init(navigationController: UINavigationController, uiImages: [String: UIImage]) {
         self.navigationController = navigationController
         self.uiImages = uiImages
+    }
+}
+
+extension ResultDetailImagesViewCoordinator {
+    func presentResultDetailThumbnailViewController(uiImages: [String: UIImage], id: String) {
+        let resultDetailThumbnailViewCoordinator = ResultDetailThumbnailViewCoordinator(navigationController: navigationController, uiImages: uiImages, id: id)
+        self.childCoordinators.append(resultDetailThumbnailViewCoordinator)
+        resultDetailThumbnailViewCoordinator.parentCoordinator = self
+        
+        resultDetailThumbnailViewCoordinator.start()
     }
 }

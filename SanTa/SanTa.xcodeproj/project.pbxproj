@@ -100,8 +100,11 @@
 		DAAF4D70273CE08B00780DC8 /* MountainListViewRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAF4D6F273CE08B00780DC8 /* MountainListViewRepository.swift */; };
 		DAB37D4C2731166B00EC523F /* RecordingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB37D4B2731166B00EC523F /* RecordingViewModel.swift */; };
 		DAB37D50273256B900EC523F /* RecordingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB37D4F273256B900EC523F /* RecordingModel.swift */; };
+		DAB751B7274E74E600C39266 /* ThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB751B6274E74E600C39266 /* ThumbnailView.swift */; };
+		DAB751BA274E7DEA00C39266 /* ResultDetailThumbnailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB751B9274E7DEA00C39266 /* ResultDetailThumbnailViewController.swift */; };
+		DAB751BC274E7DFB00C39266 /* ResultDetailThumbnailViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB751BB274E7DFA00C39266 /* ResultDetailThumbnailViewCoordinator.swift */; };
 		DAE7540E274D2A25004A19C3 /* ResultDetailImagesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE7540D274D2A25004A19C3 /* ResultDetailImagesViewController.swift */; };
-		DAE75410274D2A32004A19C3 /* ResultDetailImageViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE7540F274D2A32004A19C3 /* ResultDetailImageViewCoordinator.swift */; };
+		DAE75410274D2A32004A19C3 /* ResultDetailImagesViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE7540F274D2A32004A19C3 /* ResultDetailImagesViewCoordinator.swift */; };
 		DAE75412274D3AFA004A19C3 /* DetailImagesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAE75411274D3AFA004A19C3 /* DetailImagesCell.swift */; };
 		DAFA9B59274112D800BF168C /* RecordingPhotoCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFA9B58274112D800BF168C /* RecordingPhotoCoordinator.swift */; };
 		DAFA9B5B2741131400BF168C /* RecordingPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFA9B5A2741131400BF168C /* RecordingPhotoViewController.swift */; };
@@ -205,8 +208,11 @@
 		DAAF4D6F273CE08B00780DC8 /* MountainListViewRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainListViewRepository.swift; sourceTree = "<group>"; };
 		DAB37D4B2731166B00EC523F /* RecordingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingViewModel.swift; sourceTree = "<group>"; };
 		DAB37D4F273256B900EC523F /* RecordingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingModel.swift; sourceTree = "<group>"; };
+		DAB751B6274E74E600C39266 /* ThumbnailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailView.swift; sourceTree = "<group>"; };
+		DAB751B9274E7DEA00C39266 /* ResultDetailThumbnailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailThumbnailViewController.swift; sourceTree = "<group>"; };
+		DAB751BB274E7DFA00C39266 /* ResultDetailThumbnailViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailThumbnailViewCoordinator.swift; sourceTree = "<group>"; };
 		DAE7540D274D2A25004A19C3 /* ResultDetailImagesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailImagesViewController.swift; sourceTree = "<group>"; };
-		DAE7540F274D2A32004A19C3 /* ResultDetailImageViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailImageViewCoordinator.swift; sourceTree = "<group>"; };
+		DAE7540F274D2A32004A19C3 /* ResultDetailImagesViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailImagesViewCoordinator.swift; sourceTree = "<group>"; };
 		DAE75411274D3AFA004A19C3 /* DetailImagesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailImagesCell.swift; sourceTree = "<group>"; };
 		DAFA9B58274112D800BF168C /* RecordingPhotoCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingPhotoCoordinator.swift; sourceTree = "<group>"; };
 		DAFA9B5A2741131400BF168C /* RecordingPhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingPhotoViewController.swift; sourceTree = "<group>"; };
@@ -275,6 +281,7 @@
 			children = (
 				49FC97672744E105008CE73A /* ResultDetailViewCoordinator.swift */,
 				49225C5D273CDB4F0021AD79 /* ResultDetailViewController.swift */,
+				DAB751B6274E74E600C39266 /* ThumbnailView.swift */,
 				49225C5F273CDB680021AD79 /* ResultDetailSmallerInfoView.swift */,
 				49742D552740E1A0008F7DC2 /* ResultDetailLargerInfoView.swift */,
 				494803812743748D002854B1 /* ResultDetailViewModel.swift */,
@@ -421,6 +428,7 @@
 				54B32063274510B7002232BD /* MountainAddingScene */,
 				5428FDB6272F8B2B002F9D40 /* ResultScene */,
 				DAE7540C274D29E2004A19C3 /* ResultDetailImagesScene */,
+				DAB751B8274E7DAD00C39266 /* ResultDetailThumbnailScene */,
 				5428FDB7272F8B34002F9D40 /* ResultDetailScene */,
 				5428FDB5272F89F0002F9D40 /* RecordingScene */,
 				DA9D7C9B273A42B90018AD45 /* RecordingTitleScene */,
@@ -470,11 +478,20 @@
 			path = RecordingTitleScene;
 			sourceTree = "<group>";
 		};
+		DAB751B8274E7DAD00C39266 /* ResultDetailThumbnailScene */ = {
+			isa = PBXGroup;
+			children = (
+				DAB751B9274E7DEA00C39266 /* ResultDetailThumbnailViewController.swift */,
+				DAB751BB274E7DFA00C39266 /* ResultDetailThumbnailViewCoordinator.swift */,
+			);
+			path = ResultDetailThumbnailScene;
+			sourceTree = "<group>";
+		};
 		DAE7540C274D29E2004A19C3 /* ResultDetailImagesScene */ = {
 			isa = PBXGroup;
 			children = (
 				DAE7540D274D2A25004A19C3 /* ResultDetailImagesViewController.swift */,
-				DAE7540F274D2A32004A19C3 /* ResultDetailImageViewCoordinator.swift */,
+				DAE7540F274D2A32004A19C3 /* ResultDetailImagesViewCoordinator.swift */,
 				DAE75411274D3AFA004A19C3 /* DetailImagesCell.swift */,
 			);
 			path = ResultDetailImagesScene;
@@ -651,11 +668,12 @@
 				49FC97682744E105008CE73A /* ResultDetailViewCoordinator.swift in Sources */,
 				DAFA9B5D27424C9A00BF168C /* RecordingPhotoModel.swift in Sources */,
 				DAE75412274D3AFA004A19C3 /* DetailImagesCell.swift in Sources */,
+				DAB751B7274E74E600C39266 /* ThumbnailView.swift in Sources */,
 				49FEEDB92732584000D37CCA /* MountainEntity.swift in Sources */,
 				493178B42743992400B5FB88 /* DetailCell.swift in Sources */,
 				98BCF4F92737A7120073E6FB /* SettingsViewModel.swift in Sources */,
 				54296949272FBFAB0070B362 /* RecordingViewController.swift in Sources */,
-				DAE75410274D2A32004A19C3 /* ResultDetailImageViewCoordinator.swift in Sources */,
+				DAE75410274D2A32004A19C3 /* ResultDetailImagesViewCoordinator.swift in Sources */,
 				54B3206D27453725002232BD /* MountainAddingViewRepository.swift in Sources */,
 				984DDEC527325FB9003BE56B /* RecordRepository.swift in Sources */,
 				984DDEC327325DFC003BE56B /* RecordingUseCase.swift in Sources */,
@@ -666,10 +684,12 @@
 				54B32069274536D1002232BD /* MountainAddingViewModel.swift in Sources */,
 				54F88EB727424C210004EAFD /* TotalRecordsViewCell.swift in Sources */,
 				54B3206727451169002232BD /* MountainAddingViewCoordinator.swift in Sources */,
+				DAB751BC274E7DFB00C39266 /* ResultDetailThumbnailViewCoordinator.swift in Sources */,
 				9800821D273CB45D006A847A /* ResultRepository.swift in Sources */,
 				54B32073274B7E09002232BD /* MountainAddingView.swift in Sources */,
 				DAB37D50273256B900EC523F /* RecordingModel.swift in Sources */,
 				494803822743748D002854B1 /* ResultDetailViewModel.swift in Sources */,
+				DAB751BA274E7DEA00C39266 /* ResultDetailThumbnailViewController.swift in Sources */,
 				DAE7540E274D2A25004A19C3 /* ResultDetailImagesViewController.swift in Sources */,
 				5465237D2741F997007B2692 /* ResultViewModel.swift in Sources */,
 				9800821F273CE16E006A847A /* ResultUseCase.swift in Sources */,

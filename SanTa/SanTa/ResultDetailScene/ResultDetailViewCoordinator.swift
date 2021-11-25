@@ -67,4 +67,12 @@ extension ResultDetailViewCoordinator {
         
         resultDetailImagesViewCoordinator.start()
     }
+    
+    func presentResultDetailThumbnailViewController(uiImages: [String: UIImage], id: String) {
+        let resultDetailThumbnailViewCoordinator = ResultDetailThumbnailViewCoordinator(navigationController: navigationController, uiImages: uiImages, id: id)
+        self.childCoordinators.append(resultDetailThumbnailViewCoordinator)
+        resultDetailThumbnailViewCoordinator.parentCoordinator = self
+        
+        resultDetailThumbnailViewCoordinator.start()
+    }
 }

@@ -128,6 +128,7 @@ class ResultDetailViewController: UIViewController {
         self.configureViewModel()
         self.drawPathOnMap()
         self.markEndPoints()
+        self.registerAnnotationView()
     }
     
     private func configureViewModel() {
@@ -158,6 +159,13 @@ class ResultDetailViewController: UIViewController {
             self?.configurePanGesture()
         }
         viewModel?.setUp()
+    }
+    
+    private func registerAnnotationView() {
+        self.mapView.register(
+            ThumbnailView.self,
+            forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier
+        )
     }
     
     private func drawPathOnMap() {
@@ -458,14 +466,17 @@ extension ResultDetailViewController: MKMapViewDelegate {
                 return nil
             }
             
-            let size = CGSize(width: 30, height: 30)
-            UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
-            image.draw(in: CGRect(origin: CGPoint.zero, size: size))
-            let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
-            UIGraphicsEndImageContext()
+            let thumbnailView = ThumbnailView(annotation: annotation, reuseIdentifier: identifier)
+            thumbnailView.configureImage(uiImage: image, id: identifider ?? "")
             
-            annotationView.image = resizedImage
+            return thumbnailView
         }
         return annotationView
+    }
+    
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
+        guard let annotation = view as? ThumbnailView else { return }
+        
+        self.coordinator?.presentResultDetailThumbnailViewController(uiImages: uiImages, id: annotation.imageIdentifier)
     }
 }
