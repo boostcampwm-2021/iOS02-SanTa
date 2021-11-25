@@ -217,8 +217,10 @@ final class RecordingModel: NSObject, ObservableObject {
         switch CMPedometer.authorizationStatus() {
         case .authorized:
             self.motionAuth = true
-        case .restricted, .denied, .notDetermined:
+        case .restricted, .denied:
             self.motionAuth = false
+        case .notDetermined:
+            break
         @unknown default:
             break
         }
@@ -287,9 +289,9 @@ extension RecordingModel: CLLocationManagerDelegate {
     private func filterBadLocation(_ location: CLLocation) -> Bool{
         let age = -location.timestamp.timeIntervalSinceNow
         
-        guard age < 5,
-              location.horizontalAccuracy > 0 && location.horizontalAccuracy < 30,
-              location.verticalAccuracy > 0 && location.verticalAccuracy < 6 else {
+        guard age < 8,
+              location.horizontalAccuracy > 0 && location.horizontalAccuracy < 50,
+              location.verticalAccuracy > 0 && location.verticalAccuracy < 30 else {
                   return false
               }
         
