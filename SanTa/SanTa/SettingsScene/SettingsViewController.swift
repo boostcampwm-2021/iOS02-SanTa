@@ -51,6 +51,11 @@ class SettingsViewController: UIViewController {
         self.bind()
         self.viewModel?.viewDidLoad()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.viewModel?.viewWillAppear()
+    }
 
     private func configureTableView() {
         self.tableView.dataSource = self
@@ -89,6 +94,25 @@ class SettingsViewController: UIViewController {
         self.viewModel?.$settings.sink { [weak self] _ in
             self?.tableView.reloadData()
         }.store(in: &self.subscriptions)
+        self.viewModel?.isPhotoRecordAvailable.sink { [weak self] bool in
+            self?.configurePhotoPermission(bool)
+        }.store(in: &self.subscriptions)
+    }
+    
+    private func configurePhotoPermission(_ bool: Bool) {
+        if !bool {
+            let alert = UIAlertController(title: "사진 권한 활성화", message: "측정하는 동안 사진을 기록할 수 있도록 위치정보를 활성화해주세요", preferredStyle: .alert)
+            let confirm = UIAlertAction(title: "확인", style: .default) { _ in
+                guard let url = URL(string: UIApplication.openSettingsURLString) else { return }
+                UIApplication.shared.open(url)
+            }
+            alert.addAction(confirm)
+            self.present(alert, animated: true) {
+                guard let photoSwitchCell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as? ToggleOptionCell
+                else { return }
+                photoSwitchCell.changeSwitch()
+            }
+        }
     }
     
     private func showMapActionSheet(cellTitle: String) {
