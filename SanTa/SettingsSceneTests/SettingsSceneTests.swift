@@ -33,28 +33,26 @@ class SettingsViewModelTests: XCTestCase {
     
     func test_ViewModel은_viewDidLoad시_UseCase의_반환값_settings프로퍼티에_세팅() throws {
         viewModel.viewDidLoad()
-        XCTAssertEqual(viewModel.sectionCount, 3)
+        XCTAssertEqual(viewModel.settingsCount, 3)
     }
     
     func test_ViewModel은_change호출시_문자열이면_settings프로퍼티_업데이트() throws {
         viewModel.change(value: 1, key: .mapFormat)
-        XCTAssertEqual(viewModel.sectionCount, 0)
+        XCTAssertEqual(viewModel.settingsCount, 0)
         
         viewModel.change(value: "string", key: .mapFormat)
-        XCTAssertEqual(viewModel.sectionCount, 3)
+        XCTAssertEqual(viewModel.settingsCount, 3)
     }
     
     func test_UseCase는_repository반환_값에_따른_배열생성() {
         let options = useCase.makeSettings()
 
-        let option1 = options[0][0] as? ToggleOption
-        let option2 = options[0][1] as? ToggleOption
-        let option3 = options[1][0] as? ToggleOption
-        let option4 = options[2][0] as? MapOption
+        let option1 = options[0] as? ToggleOption
+        let option2 = options[1] as? ToggleOption
+        let option3 = options[2] as? MapOption
 
         XCTAssertNotNil(option1)
         XCTAssertNotNil(option2)
         XCTAssertNotNil(option3)
-        XCTAssertNotNil(option4)
     }
 }
