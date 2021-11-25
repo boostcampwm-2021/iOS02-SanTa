@@ -15,25 +15,22 @@ class DetailCell: UICollectionViewCell {
         label.font = .preferredFont(for: .body, weight: .bold)
         label.textColor = .init(named: "SantaColor")
         label.adjustsFontSizeToFitWidth = true
-        
         return label
     }()
     
     let line: UIView = {
         let view = UIView()
         view.backgroundColor = .init(named: "SantaColor")
-        
         return view
     }()
     
     let stack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
-        
         return stack
     }()
     
-    func layout(data: LargeViewModel) {
+    func layout(data: DetailInformationModel) {
         self.addSubview(title)
         title.text = data.title
         title.translatesAutoresizingMaskIntoConstraints = false
@@ -77,7 +74,7 @@ extension UIFont {
 }
 
 extension UIStackView {
-    convenience init(content: CellContentEntity) {
+    fileprivate convenience init(content: CellContentEntity) {
         self.init()
         self.axis = .horizontal
         self.distribution = .equalCentering

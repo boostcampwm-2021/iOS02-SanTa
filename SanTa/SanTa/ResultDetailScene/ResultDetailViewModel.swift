@@ -113,7 +113,7 @@ protocol ResultDetailCellRepresentable: Hashable {
     var contents: [CellContentEntity] { get }
 }
 
-class LargeViewModel: Hashable {
+class DetailInformationModel: Hashable {
     var id: UUID = UUID()
     var title: String = ""
     var contents: [CellContentEntity] = []
@@ -122,13 +122,13 @@ class LargeViewModel: Hashable {
       hasher.combine(id)
     }
 
-    static func == (lhs: LargeViewModel, rhs: LargeViewModel) -> Bool {
+    static func == (lhs: DetailInformationModel, rhs: DetailInformationModel) -> Bool {
       lhs.id == rhs.id
     }
 }
 
 extension ResultDetailViewModel {
-    class DistanceViewModel: LargeViewModel {
+    class DistanceViewModel: DetailInformationModel {
         var totalDistance: String = ""
         var steps: String = ""
         
@@ -155,7 +155,7 @@ extension ResultDetailViewModel {
         }
     }
     
-    class TimeViewModel: LargeViewModel {
+    class TimeViewModel: DetailInformationModel {
         var totalTimeSpent: String = ""
         
         init(timeData: ResultTime?) {
@@ -181,7 +181,7 @@ extension ResultDetailViewModel {
         }
     }
     
-    class PaceViewModel: LargeViewModel {
+    class PaceViewModel: DetailInformationModel {
         init(paceData: ResultPace?) {
             super.init()
             guard let pace = paceData else {
@@ -204,7 +204,7 @@ extension ResultDetailViewModel {
         }
     }
     
-    class AltitudeViewModel: LargeViewModel {
+    class AltitudeViewModel: DetailInformationModel {
         var highest: String = ""
         var lowest: String = ""
         
@@ -226,7 +226,7 @@ extension ResultDetailViewModel {
         }
     }
     
-    class InclineViewModel: LargeViewModel {
+    class InclineViewModel: DetailInformationModel {
         init(inclineData: ResultIncline?) {
             super.init()
             guard let inclineData = inclineData else {

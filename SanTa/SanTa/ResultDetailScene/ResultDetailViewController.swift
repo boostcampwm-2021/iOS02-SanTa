@@ -150,7 +150,7 @@ class ResultDetailViewController: UIViewController {
                   let inclineViewModel = self?.viewModel?.inclineViewMedel else {
                       return
                   }
-            let largeInfoModel: [LargeViewModel] = [
+            let largeInfoModel: [DetailInformationModel] = [
                 distanceViewModel, timeViewModel, paceViewModel, altitudeViewModel, inclineViewModel
             ]
             self?.largerInformationView.bindSnapShotApply(section: .main, item: largeInfoModel)
