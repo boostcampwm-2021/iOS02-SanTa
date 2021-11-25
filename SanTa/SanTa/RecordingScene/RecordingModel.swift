@@ -214,7 +214,14 @@ final class RecordingModel: NSObject, ObservableObject {
     }
     
     private func checkMotionAuthorizationStatus() {
-        print(CMPedometer.authorizationStatus())
+        switch CMPedometer.authorizationStatus() {
+        case .authorized:
+            self.motionAuth = true
+        case .restricted, .denied, .notDetermined:
+            self.motionAuth = false
+        @unknown default:
+            break
+        }
     }
     
     func changedWillSpeechStatus(status: Bool) {
