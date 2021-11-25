@@ -65,7 +65,6 @@ final class RecordingModel: NSObject, ObservableObject {
     
     private func configureLocationManager() {
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        self.locationManager.startUpdatingLocation()
         self.locationManager.activityType = .fitness
         self.locationManager.distanceFilter = 3
         self.locationManager.allowsBackgroundLocationUpdates = true
@@ -290,8 +289,10 @@ extension RecordingModel: CLLocationManagerDelegate {
         let age = -location.timestamp.timeIntervalSinceNow
         
         guard age < 8,
-              location.horizontalAccuracy > 0 && location.horizontalAccuracy < 50,
-              location.verticalAccuracy > 0 && location.verticalAccuracy < 30 else {
+              location.horizontalAccuracy > 0 && location.horizontalAccuracy < 80,
+              location.verticalAccuracy > 0 && location.verticalAccuracy < 50,
+              location.coordinate.latitude != self.location.last?.latitude &&
+              location.coordinate.longitude != self.location.last?.longitude else {
                   return false
               }
         
