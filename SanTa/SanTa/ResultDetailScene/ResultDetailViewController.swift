@@ -8,6 +8,7 @@
 import UIKit
 import MapKit
 import Photos
+import Combine
 
 class ResultDetailViewController: UIViewController {
     
@@ -21,6 +22,7 @@ class ResultDetailViewController: UIViewController {
     
     private let imageManager = PHCachingImageManager()
     private var uiImages = [String: UIImage]()
+    private var observers: [AnyCancellable] = []
     
     private lazy var mapView: MKMapView = {
         let mapView = MKMapView()
@@ -71,7 +73,6 @@ class ResultDetailViewController: UIViewController {
     
     private lazy var detailImagesButton: UIButton = {
         let button = UIButton()
-        button.setImage(.init(systemName: "photo.on.rectangle.angled"), for: .normal)
         button.setPreferredSymbolConfiguration(.init(pointSize: 14), forImageIn: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 15)
         button.backgroundColor = .systemBackground
@@ -92,8 +93,6 @@ class ResultDetailViewController: UIViewController {
     
     private lazy var imagesVisibilityButton: UIButton = {
         let button = UIButton()
-        button.setImage(.init(systemName: "eye"), for: .normal)
-        //eye.slash
         button.setPreferredSymbolConfiguration(.init(pointSize: 14), forImageIn: .normal)
         button.backgroundColor = .systemBackground
         button.tintColor = .label
@@ -162,6 +161,17 @@ class ResultDetailViewController: UIViewController {
             self?.configureViews()
             self?.configurePanGesture()
         }
+        self.viewModel?.$imageVisibilityIconName
+            .sink(receiveValue: { [weak self] string in
+                self?.configureImageVisibilityButton(string)
+            })
+            .store(in: &observers)
+        self.viewModel?.imageVisibilityStatus
+            .sink(receiveValue: { [weak self] bool in
+                self?.configureImageVisibility(bool)
+            })
+            .store(in: &observers)
+        
         viewModel?.setUp()
     }
     
@@ -170,6 +180,26 @@ class ResultDetailViewController: UIViewController {
             ThumbnailView.self,
             forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier
         )
+        self.mapView.register(PinView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
+    }
+
+    private func configureImageVisibilityButton(_ imageName: String?) {
+        guard let imageName = imageName else { return }
+        self.imagesVisibilityButton.setImage(UIImage(systemName: imageName), for: .normal)
+    }
+    
+    private func configureImageVisibility(_ bool: Bool) {
+        let imageAnnotations = self.mapView.annotations.filter{$0.title != "시작점" && $0.title != "종료점"}
+        switch bool {
+        case true:
+            imageAnnotations.forEach{
+                self.mapView.view(for: $0)?.isHidden = false
+            }
+        case false:
+            imageAnnotations.forEach{
+                self.mapView.view(for: $0)?.isHidden = true
+            }
+        }
     }
     
     private func drawPathOnMap() {
@@ -197,9 +227,9 @@ class ResultDetailViewController: UIViewController {
         let startingPoint = CLLocationCoordinate2D(latitude: startingLocation.latitude, longitude: startingLocation.longitude)
         let endingPoint = CLLocationCoordinate2D(latitude: endingLocation.latitude, longitude: endingLocation.longitude)
         startAnnotation.coordinate = startingPoint
-        startAnnotation.title = "start"
+        startAnnotation.title = "시작점"
         endAnnotation.coordinate = endingPoint
-        endAnnotation.title = "end"
+        endAnnotation.title = "종료점"
         self.fetchAssetImage()
         self.mapView.addAnnotations([startAnnotation, endAnnotation])
     }
@@ -401,7 +431,7 @@ extension ResultDetailViewController {
     }
     
     @objc func imagesVisibilityButtonAction() {
-        
+        self.viewModel?.imageVisibilityButtonTouched()
     }
     
     @objc func presentModifyResultAlert() {
@@ -452,30 +482,19 @@ extension ResultDetailViewController: MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard annotation is MKPointAnnotation else {
-            return nil
-        }
-        
-        let identifier = "PointAnnotation"
-        
-        
-        let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-        if annotation.title == "start" {
-            annotationView.tintColor = .init(named: "SantaColor")
-        } else if annotation.title == "end" {
-            annotationView.tintColor = .red
+        if annotation.title == "시작점" || annotation.title == "종료점" {
+            let annotationView = PinView(annotation: annotation, reuseIdentifier: PinView.ReuseID)
+            return annotationView
         } else {
             guard let identifider = annotation.title,
-                  let image = self.uiImages[identifider ?? "None"] else {
-                return nil
-            }
+                  let image = self.uiImages[identifider ?? "None"]
+            else { return nil }
             
-            let thumbnailView = ThumbnailView(annotation: annotation, reuseIdentifier: identifier)
+            let thumbnailView = ThumbnailView(annotation: annotation, reuseIdentifier: ThumbnailView.ReuseID)
             thumbnailView.configureImage(uiImage: image, id: identifider ?? "")
             
             return thumbnailView
         }
-        return annotationView
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {

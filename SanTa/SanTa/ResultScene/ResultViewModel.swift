@@ -127,7 +127,7 @@ extension ResultViewModel {
     
     private func cellAltitudeDifferenceFormatter(_ number: Double) -> String {
         guard number < 10000 else { return "9,999+" }
-        guard number < 1 else { return "-" }
+        guard number > 1 else { return "-" }
         return self.intFormatter(Int(number))
     }
     

@@ -5,8 +5,8 @@
 //  Created by Jiwon Yoon on 2021/11/16.
 //
 
-import Foundation
 import CoreLocation
+import Combine
 
 class ResultDetailViewModel {
     private let useCase: ResultDetailUseCase
@@ -27,6 +27,8 @@ class ResultDetailViewModel {
     var inclineViewMedel: InclineViewModel {
         return InclineViewModel(inclineData: self.resultDetailData?.incline)
     }
+    @Published var imageVisibilityIconName: String?
+    let imageVisibilityStatus = PassthroughSubject<Bool, Never>()
     
     init(useCase: ResultDetailUseCase) {
         self.useCase = useCase
@@ -38,6 +40,7 @@ class ResultDetailViewModel {
             self?.resultDetailData = dataModel
             self?.recordDidFetch()
         }
+        self.imageVisibilityIconName = useCase.isImageVisibilityOn ? "eye" : "eye.slash"
     }
     
     func delete(completion: @escaping (Result<Void, Error>) -> Void) {
@@ -100,6 +103,13 @@ class ResultDetailViewModel {
         dateFormatter.dateFormat = "a h시 m분"
         return dateFormatter.string(from: endTime)
     }()
+
+    func imageVisibilityButtonTouched() {
+        self.useCase.toggleImageVisibility { [weak self] bool in
+            bool ? (self?.imageVisibilityIconName = "eye") : (self?.imageVisibilityIconName = "eye.slash")
+            self?.imageVisibilityStatus.send(bool)
+        }
+    }
 }
 
 struct CellContentEntity {
