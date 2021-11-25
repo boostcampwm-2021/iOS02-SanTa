@@ -172,7 +172,6 @@ class ResultDetailViewController: UIViewController {
         guard let pointSets: [[CLLocationCoordinate2D]] = self.viewModel?.resultDetailData?.coordinates else {
             return
         }
-        print(pointSets)
         for pointSet in pointSets {
             mapView.addOverlay(MKPolyline(coordinates: pointSet, count: pointSet.count))
         }
