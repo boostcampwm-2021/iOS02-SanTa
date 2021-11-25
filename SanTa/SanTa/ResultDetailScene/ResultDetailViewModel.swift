@@ -71,7 +71,7 @@ class ResultDetailViewModel {
         formatter.maximumFractionDigits = 2
         let totalDistance = self.resultDetailData?.distance.total ?? 0
         let totalTimeSpent = self.resultDetailData?.time.spent ?? 1
-        return formatter.string(from: NSNumber(value: totalDistance / totalTimeSpent)) ?? ""
+        return formatter.string(from: NSNumber(value: totalDistance * 3600 / totalTimeSpent)) ?? ""
     }
     
     lazy var recordDate: String = {
