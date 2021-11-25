@@ -73,6 +73,7 @@ class ResultDetailViewController: UIViewController {
     
     private lazy var detailImagesButton: UIButton = {
         let button = UIButton()
+        button.setImage(.init(systemName: "photo.on.rectangle.angled"), for: .normal)
         button.setPreferredSymbolConfiguration(.init(pointSize: 14), forImageIn: .normal)
         button.titleLabel?.font = .boldSystemFont(ofSize: 15)
         button.backgroundColor = .systemBackground
