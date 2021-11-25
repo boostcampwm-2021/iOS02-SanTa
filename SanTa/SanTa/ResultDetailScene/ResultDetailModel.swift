@@ -59,8 +59,12 @@ struct ResultDistance {
     let steps: Int
     
     init(records: Records) {
-        self.total = records.distances
         self.steps = records.steps
+        guard let totalDistance = records.records.last?.distance else {
+            self.total = 0
+            return
+        }
+        self.total = totalDistance
     }
 }
 
