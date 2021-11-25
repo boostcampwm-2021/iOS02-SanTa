@@ -40,7 +40,6 @@ final class RecordingModel: NSObject, ObservableObject {
     
     private var currentTime = Date() {
         didSet {
-            self.checkMotionAuthorizationStatus()
             self.timeCalculation()
         }
     }
@@ -51,6 +50,7 @@ final class RecordingModel: NSObject, ObservableObject {
         self.oneKileDate = self.startDate
         self.configureTimer()
         self.configureLocationManager()
+        self.checkMotionAuthorizationStatus()
     }
     
     private func configureTimer() {

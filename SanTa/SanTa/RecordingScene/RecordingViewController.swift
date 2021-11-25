@@ -241,6 +241,7 @@ class RecordingViewController: UIViewController {
             DispatchQueue.main.async {
                 self.present(self.authAlert(title: title, message: message), animated: false)
             }
+            changeRecordingStatus()
         }
     }
 
