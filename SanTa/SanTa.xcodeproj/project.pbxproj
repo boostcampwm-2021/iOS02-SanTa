@@ -51,6 +51,7 @@
 		5485128C272A6AD500407F28 /* SanTa.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5485128A272A6AD500407F28 /* SanTa.xcdatamodeld */; };
 		5485128E272A6AD600407F28 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5485128D272A6AD600407F28 /* Assets.xcassets */; };
 		54851291272A6AD600407F28 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5485128F272A6AD600407F28 /* LaunchScreen.storyboard */; };
+		54953444274F6903005C0E60 /* PinView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54953443274F6903005C0E60 /* PinView.swift */; };
 		54B32065274510D8002232BD /* MountainAddingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B32064274510D8002232BD /* MountainAddingViewController.swift */; };
 		54B3206727451169002232BD /* MountainAddingViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B3206627451169002232BD /* MountainAddingViewCoordinator.swift */; };
 		54B32069274536D1002232BD /* MountainAddingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54B32068274536D1002232BD /* MountainAddingViewModel.swift */; };
@@ -169,6 +170,7 @@
 		5485128D272A6AD600407F28 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		54851290272A6AD600407F28 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		54851292272A6AD600407F28 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		54953443274F6903005C0E60 /* PinView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinView.swift; sourceTree = "<group>"; };
 		54B32064274510D8002232BD /* MountainAddingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainAddingViewController.swift; sourceTree = "<group>"; };
 		54B3206627451169002232BD /* MountainAddingViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainAddingViewCoordinator.swift; sourceTree = "<group>"; };
 		54B32068274536D1002232BD /* MountainAddingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainAddingViewModel.swift; sourceTree = "<group>"; };
@@ -290,6 +292,7 @@
 				493178B32743992400B5FB88 /* DetailCell.swift */,
 				DAFF214D274BD6460061A555 /* DetailHeader.swift */,
 				49921D88274B3B440091112C /* ResultDetailRepository.swift */,
+				54953443274F6903005C0E60 /* PinView.swift */,
 			);
 			path = ResultDetailScene;
 			sourceTree = "<group>";
@@ -718,6 +721,7 @@
 				5429694F272FC1740070B362 /* ResultViewCoordinator.swift in Sources */,
 				98BCF4F72737A66E0073E6FB /* SettingsUsecase.swift in Sources */,
 				49225C5E273CDB4F0021AD79 /* ResultDetailViewController.swift in Sources */,
+				54953444274F6903005C0E60 /* PinView.swift in Sources */,
 				54F88EB9274256FE0004EAFD /* SectionHeaderView.swift in Sources */,
 				54731B65272F84D300534097 /* MapViewModel.swift in Sources */,
 				49D5A94F2738C72E00937821 /* MountainDetailUseCase.swift in Sources */,

@@ -176,6 +176,7 @@ class ResultDetailViewController: UIViewController {
             ThumbnailView.self,
             forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier
         )
+        self.mapView.register(PinView.self, forAnnotationViewWithReuseIdentifier: MKMapViewDefaultAnnotationViewReuseIdentifier)
     }
 
     private func configureImageVisibilityButton(_ imageName: String?) {
@@ -184,7 +185,7 @@ class ResultDetailViewController: UIViewController {
     }
     
     private func configureImageVisibility(_ bool: Bool) {
-        let imageAnnotations = self.mapView.annotations.filter{$0.title != "start" && $0.title != "end"}
+        let imageAnnotations = self.mapView.annotations.filter{$0.title != "시작점" && $0.title != "종료점"}
         switch bool {
         case true:
             imageAnnotations.forEach{
@@ -222,9 +223,9 @@ class ResultDetailViewController: UIViewController {
         let startingPoint = CLLocationCoordinate2D(latitude: startingLocation.latitude, longitude: startingLocation.longitude)
         let endingPoint = CLLocationCoordinate2D(latitude: endingLocation.latitude, longitude: endingLocation.longitude)
         startAnnotation.coordinate = startingPoint
-        startAnnotation.title = "start"
+        startAnnotation.title = "시작점"
         endAnnotation.coordinate = endingPoint
-        endAnnotation.title = "end"
+        endAnnotation.title = "종료점"
         self.fetchAssetImage()
         self.mapView.addAnnotations([startAnnotation, endAnnotation])
     }
@@ -477,30 +478,19 @@ extension ResultDetailViewController: MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
-        guard annotation is MKPointAnnotation else {
-            return nil
-        }
-        
-        let identifier = "PointAnnotation"
-        
-        
-        let annotationView = MKAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-        if annotation.title == "start" {
-            annotationView.tintColor = .init(named: "SantaColor")
-        } else if annotation.title == "end" {
-            annotationView.tintColor = .red
+        if annotation.title == "시작점" || annotation.title == "종료점" {
+            let annotationView = PinView(annotation: annotation, reuseIdentifier: PinView.ReuseID)
+            return annotationView
         } else {
             guard let identifider = annotation.title,
-                  let image = self.uiImages[identifider ?? "None"] else {
-                return nil
-            }
+                  let image = self.uiImages[identifider ?? "None"]
+            else { return nil }
             
-            let thumbnailView = ThumbnailView(annotation: annotation, reuseIdentifier: identifier)
+            let thumbnailView = ThumbnailView(annotation: annotation, reuseIdentifier: ThumbnailView.ReuseID)
             thumbnailView.configureImage(uiImage: image, id: identifider ?? "")
             
             return thumbnailView
         }
-        return annotationView
     }
     
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
