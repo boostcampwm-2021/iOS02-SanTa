@@ -281,6 +281,13 @@ extension RecordingViewController: RecordingViewDelegate {
     }
     
     func didAgreeButtonTouchDone() {
-        PHPhotoLibrary.requestAuthorization { _ in }
+        PHPhotoLibrary.requestAuthorization { status in
+            switch status {
+            case .authorized:
+                break
+            case .notDetermined, .restricted, .denied, .limited:
+                break
+            }
+        }
     }
 }
