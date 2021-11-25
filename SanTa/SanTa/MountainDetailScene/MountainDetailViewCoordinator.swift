@@ -9,35 +9,44 @@ import UIKit
 import CoreLocation
 
 class MountainDetailViewCoordinator: Coordinator {
-    var childCoordinators: [Coordinator] = []
-    
     weak var parentCoordinator: Coordinator?
+    var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
-    var mountainDetailViewController: MountainDetailViewController
-    
-    func start() {
-        if self.parentCoordinator is MapViewCoordinator {
-            self.mountainDetailViewController.backButton.isHidden = false
-            self.navigationController.present(mountainDetailViewController, animated: true, completion: nil)
-        }
-    }
-    
-    func startPush() {
-        self.mountainDetailViewController.backButton.isHidden = true
-        self.navigationController.pushViewController(self.mountainDetailViewController, animated: true)
-    }
-    
-    func dismiss() {
-        self.navigationController.dismiss(animated: true)
-        self.parentCoordinator?.childCoordinators.removeLast()
-    }
-    
+    var mountainAnnotation: MountainAnnotation
     
     init(navigationController: UINavigationController, mountainAnnotation: MountainAnnotation) {
         self.navigationController = navigationController
-        let viewModel = MountainDetailViewModel(useCase: MountainDetailUseCase(mountainAnnotation: mountainAnnotation))
-        self.mountainDetailViewController = MountainDetailViewController(viewModel: viewModel)
-        self.mountainDetailViewController.coordinator = self
+        self.mountainAnnotation = mountainAnnotation
+    }
+    
+    func start() {
+        let mountainDetailViewController = MountainDetailViewController(viewModel: injectDependencies())
+        mountainDetailViewController.coordinator = self
+        if self.parentCoordinator is MapViewCoordinator {
+            self.navigationController.present(mountainDetailViewController, animated: true, completion: nil)
+        } else {
+            self.navigationController.setNavigationBarHidden(true, animated: false)
+            self.navigationController.pushViewController(mountainDetailViewController, animated: true)
+        }
+    }
+    
+    func dismiss() {
+        if self.parentCoordinator is MapViewCoordinator {
+            self.navigationController.dismiss(animated: true)
+        } else {
+            self.navigationController.popViewController(animated: true)
+        }
+        self.parentCoordinator?.childCoordinators.removeLast()
+    }
+}
+
+extension MountainDetailViewCoordinator {
+    private func injectDependencies() -> MountainDetailViewModel {
+        return MountainDetailViewModel(
+            useCase: MountainDetailUseCase(
+                mountainAnnotation: self.mountainAnnotation
+            )
+        )
     }
     
 }

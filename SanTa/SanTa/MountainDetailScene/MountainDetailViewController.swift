@@ -14,12 +14,16 @@ class MountainDetailViewController: UIViewController {
     private var mutatingTopConstraint: NSLayoutConstraint?
     private let maxRollUpDistance: CGFloat = 50
     
-    lazy var backButton: UIImageView = {
-        let uiImage = UIImageView(image: .init(systemName: "xmark"))
-        uiImage.tintColor = .white
-        uiImage.translatesAutoresizingMaskIntoConstraints = false
-        uiImage.isUserInteractionEnabled = true
-        return uiImage
+    private lazy var backButton: UIButton = {
+        let button = UIButton(frame: .zero)
+        button.setImage(.init(systemName: "xmark"), for: .normal)
+        button.setPreferredSymbolConfiguration(.init(pointSize: 25), forImageIn: .normal)
+        button.tintColor = .white
+        button.addTarget(self, action: #selector(dismissViewController), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.accessibilityLabel = "닫기"
+        button.accessibilityHint = "목록 화면으로 돌아가시려면 이중 탭 하십시오"
+        return button
     }()
     
     convenience init(viewModel: MountainDetailViewModel) {
@@ -32,16 +36,11 @@ class MountainDetailViewController: UIViewController {
         self.configureViewModel()
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        self.coordinator?.dismiss()
-    }
-    
     private func configureViewModel() {
-        self.viewModel?.mountainInfoReceived = { mountainDetail in
-            self.layoutMountainDetailView(mountainDetail: mountainDetail)
+        self.viewModel?.mountainInfoReceived = { [weak self] mountainDetail in
+            self?.layoutMountainDetailView(mountainDetail: mountainDetail)
         }
-        viewModel?.setUpViewModel()
+        self.viewModel?.setUpViewModel()
     }
 }
 
@@ -103,19 +102,16 @@ extension MountainDetailViewController {
         
         backButton.tintColorDidChange()
         self.view.addSubview(backButton)
-        backButton.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(close)))
         
         let backButtonConstraints = [
-            backButton.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 10),
+            backButton.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor, constant: 10),
             backButton.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 10),
-            backButton.widthAnchor.constraint(equalToConstant: 30),
-            backButton.heightAnchor.constraint(equalToConstant: 30),
-            
         ]
         NSLayoutConstraint.activate(backButtonConstraints)
     }
-    @objc private func close() {
-        self.dismiss(animated: true, completion: nil)
+    
+    @objc private func dismissViewController() {
+        self.coordinator?.dismiss()
     }
     
     private func configuredTableView(mountainDetail: MountainDetailModel) -> UITableView {
