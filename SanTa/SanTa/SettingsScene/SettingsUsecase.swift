@@ -38,9 +38,6 @@ final class SettingsUsecase {
         self.settingsRepository.makeToggleOption(key: Settings.recordPhoto) { value in
             photoSettings.append(value)
         }
-        self.settingsRepository.makeToggleOption(key: Settings.photosOnMap) { value in
-            photoSettings.append(value)
-        }
         self.settingsRepository.makeToggleOption(key: Settings.voiceGuidanceEveryOnekm) { value in
             voiceSettings.append(value)
         }
