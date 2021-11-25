@@ -40,6 +40,7 @@ final class RecordingModel: NSObject, ObservableObject {
     
     private var currentTime = Date() {
         didSet {
+            self.checkMotionAuthorizationStatus()
             self.timeCalculation()
         }
     }
@@ -213,12 +214,7 @@ final class RecordingModel: NSObject, ObservableObject {
     }
     
     private func checkMotionAuthorizationStatus() {
-        switch self.locationManager.authorizationStatus{
-        case .authorizedWhenInUse, .authorizedAlways:
-            self.gpsStatus = true
-        default:
-            self.gpsStatus = false
-        }
+        print(CMPedometer.authorizationStatus())
     }
     
     func changedWillSpeechStatus(status: Bool) {
@@ -283,9 +279,6 @@ extension RecordingModel: CLLocationManagerDelegate {
     
     private func filterBadLocation(_ location: CLLocation) -> Bool{
         let age = -location.timestamp.timeIntervalSinceNow
-        
-        print(location.horizontalAccuracy)
-        print(location.verticalAccuracy)
         
         guard age < 5,
               location.horizontalAccuracy > 0 && location.horizontalAccuracy < 30,
