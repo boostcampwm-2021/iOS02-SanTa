@@ -130,6 +130,10 @@
 		494803812743748D002854B1 /* ResultDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailViewModel.swift; sourceTree = "<group>"; };
 		4948038327437499002854B1 /* ResultDetailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailUseCase.swift; sourceTree = "<group>"; };
 		4955B8EA2742A65D00D90F94 /* MountainDetailAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainDetailAnnotationView.swift; sourceTree = "<group>"; };
+		4963B7A4274F6E6000636FF5 /* GeoCoderResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = GeoCoderResponse.swift; path = ../../../../../MountainGenerator/MountainGenerator/GeoCoderResponse.swift; sourceTree = "<group>"; };
+		4963B7A5274F6E6000636FF5 /* MountainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MountainModel.swift; path = ../../../../../MountainGenerator/MountainGenerator/MountainModel.swift; sourceTree = "<group>"; };
+		4963B7A6274F6E6000636FF5 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = main.swift; path = ../../../../../MountainGenerator/MountainGenerator/main.swift; sourceTree = "<group>"; };
+		4963B7A7274F6E6000636FF5 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Extensions.swift; path = ../../../../../MountainGenerator/MountainGenerator/Extensions.swift; sourceTree = "<group>"; };
 		49742D552740E1A0008F7DC2 /* ResultDetailLargerInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailLargerInfoView.swift; sourceTree = "<group>"; };
 		49921D88274B3B440091112C /* ResultDetailRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailRepository.swift; sourceTree = "<group>"; };
 		49A3E61C2732756C0020CAC1 /* MountainAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainAnnotation.swift; sourceTree = "<group>"; };
@@ -245,6 +249,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4963B7A3274F6E2600636FF5 /* MountainGeoCodingTool */ = {
+			isa = PBXGroup;
+			children = (
+				4963B7A7274F6E6000636FF5 /* Extensions.swift */,
+				4963B7A4274F6E6000636FF5 /* GeoCoderResponse.swift */,
+				4963B7A6274F6E6000636FF5 /* main.swift */,
+				4963B7A5274F6E6000636FF5 /* MountainModel.swift */,
+			);
+			path = MountainGeoCodingTool;
+			sourceTree = "<group>";
+		};
 		5428FDB5272F89F0002F9D40 /* RecordingScene */ = {
 			isa = PBXGroup;
 			children = (
@@ -388,6 +403,7 @@
 		54731B63272F81B200534097 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				4963B7A3274F6E2600636FF5 /* MountainGeoCodingTool */,
 				5485128A272A6AD500407F28 /* SanTa.xcdatamodeld */,
 				5485128F272A6AD600407F28 /* LaunchScreen.storyboard */,
 				5485128D272A6AD600407F28 /* Assets.xcassets */,
