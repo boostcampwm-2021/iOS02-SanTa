@@ -119,7 +119,7 @@ extension ResultDetailLargerInfoView {
     
     private func configureCompositionalLayout() -> UICollectionViewCompositionalLayout {
         return UICollectionViewCompositionalLayout { (sectionNumber, env) -> NSCollectionLayoutSection? in
-            let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(0.5), heightDimension: .estimated(500)))
+            let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(0.495), heightDimension: .estimated(500)))
             item.contentInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 0)
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(500)), subitems: [item])
             let section = NSCollectionLayoutSection(group: group)
