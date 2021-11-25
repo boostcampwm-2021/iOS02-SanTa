@@ -91,7 +91,7 @@ class RecordingViewController: UIViewController {
     
     private var recordingViewModel: RecordingViewModel?
     private var subscriptions = Set<AnyCancellable>()
-    private var currentState = true
+    private var isCoreLocationStatus = true
     
     convenience init(viewModel: RecordingViewModel) {
         self.init()
@@ -159,7 +159,7 @@ class RecordingViewController: UIViewController {
         self.recordingViewModel?.$gpsStatus
             .receive(on: DispatchQueue.main)
             .sink (receiveValue: { [weak self] gpsStatus in
-                if gpsStatus != self?.currentState {
+                if gpsStatus != self?.isCoreLocationStatus {
                     if !gpsStatus {
                         let title = "위치정보 활성화"
                         let message = "측정을 다시 시작할 수 있도록 위치정보를 활성화해주세요."
@@ -192,7 +192,7 @@ class RecordingViewController: UIViewController {
     }
     
     private func changeRecordingStatus() {
-        if currentState {
+        if isCoreLocationStatus {
             self.view.backgroundColor = .black
             var pauseConfiguration = UIButton.Configuration.plain()
             pauseConfiguration.image = UIImage(systemName: "play.fill")
@@ -201,7 +201,7 @@ class RecordingViewController: UIViewController {
             self.pauseButton.accessibilityLabel = "재시작"
             self.pauseButton.accessibilityHint = "측정을 재시작 하려면 이중 탭 하십시오"
             self.recordingViewModel?.pause()
-            self.currentState = false
+            self.isCoreLocationStatus = false
         } else {
             self.view.backgroundColor = UIColor(named: "SantaColor")
             var pauseConfiguration = UIButton.Configuration.plain()
@@ -211,7 +211,7 @@ class RecordingViewController: UIViewController {
             self.pauseButton.accessibilityLabel = "일시정지"
             self.pauseButton.accessibilityHint = "측정을 일시정지 하려면 이중 탭 하십시오"
             self.recordingViewModel?.resume()
-            self.currentState = true
+            self.isCoreLocationStatus = true
         }
     }
     

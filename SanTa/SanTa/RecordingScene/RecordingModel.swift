@@ -18,6 +18,7 @@ final class RecordingModel: NSObject, ObservableObject {
     @Published private(set) var altitude = "0"
     @Published private(set) var walk = "0"
     @Published private(set) var gpsStatus = true
+    @Published private(set) var motionAuth = true
     
     private let pedoMeter = CMPedometer()
     private let synthesizer = AVSpeechSynthesizer()
@@ -202,7 +203,16 @@ final class RecordingModel: NSObject, ObservableObject {
         self.records?.add(record: record)
     }
     
-    private func checkAuthorizationStatus() {
+    private func checkLocationAuthorizationStatus() {
+        switch self.locationManager.authorizationStatus{
+        case .authorizedWhenInUse, .authorizedAlways:
+            self.gpsStatus = true
+        default:
+            self.gpsStatus = false
+        }
+    }
+    
+    private func checkMotionAuthorizationStatus() {
         switch self.locationManager.authorizationStatus{
         case .authorizedWhenInUse, .authorizedAlways:
             self.gpsStatus = true
@@ -228,7 +238,7 @@ final class RecordingModel: NSObject, ObservableObject {
     func resume() {
         guard self.timerIsRunning == false else { return }
         
-        self.checkAuthorizationStatus()
+        self.checkLocationAuthorizationStatus()
         
         guard self.gpsStatus == true else { return }
         
