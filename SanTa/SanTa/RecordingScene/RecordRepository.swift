@@ -30,7 +30,7 @@ final class DefaultRecordRepository: RecordRepository {
     }
     
     func saveRecordPhotoOption(value: Bool) {
-        
+        self.settingsStorage.save(value: value, key: Settings.recordPhoto)
     }
     
     func fetchRecordOption(key: Settings, completion: @escaping (Result<Bool, Error>) -> Void) {
