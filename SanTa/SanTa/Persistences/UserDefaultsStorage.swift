@@ -43,10 +43,6 @@ final class DefaultUserDefaultsStorage: UserDefaultsStorage {
             self.save(value: Settings.recordPhoto.initValue as? Bool,
                       key: .recordPhoto)
         }
-        if !self.exist(key: .photosOnMap) {
-            self.save(value: Settings.photosOnMap.initValue as? Bool,
-                      key: .photosOnMap)
-        }
         if !self.exist(key: .voiceGuidanceEveryOnekm) {
             self.save(value: Settings.voiceGuidanceEveryOnekm.initValue as? Bool,
                       key: .voiceGuidanceEveryOnekm)

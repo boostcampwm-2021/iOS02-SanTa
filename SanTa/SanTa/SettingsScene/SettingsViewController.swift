@@ -132,20 +132,16 @@ class SettingsViewController: UIViewController {
 extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return self.viewModel?.sectionCount ?? 0
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 10.0
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        guard let itemCount = self.viewModel?.settings[section].count else { return 0 }
+        guard let itemCount = self.viewModel?.settingsCount else { return 0 }
         return itemCount
     }
     
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch self.viewModel?.option(indexPath: indexPath) {
+        switch self.viewModel?.settings[indexPath.section] {
         case let option as ToggleOption:
             guard let cell = self.tableView.dequeueReusableCell(withIdentifier: ToggleOptionCell.identifier,
                                                                 for: indexPath) as? ToggleOptionCell

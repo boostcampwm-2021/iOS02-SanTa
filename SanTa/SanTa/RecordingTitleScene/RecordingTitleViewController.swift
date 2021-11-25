@@ -22,7 +22,7 @@ class RecordingTitleViewController: UIViewController {
     private let recordingTitle: UILabel = {
         let label = UILabel()
         label.text = "기록 제목"
-        label.font = .boldSystemFont(ofSize: 24)
+        label.font = UIFont.preferredFont(forTextStyle: .title1)
         label.textColor = .systemGray
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -31,7 +31,7 @@ class RecordingTitleViewController: UIViewController {
     private let recordingTitleDescription: UILabel = {
         let label = UILabel()
         label.text = "이 기록에 대한 제목을 입력해주세요."
-        label.font = .systemFont(ofSize: 20)
+        label.font = UIFont.preferredFont(forTextStyle: .body)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
