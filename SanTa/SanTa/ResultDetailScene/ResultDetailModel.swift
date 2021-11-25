@@ -140,15 +140,17 @@ struct ResultIncline {
             let next = CLLocation(latitude: locations[index+1].latitude, longitude: locations[index+1].longitude)
             let distanceDelta = current.distance(from: next)
             let altitudeDelta = next.altitude - current.altitude
-            let incline = atan(altitudeDelta / distanceDelta)
-            totalIncline += incline == .nan || incline == .infinity ? 0 : incline
-            steepest = steepest < incline ? incline : steepest
+            if distanceDelta != 0 {
+                let incline = atan(altitudeDelta / distanceDelta)
+                totalIncline += incline
+                steepest = max(steepest, incline)
+            }
             uphillDistance += altitudeDelta > 0 ? abs(distanceDelta) : 0
             downHillDistance += altitudeDelta < 0 ? abs(distanceDelta) : 0
             plainDistance += altitudeDelta == 0 ? abs(distanceDelta) : 0
         }
         
-        self.average = 0
+        self.average = locations.count > 1 ? Int(totalIncline / Double(locations.count - 1)) : 0
         self.highest = Int(steepest)
         self.uphillKilometer = uphillDistance / 1000
         self.downhillKilometer = downHillDistance / 1000

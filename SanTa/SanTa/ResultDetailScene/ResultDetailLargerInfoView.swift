@@ -88,7 +88,7 @@ extension ResultDetailLargerInfoView {
         let datasource = DetailLargerInfoDataSource (collectionView: self.collectionView, cellProvider: { (collectionView, indexPath, item) -> UICollectionViewCell in
             
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailCell.identifier, for: indexPath) as? DetailCell,
-                let item = item as? LargeViewModel else  {
+                let item = item as? DetailInformationModel else  {
                 return UICollectionViewCell() }
             cell.layout(data: item)
             return cell
