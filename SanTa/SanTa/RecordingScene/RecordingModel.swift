@@ -65,7 +65,7 @@ final class RecordingModel: NSObject, ObservableObject {
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
         self.locationManager.startUpdatingLocation()
         self.locationManager.activityType = .fitness
-        self.locationManager.distanceFilter = 5
+        self.locationManager.distanceFilter = 3
         self.locationManager.allowsBackgroundLocationUpdates = true
         self.locationManager.pausesLocationUpdatesAutomatically = false
         self.locationManager.showsBackgroundLocationIndicator = true
@@ -257,15 +257,32 @@ final class RecordingModel: NSObject, ObservableObject {
 extension RecordingModel: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let lastLocation = locations.last {
-            location.append(Location(latitude: Double(lastLocation.coordinate.latitude),
-                                     longitude: Double(lastLocation.coordinate.longitude),
-                                     altitude: Double(lastLocation.altitude)))
             self.checkPedoMeter()
-            altitude = "\(Int(lastLocation.altitude))"
+            if filterBadLocation(lastLocation) {
+                altitude = "\(Int(lastLocation.altitude))"
+                location.append(Location(latitude: Double(lastLocation.coordinate.latitude),
+                                         longitude: Double(lastLocation.coordinate.longitude),
+                                         altitude: Double(lastLocation.altitude)))
+            }
         }
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         self.gpsStatus = false
+    }
+    
+    private func filterBadLocation(_ location: CLLocation) -> Bool{
+        let age = -location.timestamp.timeIntervalSinceNow
+        
+        print(location.horizontalAccuracy)
+        print(location.verticalAccuracy)
+        
+        guard age < 5,
+              location.horizontalAccuracy > 0 && location.horizontalAccuracy < 30,
+              location.verticalAccuracy > 0 && location.verticalAccuracy < 6 else {
+                  return false
+              }
+        
+        return true
     }
 }
