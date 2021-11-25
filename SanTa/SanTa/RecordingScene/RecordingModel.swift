@@ -18,6 +18,7 @@ final class RecordingModel: NSObject, ObservableObject {
     @Published private(set) var altitude = "0"
     @Published private(set) var walk = "0"
     @Published private(set) var gpsStatus = true
+    @Published private(set) var motionAuth = true
     
     private let pedoMeter = CMPedometer()
     private let synthesizer = AVSpeechSynthesizer()
@@ -27,7 +28,7 @@ final class RecordingModel: NSObject, ObservableObject {
     private var timerIsRunning = false
     private var records: Records?
     private var startDate: Date?
-    private var oneKileDate: Date?
+    private var oneKiloDate: Date?
     private var currentWalk = 0
     private var currentDistance: Double = 0
     private var maxOneKiloTime = 0
@@ -46,9 +47,10 @@ final class RecordingModel: NSObject, ObservableObject {
     override init() {
         super.init()
         self.startDate = Date()
-        self.oneKileDate = self.startDate
+        self.oneKiloDate = self.startDate
         self.configureTimer()
         self.configureLocationManager()
+        self.checkMotionAuthorizationStatus()
     }
     
     private func configureTimer() {
@@ -63,7 +65,8 @@ final class RecordingModel: NSObject, ObservableObject {
     
     private func configureLocationManager() {
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        self.locationManager.startUpdatingLocation()
+        self.locationManager.activityType = .fitness
+        self.locationManager.distanceFilter = 3
         self.locationManager.allowsBackgroundLocationUpdates = true
         self.locationManager.pausesLocationUpdatesAutomatically = false
         self.locationManager.showsBackgroundLocationIndicator = true
@@ -145,8 +148,8 @@ final class RecordingModel: NSObject, ObservableObject {
     
     private func calculateSpeed() {
         if self.sliceDistance <= self.currentDistance {
-            guard let oneKileDate = self.oneKileDate else {
-                self.oneKileDate = self.currentTime
+            guard let oneKileDate = self.oneKiloDate else {
+                self.oneKiloDate = self.currentTime
                 return
             }
             let elapsedTimeMinutes = Int(self.currentTime.timeIntervalSince(oneKileDate))
@@ -155,13 +158,13 @@ final class RecordingModel: NSObject, ObservableObject {
             
             if elapsedTimeMinutes > self.maxOneKiloTime {
                 self.maxOneKiloTime = elapsedTimeMinutes
-                self.oneKileDate = self.currentTime
+                self.oneKiloDate = self.currentTime
                 self.sliceDistance += 1
             }
             
             if elapsedTimeMinutes < self.minOneKiloTime {
                 self.minOneKiloTime = elapsedTimeMinutes
-                self.oneKileDate = self.currentTime
+                self.oneKiloDate = self.currentTime
                 self.sliceDistance += 1
             }
         }
@@ -200,12 +203,25 @@ final class RecordingModel: NSObject, ObservableObject {
         self.records?.add(record: record)
     }
     
-    private func checkAuthorizationStatus() {
+    private func checkLocationAuthorizationStatus() {
         switch self.locationManager.authorizationStatus{
         case .authorizedWhenInUse, .authorizedAlways:
             self.gpsStatus = true
         default:
             self.gpsStatus = false
+        }
+    }
+    
+    private func checkMotionAuthorizationStatus() {
+        switch CMPedometer.authorizationStatus() {
+        case .authorized:
+            self.motionAuth = true
+        case .restricted, .denied:
+            self.motionAuth = false
+        case .notDetermined:
+            break
+        @unknown default:
+            break
         }
     }
     
@@ -226,7 +242,7 @@ final class RecordingModel: NSObject, ObservableObject {
     func resume() {
         guard self.timerIsRunning == false else { return }
         
-        self.checkAuthorizationStatus()
+        self.checkLocationAuthorizationStatus()
         
         guard self.gpsStatus == true else { return }
         
@@ -255,15 +271,31 @@ final class RecordingModel: NSObject, ObservableObject {
 extension RecordingModel: CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let lastLocation = locations.last {
-            location.append(Location(latitude: Double(lastLocation.coordinate.latitude),
-                                     longitude: Double(lastLocation.coordinate.longitude),
-                                     altitude: Double(lastLocation.altitude)))
             self.checkPedoMeter()
-            altitude = "\(Int(lastLocation.altitude))"
+            if filterBadLocation(lastLocation) {
+                altitude = "\(Int(lastLocation.altitude))"
+                location.append(Location(latitude: Double(lastLocation.coordinate.latitude),
+                                         longitude: Double(lastLocation.coordinate.longitude),
+                                         altitude: Double(lastLocation.altitude)))
+            }
         }
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         self.gpsStatus = false
+    }
+    
+    private func filterBadLocation(_ location: CLLocation) -> Bool{
+        let age = -location.timestamp.timeIntervalSinceNow
+        
+        guard age < 8,
+              location.horizontalAccuracy > 0 && location.horizontalAccuracy < 80,
+              location.verticalAccuracy > 0 && location.verticalAccuracy < 50,
+              location.coordinate.latitude != self.location.last?.latitude &&
+              location.coordinate.longitude != self.location.last?.longitude else {
+                  return false
+              }
+        
+        return true
     }
 }

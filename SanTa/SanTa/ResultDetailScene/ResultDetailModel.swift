@@ -133,19 +133,22 @@ struct ResultIncline {
             locations.append(contentsOf: record.locations)
         }
         
-        for index in 0..<locations.count - 1 {
-            let current = CLLocation(latitude: locations[index].latitude, longitude: locations[index].longitude)
-            let next = CLLocation(latitude: locations[index+1].latitude, longitude: locations[index+1].longitude)
-            let distanceDelta = current.distance(from: next)
-            let altitudeDelta = next.altitude - current.altitude
-            if distanceDelta != 0 {
-                let incline = atan(altitudeDelta / distanceDelta)
-                totalIncline += incline
-                steepest = max(steepest, incline)
+        
+        if !locations.isEmpty {
+            for index in 0..<locations.count - 1 {
+                let current = CLLocation(latitude: locations[index].latitude, longitude: locations[index].longitude)
+                let next = CLLocation(latitude: locations[index+1].latitude, longitude: locations[index+1].longitude)
+                let distanceDelta = current.distance(from: next)
+                let altitudeDelta = next.altitude - current.altitude
+                if distanceDelta != 0 {
+                    let incline = atan(altitudeDelta / distanceDelta)
+                    totalIncline += incline
+                    steepest = max(steepest, incline)
+                }
+                uphillDistance += altitudeDelta > 0 ? abs(distanceDelta) : 0
+                downHillDistance += altitudeDelta < 0 ? abs(distanceDelta) : 0
+                plainDistance += altitudeDelta == 0 ? abs(distanceDelta) : 0
             }
-            uphillDistance += altitudeDelta > 0 ? abs(distanceDelta) : 0
-            downHillDistance += altitudeDelta < 0 ? abs(distanceDelta) : 0
-            plainDistance += altitudeDelta == 0 ? abs(distanceDelta) : 0
         }
         
         self.average = locations.count > 1 ? Int(totalIncline / Double(locations.count - 1)) : 0
