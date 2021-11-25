@@ -19,27 +19,13 @@ class RecordingTitleViewCoordinator: Coordinator {
     }
 
     func start() {
-        if let recordingCoordinator = parentCoordinator as? RecordingViewCoordinator {
-            recordingCoordinator.recordingViewController.present(recordingTitleViewController, animated: true)
-        } else if let resultDetailCoordinator = parentCoordinator as? ResultDetailViewCoordinator {
-            resultDetailCoordinator.navigationController.viewControllers.last?.present(recordingTitleViewController, animated: true)
-        }
-//        guard let recordingCoordinator = parentCoordinator as? RecordingViewCoordinator else {return}
-        
-//        recordingCoordinator.recordingViewController.present(recordingTitleViewController, animated: true)
+        guard let viewController = self.recordingTitleViewController.delegate as? UIViewController else { return }
+        viewController.present(recordingTitleViewController, animated: true)
     }
     
     func dismiss() {
-        if let recordingCoordinator = parentCoordinator as? RecordingViewCoordinator {
-            recordingCoordinator.recordingViewController.dismiss(animated: true, completion: nil)
-            
-        } else if let resultDetailViewCoordinator = parentCoordinator as? ResultDetailViewCoordinator {
-            resultDetailViewCoordinator.navigationController.viewControllers.last?.dismiss(animated: true, completion: nil)
-        }
-        
-//        guard let recordingCoordinator = parentCoordinator as? RecordingViewCoordinator else { return }
-//        recordingCoordinator.recordingViewController.dismiss(animated: true)
-        
+        guard let viewController = self.recordingTitleViewController.delegate as? UIViewController else { return }
+        viewController.dismiss(animated: true, completion: nil)
         self.parentCoordinator?.childCoordinators.removeLast()
     }
     
