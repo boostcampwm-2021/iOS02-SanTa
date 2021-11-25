@@ -172,6 +172,13 @@ class RecordingViewController: UIViewController {
                 }
             })
             .store(in: &self.subscriptions)
+        
+        self.recordingViewModel?.$motionAuth
+            .receive(on: DispatchQueue.main)
+            .sink (receiveValue: { [weak self] motionAuth in
+                self?.requestMotionAuth(status: motionAuth)
+            })
+            .store(in: &self.subscriptions)
     }
     
     private func configureTarget() {
@@ -225,6 +232,16 @@ class RecordingViewController: UIViewController {
         alert.addAction(cancel)
         alert.addAction(confirm)
         return alert
+    }
+    
+    private func requestMotionAuth(status: Bool) {
+        if !status {
+            let title = "동작 및 피트니스 활성화"
+            let message = "측정을 시작할 수 있도록 동작 및 피트니스를 활성화해주세요."
+            DispatchQueue.main.async {
+                self.present(self.authAlert(title: title, message: message), animated: false)
+            }
+        }
     }
 
     @objc private func pauseButtonAction(_ sender: UIResponder) {
