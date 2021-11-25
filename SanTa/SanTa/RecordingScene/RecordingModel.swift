@@ -28,7 +28,7 @@ final class RecordingModel: NSObject, ObservableObject {
     private var timerIsRunning = false
     private var records: Records?
     private var startDate: Date?
-    private var g: Date?
+    private var oneKiloDate: Date?
     private var currentWalk = 0
     private var currentDistance: Double = 0
     private var maxOneKiloTime = 0
