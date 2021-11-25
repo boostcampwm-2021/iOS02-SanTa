@@ -26,6 +26,7 @@ final class RecordingViewModel: ObservableObject {
     @Published private(set) var altitude = ""
     @Published private(set) var walk = ""
     @Published private(set) var gpsStatus = true
+    @Published private(set) var motionAuth = true
     
     private let recordingUseCase: RecordingUseCase?
     private var subscriptions = Set<AnyCancellable>()
@@ -75,6 +76,13 @@ final class RecordingViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink (receiveValue: { [weak self] gpsStatus in
                 self?.gpsStatus = gpsStatus
+            })
+            .store(in: &self.subscriptions)
+        
+        self.recordingUseCase?.recording?.$motionAuth
+            .receive(on: DispatchQueue.main)
+            .sink (receiveValue: { [weak self] motionAuth in
+                self?.motionAuth = motionAuth
             })
             .store(in: &self.subscriptions)
     }
