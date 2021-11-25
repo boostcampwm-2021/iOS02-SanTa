@@ -15,6 +15,7 @@ protocol RecordingUseCase {
     func fetchPhotos(startDate: Date?, endDate: Date?) -> [String]
     func pause()
     func resume()
+    func saveRecordPhotoOption(value: Bool)
     func fetchOptions()
 }
 
@@ -88,6 +89,10 @@ final class RecordingViewModel: ObservableObject {
     
     func save(title: String, completion: @escaping (Result<Records, Error>) -> Void) {
         self.recordingUseCase?.save(title: title, completion: completion)
+    }
+    
+    func saveRecordPhotoOption(value: Bool) {
+        self.recordingUseCase?.saveRecordPhotoOption(value: value)
     }
     
     func fetchOptions() {

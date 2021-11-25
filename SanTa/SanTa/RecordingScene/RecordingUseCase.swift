@@ -52,6 +52,10 @@ final class DefaultRecordingUseCase: RecordingUseCase, ObservableObject {
         self.recordRepository.save(records: records, completion: completion)
     }
     
+    func saveRecordPhotoOption(value: Bool) {
+        
+    }
+    
     func fetchPhotos(startDate: Date?, endDate: Date?) -> [String] {
         guard let startDate = startDate,
               let endDate = endDate else {

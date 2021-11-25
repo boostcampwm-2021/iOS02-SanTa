@@ -284,9 +284,9 @@ extension RecordingViewController: RecordingViewDelegate {
         PHPhotoLibrary.requestAuthorization { status in
             switch status {
             case .authorized:
-                break
+                self.recordingViewModel?.saveRecordPhotoOption(value: true)
             case .notDetermined, .restricted, .denied, .limited:
-                break
+                self.recordingViewModel?.saveRecordPhotoOption(value: false)
             }
         }
     }
