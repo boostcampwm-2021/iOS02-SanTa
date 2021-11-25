@@ -21,6 +21,7 @@ class ResultDetailViewCoordinator: Coordinator {
     }
     
     func dismiss() {
+        self.navigationController.setNavigationBarHidden(false, animated: false)
         self.navigationController.popViewController(animated: true)
         self.parentCoordinator?.childCoordinators.removeLast()
     }
