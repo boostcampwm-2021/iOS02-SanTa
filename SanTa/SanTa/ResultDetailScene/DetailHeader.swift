@@ -15,7 +15,6 @@ class DetailHeader: UICollectionReusableView {
         label.backgroundColor = .label
         label.textColor = .systemBackground
         label.textAlignment = .center
-        label.text = "2021. 11. 16(화)"
         label.font = .preferredFont(forTextStyle: .caption1)
         label.adjustsFontForContentSizeCategory = true
         label.adjustsFontSizeToFitWidth = true
@@ -50,7 +49,6 @@ class DetailHeader: UICollectionReusableView {
     private lazy var startTime: UILabel = {
         let label = UILabel()
         label.textColor = .label
-        label.text = "오후 6시 0분"
         label.textAlignment = .right
         label.numberOfLines = 2
         label.font = .preferredFont(forTextStyle: .title2)
@@ -63,7 +61,6 @@ class DetailHeader: UICollectionReusableView {
     private lazy var endTime: UILabel = {
         let label = UILabel()
         label.textColor = .label
-        label.text = "오후 7시 38분"
         label.textAlignment = .left
         label.numberOfLines = 2
         label.font = .preferredFont(forTextStyle: .title2)
@@ -93,20 +90,21 @@ class DetailHeader: UICollectionReusableView {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.configure()
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
     }
     
-    private func configure() {
+    func configure(date: String, startTime: String, endTime: String) {
         self.configureStackView()
-        self.configureViews()
+        self.configureViews(date: date, startTime: startTime, endTime: endTime)
     }
     
-    private func configureViews() {
+    private func configureViews(date: String, startTime: String, endTime: String) {
+        self.dateLabel.text = date
+        self.startTime.text = startTime
+        self.endTime.text = endTime
         self.addSubview(self.dateLabel)
         self.addSubview(self.labelStackView)
         self.addSubview(self.timeStackView)

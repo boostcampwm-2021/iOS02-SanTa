@@ -18,6 +18,10 @@ class ResultDetailLargerInfoView: UIView {
     private var dataSource: DetailLargerInfoDataSource?
     private var currentSnapshot: DetailLargerInfoSnapshot?
     
+    private var date: String = ""
+    private var startTime: String = ""
+    private var endTime: String = ""
+    
     lazy var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .init(x: 0, y: 0, width: 0, height: 0), collectionViewLayout: flowLayout)
@@ -26,6 +30,13 @@ class ResultDetailLargerInfoView: UIView {
         return collectionView
     }()
 
+    init(frame: CGRect, date: String, start: String, end: String) {
+        super.init(frame: frame)
+        self.date = date
+        self.startTime = start
+        self.endTime = end
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -58,6 +69,12 @@ extension ResultDetailLargerInfoView {
         self.configureViews()
         self.configuareDataSource()
         self.displayUpDownMark()
+    }
+    
+    func configureHeaderInformation(date: String, startTime: String, endTime: String) {
+        self.date = date
+        self.startTime = startTime
+        self.endTime = endTime
     }
     
     func bindSnapShotApply(section: DetailLargerInfoSection, item: [AnyHashable]) {
@@ -113,6 +130,7 @@ extension ResultDetailLargerInfoView {
             indexPath: IndexPath) -> UICollectionReusableView? in
             guard let header: DetailHeader = self.collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: DetailHeader.identifier, for: indexPath) as? DetailHeader else { return DetailHeader() }
             
+            header.configure(date: self.date, startTime: self.startTime, endTime: self.endTime)
             return header
         }
     }

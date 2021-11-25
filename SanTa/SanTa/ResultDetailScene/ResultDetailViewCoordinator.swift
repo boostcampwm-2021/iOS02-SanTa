@@ -12,7 +12,6 @@ class ResultDetailViewCoordinator: Coordinator {
     var navigationController: UINavigationController
     var coreDataStorage: CoreDataStorage
     var records: Records
-//    let viewController: ResultDetailViewController = .init(viewModel: self.injectDependencies())
     
     func start() {
         let resultDetailViewController = ResultDetailViewController(viewModel: injectDependencies())

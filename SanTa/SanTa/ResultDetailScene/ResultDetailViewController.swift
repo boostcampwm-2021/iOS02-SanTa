@@ -148,9 +148,13 @@ class ResultDetailViewController: UIViewController {
                   let timeViewModel = self?.viewModel?.timeViewModel,
                   let paceViewModel = self?.viewModel?.paceViewModel,
                   let altitudeViewModel = self?.viewModel?.altitudeViewModel,
-                  let inclineViewModel = self?.viewModel?.inclineViewMedel else {
+                  let inclineViewModel = self?.viewModel?.inclineViewMedel,
+                  let recordDate = self?.viewModel?.recordDate,
+                  let startTime = self?.viewModel?.startTime,
+                  let endTime = self?.viewModel?.endTime else {
                       return
                   }
+            self?.largerInformationView.configureHeaderInformation(date: recordDate, startTime: startTime, endTime: endTime)
             let largeInfoModel: [DetailInformationModel] = [
                 distanceViewModel, timeViewModel, paceViewModel, altitudeViewModel, inclineViewModel
             ]

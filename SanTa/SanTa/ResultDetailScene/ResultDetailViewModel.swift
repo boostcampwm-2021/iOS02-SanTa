@@ -68,11 +68,10 @@ class ResultDetailViewModel {
         formatter.maximumFractionDigits = 2
         let totalDistance = self.resultDetailData?.distance.total ?? 0
         let totalTimeSpent = self.resultDetailData?.time.spent ?? 1
-        print(totalTimeSpent)
         return formatter.string(from: NSNumber(value: totalDistance / totalTimeSpent)) ?? ""
     }
     
-    var recordDate: String {
+    lazy var recordDate: String = {
         guard let endTime = self.resultDetailData?.timeStamp.endTime else {
             return ""
         }
@@ -80,9 +79,9 @@ class ResultDetailViewModel {
         dateFormatter.locale = Locale(identifier: "ko-KR")
         dateFormatter.dateFormat = "yyyy. MM. dd. (E)"
         return dateFormatter.string(from: endTime)
-    }
+    }()
     
-    var startDate: String {
+    lazy var startTime: String = {
         guard let startTime = self.resultDetailData?.timeStamp.startTime else {
             return ""
         }
@@ -90,9 +89,9 @@ class ResultDetailViewModel {
         dateFormatter.locale = Locale(identifier: "ko-KR")
         dateFormatter.dateFormat = "a h시 m분"
         return dateFormatter.string(from: startTime)
-    }
+    }()
     
-    var endDate: String {
+    lazy var endTime: String = {
         guard let endTime = self.resultDetailData?.timeStamp.endTime else {
             return ""
         }
@@ -100,7 +99,7 @@ class ResultDetailViewModel {
         dateFormatter.locale = Locale(identifier: "ko-KR")
         dateFormatter.dateFormat = "a h시 m분"
         return dateFormatter.string(from: endTime)
-    }
+    }()
 }
 
 struct CellContentEntity {
