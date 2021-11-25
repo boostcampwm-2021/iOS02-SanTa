@@ -82,12 +82,10 @@ extension UIStackView {
         let contentLabel = UILabel()
         contentLabel.text = content.content
         contentLabel.font = .preferredFont(for: .title1, weight: .bold)
-        contentLabel.numberOfLines = 0
 
         let contentTitleLabel = UILabel()
         contentTitleLabel.text = content.contentTitle
         contentTitleLabel.font = .preferredFont(forTextStyle: .body)
-        contentTitleLabel.numberOfLines = 0
         
         self.addArrangedSubview(contentLabel)
         self.addArrangedSubview(contentTitleLabel)

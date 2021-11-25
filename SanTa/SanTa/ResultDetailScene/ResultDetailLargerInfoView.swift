@@ -18,6 +18,10 @@ class ResultDetailLargerInfoView: UIView {
     private var dataSource: DetailLargerInfoDataSource?
     private var currentSnapshot: DetailLargerInfoSnapshot?
     
+    private var date: String = ""
+    private var startTime: String = ""
+    private var endTime: String = ""
+    
     lazy var collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         let collectionView = UICollectionView(frame: .init(x: 0, y: 0, width: 0, height: 0), collectionViewLayout: flowLayout)
@@ -25,7 +29,7 @@ class ResultDetailLargerInfoView: UIView {
 
         return collectionView
     }()
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -58,6 +62,12 @@ extension ResultDetailLargerInfoView {
         self.configureViews()
         self.configuareDataSource()
         self.displayUpDownMark()
+    }
+    
+    func configureHeaderInformation(date: String, startTime: String, endTime: String) {
+        self.date = date
+        self.startTime = startTime
+        self.endTime = endTime
     }
     
     func bindSnapShotApply(section: DetailLargerInfoSection, item: [AnyHashable]) {
@@ -113,13 +123,14 @@ extension ResultDetailLargerInfoView {
             indexPath: IndexPath) -> UICollectionReusableView? in
             guard let header: DetailHeader = self.collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: DetailHeader.identifier, for: indexPath) as? DetailHeader else { return DetailHeader() }
             
+            header.configure(date: self.date, startTime: self.startTime, endTime: self.endTime)
             return header
         }
     }
     
     private func configureCompositionalLayout() -> UICollectionViewCompositionalLayout {
         return UICollectionViewCompositionalLayout { (sectionNumber, env) -> NSCollectionLayoutSection? in
-            let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(0.5), heightDimension: .estimated(500)))
+            let item = NSCollectionLayoutItem(layoutSize: .init(widthDimension: .fractionalWidth(0.495), heightDimension: .estimated(500)))
             item.contentInsets = .init(top: 0, leading: 0, bottom: 0, trailing: 0)
             let group = NSCollectionLayoutGroup.horizontal(layoutSize: .init(widthDimension: .fractionalWidth(1), heightDimension: .estimated(500)), subitems: [item])
             let section = NSCollectionLayoutSection(group: group)

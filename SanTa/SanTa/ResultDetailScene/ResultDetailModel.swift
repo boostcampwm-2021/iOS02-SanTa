@@ -56,12 +56,10 @@ struct ResultTimeStamp {
 
 struct ResultDistance {
     let total: Double
-    let exercise: Double
     let steps: Int
     
     init(records: Records) {
         self.total = records.distances
-        self.exercise = records.distances  //??
         self.steps = records.steps
     }
 }
