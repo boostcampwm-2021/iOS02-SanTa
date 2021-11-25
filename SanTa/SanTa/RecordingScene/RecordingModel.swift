@@ -64,6 +64,7 @@ final class RecordingModel: NSObject, ObservableObject {
     private func configureLocationManager() {
         self.locationManager.desiredAccuracy = kCLLocationAccuracyBest
         self.locationManager.startUpdatingLocation()
+        self.locationManager.activityType = .fitness
         self.locationManager.allowsBackgroundLocationUpdates = true
         self.locationManager.pausesLocationUpdatesAutomatically = false
         self.locationManager.showsBackgroundLocationIndicator = true
