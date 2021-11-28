@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreLocation
 
 class TotalRecords {
     private(set) var totalRecords: [DateSeperateRecords] = []
@@ -31,12 +32,12 @@ class TotalRecords {
     var totalSteps: Int {
         return totalRecords.reduce(0) { $0 + $1.steps }
     }
-
+    
     subscript(section: Int) -> DateSeperateRecords? {
         guard self.totalCount > section else { return nil }
         return totalRecords[section]
     }
-
+    
     func add(records: Records) {
         guard let date = records.date else { return }
         let year = Calendar.current.component(.year, from: date)
@@ -160,11 +161,11 @@ struct Record {
     let step: Int
     let distance: Double
     let locations: [Location]
-
+    
     var time: TimeInterval {
         return endTime.timeIntervalSinceReferenceDate - startTime.timeIntervalSinceReferenceDate
     }
-
+    
     var minAltitude: Double? {
         return locations.map{ $0.altitude }.min()
     }
@@ -178,4 +179,103 @@ struct Location {
     let latitude: Double
     let longitude: Double
     let altitude: Double
+    
+    func distance(to: Location) -> Double {
+        let current = CLLocation(latitude: self.latitude, longitude: self.longitude)
+        let destination = CLLocation(latitude: to.latitude, longitude: to.longitude)
+        
+        return abs(current.distance(from: destination))
+    }
+}
+
+struct Locations {
+    private(set) var locations: [Location]
+    
+    init(locations: [Location]) {
+        self.locations = locations
+    }
+    
+    func totalUphillDistance() -> Double {
+        var uphillDistance: Double = 0
+        var prevLocation: Location? = nil
+        for location in locations {
+            if let prevLocation = prevLocation {
+                let distance = location.distance(to: prevLocation)
+                if location.altitude > prevLocation.altitude {
+                    uphillDistance += distance
+                }
+            }
+            prevLocation = location
+        }
+        
+        return uphillDistance
+    }
+    
+    func totalDownhillDistance() -> Double {
+        var downhillDistance: Double = 0
+        var prevLocation: Location? = nil
+        for location in locations {
+            if let prevLocation = prevLocation {
+                let distance = location.distance(to: prevLocation)
+                if location.altitude < prevLocation.altitude {
+                    downhillDistance += distance
+                }
+            }
+            prevLocation = location
+        }
+        
+        return downhillDistance
+    }
+    
+    func totalPlainDistance() -> Double {
+        var plainDistance: Double = 0
+        var prevLocation: Location? = nil
+        for location in locations {
+            if let prevLocation = prevLocation {
+                let distance = location.distance(to: prevLocation)
+                if location.altitude == prevLocation.altitude {
+                    plainDistance += distance
+                }
+            }
+            prevLocation = location
+        }
+        
+        return plainDistance
+    }
+    
+    func totalIncline() -> Double {
+        var incline: Double = 0
+        var prevLocation: Location? = nil
+        
+        for location in locations {
+            if let prevLocation = prevLocation {
+                let distanceDelta = location.distance(to: prevLocation)
+                let altitudeDelta = location.altitude > prevLocation.altitude ? location.altitude - prevLocation.altitude : 0
+                if distanceDelta != 0 {
+                    incline += atan(altitudeDelta / distanceDelta)
+                }
+            }
+            prevLocation = location
+        }
+        
+        return incline
+    }
+    
+    func steepestIncline() -> Double {
+        var steepest: Double = 0
+        var prevLocation: Location? = nil
+        
+        for location in locations {
+            if let prevLocation = prevLocation {
+                let distanceDelta = location.distance(to: prevLocation)
+                let altitudeDelta = location.altitude > prevLocation.altitude ? location.altitude - prevLocation.altitude : 0
+                if distanceDelta != 0 {
+                    let incline = atan(altitudeDelta / distanceDelta)
+                    steepest = max(incline, steepest)
+                }
+            }
+            prevLocation = location
+        }
+        return steepest
+    }
 }

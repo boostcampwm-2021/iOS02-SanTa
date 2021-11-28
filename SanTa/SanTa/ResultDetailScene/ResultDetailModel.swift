@@ -132,30 +132,21 @@ struct ResultIncline {
         var downHillDistance: Double = 0
         var plainDistance: Double = 0
         
-        var locations: [Location] = []
+        var paths: [[Location]] = []
         for record in records.records {
-            locations.append(contentsOf: record.locations)
+            paths.append(record.locations)
         }
         
-        
-        if !locations.isEmpty {
-            for index in 0..<locations.count - 1 {
-                let current = CLLocation(latitude: locations[index].latitude, longitude: locations[index].longitude)
-                let next = CLLocation(latitude: locations[index+1].latitude, longitude: locations[index+1].longitude)
-                let distanceDelta = current.distance(from: next)
-                let altitudeDelta = next.altitude - current.altitude
-                if distanceDelta != 0 {
-                    let incline = atan(altitudeDelta / distanceDelta)
-                    totalIncline += incline
-                    steepest = max(steepest, incline)
-                }
-                uphillDistance += altitudeDelta > 0 ? abs(distanceDelta) : 0
-                downHillDistance += altitudeDelta < 0 ? abs(distanceDelta) : 0
-                plainDistance += altitudeDelta == 0 ? abs(distanceDelta) : 0
-            }
+        for path in paths {
+            let locations = Locations(locations: path)
+            totalIncline += locations.totalIncline()
+            steepest = locations.steepestIncline()
+            uphillDistance += locations.totalUphillDistance()
+            downHillDistance += locations.totalDownhillDistance()
+            plainDistance += locations.totalPlainDistance()
         }
         
-        self.average = locations.count > 1 ? Int(totalIncline / Double(locations.count - 1)) : 0
+        self.average = paths.count > 1 ? Int(totalIncline / Double(paths.count - 1)) : 0
         self.highest = Int(steepest)
         self.uphillKilometer = uphillDistance / 1000
         self.downhillKilometer = downHillDistance / 1000
