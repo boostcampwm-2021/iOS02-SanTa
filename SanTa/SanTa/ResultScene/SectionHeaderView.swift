@@ -28,6 +28,7 @@ class SectionHeaderView: UICollectionReusableView {
         label.font = .preferredFont(forTextStyle: .body)
         label.textColor = .label
         label.adjustsFontSizeToFitWidth = true
+        label.numberOfLines = 2
         return label
     }()
     
@@ -36,6 +37,7 @@ class SectionHeaderView: UICollectionReusableView {
         label.font = .preferredFont(forTextStyle: .caption1)
         label.textColor = .systemGray
         label.adjustsFontSizeToFitWidth = true
+        label.textAlignment = .right
         return label
     }()
     
@@ -44,6 +46,8 @@ class SectionHeaderView: UICollectionReusableView {
         label.font = .preferredFont(forTextStyle: .caption1)
         label.textColor = .systemGray
         label.adjustsFontSizeToFitWidth = true
+        label.textAlignment = .right
+        label.numberOfLines = 2
         return label
     }()
     
@@ -52,6 +56,8 @@ class SectionHeaderView: UICollectionReusableView {
         label.font = .preferredFont(forTextStyle: .caption1)
         label.textColor = .systemGray
         label.adjustsFontSizeToFitWidth = true
+        label.textAlignment = .right
+        label.numberOfLines = 2
         return label
     }()
     
@@ -83,12 +89,14 @@ class SectionHeaderView: UICollectionReusableView {
             self.monthLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             self.monthLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20),
             self.monthLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
+            self.monthLabel.trailingAnchor.constraint(equalTo: self.centerXAnchor, constant: -10),
             self.timeLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             self.timeLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -20),
             self.distanceLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             self.distanceLabel.rightAnchor.constraint(equalTo: self.timeLabel.leftAnchor, constant: -10),
             self.countLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            self.countLabel.rightAnchor.constraint(equalTo: self.distanceLabel.leftAnchor, constant: -10)
+            self.countLabel.rightAnchor.constraint(equalTo: self.distanceLabel.leftAnchor, constant: -10),
+            self.countLabel.leadingAnchor.constraint(equalTo: self.centerXAnchor, constant: 10),
         ])
     }
 }
