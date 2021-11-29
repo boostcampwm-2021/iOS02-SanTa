@@ -55,7 +55,7 @@ struct ResultTimeStamp {
 }
 
 struct ResultDistance {
-    let total: Double
+    var total: Double? = nil
     let steps: Int
     
     init(records: Records) {
@@ -71,12 +71,14 @@ struct ResultTime {
     
     init(records: Records) {
         var inactive: TimeInterval = 0
-        for index in 0..<records.records.count - 1 {
-            inactive += records.records[index].endTime.timeIntervalSince(records.records[index+1].startTime)
+        if records.records.count > 1 {
+            for index in 0..<records.records.count - 1 {
+                inactive += records.records[index + 1].startTime.timeIntervalSince(records.records[index].endTime)
+            }
         }
         self.active = records.records.map{$0.endTime.timeIntervalSince($0.startTime)}.reduce(0, +)
         self.inactive = inactive
-        self.spent = records.times
+        self.spent = records.totalTravelTime
     }
 }
 
@@ -86,26 +88,35 @@ struct ResultPace {
     let slowestPace: TimeInterval
     
     init(records: Records) {
-        self.timePerKilometer = records.distances / records.times / 1000
+        self.timePerKilometer = records.distances / records.totalTravelTime / 1000
         self.fastestPace = TimeInterval(records.secondPerHighestSpeed)
         self.slowestPace = TimeInterval(records.secondPerMinimumSpeed)
     }
 }
 
 struct ResultAltitude {
-    let total: Int
-    let highest: Int
-    let lowest: Int
-    let starting: Int
-    let ending: Int
+    let total: Int?
+    let highest: Int?
+    let lowest: Int?
+    let starting: Int?
+    let ending: Int?
     
     init(records: Records) {
         var paths: [Locations] = []
         for record in records.records {
             paths.append(record.locations)
         }
-        var maxAltitude: Int = paths.isEmpty ? 0 : Int.min
-        var minAltitude: Int = paths.isEmpty ? 0 : Int.max
+        guard !paths.isEmpty else {
+            self.total = nil
+            self.highest = nil
+            self.lowest = nil
+            self.starting = nil
+            self.ending = nil
+            return
+        }
+        
+        var maxAltitude: Int = Int.min
+        var minAltitude: Int = Int.max
         for path in paths {
             maxAltitude = max(Int(round(path.maxAltitude)), Int(maxAltitude))
             minAltitude = min(Int(round(path.minAltitude)), Int(minAltitude))
@@ -153,8 +164,6 @@ struct ResultIncline {
         self.uphillKilometer = uphillDistance / 1000
         self.downhillKilometer = downHillDistance / 1000
         self.plainKilometer = plainDistance / 1000
-        
-        print("init: ", steepest)
     }
 }
 

@@ -150,15 +150,6 @@ extension MountainDetailViewController {
         snapShotter.start { snapShot, error in
             if let snapShot = snapShot {
                 let mapImage = snapShot.image
-                /*
-                 func imageWith(newSize: CGSize) -> UIImage {
-                     let image = UIGraphicsImageRenderer(size: newSize).image { _ in
-                         draw(in: CGRect(origin: .zero, size: newSize))
-                     }
-                         
-                     return image.withRenderingMode(renderingMode)
-                 }
-                 */
                 UIGraphicsBeginImageContext(CGSize(width: 20, height: 20))
                 UIImage(named: "SantaImage")?.draw(in: CGRect(x: 0, y: 0, width: 20, height: 20))
                 let markerImage = UIGraphicsGetImageFromCurrentImageContext()

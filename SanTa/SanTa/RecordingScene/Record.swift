@@ -80,7 +80,7 @@ class DateSeperateRecords {
     }
     
     var times: TimeInterval {
-        return dateSeperateRecords.reduce(0) { $0 + $1.times }
+        return dateSeperateRecords.reduce(0) { $0 + $1.totalTravelTime }
     }
     
     var steps: Int {
@@ -111,8 +111,8 @@ struct Records {
         return records.reduce(0) { $0 + $1.distance }
     }
     
-    var times: TimeInterval {
-        return records.reduce(0) { $0 + $1.time }
+    var totalTravelTime: TimeInterval {
+        return records.reduce(0) { $0 + $1.travelTime }
     }
     
     var steps: Int {
@@ -162,8 +162,8 @@ struct Record {
     let distance: Double
     let locations: Locations
     
-    var time: TimeInterval {
-        return endTime.timeIntervalSinceReferenceDate - startTime.timeIntervalSinceReferenceDate
+    var travelTime: TimeInterval {
+        return endTime.timeIntervalSince(startTime)
     }
     
     var minAltitude: Double? {
@@ -244,7 +244,15 @@ struct Locations {
     }
     
     func totalDistance() -> Double {
-        totalUphillDistance() + totalDownhillDistance() + totalPlainDistance()
+        var distance: Double = 0
+        var prevLocation: Location? = nil
+        for location in locations {
+            if let prevLocation = prevLocation {
+                distance += location.distance(to: prevLocation)
+            }
+            prevLocation = location
+        }
+        return distance
     }
     
     func totalUphillDistance() -> Double {
