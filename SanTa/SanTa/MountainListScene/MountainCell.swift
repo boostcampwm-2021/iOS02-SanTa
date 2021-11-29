@@ -62,7 +62,7 @@ final class MountainCell: UICollectionViewCell {
         let stackViewConstrain = [
             self.stackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
             self.stackView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 30),
-            self.stackView.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -30),
+            self.stackView.rightAnchor.constraint(lessThanOrEqualTo: self.rightAnchor, constant: -30),
         ]
         NSLayoutConstraint.activate(stackViewConstrain)
         
