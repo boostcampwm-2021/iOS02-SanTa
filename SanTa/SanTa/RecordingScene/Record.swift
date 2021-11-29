@@ -243,6 +243,9 @@ struct Locations {
         return locations.last
     }
     
+    func totalDistance() -> Double {
+        totalUphillDistance() + totalDownhillDistance() + totalPlainDistance()
+    }
     
     func totalUphillDistance() -> Double {
         var uphillDistance: Double = 0

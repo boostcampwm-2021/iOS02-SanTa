@@ -60,11 +60,7 @@ struct ResultDistance {
     
     init(records: Records) {
         self.steps = records.steps
-        guard let totalDistance = records.records.last?.distance else {
-            self.total = 0
-            return
-        }
-        self.total = totalDistance
+        self.total = records.records.map{$0.locations.totalDistance()}.reduce(0, +) / 1000
     }
 }
 
