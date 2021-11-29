@@ -292,8 +292,8 @@ struct Locations {
         return plainDistance
     }
     
-    func totalIncline() -> Double {
-        var incline: Double = 0
+    func totalIncline() -> [Double] {
+        var incline: [Double] = []
         var prevLocation: Location? = nil
         
         for location in locations {
@@ -301,7 +301,7 @@ struct Locations {
                 let distanceDelta = location.distance(to: prevLocation)
                 let altitudeDelta = location.altitude > prevLocation.altitude ? location.altitude - prevLocation.altitude : 0
                 if distanceDelta != 0 {
-                    incline += atan(altitudeDelta / distanceDelta)
+                    incline.append(atan(altitudeDelta / distanceDelta))
                 }
             }
             prevLocation = location

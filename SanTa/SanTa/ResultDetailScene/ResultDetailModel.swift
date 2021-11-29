@@ -108,8 +108,8 @@ struct ResultAltitude {
         for record in records.records {
             paths.append(record.locations)
         }
-        var maxAltitude: Int = Int.min
-        var minAltitude: Int = Int.max
+        var maxAltitude: Int = paths.isEmpty ? 0 : Int.min
+        var minAltitude: Int = paths.isEmpty ? 0 : Int.max
         for path in paths {
             maxAltitude = max(Int(round(path.maxAltitude)), Int(maxAltitude))
             minAltitude = min(Int(round(path.minAltitude)), Int(minAltitude))
@@ -131,7 +131,7 @@ struct ResultIncline {
     let plainKilometer: Double
     
     init(records: Records) {
-        var totalIncline: Double = 0
+        var inclines: [Double] = []
         var steepest: Double = 0
         var uphillDistance: Double = 0
         var downHillDistance: Double = 0
@@ -142,19 +142,28 @@ struct ResultIncline {
             paths.append(record.locations)
         }
         
-        for locations in paths {
-            
-            totalIncline += locations.totalIncline()
-            steepest = locations.steepestIncline()
-            uphillDistance += locations.totalUphillDistance()
-            downHillDistance += locations.totalDownhillDistance()
-            plainDistance += locations.totalPlainDistance()
+        for path in paths {
+            inclines.append(contentsOf: path.totalIncline())
+            steepest = max(path.steepestIncline(), steepest)
+            uphillDistance += path.totalUphillDistance()
+            downHillDistance += path.totalDownhillDistance()
+            plainDistance += path.totalPlainDistance()
         }
+        let averageInclineInRadian: Double = inclines.isEmpty ? 0 : inclines.reduce(0, +) / Double(inclines.count)
+        let averageInclineInDegrees: Int = Int(round(averageInclineInRadian.toDegrees()))
         
-        self.average = paths.count > 1 ? Int(totalIncline / Double(paths.count - 1)) : 0
-        self.highest = Int(steepest)
+        self.average = averageInclineInDegrees
+        self.highest = Int(round(steepest.toDegrees()))
         self.uphillKilometer = uphillDistance / 1000
         self.downhillKilometer = downHillDistance / 1000
         self.plainKilometer = plainDistance / 1000
+        
+        print("init: ", steepest)
+    }
+}
+
+extension Double {
+    fileprivate func toDegrees() -> Double {
+        return self * 180 / Double.pi
     }
 }

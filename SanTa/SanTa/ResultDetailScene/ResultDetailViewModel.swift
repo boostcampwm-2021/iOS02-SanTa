@@ -251,8 +251,8 @@ extension ResultDetailViewModel {
                       return
                   }
             self.contents = [
-                CellContentEntity(content: String(inclineData.average), contentTitle: "평균"),
-                CellContentEntity(content: String(inclineData.highest), contentTitle: "최고"),
+                CellContentEntity(content: String(inclineData.average)+"°", contentTitle: "평균"),
+                CellContentEntity(content: String(inclineData.highest)+"°", contentTitle: "최고"),
                 CellContentEntity(content: uphill, contentTitle: "오르막(km)"),
                 CellContentEntity(content: downhill, contentTitle: "내리막(km)"),
                 CellContentEntity(content: plain, contentTitle: "평지(km)"),
