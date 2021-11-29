@@ -95,12 +95,14 @@ extension ResultDetailLargerInfoView {
     }
     
     private func configuareDataSource() {
-        let datasource = DetailLargerInfoDataSource (collectionView: self.collectionView, cellProvider: { (collectionView, indexPath, item) -> UICollectionViewCell in
+        let datasource = DetailLargerInfoDataSource (collectionView: self.collectionView,
+                                                     cellProvider: { (collectionView, indexPath, item) -> UICollectionViewCell in
             
             guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: DetailCell.identifier, for: indexPath) as? DetailCell,
                 let item = item as? DetailInformationModel else  {
                 return UICollectionViewCell() }
             cell.layout(data: item)
+            cell.configureVoiceOverAccessibility()
             return cell
         })
         
@@ -124,6 +126,7 @@ extension ResultDetailLargerInfoView {
             guard let header: DetailHeader = self.collectionView.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: DetailHeader.identifier, for: indexPath) as? DetailHeader else { return DetailHeader() }
             
             header.configure(date: self.date, startTime: self.startTime, endTime: self.endTime)
+            header.configureVoiceOverAccessibility()
             return header
         }
     }

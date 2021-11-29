@@ -139,6 +139,7 @@ class ResultDetailViewController: UIViewController {
         self.drawPathOnMap()
         self.markEndPoints()
         self.registerAnnotationView()
+        self.configureVoiceOverAccessibility()
     }
     
     private func configureViewModel() {
@@ -153,6 +154,7 @@ class ResultDetailViewController: UIViewController {
                 minAltitude: viewModel.altitudeViewModel.lowest,
                 averageSpeed: viewModel.averageSpeed()
             )
+            self?.smallerInformationView.configureVoiceOverAccessibility()
             self?.largerInformationView.configure()
             guard let distanceViewModel = self?.viewModel?.distanceViewModel,
                   let timeViewModel = self?.viewModel?.timeViewModel,
@@ -430,6 +432,7 @@ class ResultDetailViewController: UIViewController {
                 self.largerInformationView.collectionView.setNeedsLayout()
             }, completion: nil)
             
+            self.configureVoiceOverAccessibility()
         default:
             break
         }
@@ -516,5 +519,22 @@ extension ResultDetailViewController: MKMapViewDelegate {
         guard let annotation = view as? ThumbnailView else { return }
         
         self.coordinator?.presentResultDetailThumbnailViewController(uiImages: uiImages, id: annotation.imageIdentifier)
+    }
+}
+
+// MARK: - Accessibility
+
+extension ResultDetailViewController {
+    private func configureVoiceOverAccessibility() {
+        switch isLargeInfoView {
+        case true:
+            self.view.accessibilityElements = [self.largerInformationView]
+            self.smallerInformationView.accessibilityElementsHidden = true
+            self.largerInformationView.accessibilityElementsHidden = false
+        case false:
+            self.view.accessibilityElements = nil
+            self.smallerInformationView.accessibilityElementsHidden = false
+            self.largerInformationView.accessibilityElementsHidden = true
+        }
     }
 }

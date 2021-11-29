@@ -190,3 +190,22 @@ class ResultDetailSmallerInfoView: UIView {
         NSLayoutConstraint.activate(upDownConstraints)
     }
 }
+
+// MARK: - Accessibility
+
+extension ResultDetailSmallerInfoView {
+    func configureVoiceOverAccessibility() {
+        self.isAccessibilityElement = true
+        guard let distance = self.distance.text,
+              let time = self.time.text,
+              let steps = self.steps.text,
+              let maxAltitude = self.maxAltitude.text,
+              let minAltitude = self.minAltitude.text,
+              let averageSpeed = self.averageSpeed.text
+        else {
+            return
+        }
+        self.accessibilityLabel =
+        "기록 정보 거리: \(distance)km, 시간: \(time), 걸음: \(steps), 최고고도: \(maxAltitude), 최저고도: \(minAltitude), 평균속도: \(averageSpeed)"
+    }
+}
