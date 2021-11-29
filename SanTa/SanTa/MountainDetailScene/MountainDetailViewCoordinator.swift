@@ -25,7 +25,7 @@ class MountainDetailViewCoordinator: Coordinator {
         if self.parentCoordinator is MapViewCoordinator {
             self.navigationController.present(mountainDetailViewController, animated: true, completion: nil)
         } else {
-            self.navigationController.setNavigationBarHidden(true, animated: false)
+            self.navigationController.setNavigationBarHidden(true, animated: true)
             self.navigationController.pushViewController(mountainDetailViewController, animated: true)
         }
     }
@@ -34,6 +34,7 @@ class MountainDetailViewCoordinator: Coordinator {
         if self.parentCoordinator is MapViewCoordinator {
             self.navigationController.dismiss(animated: true)
         } else {
+            self.navigationController.setNavigationBarHidden(false, animated: true)
             self.navigationController.popViewController(animated: true)
         }
         self.parentCoordinator?.childCoordinators.removeLast()
