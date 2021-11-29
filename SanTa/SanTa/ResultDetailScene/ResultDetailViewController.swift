@@ -238,11 +238,15 @@ class ResultDetailViewController: UIViewController {
     private func fetchAssetImage() {
         guard let assetIdentifiers = self.viewModel?.resultDetailData?.assetIdentifiers else { return }
         let allMedia = PHAsset.fetchAssets(with: .image, options: nil)
-        var identifierIndex = 0
-        self.detailImagesButton.setTitle("\(assetIdentifiers.count)", for: .normal)
+        var assetMap = [String: Bool]()
+        var identifierCount = 0
+        
+        for identifier in assetIdentifiers { assetMap[identifier] = true }
+        
         for i in stride(from: allMedia.count - 1, through: 0, by: -1) {
-            guard identifierIndex < assetIdentifiers.count else { return }
-            if allMedia[i].localIdentifier == assetIdentifiers[identifierIndex] {
+            guard identifierCount < assetIdentifiers.count else { return }
+            if let value = assetMap[allMedia[i].localIdentifier] {
+                guard value == true else { return }
                 requestAssetIamge(with: allMedia[i]) { [weak self] (image, asset) in
                     guard let image = image,
                           let identifier = asset?.localIdentifier,
@@ -250,9 +254,11 @@ class ResultDetailViewController: UIViewController {
                     self?.uiImages[identifier] = image
                     self?.appendImageAnnotation(identifier: identifier, location: coordinate)
                 }
-                identifierIndex += 1
+                identifierCount += 1
             }
         }
+        
+        self.detailImagesButton.setTitle("\(identifierCount)", for: .normal)
     }
     
     private func requestAssetIamge(with asset: PHAsset?, completion: @escaping (UIImage?, PHAsset?) -> Void) {
