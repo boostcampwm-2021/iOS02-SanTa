@@ -7,10 +7,6 @@
 
 import Foundation
 
-protocol ResultRepository {
-    func fetch(completion: @escaping (Result<[Records], Error>) -> Void)
-}
-
 final class DefaultResultRepository: ResultRepository {
     
     private let recordStorage: CoreDataRecordStorage

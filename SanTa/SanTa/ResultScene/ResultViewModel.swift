@@ -11,11 +11,11 @@ class ResultViewModel {
     private let useCase: ResultUseCase
     var cellShouldUpdate: () -> Void
     var totalDistance: String {
-        guard let totalRecords = useCase.totalRecords else { return "" }
+        guard let totalRecords = self.useCase.totalRecords else { return "" }
         return self.doubleFormatter(totalRecords.totalDistances) + " km"
     }
     var totalSections: Int {
-        guard let totalRecords = useCase.totalRecords else { return 0 }
+        guard let totalRecords = self.useCase.totalRecords else { return 0 }
         return totalRecords.sectionCount
     }
     
@@ -33,11 +33,11 @@ class ResultViewModel {
     }
     
     func itemsInSection(section: Int) -> Int {
-        useCase.totalRecords?[section]?.count ?? 0
+        self.useCase.totalRecords?[section]?.count ?? 0
     }
     
     func totalInfo() -> (distance: String, count: String, time: String, steps: String) {
-        guard let totalRecords = useCase.totalRecords else {
+        guard let totalRecords = self.useCase.totalRecords else {
             return ("", "", "", "")
         }
         let distanceString = self.doubleFormatter(totalRecords.totalDistances)
@@ -52,7 +52,7 @@ class ResultViewModel {
                                        count: String,
                                        distance: String,
                                        time: String) {
-        guard let totalRecords = useCase.totalRecords,
+        guard let totalRecords = self.useCase.totalRecords,
               let dateSeperateRecords = totalRecords[section]
         else {
             return ("", "", "", "", "")
@@ -71,9 +71,13 @@ class ResultViewModel {
         return (dateString, accessibiltyDateString, countString, distanceString, timeString)
     }
     
-    func cellInfo(indexPath: IndexPath)
-    -> (date: String, distance: String, time: String, altitudeDifference: String, steps: String, title: String) {
-        guard let totalRecords = useCase.totalRecords,
+    func cellInfo(indexPath: IndexPath) -> (date: String,
+                                            distance: String,
+                                            time: String,
+                                            altitudeDifference: String,
+                                            steps: String,
+                                            title: String) {
+        guard let totalRecords = self.useCase.totalRecords,
               let records = totalRecords[indexPath.section]?[indexPath.item]
         else {
             return ("", "", "", "", "", "")
@@ -88,7 +92,7 @@ class ResultViewModel {
     }
     
     func selectedRecords(indexPath: IndexPath) -> Records? {
-        return useCase.totalRecords?[indexPath.section]?[indexPath.item]
+        return self.useCase.totalRecords?[indexPath.section]?[indexPath.item]
     }
 }
 

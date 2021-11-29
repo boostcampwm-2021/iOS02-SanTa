@@ -62,6 +62,16 @@
                ReferencedContainer = "container:SanTa.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "98BAABB0275479B0004505BB"
+               BuildableName = "ResultSceneTests.xctest"
+               BlueprintName = "ResultSceneTests"
+               ReferencedContainer = "container:SanTa.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction

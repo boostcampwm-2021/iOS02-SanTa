@@ -8,6 +8,10 @@
 import Foundation
 import OSLog
 
+protocol ResultRepository {
+    func fetch(completion: @escaping (Result<[Records], Error>) -> Void)
+}
+
 final class ResultUseCase {
     private let resultRepository: ResultRepository
     private(set) var totalRecords: TotalRecords?
