@@ -31,7 +31,7 @@ struct ResultDetailData {
         self.title = records.title
         self.assetIdentifiers = records.assetIdentifiers
         var locations: [[CLLocationCoordinate2D]] = []
-        records.records.forEach { locations.append($0.locations.map {CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude) }) }
+        records.records.forEach{locations.append($0.locations.coordinates)}
         self.coordinates = locations
     }
     
@@ -49,8 +49,8 @@ struct ResultTimeStamp {
     init(records: Records) {
         self.startTime = records.records.first?.startTime ?? Date.distantPast
         self.endTime = records.records.last?.endTime ?? Date.distantFuture
-        self.startLocation = records.records.first?.locations.first
-        self.endLocation = records.records.last?.locations.last
+        self.startLocation = records.records.first?.locations.startLocation
+        self.endLocation = records.records.last?.locations.endLocation
     }
 }
 
@@ -106,10 +106,10 @@ struct ResultAltitude {
     init(records: Records) {
         var paths: [Locations] = []
         for record in records.records {
-            paths.append(Locations(locations: record.locations))
+            paths.append(record.locations)
         }
-        var maxAltitude: Int = 0
-        var minAltitude: Int = 0
+        var maxAltitude: Int = Int.min
+        var minAltitude: Int = Int.max
         for path in paths {
             maxAltitude = max(Int(round(path.maxAltitude)), Int(maxAltitude))
             minAltitude = min(Int(round(path.minAltitude)), Int(minAltitude))
@@ -139,7 +139,7 @@ struct ResultIncline {
         
         var paths: [Locations] = []
         for record in records.records {
-            paths.append(Locations(locations: record.locations))
+            paths.append(record.locations)
         }
         
         for locations in paths {

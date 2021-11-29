@@ -160,18 +160,26 @@ struct Record {
     let endTime: Date
     let step: Int
     let distance: Double
-    let locations: [Location]
+    let locations: Locations
     
     var time: TimeInterval {
         return endTime.timeIntervalSinceReferenceDate - startTime.timeIntervalSinceReferenceDate
     }
     
     var minAltitude: Double? {
-        return locations.map{ $0.altitude }.min()
+        return locations.minAltitude
     }
     
     var maxAltitude: Double? {
-        return locations.map{ $0.altitude }.max()
+        return locations.maxAltitude
+    }
+    
+    init(startTime: Date, endTime: Date, step: Int, distance: Double, locations: [Location]) {
+        self.startTime = startTime
+        self.endTime = endTime
+        self.step = step
+        self.distance = distance
+        self.locations = Locations(locations: locations)
     }
 }
 
@@ -193,6 +201,10 @@ struct Locations {
     
     init(locations: [Location]) {
         self.locations = locations
+    }
+    
+    var coordinates: [CLLocationCoordinate2D] {
+        return locations.map{CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude)}
     }
     
     var maxAltitude: Double {
@@ -222,6 +234,15 @@ struct Locations {
         }
         return last
     }
+    
+    var startLocation: Location? {
+        return locations.first
+    }
+    
+    var endLocation: Location? {
+        return locations.last
+    }
+    
     
     func totalUphillDistance() -> Double {
         var uphillDistance: Double = 0
