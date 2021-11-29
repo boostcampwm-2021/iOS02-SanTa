@@ -195,6 +195,34 @@ struct Locations {
         self.locations = locations
     }
     
+    var maxAltitude: Double {
+        guard let max = locations.map({$0.altitude}).max() else {
+            return 0
+        }
+        return max
+    }
+    
+    var minAltitude: Double {
+        guard let min = locations.map({$0.altitude}).min() else {
+            return 0
+        }
+        return min
+    }
+    
+    var firstAltitude: Double {
+        guard let first = locations.map({$0.altitude}).first else {
+            return 0
+        }
+        return first
+    }
+    
+    var lastAltitude: Double {
+        guard let last = locations.map({$0.altitude}).last else {
+            return 0
+        }
+        return last
+    }
+    
     func totalUphillDistance() -> Double {
         var uphillDistance: Double = 0
         var prevLocation: Location? = nil

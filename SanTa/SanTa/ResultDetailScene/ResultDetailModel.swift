@@ -104,17 +104,22 @@ struct ResultAltitude {
     let ending: Int
     
     init(records: Records) {
-        let maxAltitude:Int = Int(records.records.flatMap{$0.locations}.max{ $0.altitude < $1.altitude }?.altitude ?? 0)
-        let minAltitude = Int(records.records.flatMap{$0.locations}.min{ $0.altitude < $1.altitude }?.altitude ?? 0)
-        let total = Int(maxAltitude - minAltitude)
-        let startAltitude = Int(records.records.first?.locations.first?.altitude ?? 0)
-        let endAltitude = Int(records.records.last?.locations.last?.altitude ?? 0)
+        var paths: [Locations] = []
+        for record in records.records {
+            paths.append(Locations(locations: record.locations))
+        }
+        var maxAltitude: Int = 0
+        var minAltitude: Int = 0
+        for path in paths {
+            maxAltitude = max(Int(round(path.maxAltitude)), Int(maxAltitude))
+            minAltitude = min(Int(round(path.minAltitude)), Int(minAltitude))
+        }
         
-        self.total = total
+        self.total = maxAltitude - minAltitude
         self.highest = maxAltitude
         self.lowest = minAltitude
-        self.starting = startAltitude
-        self.ending = endAltitude
+        self.starting = Int(round(paths.first?.firstAltitude ?? 0))
+        self.ending = Int(round(paths.last?.lastAltitude ?? 0))
     }
 }
 
@@ -132,13 +137,13 @@ struct ResultIncline {
         var downHillDistance: Double = 0
         var plainDistance: Double = 0
         
-        var paths: [[Location]] = []
+        var paths: [Locations] = []
         for record in records.records {
-            paths.append(record.locations)
+            paths.append(Locations(locations: record.locations))
         }
         
-        for path in paths {
-            let locations = Locations(locations: path)
+        for locations in paths {
+            
             totalIncline += locations.totalIncline()
             steepest = locations.steepestIncline()
             uphillDistance += locations.totalUphillDistance()
