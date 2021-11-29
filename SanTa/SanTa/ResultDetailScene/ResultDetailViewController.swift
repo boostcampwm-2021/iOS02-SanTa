@@ -29,7 +29,7 @@ class ResultDetailViewController: UIViewController {
         mapView.mapType = .mutedStandard
         mapView.backgroundColor = .black
         mapView.translatesAutoresizingMaskIntoConstraints = false
-        
+        mapView.accessibilityElementsHidden = true
         return mapView
     }()
     
@@ -57,7 +57,9 @@ class ResultDetailViewController: UIViewController {
         button.setPreferredSymbolConfiguration(.init(pointSize: 25), forImageIn: .normal)
         button.tintColor = .label
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(dismissViewController), for: .touchUpInside)
+        button.addTarget(self, action: #selector(self.dismissViewController), for: .touchUpInside)
+        button.accessibilityLabel = "뒤로가기"
+        button.accessibilityHint = "이전 화면으로 돌아가려면 이중 탭 하십시오"
         return button
     }()
     
@@ -67,7 +69,9 @@ class ResultDetailViewController: UIViewController {
         button.setPreferredSymbolConfiguration(.init(pointSize: 25), forImageIn: .normal)
         button.tintColor = .label
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(presentModifyResultAlert), for: .touchUpInside)
+        button.addTarget(self, action: #selector(self.presentModifyResultAlert), for: .touchUpInside)
+        button.accessibilityLabel = "수정하기"
+        button.accessibilityHint = "기록을 수정하거나 삭제하려면 이중 탭 하십시오"
         return button
     }()
     
@@ -88,7 +92,9 @@ class ResultDetailViewController: UIViewController {
         button.layer.shadowOffset = CGSize.zero
         button.layer.shadowRadius = 2
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(pushDetailImagesViewController), for: .touchUpInside)
+        button.addTarget(self, action: #selector(self.pushDetailImagesViewController), for: .touchUpInside)
+        button.accessibilityLabel = "앨범형식 모아보기"
+        button.accessibilityHint = "앨범형식으로 모아보려면 이중 탭 하십시오"
         return button
     }()
     
@@ -105,7 +111,10 @@ class ResultDetailViewController: UIViewController {
         button.layer.shadowOffset = CGSize.zero
         button.layer.shadowRadius = 2
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(imagesVisibilityButtonAction), for: .touchUpInside)
+        button.addTarget(self, action: #selector(self.imagesVisibilityButtonAction), for: .touchUpInside)
+        button.accessibilityLabel = "이미지 썸네일"
+        button.accessibilityValue = "켜짐"
+        button.accessibilityHint = "이미지 썸네일을 끄려면 이중 탭 하십시오"
         return button
     }()
     
@@ -113,6 +122,7 @@ class ResultDetailViewController: UIViewController {
         let label = UILabel()
         label.font = .systemFont(ofSize: label.font.pointSize, weight: .bold)
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.accessibilityTraits = .header
         return label
     }()
     
@@ -173,7 +183,7 @@ class ResultDetailViewController: UIViewController {
             })
             .store(in: &observers)
         
-        viewModel?.setUp()
+        self.viewModel?.setUp()
     }
     
     private func registerAnnotationView() {
@@ -193,10 +203,14 @@ class ResultDetailViewController: UIViewController {
         let imageAnnotations = self.mapView.annotations.filter{$0.title != "시작점" && $0.title != "종료점"}
         switch bool {
         case true:
+            self.imagesVisibilityButton.accessibilityValue = "켜짐"
+            self.imagesVisibilityButton.accessibilityHint = "이미지 썸네일을 끄려면 이중 탭 하십시오"
             imageAnnotations.forEach{
                 self.mapView.view(for: $0)?.isHidden = false
             }
         case false:
+            self.imagesVisibilityButton.accessibilityValue = "꺼짐"
+            self.imagesVisibilityButton.accessibilityHint = "이미지 썸네일을 켜려면 이중 탭 하십시오"
             imageAnnotations.forEach{
                 self.mapView.view(for: $0)?.isHidden = true
             }
@@ -208,14 +222,14 @@ class ResultDetailViewController: UIViewController {
             return
         }
         for pointSet in pointSets {
-            mapView.addOverlay(MKPolyline(coordinates: pointSet, count: pointSet.count))
+            self.mapView.addOverlay(MKPolyline(coordinates: pointSet, count: pointSet.count))
         }
-        guard let initial = mapView.overlays.first?.boundingMapRect else {
+        guard let initial = self.mapView.overlays.first?.boundingMapRect else {
             return
         }
         
-        let mapRect = mapView.overlays.dropFirst().reduce(initial) { $0.union($1.boundingMapRect) }
-        mapView.setVisibleMapRect(mapRect, animated: true)
+        let mapRect = self.mapView.overlays.dropFirst().reduce(initial) { $0.union($1.boundingMapRect) }
+        self.mapView.setVisibleMapRect(mapRect, animated: true)
     }
     
     private func markEndPoints() {
@@ -243,7 +257,7 @@ class ResultDetailViewController: UIViewController {
         for i in stride(from: allMedia.count - 1, through: 0, by: -1) {
             guard identifierIndex < assetIdentifiers.count else { return }
             if allMedia[i].localIdentifier == assetIdentifiers[identifierIndex] {
-                requestAssetIamge(with: allMedia[i]) { [weak self] (image, asset) in
+                self.requestAssetIamge(with: allMedia[i]) { [weak self] (image, asset) in
                     guard let image = image,
                           let identifier = asset?.localIdentifier,
                           let coordinate = asset?.location?.coordinate else { return }
@@ -270,7 +284,7 @@ class ResultDetailViewController: UIViewController {
         let imageAnnotation = MKPointAnnotation()
         imageAnnotation.coordinate = location
         imageAnnotation.title = identifier
-        mapView.addAnnotation(imageAnnotation)
+        self.mapView.addAnnotation(imageAnnotation)
     }
     
     private func configureSmallerView() {
@@ -278,7 +292,7 @@ class ResultDetailViewController: UIViewController {
     }
     
     private func configurePanGesture() {
-        let informationViewPan = UIPanGestureRecognizer(target: self, action: #selector(informationViewPanPanned(_:)))
+        let informationViewPan = UIPanGestureRecognizer(target: self, action: #selector(self.informationViewPanPanned(_:)))
         
         informationViewPan.delaysTouchesBegan = false
         informationViewPan.delaysTouchesEnded = false
@@ -346,9 +360,9 @@ class ResultDetailViewController: UIViewController {
             self.imagesVisibilityButton.heightAnchor.constraint(equalToConstant: 30)
         ])
         
-        infoViewTopConstraint =
+        self.infoViewTopConstraint =
         self.smallerInformationView.topAnchor.constraint(equalTo: self.mapView.bottomAnchor)
-        guard let infoViewConstraint = infoViewTopConstraint else { return }
+        guard let infoViewConstraint = self.infoViewTopConstraint else { return }
         NSLayoutConstraint.activate([infoViewConstraint])
         
         self.view.layoutIfNeeded()
@@ -382,7 +396,7 @@ class ResultDetailViewController: UIViewController {
             
         case .changed:
             var offset: CGFloat = 0
-            if isLargeInfoView {
+            if self.isLargeInfoView {
                 offset = self.backButton.frame.maxY - self.mapView.safeAreaLayoutGuide.layoutFrame.maxY
             }
             
@@ -424,11 +438,11 @@ class ResultDetailViewController: UIViewController {
 
 extension ResultDetailViewController {
     @objc func dismissViewController() {
-        coordinator?.dismiss()
+        self.coordinator?.dismiss()
     }
     
     @objc func pushDetailImagesViewController() {
-        coordinator?.pushResultDetailImagesViewController(uiImages: uiImages)
+        self.coordinator?.pushResultDetailImagesViewController(uiImages: uiImages)
     }
     
     @objc func imagesVisibilityButtonAction() {
