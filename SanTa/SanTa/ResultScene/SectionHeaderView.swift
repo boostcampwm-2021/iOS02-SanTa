@@ -23,43 +23,10 @@ extension UILabel {
 
 class SectionHeaderView: UICollectionReusableView {
     static let identifier = "SectionHeaderView"
-    let monthLabel: UILabel = {
-        let label = UILabel()
-        label.font = .preferredFont(forTextStyle: .body)
-        label.textColor = .label
-        label.adjustsFontSizeToFitWidth = true
-        label.numberOfLines = 2
-        return label
-    }()
-    
-    let countLabel: UILabel = {
-        let label = UILabel()
-        label.font = .preferredFont(forTextStyle: .caption1)
-        label.textColor = .systemGray
-        label.adjustsFontSizeToFitWidth = true
-        label.textAlignment = .right
-        return label
-    }()
-    
-    let distanceLabel: UILabel = {
-        let label = UILabel()
-        label.font = .preferredFont(forTextStyle: .caption1)
-        label.textColor = .systemGray
-        label.adjustsFontSizeToFitWidth = true
-        label.textAlignment = .right
-        label.numberOfLines = 2
-        return label
-    }()
-    
-    let timeLabel: UILabel = {
-        let label = UILabel()
-        label.font = .preferredFont(forTextStyle: .caption1)
-        label.textColor = .systemGray
-        label.adjustsFontSizeToFitWidth = true
-        label.textAlignment = .right
-        label.numberOfLines = 2
-        return label
-    }()
+    let monthLabel = UILabel(boldFontWithSize: 17, withTextColor: .label)
+    let countLabel = UILabel(normalFontWithSize: 15, withTextColor: .systemGray)
+    let distanceLabel = UILabel(normalFontWithSize: 15, withTextColor: .systemGray)
+    let timeLabel = UILabel(normalFontWithSize: 15, withTextColor: .systemGray)
     
     func configure(month: String, count: String, distance: String, time: String) {
         self.backgroundColor = .systemBackground
@@ -85,24 +52,19 @@ class SectionHeaderView: UICollectionReusableView {
         self.distanceLabel.translatesAutoresizingMaskIntoConstraints = false
         self.timeLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            self.monthLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
             self.monthLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             self.monthLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20),
-            self.monthLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
-            self.monthLabel.trailingAnchor.constraint(equalTo: self.centerXAnchor, constant: -10),
             self.timeLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             self.timeLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -20),
             self.distanceLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             self.distanceLabel.rightAnchor.constraint(equalTo: self.timeLabel.leftAnchor, constant: -10),
             self.countLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            self.countLabel.rightAnchor.constraint(equalTo: self.distanceLabel.leftAnchor, constant: -10),
-            self.countLabel.leadingAnchor.constraint(equalTo: self.centerXAnchor, constant: 10),
+            self.countLabel.rightAnchor.constraint(equalTo: self.distanceLabel.leftAnchor, constant: -10)
         ])
     }
 }
 
 // MARK: - Accessibility
-
 extension SectionHeaderView {
     
     func configureVoiceOverAccessibility(date: String) {
