@@ -23,10 +23,37 @@ extension UILabel {
 
 class SectionHeaderView: UICollectionReusableView {
     static let identifier = "SectionHeaderView"
-    let monthLabel = UILabel(boldFontWithSize: 17, withTextColor: .label)
-    let countLabel = UILabel(normalFontWithSize: 15, withTextColor: .systemGray)
-    let distanceLabel = UILabel(normalFontWithSize: 15, withTextColor: .systemGray)
-    let timeLabel = UILabel(normalFontWithSize: 15, withTextColor: .systemGray)
+    let monthLabel: UILabel = {
+        let label = UILabel()
+        label.font = .preferredFont(forTextStyle: .body)
+        label.textColor = .label
+        label.adjustsFontSizeToFitWidth = true
+        return label
+    }()
+    
+    let countLabel: UILabel = {
+        let label = UILabel()
+        label.font = .preferredFont(forTextStyle: .caption1)
+        label.textColor = .systemGray
+        label.adjustsFontSizeToFitWidth = true
+        return label
+    }()
+    
+    let distanceLabel: UILabel = {
+        let label = UILabel()
+        label.font = .preferredFont(forTextStyle: .caption1)
+        label.textColor = .systemGray
+        label.adjustsFontSizeToFitWidth = true
+        return label
+    }()
+    
+    let timeLabel: UILabel = {
+        let label = UILabel()
+        label.font = .preferredFont(forTextStyle: .caption1)
+        label.textColor = .systemGray
+        label.adjustsFontSizeToFitWidth = true
+        return label
+    }()
     
     func configure(month: String, count: String, distance: String, time: String) {
         self.backgroundColor = .systemBackground
@@ -52,8 +79,10 @@ class SectionHeaderView: UICollectionReusableView {
         self.distanceLabel.translatesAutoresizingMaskIntoConstraints = false
         self.timeLabel.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
+            self.monthLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
             self.monthLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             self.monthLabel.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20),
+            self.monthLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
             self.timeLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             self.timeLabel.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -20),
             self.distanceLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor),
