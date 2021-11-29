@@ -20,18 +20,18 @@ protocol RecordingUseCase {
 }
 
 final class RecordingViewModel: ObservableObject {
-    @Published private(set) var currentTime = ""
-    @Published private(set) var accessibilityCurrentTime = ""
-    @Published private(set) var kilometer = ""
-    @Published private(set) var altitude = ""
-    @Published private(set) var walk = ""
-    @Published private(set) var gpsStatus = true
-    @Published private(set) var motionAuth = true
+    @Published var currentTime = ""
+    @Published var accessibilityCurrentTime = ""
+    @Published var kilometer = ""
+    @Published var altitude = ""
+    @Published var walk = ""
+    @Published var gpsStatus = true
+    @Published var motionAuth = true
     
     private let recordingUseCase: RecordingUseCase?
     private var subscriptions = Set<AnyCancellable>()
     
-    init(recordingUseCase: RecordingUseCase) {
+    init(recordingUseCase: RecordingUseCase?) {
         self.recordingUseCase = recordingUseCase
         configureBindings()
     }

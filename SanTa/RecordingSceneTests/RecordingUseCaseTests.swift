@@ -17,6 +17,10 @@ class RecordingUseCaseTests: XCTestCase {
     }
     
     class TestRecordingRepository : RecordRepository {
+        func saveRecordPhotoOption(value: Bool) {
+            return
+        }
+        
         func save(records: Records,
                   completion: @escaping (Result<Records, Error>) -> Void) {
             
@@ -54,7 +58,7 @@ class RecordingUseCaseTests: XCTestCase {
     
     func test_음성안내_옵션_False_값_가져오기_성공() {
         _ = XCTWaiter.wait(for: [expectation(description: "Wait for 0.5 seconds")], timeout: 0.5)
-        self.repository.fetchRecordOption(key: Settings.photosOnMap) { result in
+        self.repository.fetchRecordOption(key: Settings.recordPhoto) { result in
             switch result {
             case .failure(_):
                 return
@@ -78,7 +82,7 @@ class RecordingUseCaseTests: XCTestCase {
     
     func test_사진저장_옵션_False_값_가져오기_성공() {
         _ = XCTWaiter.wait(for: [expectation(description: "Wait for 0.5 seconds")], timeout: 0.5)
-        self.repository.fetchRecordOption(key: Settings.photosOnMap) { result in
+        self.repository.fetchRecordOption(key: Settings.recordPhoto) { result in
             switch result {
             case .failure(_):
                 return
@@ -90,7 +94,7 @@ class RecordingUseCaseTests: XCTestCase {
     
     func test_Records_저장_성공() {
         _ = XCTWaiter.wait(for: [expectation(description: "Wait for 0.5 seconds")], timeout: 0.5)
-        let records = Records(title: "테스트", records: [Record](), assetIdentifiers: [String](), secondPerHighestSpeed: Int(), secondPerMinimumSpeed: Int())
+        let records = Records(title: "테스트", records: [Record](), assetIdentifiers: [String](), secondPerHighestSpeed: Int(), secondPerMinimumSpeed: Int(), id: "")
         
         self.repository.save(records: records) { result in
             switch result {

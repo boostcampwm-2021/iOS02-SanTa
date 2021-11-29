@@ -99,6 +99,7 @@
 		DAAF4D6C273CE02400780DC8 /* MountainListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAF4D6B273CE02400780DC8 /* MountainListViewModel.swift */; };
 		DAAF4D6E273CE06A00780DC8 /* MountainListViewUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAF4D6D273CE06A00780DC8 /* MountainListViewUseCase.swift */; };
 		DAAF4D70273CE08B00780DC8 /* MountainListViewRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAF4D6F273CE08B00780DC8 /* MountainListViewRepository.swift */; };
+		DAB25F1B2754AF2D00F0BE75 /* RecordingViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB25F1A2754AF2D00F0BE75 /* RecordingViewModelTests.swift */; };
 		DAB37D4C2731166B00EC523F /* RecordingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB37D4B2731166B00EC523F /* RecordingViewModel.swift */; };
 		DAB37D50273256B900EC523F /* RecordingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB37D4F273256B900EC523F /* RecordingModel.swift */; };
 		DAB751B7274E74E600C39266 /* ThumbnailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB751B6274E74E600C39266 /* ThumbnailView.swift */; };
@@ -208,6 +209,7 @@
 		DAAF4D6B273CE02400780DC8 /* MountainListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainListViewModel.swift; sourceTree = "<group>"; };
 		DAAF4D6D273CE06A00780DC8 /* MountainListViewUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainListViewUseCase.swift; sourceTree = "<group>"; };
 		DAAF4D6F273CE08B00780DC8 /* MountainListViewRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainListViewRepository.swift; sourceTree = "<group>"; };
+		DAB25F1A2754AF2D00F0BE75 /* RecordingViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingViewModelTests.swift; sourceTree = "<group>"; };
 		DAB37D4B2731166B00EC523F /* RecordingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingViewModel.swift; sourceTree = "<group>"; };
 		DAB37D4F273256B900EC523F /* RecordingModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingModel.swift; sourceTree = "<group>"; };
 		DAB751B6274E74E600C39266 /* ThumbnailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThumbnailView.swift; sourceTree = "<group>"; };
@@ -255,10 +257,10 @@
 				5429694A272FBFCA0070B362 /* RecordingViewCoordinator.swift */,
 				DAB37D4B2731166B00EC523F /* RecordingViewModel.swift */,
 				984DDEC227325DFC003BE56B /* RecordingUseCase.swift */,
+				DAB37D4F273256B900EC523F /* RecordingModel.swift */,
 				DAFA9B5C27424C9A00BF168C /* RecordingPhotoModel.swift */,
 				984DDEC427325FB9003BE56B /* RecordRepository.swift */,
 				984DDEC027325D67003BE56B /* Record.swift */,
-				DAB37D4F273256B900EC523F /* RecordingModel.swift */,
 			);
 			path = RecordingScene;
 			sourceTree = "<group>";
@@ -468,6 +470,7 @@
 			isa = PBXGroup;
 			children = (
 				DA854FDB2746273300E51E4B /* RecordingUseCaseTests.swift */,
+				DAB25F1A2754AF2D00F0BE75 /* RecordingViewModelTests.swift */,
 			);
 			path = RecordingSceneTests;
 			sourceTree = "<group>";
@@ -750,6 +753,7 @@
 				DA854FE62746282600E51E4B /* RecordingPhotoModel.swift in Sources */,
 				DA854FE4274627D500E51E4B /* Settings.swift in Sources */,
 				DA854FE2274627B000E51E4B /* Record.swift in Sources */,
+				DAB25F1B2754AF2D00F0BE75 /* RecordingViewModelTests.swift in Sources */,
 				DA854FE1274627AA00E51E4B /* RecordingModel.swift in Sources */,
 				DA854FE02746279F00E51E4B /* RecordingUseCase.swift in Sources */,
 				DA854FDC2746273300E51E4B /* RecordingUseCaseTests.swift in Sources */,
