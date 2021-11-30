@@ -86,6 +86,13 @@
 		98BCF4F72737A66E0073E6FB /* SettingsUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BCF4F62737A66E0073E6FB /* SettingsUsecase.swift */; };
 		98BCF4F92737A7120073E6FB /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BCF4F82737A7120073E6FB /* SettingsViewModel.swift */; };
 		DA4736D22755E39500841326 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4736D12755E39500841326 /* Location.swift */; };
+		DA4736E6275610EE00841326 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9826F3DE273904010064FA85 /* Settings.swift */; };
+		DA4736E7275610F600841326 /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984DDEC027325D67003BE56B /* Record.swift */; };
+		DA4736E8275610FA00841326 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4736D12755E39500841326 /* Location.swift */; };
+		DA4736F327561C6200841326 /* MountainListSceneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4736F227561C6200841326 /* MountainListSceneTests.swift */; };
+		DA4736F927561C9400841326 /* MountainListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAF4D6B273CE02400780DC8 /* MountainListViewModel.swift */; };
+		DA4736FA27561C9400841326 /* MountainListViewUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAF4D6D273CE06A00780DC8 /* MountainListViewUseCase.swift */; };
+		DA4736FB27561C9A00841326 /* MountainEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FEEDB82732584000D37CCA /* MountainEntity.swift */; };
 		DA854FD42746270A00E51E4B /* UserDefaultsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A913002736844E008AAE39 /* UserDefaultsStorage.swift */; };
 		DA854FDC2746273300E51E4B /* RecordingUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA854FDB2746273300E51E4B /* RecordingUseCaseTests.swift */; };
 		DA854FE02746279F00E51E4B /* RecordingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984DDEC227325DFC003BE56B /* RecordingUseCase.swift */; };
@@ -122,6 +129,13 @@
 			remoteInfo = SanTa;
 		};
 		98BAABB5275479B0004505BB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 54851276272A6AD500407F28 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5485127D272A6AD500407F28;
+			remoteInfo = SanTa;
+		};
+		DA4736F427561C6200841326 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 54851276272A6AD500407F28 /* Project object */;
 			proxyType = 1;
@@ -209,6 +223,8 @@
 		98BCF4F62737A66E0073E6FB /* SettingsUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsUsecase.swift; sourceTree = "<group>"; };
 		98BCF4F82737A7120073E6FB /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		DA4736D12755E39500841326 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		DA4736F027561C6200841326 /* MountainListSceneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MountainListSceneTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA4736F227561C6200841326 /* MountainListSceneTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainListSceneTests.swift; sourceTree = "<group>"; };
 		DA854FD92746273300E51E4B /* RecordingSceneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RecordingSceneTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA854FDB2746273300E51E4B /* RecordingUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingUseCaseTests.swift; sourceTree = "<group>"; };
 		DA9D7C9C273A433E0018AD45 /* RecordingTitleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingTitleViewController.swift; sourceTree = "<group>"; };
@@ -248,6 +264,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		98BAABAE275479B0004505BB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DA4736ED27561C6200841326 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -423,6 +446,7 @@
 				9826F42E273953FB0064FA85 /* SettingsSceneTests */,
 				DA854FDA2746273300E51E4B /* RecordingSceneTests */,
 				98BAABB2275479B0004505BB /* ResultSceneTests */,
+				DA4736F127561C6200841326 /* MountainListSceneTests */,
 				5485127F272A6AD500407F28 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -434,6 +458,7 @@
 				9826F42D273953FB0064FA85 /* SettingsSceneTests.xctest */,
 				DA854FD92746273300E51E4B /* RecordingSceneTests.xctest */,
 				98BAABB1275479B0004505BB /* ResultSceneTests.xctest */,
+				DA4736F027561C6200841326 /* MountainListSceneTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -505,6 +530,14 @@
 				5428FDBB272F8C32002F9D40 /* SettingsScene */,
 			);
 			path = Scenes;
+			sourceTree = "<group>";
+		};
+		DA4736F127561C6200841326 /* MountainListSceneTests */ = {
+			isa = PBXGroup;
+			children = (
+				DA4736F227561C6200841326 /* MountainListSceneTests.swift */,
+			);
+			path = MountainListSceneTests;
 			sourceTree = "<group>";
 		};
 		DA854FDA2746273300E51E4B /* RecordingSceneTests */ = {
@@ -609,6 +642,24 @@
 			productReference = 98BAABB1275479B0004505BB /* ResultSceneTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		DA4736EF27561C6200841326 /* MountainListSceneTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DA4736F627561C6200841326 /* Build configuration list for PBXNativeTarget "MountainListSceneTests" */;
+			buildPhases = (
+				DA4736EC27561C6200841326 /* Sources */,
+				DA4736ED27561C6200841326 /* Frameworks */,
+				DA4736EE27561C6200841326 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				DA4736F527561C6200841326 /* PBXTargetDependency */,
+			);
+			name = MountainListSceneTests;
+			productName = MountainListSceneTestss;
+			productReference = DA4736F027561C6200841326 /* MountainListSceneTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		DA854FD82746273300E51E4B /* RecordingSceneTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = DA854FDD2746273300E51E4B /* Build configuration list for PBXNativeTarget "RecordingSceneTests" */;
@@ -647,6 +698,10 @@
 						CreatedOnToolsVersion = 13.0;
 						TestTargetID = 5485127D272A6AD500407F28;
 					};
+					DA4736EF27561C6200841326 = {
+						CreatedOnToolsVersion = 13.0;
+						TestTargetID = 5485127D272A6AD500407F28;
+					};
 					DA854FD82746273300E51E4B = {
 						CreatedOnToolsVersion = 13.0;
 					};
@@ -669,6 +724,7 @@
 				9826F42C273953FB0064FA85 /* SettingsSceneTests */,
 				DA854FD82746273300E51E4B /* RecordingSceneTests */,
 				98BAABB0275479B0004505BB /* ResultSceneTests */,
+				DA4736EF27561C6200841326 /* MountainListSceneTests */,
 			);
 		};
 /* End PBXProject section */
@@ -692,6 +748,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		98BAABAF275479B0004505BB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		DA4736EE27561C6200841326 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -824,10 +887,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		DA4736EC27561C6200841326 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DA4736FB27561C9A00841326 /* MountainEntity.swift in Sources */,
+				DA4736F927561C9400841326 /* MountainListViewModel.swift in Sources */,
+				DA4736FA27561C9400841326 /* MountainListViewUseCase.swift in Sources */,
+				DA4736F327561C6200841326 /* MountainListSceneTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DA854FD52746273300E51E4B /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DA4736E8275610FA00841326 /* Location.swift in Sources */,
+				DA4736E7275610F600841326 /* Record.swift in Sources */,
+				DA4736E6275610EE00841326 /* Settings.swift in Sources */,
 				DA854FE92746292300E51E4B /* RecordingViewModel.swift in Sources */,
 				DA854FE62746282600E51E4B /* RecordingPhotoModel.swift in Sources */,
 				DAB25F1B2754AF2D00F0BE75 /* RecordingViewModelTests.swift in Sources */,
@@ -849,6 +926,11 @@
 			isa = PBXTargetDependency;
 			target = 5485127D272A6AD500407F28 /* SanTa */;
 			targetProxy = 98BAABB5275479B0004505BB /* PBXContainerItemProxy */;
+		};
+		DA4736F527561C6200841326 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5485127D272A6AD500407F28 /* SanTa */;
+			targetProxy = DA4736F427561C6200841326 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1134,6 +1216,52 @@
 			};
 			name = Release;
 		};
+		DA4736F727561C6200841326 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = GQ4HM48H8H;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ajou.minryul.MountainListSceneTestss;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SanTa.app/SanTa";
+			};
+			name = Debug;
+		};
+		DA4736F827561C6200841326 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = GQ4HM48H8H;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ajou.minryul.MountainListSceneTestss;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SanTa.app/SanTa";
+			};
+			name = Release;
+		};
 		DA854FDE2746273300E51E4B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1211,6 +1339,15 @@
 			buildConfigurations = (
 				98BAABB7275479B0004505BB /* Debug */,
 				98BAABB8275479B0004505BB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DA4736F627561C6200841326 /* Build configuration list for PBXNativeTarget "MountainListSceneTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DA4736F727561C6200841326 /* Debug */,
+				DA4736F827561C6200841326 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -7,10 +7,6 @@
 
 import Foundation
 
-protocol MountainListViewRepository {
-    func fetchMountains(completion: @escaping (Result<[MountainEntity], Error>) -> Void)
-}
-
 final class DefaultMountainListViewReposiory {
     enum JSONDecodeError: Error {
         case decodingFailed

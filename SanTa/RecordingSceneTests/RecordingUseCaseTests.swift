@@ -58,7 +58,7 @@ final class RecordingUseCaseTests: XCTestCase {
 
     func test_음성안내_옵션_False_값_가져오기_성공() {
         _ = XCTWaiter.wait(for: [expectation(description: "Wait for 0.5 seconds")], timeout: 0.5)
-        self.repository.fetchRecordOption(key: Settings.recordPhoto) { result in
+        self.repository.fetchRecordOption(key: Settings.mapFormat) { result in
             switch result {
             case .failure:
                 return
@@ -82,7 +82,7 @@ final class RecordingUseCaseTests: XCTestCase {
 
     func test_사진저장_옵션_False_값_가져오기_성공() {
         _ = XCTWaiter.wait(for: [expectation(description: "Wait for 0.5 seconds")], timeout: 0.5)
-        self.repository.fetchRecordOption(key: Settings.recordPhoto) { result in
+        self.repository.fetchRecordOption(key: Settings.mapFormat) { result in
             switch result {
             case .failure:
                 return
