@@ -72,6 +72,26 @@
                ReferencedContainer = "container:SanTa.xcodeproj">
             </BuildableReference>
          </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "5423CD622755FA4A00BAB338"
+               BuildableName = "MapSceneTests.xctest"
+               BlueprintName = "MapSceneTests"
+               ReferencedContainer = "container:SanTa.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "5423CD7E2755FCEF00BAB338"
+               BuildableName = "MountainAddingSceneTests.xctest"
+               BlueprintName = "MountainAddingSceneTests"
+               ReferencedContainer = "container:SanTa.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
