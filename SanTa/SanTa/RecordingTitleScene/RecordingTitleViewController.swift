@@ -161,7 +161,7 @@ final class RecordingTitleViewController: UIViewController {
 extension RecordingTitleViewController: UITextFieldDelegate {
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let text = textField.text else { return false }
-        if text.count >= 20 && range.length == 0 && range.location >= 20 {
+        if text.count >= 10 && range.length == 0 && range.location >= 10 {
             return false
         }
 
