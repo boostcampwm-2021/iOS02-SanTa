@@ -48,7 +48,7 @@ final class SettingsViewController: UIViewController {
         super.viewDidLoad()
         self.configureTableView()
         self.configureView()
-        self.bind()
+        self.configureBindings()
         self.viewModel?.viewDidLoad()
     }
 
@@ -88,7 +88,7 @@ final class SettingsViewController: UIViewController {
         ])
     }
 
-    private func bind() {
+    private func configureBindings() {
         self.viewModel?.$settings.sink { [weak self] _ in
             self?.tableView.reloadData()
         }.store(in: &self.subscriptions)

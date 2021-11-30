@@ -82,7 +82,7 @@ final class MapViewController: UIViewController {
         super.viewDidLoad()
         self.configureViews()
         self.registerAnnotationView()
-        self.configureViewModel()
+        self.configureBindings()
         self.configureNotification()
     }
 
@@ -102,12 +102,14 @@ final class MapViewController: UIViewController {
             self.startButton.bottomAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.bottomAnchor, constant: -mapView.frame.height/15),
             self.startButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
         ])
+
         NSLayoutConstraint.activate([
             self.userTrackingButton.widthAnchor.constraint(equalToConstant: 50),
             self.userTrackingButton.heightAnchor.constraint(equalToConstant: 50),
             self.userTrackingButton.leftAnchor.constraint(equalTo: mapView.rightAnchor, constant: -100),
             self.userTrackingButton.centerYAnchor.constraint(equalTo: self.startButton.centerYAnchor)
         ])
+
         NSLayoutConstraint.activate([
             self.newPlaceButton.widthAnchor.constraint(equalToConstant: 150),
             self.newPlaceButton.heightAnchor.constraint(equalToConstant: 30),
@@ -127,7 +129,7 @@ final class MapViewController: UIViewController {
         )
     }
 
-    private func configureViewModel() {
+    private func configureBindings() {
         self.viewModel?.configureBindings()
         self.viewModel?.$mountains
             .sink(receiveValue: { [weak self] mountains in

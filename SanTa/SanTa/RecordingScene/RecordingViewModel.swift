@@ -33,7 +33,7 @@ final class RecordingViewModel: ObservableObject {
 
     init(recordingUseCase: RecordingUseCase?) {
         self.recordingUseCase = recordingUseCase
-        configureBindings()
+        self.configureBindings()
     }
 
     private func configureBindings() {

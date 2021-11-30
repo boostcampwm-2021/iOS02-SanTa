@@ -49,7 +49,7 @@ final class MountainAddingViewController: UIViewController {
         super.viewDidLoad()
         self.mountainAddingView.newPlaceDelegate = self
         self.configureViews()
-        self.configureViewModel()
+        self.configureBindings()
     }
 
     private func configureViews() {
@@ -70,7 +70,7 @@ final class MountainAddingViewController: UIViewController {
         ])
     }
 
-    private func configureViewModel() {
+    private func configureBindings() {
         self.viewModel?.$coordinate
             .sink(receiveValue: { [weak self] coordinate in
                 self?.mapView.showsUserLocation = false
