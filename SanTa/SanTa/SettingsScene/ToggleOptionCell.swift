@@ -11,7 +11,7 @@ protocol ToggleOptionCellDelegate: AnyObject {
     func toggleOptionCellSwitchChanged(_ cell: ToggleOptionCell, title: String, switchOn: Bool)
 }
 
-class ToggleOptionCell: UITableViewCell {
+final class ToggleOptionCell: UITableViewCell {
 
     static let identifier = "ToggleOptionCell"
 

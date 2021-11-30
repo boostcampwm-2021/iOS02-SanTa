@@ -7,7 +7,7 @@
 
 import UIKit
 
-class RecordingViewCoordinator: Coordinator {
+final class RecordingViewCoordinator: Coordinator {
     weak var parentCoordinator: Coordinator?
     var navigationController: UINavigationController
     var childCoordinators: [Coordinator] = []

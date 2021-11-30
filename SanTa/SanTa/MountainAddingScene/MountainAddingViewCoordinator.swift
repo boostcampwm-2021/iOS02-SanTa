@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MountainAddingViewCoordinator: Coordinator {
+final class MountainAddingViewCoordinator: Coordinator {
     weak var parentCoordinator: Coordinator?
     var navigationController: UINavigationController
     var childCoordinators: [Coordinator] = []

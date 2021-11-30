@@ -7,7 +7,7 @@
 
 import Foundation
 
-class MountainDetailViewModel {
+final class MountainDetailViewModel {
     private let useCase: MountainDetailUseCase
     var mountainDetail: MountainDetailModel?
     var mountainInfoReceived: (MountainDetailModel) -> Void = { _ in }

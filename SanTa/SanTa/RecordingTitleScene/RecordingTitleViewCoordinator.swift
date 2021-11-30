@@ -7,7 +7,7 @@
 
 import UIKit
 
-class RecordingTitleViewCoordinator: Coordinator {
+final class RecordingTitleViewCoordinator: Coordinator {
     weak var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
     var recordingTitleViewController: RecordingTitleViewController

@@ -12,7 +12,7 @@ protocol NewPlaceAddable: AnyObject {
     func newPlaceShouldAdd(title: String, description: String)
 }
 
-class MountainAddingView: UIScrollView {
+final class MountainAddingView: UIScrollView {
 
     private let titleLabel: UILabel = {
         let label = UILabel()

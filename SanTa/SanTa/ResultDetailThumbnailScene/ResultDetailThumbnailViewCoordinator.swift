@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ResultDetailThumbnailViewCoordinator: Coordinator {
+final class ResultDetailThumbnailViewCoordinator: Coordinator {
     weak var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController

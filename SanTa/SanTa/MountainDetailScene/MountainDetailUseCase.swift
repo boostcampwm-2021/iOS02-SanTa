@@ -8,7 +8,7 @@
 import Foundation
 import CoreLocation
 
-class MountainDetailUseCase {
+final class MountainDetailUseCase {
     private let mountainAnnotation: MountainAnnotation
     private let manager = CLLocationManager()
 

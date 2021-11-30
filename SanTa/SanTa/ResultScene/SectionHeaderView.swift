@@ -21,7 +21,7 @@ extension UILabel {
     }
 }
 
-class SectionHeaderView: UICollectionReusableView {
+final class SectionHeaderView: UICollectionReusableView {
     static let identifier = "SectionHeaderView"
     let monthLabel = UILabel(boldFontWithSize: 17, withTextColor: .label)
     let countLabel = UILabel(normalFontWithSize: 15, withTextColor: .systemGray)

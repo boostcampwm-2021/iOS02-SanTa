@@ -7,7 +7,7 @@
 
 import Foundation
 
-class ResultViewModel {
+final class ResultViewModel {
     private let useCase: ResultUseCase
     var cellShouldUpdate: () -> Void
     var totalDistance: String {

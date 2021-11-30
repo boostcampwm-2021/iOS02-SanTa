@@ -21,7 +21,7 @@ extension UILabel {
     }
 }
 
-class RecordsViewCell: UICollectionViewCell {
+final class RecordsViewCell: UICollectionViewCell {
     static let identifier = "RecordsViewCell"
     let date: PaddingLabel = {
         let paddingLabel = PaddingLabel(insets: UIEdgeInsets(top: 2, left: 3, bottom: 2, right: 3))

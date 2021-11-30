@@ -8,7 +8,7 @@
 import UIKit
 import MapKit
 
-class MountainnDetailAnnotationView: MKAnnotationView {
+final class MountainnDetailAnnotationView: MKAnnotationView {
     static let ReuseID = "MountainDetailAnnotationView"
     let imageSideLength: CGFloat = 30
 

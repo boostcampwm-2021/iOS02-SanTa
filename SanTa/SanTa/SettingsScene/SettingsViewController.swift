@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-class SettingsViewController: UIViewController {
+final class SettingsViewController: UIViewController {
     weak var coordinator: SettingsViewCoordinator?
 
     private var headerView: UIView = {

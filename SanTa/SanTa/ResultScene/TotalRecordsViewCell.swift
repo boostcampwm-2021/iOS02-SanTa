@@ -20,7 +20,7 @@ extension UILabel {
     }
 }
 
-class TotalRecordsViewCell: UICollectionViewCell {
+final class TotalRecordsViewCell: UICollectionViewCell {
     static let identifier = "TotalRecordsInfoCell"
     let kilometerNumber = UILabel(normalFontWithSize: 60)
     let kilometer = UILabel(text: "킬로미터", normalFontWithSize: 25)

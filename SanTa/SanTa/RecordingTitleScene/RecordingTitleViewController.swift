@@ -7,7 +7,7 @@
 
 import UIKit
 
-class RecordingTitleViewController: UIViewController {
+final class RecordingTitleViewController: UIViewController {
     weak var coordinator: RecordingTitleViewCoordinator?
     weak var delegate: SetTitleDelegate?
 

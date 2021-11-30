@@ -10,7 +10,7 @@ import MapKit
 import Photos
 import Combine
 
-class ResultDetailViewController: UIViewController {
+final class ResultDetailViewController: UIViewController {
 
     weak var coordinator: ResultDetailViewCoordinator?
 

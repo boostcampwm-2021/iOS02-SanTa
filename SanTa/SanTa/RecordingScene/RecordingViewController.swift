@@ -17,7 +17,7 @@ protocol RecordingViewDelegate: SetTitleDelegate {
     func didAgreeButtonTouchDone()
 }
 
-class RecordingViewController: UIViewController {
+final class RecordingViewController: UIViewController {
     weak var coordinator: RecordingViewCoordinator?
 
     let kilometerLabel: UILabel = {

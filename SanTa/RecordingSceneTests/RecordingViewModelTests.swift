@@ -8,7 +8,7 @@
 import XCTest
 import Combine
 
-class RecordingViewModelTests: XCTestCase {
+final class RecordingViewModelTests: XCTestCase {
 
     private let recordingUseCase: RecordingUseCase? = nil
     private var subscriptions = Set<AnyCancellable>()

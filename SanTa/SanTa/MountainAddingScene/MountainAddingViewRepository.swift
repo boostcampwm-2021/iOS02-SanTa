@@ -11,7 +11,7 @@ protocol MountainAddingRepository {
     func save(_ mountainEntity: MountainEntity, completion: @escaping(Result<Void, Error>) -> Void)
 }
 
-class DefaultMountainAddingRepository: MountainAddingRepository {
+final class DefaultMountainAddingRepository: MountainAddingRepository {
     private let coreDataMountainStorage: CoreDataMountainStorage
 
     init(coreDataMountainStorage: CoreDataMountainStorage) {

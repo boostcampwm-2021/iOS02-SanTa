@@ -8,7 +8,7 @@
 import Foundation
 import CoreLocation
 
-class TotalRecords {
+final class TotalRecords {
     private(set) var totalRecords: [DateSeperateRecords] = []
 
     private var mappingDateSeperateRecords: [String: DateSeperateRecords] = [:]
@@ -55,7 +55,7 @@ class TotalRecords {
     }
 }
 
-class DateSeperateRecords {
+final class DateSeperateRecords {
     let year: Int
     let month: Int
 

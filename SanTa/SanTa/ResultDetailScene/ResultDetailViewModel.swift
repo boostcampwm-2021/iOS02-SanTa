@@ -8,7 +8,7 @@
 import CoreLocation
 import Combine
 
-class ResultDetailViewModel {
+final class ResultDetailViewModel {
     private let useCase: ResultDetailUseCase
     var resultDetailData: ResultDetailData?
     var recordDidFetch: () -> Void
@@ -140,7 +140,7 @@ class DetailInformationModel: Hashable {
 }
 
 extension ResultDetailViewModel {
-    class DistanceViewModel: DetailInformationModel {
+    final class DistanceViewModel: DetailInformationModel {
         var totalDistance: String = "-"
         var steps: String = "0"
 
@@ -169,7 +169,7 @@ extension ResultDetailViewModel {
         }
     }
 
-    class TimeViewModel: DetailInformationModel {
+    final class TimeViewModel: DetailInformationModel {
         var totalTimeSpent: String = ""
 
         init(timeData: ResultTime?) {
@@ -195,7 +195,7 @@ extension ResultDetailViewModel {
         }
     }
 
-    class PaceViewModel: DetailInformationModel {
+    final class PaceViewModel: DetailInformationModel {
         init(paceData: ResultPace?) {
             super.init()
             guard let pace = paceData else {
@@ -218,7 +218,7 @@ extension ResultDetailViewModel {
         }
     }
 
-    class AltitudeViewModel: DetailInformationModel {
+    final class AltitudeViewModel: DetailInformationModel {
         var highest: String = "-"
         var lowest: String = "-"
 
@@ -266,7 +266,7 @@ extension ResultDetailViewModel {
         }
     }
 
-    class InclineViewModel: DetailInformationModel {
+    final class InclineViewModel: DetailInformationModel {
         init(inclineData: ResultIncline?) {
             super.init()
             guard let inclineData = inclineData else {

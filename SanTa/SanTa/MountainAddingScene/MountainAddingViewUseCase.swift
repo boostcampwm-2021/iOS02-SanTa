@@ -9,7 +9,7 @@ import Foundation
 import CoreLocation
 import OSLog
 
-class MountainAddingViewUseCase {
+final class MountainAddingViewUseCase {
     private let repository: MountainAddingRepository
 
     init(repository: MountainAddingRepository) {

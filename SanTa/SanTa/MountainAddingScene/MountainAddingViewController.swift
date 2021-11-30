@@ -8,7 +8,7 @@
 import MapKit
 import Combine
 
-class MountainAddingViewController: UIViewController {
+final class MountainAddingViewController: UIViewController {
     weak var coordinator: MountainAddingViewCoordinator?
     private var viewModel: MountainAddingViewModel?
     private var observers: [AnyCancellable] = []

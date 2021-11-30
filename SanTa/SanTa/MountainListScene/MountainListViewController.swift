@@ -9,7 +9,7 @@ import UIKit
 import Combine
 import CoreLocation
 
-class MountainListViewController: UIViewController {
+final class MountainListViewController: UIViewController {
     enum MountainListSection: Int, CaseIterable {
         case main
     }

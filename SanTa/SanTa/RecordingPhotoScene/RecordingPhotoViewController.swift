@@ -7,7 +7,7 @@
 
 import UIKit
 
-class RecordingPhotoViewController: UIViewController {
+final class RecordingPhotoViewController: UIViewController {
     weak var coordinator: RecordingPhotoViewCoordinator?
     weak var delegate: RecordingViewDelegate?
 

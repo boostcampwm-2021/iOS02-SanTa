@@ -9,7 +9,7 @@ import Combine
 import CoreLocation
 import AVFoundation
 
-class MountainAddingViewModel {
+final class MountainAddingViewModel {
     private var useCase: MountainAddingViewUseCase?
     @Published private(set) var coordinate: CLLocationCoordinate2D?
     private(set) var altitude: CLLocationDistance?

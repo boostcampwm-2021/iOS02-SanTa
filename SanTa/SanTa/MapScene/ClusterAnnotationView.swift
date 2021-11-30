@@ -7,7 +7,7 @@
 
 import MapKit
 
-class ClusterAnnotationView: MKAnnotationView {
+final class ClusterAnnotationView: MKAnnotationView {
     override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
         collisionMode = .circle

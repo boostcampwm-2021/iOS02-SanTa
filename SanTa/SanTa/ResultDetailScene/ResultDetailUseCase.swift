@@ -7,7 +7,7 @@
 
 import Foundation
 
-class ResultDetailUseCase {
+final class ResultDetailUseCase {
     private let model: ResultDetailData
     private let repository: ResultDetailRepository
     private(set) var isImageVisibilityOn: Bool

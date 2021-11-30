@@ -8,7 +8,7 @@
 import UIKit
 import CoreLocation
 
-class MapViewCoordinator: Coordinator {
+final class MapViewCoordinator: Coordinator {
     weak var parentCoordinator: Coordinator?
     var navigationController: UINavigationController = UINavigationController()
     var childCoordinators: [Coordinator] = []

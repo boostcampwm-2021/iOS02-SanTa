@@ -8,7 +8,7 @@
 import UIKit
 import MapKit
 
-class MountainDetailViewController: UIViewController {
+final class MountainDetailViewController: UIViewController {
     weak var coordinator: MountainDetailViewCoordinator?
     private var viewModel: MountainDetailViewModel?
     private var mutatingTopConstraint: NSLayoutConstraint?

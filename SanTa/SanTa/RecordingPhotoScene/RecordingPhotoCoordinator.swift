@@ -7,7 +7,7 @@
 
 import UIKit
 
-class RecordingPhotoViewCoordinator: Coordinator {
+final class RecordingPhotoViewCoordinator: Coordinator {
     weak var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
     var recordingPhotoViewController: RecordingPhotoViewController

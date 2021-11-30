@@ -7,7 +7,7 @@
 
 import MapKit
 
-class MountainAnnotation: NSObject, MKAnnotation {
+final class MountainAnnotation: NSObject, MKAnnotation {
     var title: String?
     var subtitle: String?
     var latitude: Double

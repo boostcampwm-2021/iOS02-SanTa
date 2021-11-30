@@ -12,7 +12,7 @@ protocol MapViewRepository {
     func fetchMapOption(key: Settings, completion: @escaping (Result<Map, Error>) -> Void)
 }
 
-class DefaultMapViewRespository {
+final class DefaultMapViewRespository {
     enum JSONDecodeError: Error {
         case decodingFailed
     }

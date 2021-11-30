@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ResultDetailThumbnailViewController: UIViewController {
+final class ResultDetailThumbnailViewController: UIViewController {
     weak var coordinator: ResultDetailThumbnailViewCoordinator?
 
     enum DetailThumbnailSection: Int, CaseIterable {

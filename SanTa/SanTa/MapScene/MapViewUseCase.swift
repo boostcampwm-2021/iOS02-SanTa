@@ -9,7 +9,7 @@ import Foundation
 import OSLog
 import CoreLocation
 
-class MapViewUseCase: NSObject {
+final class MapViewUseCase: NSObject {
     private let repository: MapViewRepository
     private let manager = CLLocationManager()
     var initialLocation: (CLLocation) -> Void

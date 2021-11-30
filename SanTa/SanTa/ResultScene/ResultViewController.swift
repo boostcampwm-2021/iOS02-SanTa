@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ResultViewController: UIViewController {
+final class ResultViewController: UIViewController {
     weak var coordinator: ResultViewCoordinator?
     private var collectionView: UICollectionView?
     private var viewModel: ResultViewModel?

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SettingsViewCoordinator: Coordinator {
+final class SettingsViewCoordinator: Coordinator {
     weak var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
 

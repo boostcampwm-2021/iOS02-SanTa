@@ -8,7 +8,7 @@
 import UIKit
 import CoreLocation
 
-class MountainDetailViewCoordinator: Coordinator {
+final class MountainDetailViewCoordinator: Coordinator {
     weak var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController

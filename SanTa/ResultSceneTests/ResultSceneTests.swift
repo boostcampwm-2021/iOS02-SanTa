@@ -7,7 +7,7 @@
 
 import XCTest
 
-class ResultSceneTests: XCTestCase {
+final class ResultSceneTests: XCTestCase {
 
     class MockRepository: ResultRepository {
         func fetch(completion: @escaping (Result<[Records], Error>) -> Void) {

@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MountainDetailTitleView: UIView {
+final class MountainDetailTitleView: UIView {
     private let titleLabel = UILabel()
     private let distanceLabel = UILabel()
 

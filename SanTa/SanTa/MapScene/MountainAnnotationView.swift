@@ -8,7 +8,7 @@
 import UIKit
 import MapKit
 
-class MountainAnnotationView: MKAnnotationView {
+final class MountainAnnotationView: MKAnnotationView {
     static let ReuseID = "MountainAnnotation"
 
     override init(annotation: MKAnnotation?, reuseIdentifier: String?) {

@@ -7,7 +7,7 @@
 
 import MapKit
 
-class PinView: MKAnnotationView {
+final class PinView: MKAnnotationView {
     static let ReuseID = "PinView"
 
     override init(annotation: MKAnnotation?, reuseIdentifier: String?) {

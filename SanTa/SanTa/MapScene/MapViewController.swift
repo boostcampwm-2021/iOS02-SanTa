@@ -12,7 +12,7 @@ protocol Animatable: AnyObject {
     func shouldStopAnimate()
 }
 
-class MapViewController: UIViewController {
+final class MapViewController: UIViewController {
     weak var coordinator: MapViewCoordinator?
     private var viewModel: MapViewModel?
     private var observers: [AnyCancellable] = []

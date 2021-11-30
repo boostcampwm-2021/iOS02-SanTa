@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MountainDetailTableViewCell: UITableViewCell {
+final class MountainDetailTableViewCell: UITableViewCell {
     static let identifier = "MountainDetailTableViewCellID"
 
     let categoryLabel = PaddingLabel(insets: UIEdgeInsets(top: 3, left: 3, bottom: 3, right: 3))

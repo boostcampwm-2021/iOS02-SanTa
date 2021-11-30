@@ -11,7 +11,7 @@ protocol MountainListViewRepository {
     func fetchMountains(completion: @escaping (Result<[MountainEntity], Error>) -> Void)
 }
 
-class DefaultMountainListViewReposiory {
+final class DefaultMountainListViewReposiory {
     enum JSONDecodeError: Error {
         case decodingFailed
     }

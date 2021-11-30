@@ -13,7 +13,7 @@ protocol Coordinator: AnyObject {
     func start ()
 }
 
-class AppCoordinator: NSObject, Coordinator {
+final class AppCoordinator: NSObject, Coordinator {
     var childCoordinators: [Coordinator] = []
     let window: UIWindow?
 

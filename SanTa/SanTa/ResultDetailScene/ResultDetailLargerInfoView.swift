@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ResultDetailLargerInfoView: UIView {
+final class ResultDetailLargerInfoView: UIView {
     enum DetailLargerInfoSection: Int, CaseIterable {
         case main
     }

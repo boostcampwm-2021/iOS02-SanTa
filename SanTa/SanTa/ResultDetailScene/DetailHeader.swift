@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DetailHeader: UICollectionReusableView {
+final class DetailHeader: UICollectionReusableView {
     static let identifier = "DetailHeader"
 
     private lazy var dateLabel: PaddingLabel = {

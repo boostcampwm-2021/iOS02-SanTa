@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ResultViewCoordinator: Coordinator {
+final class ResultViewCoordinator: Coordinator {
     weak var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController

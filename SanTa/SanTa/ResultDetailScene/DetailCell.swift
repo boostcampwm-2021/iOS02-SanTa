@@ -7,7 +7,7 @@
 
 import UIKit
 
-class DetailCell: UICollectionViewCell {
+final class DetailCell: UICollectionViewCell {
     static let identifier = "DetailCell"
 
     let title: UILabel = {

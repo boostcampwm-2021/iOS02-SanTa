@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ResultDetailSmallerInfoView: UIView {
+final class ResultDetailSmallerInfoView: UIView {
 
     private let distance: UILabel = {
         let label = UILabel()

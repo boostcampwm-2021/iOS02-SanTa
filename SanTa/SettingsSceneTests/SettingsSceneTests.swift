@@ -7,7 +7,7 @@
 
 import XCTest
 
-class SettingsViewModelTests: XCTestCase {
+final class SettingsViewModelTests: XCTestCase {
 
     class MockRepository: SettingsRepository {
         func save<T>(value: T, key: Settings) where T: Decodable, T: Encodable {

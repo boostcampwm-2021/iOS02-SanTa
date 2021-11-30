@@ -7,7 +7,7 @@
 
 import XCTest
 
-class RecordingUseCaseTests: XCTestCase {
+final class RecordingUseCaseTests: XCTestCase {
 
     private var useCase: DefaultRecordingUseCase!
     private var repository: RecordRepository!

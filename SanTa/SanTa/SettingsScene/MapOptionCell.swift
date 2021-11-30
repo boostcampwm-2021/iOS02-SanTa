@@ -7,7 +7,7 @@
 
 import UIKit
 
-class MapOptionCell: UITableViewCell {
+final class MapOptionCell: UITableViewCell {
 
     static let identifier = "MapOptionCell"
 

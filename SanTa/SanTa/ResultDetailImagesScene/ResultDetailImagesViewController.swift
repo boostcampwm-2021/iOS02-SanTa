@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ResultDetailImagesViewController: UIViewController {
+final class ResultDetailImagesViewController: UIViewController {
     weak var coordinator: ResultDetailImagesViewCoordinator?
 
     enum DetailImagesSection: Int, CaseIterable {
