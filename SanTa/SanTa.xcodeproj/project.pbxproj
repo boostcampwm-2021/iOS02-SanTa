@@ -44,7 +44,6 @@
 		5465237D2741F997007B2692 /* ResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5465237C2741F997007B2692 /* ResultViewModel.swift */; };
 		54731B65272F84D300534097 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54731B64272F84D300534097 /* MapViewModel.swift */; };
 		547CDD9A27392474007CCA29 /* walkingManAnimation.gif in Resources */ = {isa = PBXBuildFile; fileRef = 547CDD9927392474007CCA29 /* walkingManAnimation.gif */; };
-		547CDD9C27392496007CCA29 /* UIImage+Gif.swift in Sources */ = {isa = PBXBuildFile; fileRef = 547CDD9B27392496007CCA29 /* UIImage+Gif.swift */; };
 		54851282272A6AD500407F28 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54851281272A6AD500407F28 /* AppDelegate.swift */; };
 		54851284272A6AD500407F28 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54851283272A6AD500407F28 /* SceneDelegate.swift */; };
 		54851286272A6AD500407F28 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54851285272A6AD500407F28 /* MapViewController.swift */; };
@@ -70,8 +69,6 @@
 		9826F4382739546E0064FA85 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BCF4F82737A7120073E6FB /* SettingsViewModel.swift */; };
 		9826F4392739546E0064FA85 /* SettingsUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BCF4F62737A66E0073E6FB /* SettingsUsecase.swift */; };
 		9826F43A2739546E0064FA85 /* SettingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BCF4F42737A3480073E6FB /* SettingsRepository.swift */; };
-		9826F43C2739546E0064FA85 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9826F3DE273904010064FA85 /* Settings.swift */; };
-		9826F43D2739546E0064FA85 /* Option.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9826F3DC2739035E0064FA85 /* Option.swift */; };
 		984DDEC127325D67003BE56B /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984DDEC027325D67003BE56B /* Record.swift */; };
 		984DDEC327325DFC003BE56B /* RecordingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984DDEC227325DFC003BE56B /* RecordingUseCase.swift */; };
 		984DDEC527325FB9003BE56B /* RecordRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984DDEC427325FB9003BE56B /* RecordRepository.swift */; };
@@ -85,16 +82,14 @@
 		98BAABB4275479B0004505BB /* ResultSceneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BAABB3275479B0004505BB /* ResultSceneTests.swift */; };
 		98BAABBA27547A11004505BB /* ResultViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5465237C2741F997007B2692 /* ResultViewModel.swift */; };
 		98BAABBB27547A11004505BB /* ResultUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9800821E273CE16E006A847A /* ResultUseCase.swift */; };
-		98BAABBC27547A1B004505BB /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984DDEC027325D67003BE56B /* Record.swift */; };
 		98BCF4F52737A3480073E6FB /* SettingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BCF4F42737A3480073E6FB /* SettingsRepository.swift */; };
 		98BCF4F72737A66E0073E6FB /* SettingsUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BCF4F62737A66E0073E6FB /* SettingsUsecase.swift */; };
 		98BCF4F92737A7120073E6FB /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BCF4F82737A7120073E6FB /* SettingsViewModel.swift */; };
+		DA4736D22755E39500841326 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4736D12755E39500841326 /* Location.swift */; };
 		DA854FD42746270A00E51E4B /* UserDefaultsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A913002736844E008AAE39 /* UserDefaultsStorage.swift */; };
 		DA854FDC2746273300E51E4B /* RecordingUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA854FDB2746273300E51E4B /* RecordingUseCaseTests.swift */; };
 		DA854FE02746279F00E51E4B /* RecordingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984DDEC227325DFC003BE56B /* RecordingUseCase.swift */; };
 		DA854FE1274627AA00E51E4B /* RecordingModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB37D4F273256B900EC523F /* RecordingModel.swift */; };
-		DA854FE2274627B000E51E4B /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984DDEC027325D67003BE56B /* Record.swift */; };
-		DA854FE4274627D500E51E4B /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9826F3DE273904010064FA85 /* Settings.swift */; };
 		DA854FE62746282600E51E4B /* RecordingPhotoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFA9B5C27424C9A00BF168C /* RecordingPhotoModel.swift */; };
 		DA854FE92746292300E51E4B /* RecordingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAB37D4B2731166B00EC523F /* RecordingViewModel.swift */; };
 		DA9D7C9D273A433E0018AD45 /* RecordingTitleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA9D7C9C273A433E0018AD45 /* RecordingTitleViewController.swift */; };
@@ -173,7 +168,6 @@
 		5465237C2741F997007B2692 /* ResultViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewModel.swift; sourceTree = "<group>"; };
 		54731B64272F84D300534097 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		547CDD9927392474007CCA29 /* walkingManAnimation.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = walkingManAnimation.gif; sourceTree = "<group>"; };
-		547CDD9B27392496007CCA29 /* UIImage+Gif.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Gif.swift"; sourceTree = "<group>"; };
 		5485127E272A6AD500407F28 /* SanTa.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SanTa.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		54851281272A6AD500407F28 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		54851283272A6AD500407F28 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -214,6 +208,7 @@
 		98BCF4F42737A3480073E6FB /* SettingsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRepository.swift; sourceTree = "<group>"; };
 		98BCF4F62737A66E0073E6FB /* SettingsUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsUsecase.swift; sourceTree = "<group>"; };
 		98BCF4F82737A7120073E6FB /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		DA4736D12755E39500841326 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		DA854FD92746273300E51E4B /* RecordingSceneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RecordingSceneTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA854FDB2746273300E51E4B /* RecordingUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingUseCaseTests.swift; sourceTree = "<group>"; };
 		DA9D7C9C273A433E0018AD45 /* RecordingTitleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingTitleViewController.swift; sourceTree = "<group>"; };
@@ -272,15 +267,14 @@
 		5428FDB5272F89F0002F9D40 /* RecordingScene */ = {
 			isa = PBXGroup;
 			children = (
+				5429694A272FBFCA0070B362 /* RecordingViewCoordinator.swift */,
 				54296948272FBFAB0070B362 /* RecordingViewController.swift */,
 				DAAF2715272FF73700F8A115 /* RecordingViewController+Extension.swift */,
-				5429694A272FBFCA0070B362 /* RecordingViewCoordinator.swift */,
 				DAB37D4B2731166B00EC523F /* RecordingViewModel.swift */,
 				984DDEC227325DFC003BE56B /* RecordingUseCase.swift */,
 				DAB37D4F273256B900EC523F /* RecordingModel.swift */,
 				DAFA9B5C27424C9A00BF168C /* RecordingPhotoModel.swift */,
 				984DDEC427325FB9003BE56B /* RecordRepository.swift */,
-				984DDEC027325D67003BE56B /* Record.swift */,
 			);
 			path = RecordingScene;
 			sourceTree = "<group>";
@@ -293,8 +287,8 @@
 				5465237C2741F997007B2692 /* ResultViewModel.swift */,
 				9800821E273CE16E006A847A /* ResultUseCase.swift */,
 				9800821C273CB45D006A847A /* ResultRepository.swift */,
-				54F88EB627424C210004EAFD /* TotalRecordsViewCell.swift */,
 				54F88EB8274256FE0004EAFD /* SectionHeaderView.swift */,
+				54F88EB627424C210004EAFD /* TotalRecordsViewCell.swift */,
 				54F88EBA274259950004EAFD /* RecordsViewCell.swift */,
 			);
 			path = ResultScene;
@@ -305,15 +299,15 @@
 			children = (
 				49FC97672744E105008CE73A /* ResultDetailViewCoordinator.swift */,
 				49225C5D273CDB4F0021AD79 /* ResultDetailViewController.swift */,
-				DAB751B6274E74E600C39266 /* ThumbnailView.swift */,
-				49225C5F273CDB680021AD79 /* ResultDetailSmallerInfoView.swift */,
-				49742D552740E1A0008F7DC2 /* ResultDetailLargerInfoView.swift */,
 				494803812743748D002854B1 /* ResultDetailViewModel.swift */,
 				4948038327437499002854B1 /* ResultDetailUseCase.swift */,
 				493178B527439D0000B5FB88 /* ResultDetailModel.swift */,
-				493178B32743992400B5FB88 /* DetailCell.swift */,
-				DAFF214D274BD6460061A555 /* DetailHeader.swift */,
 				49921D88274B3B440091112C /* ResultDetailRepository.swift */,
+				49225C5F273CDB680021AD79 /* ResultDetailSmallerInfoView.swift */,
+				49742D552740E1A0008F7DC2 /* ResultDetailLargerInfoView.swift */,
+				DAB751B6274E74E600C39266 /* ThumbnailView.swift */,
+				DAFF214D274BD6460061A555 /* DetailHeader.swift */,
+				493178B32743992400B5FB88 /* DetailCell.swift */,
 				54953443274F6903005C0E60 /* PinView.swift */,
 			);
 			path = ResultDetailScene;
@@ -335,14 +329,14 @@
 		5428FDBA272F8BF6002F9D40 /* MountainDetailScene */ = {
 			isa = PBXGroup;
 			children = (
-				49D5A94A2738C3AB00937821 /* MountainDetailViewController.swift */,
 				49D5A9482738C31600937821 /* MountainDetailViewCoordinator.swift */,
+				49D5A94A2738C3AB00937821 /* MountainDetailViewController.swift */,
 				49D5A94C2738C71700937821 /* MountainDetailViewModel.swift */,
 				49D5A94E2738C72E00937821 /* MountainDetailUseCase.swift */,
 				49D5A9522738FBCD00937821 /* MountainDetailModel.swift */,
 				49D5A954273A5A5C00937821 /* MountainDetailTitleView.swift */,
-				49D5A956273A62F800937821 /* MountainDetailTableViewCell.swift */,
 				4955B8EA2742A65D00D90F94 /* MountainDetailAnnotationView.swift */,
+				49D5A956273A62F800937821 /* MountainDetailTableViewCell.swift */,
 			);
 			path = MountainDetailScene;
 			sourceTree = "<group>";
@@ -350,16 +344,13 @@
 		5428FDBB272F8C32002F9D40 /* SettingsScene */ = {
 			isa = PBXGroup;
 			children = (
-				98AEF1D627310759002E9C9A /* PaddingLabel.swift */,
-				985EEF64273010BD002413D9 /* ToggleOptionCell.swift */,
-				9889DA502730FFCD00F3C772 /* MapOptionCell.swift */,
 				54296956272FC4380070B362 /* SettingsViewCoordinator.swift */,
 				54296954272FC3EC0070B362 /* SettingsViewController.swift */,
 				98BCF4F82737A7120073E6FB /* SettingsViewModel.swift */,
 				98BCF4F62737A66E0073E6FB /* SettingsUsecase.swift */,
 				98BCF4F42737A3480073E6FB /* SettingsRepository.swift */,
-				9826F3DE273904010064FA85 /* Settings.swift */,
-				9826F3DC2739035E0064FA85 /* Option.swift */,
+				985EEF64273010BD002413D9 /* ToggleOptionCell.swift */,
+				9889DA502730FFCD00F3C772 /* MapOptionCell.swift */,
 			);
 			path = SettingsScene;
 			sourceTree = "<group>";
@@ -368,6 +359,10 @@
 			isa = PBXGroup;
 			children = (
 				49FEEDB82732584000D37CCA /* MountainEntity.swift */,
+				984DDEC027325D67003BE56B /* Record.swift */,
+				DA4736D12755E39500841326 /* Location.swift */,
+				9826F3DC2739035E0064FA85 /* Option.swift */,
+				9826F3DE273904010064FA85 /* Settings.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -387,15 +382,14 @@
 		54731B61272F7F7600534097 /* MapScene */ = {
 			isa = PBXGroup;
 			children = (
+				54296946272FBD4B0070B362 /* MapViewCoordinator.swift */,
 				54851285272A6AD500407F28 /* MapViewController.swift */,
 				54731B64272F84D300534097 /* MapViewModel.swift */,
 				5428FDBC272F8C5B002F9D40 /* MapViewUseCase.swift */,
 				5428FDB3272F894D002F9D40 /* MapViewRepository.swift */,
-				54296946272FBD4B0070B362 /* MapViewCoordinator.swift */,
 				5429695A273026B10070B362 /* MountainAnnotationView.swift */,
 				5429695C27302B1D0070B362 /* ClusterAnnotationView.swift */,
 				49A3E61C2732756C0020CAC1 /* MountainAnnotation.swift */,
-				547CDD9B27392496007CCA29 /* UIImage+Gif.swift */,
 			);
 			path = MapScene;
 			sourceTree = "<group>";
@@ -448,21 +442,11 @@
 			isa = PBXGroup;
 			children = (
 				54731B63272F81B200534097 /* Resources */,
+				54731B62272F808300534097 /* Application */,
 				54296943272FB8410070B362 /* Persistences */,
 				5428FDBE272F8D43002F9D40 /* Entities */,
-				54731B62272F808300534097 /* Application */,
-				54731B61272F7F7600534097 /* MapScene */,
-				54B32063274510B7002232BD /* MountainAddingScene */,
-				5428FDB6272F8B2B002F9D40 /* ResultScene */,
-				DAE7540C274D29E2004A19C3 /* ResultDetailImagesScene */,
-				DAB751B8274E7DAD00C39266 /* ResultDetailThumbnailScene */,
-				5428FDB7272F8B34002F9D40 /* ResultDetailScene */,
-				5428FDB5272F89F0002F9D40 /* RecordingScene */,
-				DA9D7C9B273A42B90018AD45 /* RecordingTitleScene */,
-				DAFA9B55274112AB00BF168C /* RecordingPhotoScene */,
-				5428FDB9272F8BD9002F9D40 /* MountainListScene */,
-				5428FDBA272F8BF6002F9D40 /* MountainDetailScene */,
-				5428FDBB272F8C32002F9D40 /* SettingsScene */,
+				DA4736D32755E46800841326 /* Utility */,
+				DA4736D42755E56300841326 /* Scenes */,
 			);
 			path = SanTa;
 			sourceTree = "<group>";
@@ -472,10 +456,10 @@
 			children = (
 				54B3206627451169002232BD /* MountainAddingViewCoordinator.swift */,
 				54B32064274510D8002232BD /* MountainAddingViewController.swift */,
-				54B32072274B7E09002232BD /* MountainAddingView.swift */,
 				54B32068274536D1002232BD /* MountainAddingViewModel.swift */,
 				54B3206A274536E3002232BD /* MountainAddingViewUseCase.swift */,
 				54B3206C27453725002232BD /* MountainAddingViewRepository.swift */,
+				54B32072274B7E09002232BD /* MountainAddingView.swift */,
 			);
 			path = MountainAddingScene;
 			sourceTree = "<group>";
@@ -496,6 +480,33 @@
 			path = ResultSceneTests;
 			sourceTree = "<group>";
 		};
+		DA4736D32755E46800841326 /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				98AEF1D627310759002E9C9A /* PaddingLabel.swift */,
+			);
+			path = Utility;
+			sourceTree = "<group>";
+		};
+		DA4736D42755E56300841326 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				54731B61272F7F7600534097 /* MapScene */,
+				54B32063274510B7002232BD /* MountainAddingScene */,
+				5428FDB5272F89F0002F9D40 /* RecordingScene */,
+				DA9D7C9B273A42B90018AD45 /* RecordingTitleScene */,
+				DAFA9B55274112AB00BF168C /* RecordingPhotoScene */,
+				5428FDB6272F8B2B002F9D40 /* ResultScene */,
+				5428FDB7272F8B34002F9D40 /* ResultDetailScene */,
+				DAE7540C274D29E2004A19C3 /* ResultDetailImagesScene */,
+				DAB751B8274E7DAD00C39266 /* ResultDetailThumbnailScene */,
+				5428FDB9272F8BD9002F9D40 /* MountainListScene */,
+				5428FDBA272F8BF6002F9D40 /* MountainDetailScene */,
+				5428FDBB272F8C32002F9D40 /* SettingsScene */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
 		DA854FDA2746273300E51E4B /* RecordingSceneTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -508,8 +519,8 @@
 		DA9D7C9B273A42B90018AD45 /* RecordingTitleScene */ = {
 			isa = PBXGroup;
 			children = (
-				DA9D7C9C273A433E0018AD45 /* RecordingTitleViewController.swift */,
 				DA9D7C9E273A45BE0018AD45 /* RecordingTitleViewCoordinator.swift */,
+				DA9D7C9C273A433E0018AD45 /* RecordingTitleViewController.swift */,
 			);
 			path = RecordingTitleScene;
 			sourceTree = "<group>";
@@ -517,8 +528,8 @@
 		DAB751B8274E7DAD00C39266 /* ResultDetailThumbnailScene */ = {
 			isa = PBXGroup;
 			children = (
-				DAB751B9274E7DEA00C39266 /* ResultDetailThumbnailViewController.swift */,
 				DAB751BB274E7DFA00C39266 /* ResultDetailThumbnailViewCoordinator.swift */,
+				DAB751B9274E7DEA00C39266 /* ResultDetailThumbnailViewController.swift */,
 			);
 			path = ResultDetailThumbnailScene;
 			sourceTree = "<group>";
@@ -526,8 +537,8 @@
 		DAE7540C274D29E2004A19C3 /* ResultDetailImagesScene */ = {
 			isa = PBXGroup;
 			children = (
-				DAE7540D274D2A25004A19C3 /* ResultDetailImagesViewController.swift */,
 				DAE7540F274D2A32004A19C3 /* ResultDetailImagesViewCoordinator.swift */,
+				DAE7540D274D2A25004A19C3 /* ResultDetailImagesViewController.swift */,
 				DAE75411274D3AFA004A19C3 /* DetailImagesCell.swift */,
 			);
 			path = ResultDetailImagesScene;
@@ -735,6 +746,7 @@
 				DAFA9B5D27424C9A00BF168C /* RecordingPhotoModel.swift in Sources */,
 				DAE75412274D3AFA004A19C3 /* DetailImagesCell.swift in Sources */,
 				DAB751B7274E74E600C39266 /* ThumbnailView.swift in Sources */,
+				DA4736D22755E39500841326 /* Location.swift in Sources */,
 				49FEEDB92732584000D37CCA /* MountainEntity.swift in Sources */,
 				493178B42743992400B5FB88 /* DetailCell.swift in Sources */,
 				98BCF4F92737A7120073E6FB /* SettingsViewModel.swift in Sources */,
@@ -760,7 +772,6 @@
 				5465237D2741F997007B2692 /* ResultViewModel.swift in Sources */,
 				9800821F273CE16E006A847A /* ResultUseCase.swift in Sources */,
 				54296945272FBC6E0070B362 /* AppCoordinator.swift in Sources */,
-				547CDD9C27392496007CCA29 /* UIImage+Gif.swift in Sources */,
 				5429694B272FBFCA0070B362 /* RecordingViewCoordinator.swift in Sources */,
 				DAAF4D70273CE08B00780DC8 /* MountainListViewRepository.swift in Sources */,
 				DAAF4D6C273CE02400780DC8 /* MountainListViewModel.swift in Sources */,
@@ -799,8 +810,6 @@
 				9826F4382739546E0064FA85 /* SettingsViewModel.swift in Sources */,
 				9826F4392739546E0064FA85 /* SettingsUsecase.swift in Sources */,
 				9826F43A2739546E0064FA85 /* SettingsRepository.swift in Sources */,
-				9826F43C2739546E0064FA85 /* Settings.swift in Sources */,
-				9826F43D2739546E0064FA85 /* Option.swift in Sources */,
 				9826F436273954020064FA85 /* SettingsSceneTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -809,7 +818,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				98BAABBC27547A1B004505BB /* Record.swift in Sources */,
 				98BAABBA27547A11004505BB /* ResultViewModel.swift in Sources */,
 				98BAABBB27547A11004505BB /* ResultUseCase.swift in Sources */,
 				98BAABB4275479B0004505BB /* ResultSceneTests.swift in Sources */,
@@ -822,8 +830,6 @@
 			files = (
 				DA854FE92746292300E51E4B /* RecordingViewModel.swift in Sources */,
 				DA854FE62746282600E51E4B /* RecordingPhotoModel.swift in Sources */,
-				DA854FE4274627D500E51E4B /* Settings.swift in Sources */,
-				DA854FE2274627B000E51E4B /* Record.swift in Sources */,
 				DAB25F1B2754AF2D00F0BE75 /* RecordingViewModelTests.swift in Sources */,
 				DA854FE1274627AA00E51E4B /* RecordingModel.swift in Sources */,
 				DA854FE02746279F00E51E4B /* RecordingUseCase.swift in Sources */,
