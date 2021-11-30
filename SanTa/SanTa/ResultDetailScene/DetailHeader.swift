@@ -134,3 +134,18 @@ class DetailHeader: UICollectionReusableView {
         [self.startTime, self.endTime].forEach { self.timeStackView.addArrangedSubview($0) }
     }
 }
+
+// MARK: - Accessibility
+
+extension DetailHeader {
+    func configureVoiceOverAccessibility() {
+        self.isAccessibilityElement = true
+        guard let dateLabel = self.dateLabel.text,
+              let startTime = self.startTime.text,
+              let endTime = self.endTime.text
+        else {
+            return
+        }
+        self.accessibilityLabel = "날짜: \(dateLabel), 시작시간: \(startTime), 종료시간: \(endTime)"
+    }
+}

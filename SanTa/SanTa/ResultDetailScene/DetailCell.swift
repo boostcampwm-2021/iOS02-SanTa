@@ -31,35 +31,35 @@ class DetailCell: UICollectionViewCell {
     }()
     
     func layout(data: DetailInformationModel) {
-        self.addSubview(title)
-        title.text = data.title
-        title.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(self.title)
+        self.title.text = data.title
+        self.title.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            title.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
-            title.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10)
+            self.title.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
+            self.title.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10)
         ])
         
-        self.addSubview(line)
-        line.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(self.line)
+        self.line.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            line.heightAnchor.constraint(equalToConstant: 1),
-            line.leftAnchor.constraint(equalTo: title.rightAnchor, constant: 5),
-            line.centerYAnchor.constraint(equalTo: title.centerYAnchor),
-            line.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -15),
+            self.line.heightAnchor.constraint(equalToConstant: 1),
+            self.line.leftAnchor.constraint(equalTo: self.title.rightAnchor, constant: 5),
+            self.line.centerYAnchor.constraint(equalTo: self.title.centerYAnchor),
+            self.line.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -15),
         ])
         
-        stack.subviews.forEach{ $0.removeFromSuperview() }
-        self.addSubview(stack)
+        self.stack.subviews.forEach{ $0.removeFromSuperview() }
+        self.addSubview(self.stack)
         for content in data.contents {
-            stack.addArrangedSubview(UIStackView(content: content))
+            self.stack.addArrangedSubview(UIStackView(content: content))
         }
         
-        stack.translatesAutoresizingMaskIntoConstraints = false
+        self.stack.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            stack.topAnchor.constraint(equalTo: title.bottomAnchor, constant: 30),
-            stack.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10),
-            stack.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -15),
-            stack.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+            self.stack.topAnchor.constraint(equalTo: self.title.bottomAnchor, constant: 30),
+            self.stack.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10),
+            self.stack.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -15),
+            self.stack.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
     }
 }
@@ -89,5 +89,26 @@ extension UIStackView {
         
         self.addArrangedSubview(contentLabel)
         self.addArrangedSubview(contentTitleLabel)
+    }
+}
+
+
+// MARK: - Accessibility
+
+extension DetailCell {
+    func configureVoiceOverAccessibility() {
+        self.isAccessibilityElement = true
+        guard let title = self.title.text else { return }
+        var label = "\(title)정보. "
+        self.stack.arrangedSubviews.forEach {
+            let stackView = $0 as? UIStackView
+            guard let contentLabel = (stackView?.arrangedSubviews[0] as? UILabel)?.text,
+                  let contentTitleLabel = (stackView?.arrangedSubviews[1] as? UILabel)?.text
+            else {
+                return
+            }
+            label += "\(contentTitleLabel): \(contentLabel), "
+        }
+        self.accessibilityLabel = label
     }
 }

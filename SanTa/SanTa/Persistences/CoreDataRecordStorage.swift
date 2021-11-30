@@ -25,17 +25,15 @@ final class CoreDataRecordStorage: RecordsStorage {
     func save(records: Records, completion: @escaping (Result<Records, Error>) -> Void) {
         self.coreDataStorage.performBackgroundTask { context in
             let recordsObject = NSEntityDescription.insertNewObject(forEntityName: "RecordsEntity",
-                                                                    into: context)
-            
-            recordsObject.setValue(records.title, forKey: "title")
-            recordsObject.setValue(records.id, forKey: "id")
-            recordsObject.setValue(records.secondPerHighestSpeed, forKey: "secondPerHighestSpeed")
-            recordsObject.setValue(records.secondPerMinimumSpeed, forKey: "secondPerMinimumSpeed")
+                                                                    into: context) as? RecordsEntityMO
+            recordsObject?.title = records.title
+            recordsObject?.id = records.id
+            recordsObject?.secondPerHighestSpeed = Int16(records.secondPerHighestSpeed)
+            recordsObject?.secondPerMinimumSpeed = Int16(records.secondPerMinimumSpeed)
             
             do {
                 let assetIdentifiers = try NSKeyedArchiver.archivedData(withRootObject: records.assetIdentifiers, requiringSecureCoding: true)
-                
-                recordsObject.setValue(assetIdentifiers, forKey: "assetIdentifiers")
+                recordsObject?.assetIdentifiers = assetIdentifiers
             } catch {
                 completion(.failure(CoreDataError.coreDataError))
             }
@@ -43,14 +41,13 @@ final class CoreDataRecordStorage: RecordsStorage {
             records.records.forEach {
                 let recordObject = NSEntityDescription.insertNewObject(forEntityName: "RecordEntity",
                                                                        into: context) as? RecordEntityMO
-                
                 recordObject?.startTime = $0.startTime
                 recordObject?.endTime = $0.endTime
                 recordObject?.distance = $0.distance
                 recordObject?.step = Int16($0.step)
                 
                 guard let recordObject = recordObject else { return }
-                (recordsObject as? RecordsEntityMO)?.addToRecords(recordObject)
+                recordsObject?.addToRecords(recordObject)
                 
                 $0.locations.forEach {
                     let locationObject = NSEntityDescription.insertNewObject(forEntityName: "LocationEntity",
