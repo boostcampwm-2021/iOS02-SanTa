@@ -12,7 +12,7 @@ enum Map: String, CaseIterable {
     case infomation = "정보지도"
     case normal = "일반지도"
     case satellite = "위성지도"
-    
+
     var name: String {
         return self.rawValue
     }

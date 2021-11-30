@@ -7,17 +7,17 @@
 
 import UIKit
 
-class MountainAddingViewCoordinator: Coordinator {
+final class MountainAddingViewCoordinator: Coordinator {
     weak var parentCoordinator: Coordinator?
     var navigationController: UINavigationController
     var childCoordinators: [Coordinator] = []
     var coreDataStorage: CoreDataStorage
-    
+
     init(navigationController: UINavigationController, coreDataStorage: CoreDataStorage) {
         self.navigationController = navigationController
         self.coreDataStorage = coreDataStorage
     }
-    
+
     func start() {
         let mountainAddingViewController = MountainAddingViewController(viewModel: injectDependencies())
         mountainAddingViewController.coordinator = self
@@ -38,7 +38,7 @@ extension MountainAddingViewCoordinator {
             )
         )
     }
-    
+
     func dismiss() {
         self.navigationController.dismiss(animated: true)
         self.parentCoordinator?.childCoordinators.removeLast()

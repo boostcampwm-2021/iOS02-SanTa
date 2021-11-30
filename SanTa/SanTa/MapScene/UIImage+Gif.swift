@@ -16,12 +16,12 @@ extension UIImage {
         else { return nil }
         return UIImage.animatedImageWithSource(source, withTintColor: withTintColor)
     }
-    
+
     private class func animatedImageWithSource(_ source: CGImageSource, withTintColor: UIColor?) -> UIImage? {
         let count: Int = CGImageSourceGetCount(source)
-        let images: [UIImage] = (0..<count).compactMap{
+        let images: [UIImage] = (0..<count).compactMap {
             CGImageSourceCreateImageAtIndex(source, $0, nil)
-        }.map{
+        }.map {
             if let tintColor = withTintColor {
                 return UIImage(cgImage: $0).withTintColor(tintColor)
             } else {
@@ -29,7 +29,7 @@ extension UIImage {
             }
         }
         let time: TimeInterval = 0.05 * Double(images.count)
-        
+
         return UIImage.animatedImage(with: images, duration: time)
     }
 }

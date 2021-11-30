@@ -12,12 +12,12 @@ protocol Animatable: AnyObject {
     func shouldStopAnimate()
 }
 
-class MapViewController: UIViewController {
+final class MapViewController: UIViewController {
     weak var coordinator: MapViewCoordinator?
     private var viewModel: MapViewModel?
     private var observers: [AnyCancellable] = []
-    private let mapDictionary: [Map:MKMapType] = [.infomation:.mutedStandard, .normal: .standard, .satellite: .hybrid]
-    
+    private let mapDictionary: [Map: MKMapType] = [.infomation: .mutedStandard, .normal: .standard, .satellite: .hybrid]
+
     private lazy var mapView: MKMapView = {
         let mapView = MKMapView(frame: view.bounds)
         mapView.showsUserLocation = true
@@ -27,7 +27,7 @@ class MapViewController: UIViewController {
         mapView.accessibilityElementsHidden = true
         return mapView
     }()
-    
+
     private lazy var startButton: UIButton = {
         let button = UIButton()
         button.backgroundColor = UIColor(named: "SantaColor")
@@ -44,7 +44,7 @@ class MapViewController: UIViewController {
         button.accessibilityHint = "측정을 시작하려면 이중 탭 하십시오"
         return button
     }()
-    
+
     private lazy var newPlaceButton: UIButton = {
         let button = UIButton()
         button.isHidden = true
@@ -61,7 +61,7 @@ class MapViewController: UIViewController {
         button.addTarget(self, action: #selector(presentMountainAddingViewController), for: .touchUpInside)
         return button
     }()
-    
+
     private lazy var userTrackingButton: MKUserTrackingButton = {
         let button = MKUserTrackingButton(mapView: self.mapView)
         button.isHidden = true
@@ -72,42 +72,44 @@ class MapViewController: UIViewController {
         button.clipsToBounds = true
         return button
     }()
-    
+
     convenience init(viewModel: MapViewModel) {
         self.init()
         self.viewModel = viewModel
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureViews()
         self.registerAnnotationView()
-        self.configureViewModel()
+        self.configureBindings()
         self.configureNotification()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         self.viewModel?.viewWillAppear()
     }
-    
+
     private func configureViews() {
         self.view.addSubview(self.mapView)
         self.view.addSubview(self.startButton)
         self.view.addSubview(self.newPlaceButton)
         self.view.addSubview(self.userTrackingButton)
-        
+
         NSLayoutConstraint.activate([
             self.startButton.widthAnchor.constraint(equalToConstant: 100),
             self.startButton.heightAnchor.constraint(equalToConstant: 100),
             self.startButton.bottomAnchor.constraint(equalTo: mapView.safeAreaLayoutGuide.bottomAnchor, constant: -mapView.frame.height/15),
             self.startButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor)
         ])
+
         NSLayoutConstraint.activate([
             self.userTrackingButton.widthAnchor.constraint(equalToConstant: 50),
             self.userTrackingButton.heightAnchor.constraint(equalToConstant: 50),
             self.userTrackingButton.leftAnchor.constraint(equalTo: mapView.rightAnchor, constant: -100),
             self.userTrackingButton.centerYAnchor.constraint(equalTo: self.startButton.centerYAnchor)
         ])
+
         NSLayoutConstraint.activate([
             self.newPlaceButton.widthAnchor.constraint(equalToConstant: 150),
             self.newPlaceButton.heightAnchor.constraint(equalToConstant: 30),
@@ -115,7 +117,7 @@ class MapViewController: UIViewController {
             self.newPlaceButton.centerXAnchor.constraint(equalTo: self.startButton.centerXAnchor)
         ])
     }
-    
+
     private func registerAnnotationView() {
         self.mapView.register(
             MountainAnnotationView.self,
@@ -126,8 +128,8 @@ class MapViewController: UIViewController {
             forAnnotationViewWithReuseIdentifier: MKMapViewDefaultClusterAnnotationViewReuseIdentifier
         )
     }
-    
-    private func configureViewModel() {
+
+    private func configureBindings() {
         self.viewModel?.configureBindings()
         self.viewModel?.$mountains
             .sink(receiveValue: { [weak self] mountains in
@@ -150,19 +152,19 @@ class MapViewController: UIViewController {
             })
             .store(in: &self.observers)
     }
-    
+
     private func configureNotification() {
         NotificationCenter.default.addObserver(self, selector: #selector(shouldUpdateMarkers), name: NSNotification.Name.init(rawValue: "save"), object: nil)
     }
-    
+
     @objc func shouldUpdateMarkers() {
         self.viewModel?.updateMarker()
     }
-    
+
     private func configureMarkers(_ mountains: [MountainEntity]?) {
         self.mapView.removeAnnotations(self.mapView.annotations)
         guard let mountains = mountains else { return }
-        let annotations = mountains.map{ mountainEntity in
+        let annotations = mountains.map { mountainEntity in
             return MountainAnnotation(
                 title: mountainEntity.mountain.mountainName,
                 subtitle: mountainEntity.mountain.mountainHeight + "m",
@@ -174,13 +176,13 @@ class MapViewController: UIViewController {
         }
         self.mapView.addAnnotations(annotations)
     }
-    
+
     private func configureMap(_ map: Map?) {
         guard let map = map,
               let mapType = mapDictionary[map] else { return }
         self.mapView.mapType = mapType
     }
-    
+
     private func configureLocation(_ location: CLLocation?) {
         guard let location = location else { return }
         let coordinate = CLLocationCoordinate2D(
@@ -194,12 +196,12 @@ class MapViewController: UIViewController {
         let region = MKCoordinateRegion(center: coordinate, span: span)
         mapView.setRegion(region, animated: true)
     }
-    
+
     private func configureUserTrackingButton(_ permission: Bool?) {
         guard let permission = permission else { return }
         self.userTrackingButton.isHidden = !permission
     }
-    
+
     private func authAlert() -> UIAlertController {
         let alert = UIAlertController(title: "위치정보 활성화", message: "지도에 현재 위치를 표시할 수 있도록 위치정보를 활성화해주세요", preferredStyle: .alert)
         let cancel = UIAlertAction(title: "아니요", style: .cancel)
@@ -220,7 +222,7 @@ class MapViewController: UIViewController {
             self.present(authAlert(), animated: false)
         }
     }
-    
+
     @objc private func presentMountainAddingViewController() {
         self.coordinator?.presentMountainAddingViewController()
     }
@@ -232,7 +234,7 @@ extension MapViewController: Animatable {
         self.startButton.setImage(image, for: .normal)
         self.startButton.accessibilityHint = "현재 측정 중입니다. 측정화면으로 돌아가려면 이중 탭 하십시오"
     }
-    
+
     func shouldStopAnimate() {
         self.startButton.setImage(nil, for: .normal)
         self.startButton.accessibilityHint = "측정을 시작하려면 이중 탭 하십시오"
@@ -276,7 +278,7 @@ extension MapViewController: MKMapViewDelegate {
             )
         }
     }
-  
+
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         guard let annotation = view.annotation as? MountainAnnotation else { return }
         coordinator?.presentMountainDetailViewController(mountainAnnotation: annotation)

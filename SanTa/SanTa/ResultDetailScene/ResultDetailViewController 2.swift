@@ -19,7 +19,7 @@ import MapKit
 class ResultDetailViewController: UIViewController {
 
     private let mapView = MKMapView()
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -31,7 +31,7 @@ extension ResultDetailViewController {
     private func layoutResultDetailView() {
         self.view.addSubview(mapView)
         mapView.translatesAutoresizingMaskIntoConstraints = false
-        
+
         let mapViewConstraints = [
             mapView.topAnchor.constraint(equalTo: self.view.topAnchor),
             mapView.leftAnchor.constraint(equalTo: self.view.leftAnchor),

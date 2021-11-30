@@ -9,24 +9,24 @@ import Foundation
 import Combine
 
 final class SettingsViewModel {
-    
+
     @Published var settings: [Option] = []
-    
+
     let settingsUseCase: SettingsUsecase
     let isPhotoRecordAvailable = PassthroughSubject<Bool, Never>()
-    
+
     var settingsCount: Int {
         return settings.count
     }
-    
+
     init(settingsUseCase: SettingsUsecase) {
         self.settingsUseCase = settingsUseCase
     }
-    
+
     func viewDidLoad() {
         self.reloadSettings()
     }
-    
+
     func viewWillAppear() {
         self.settingsUseCase.photoPermission { [weak self] bool in
             if !bool {
@@ -35,7 +35,7 @@ final class SettingsViewModel {
             }
         }
     }
-    
+
     func change<T: Codable>(value: T, key: Settings) {
         self.settingsUseCase.save(value: value, key: key)
         if value is String {
@@ -51,7 +51,7 @@ final class SettingsViewModel {
             }
         }
     }
-    
+
     private func reloadSettings() {
         self.settings = self.settingsUseCase.makeSettings()
     }

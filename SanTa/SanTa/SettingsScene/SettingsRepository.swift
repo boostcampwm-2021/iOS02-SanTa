@@ -14,24 +14,24 @@ protocol SettingsRepository {
 }
 
 final class DefaultSettingsRepository: SettingsRepository {
-    
+
     let settingsStorage: UserDefaultsStorage
-    
+
     init(settingsStorage: UserDefaultsStorage) {
         self.settingsStorage = settingsStorage
     }
-    
+
     func save<T: Codable>(value: T, key: Settings) {
         self.settingsStorage.save(value: value, key: key)
     }
-    
+
     func makeToggleOption(key: Settings, completion: @escaping (Option) -> Void) {
         self.settingsStorage.bool(key: key) { value in
             let option = ToggleOption(text: key.title, toggle: value)
             completion(option)
         }
     }
-    
+
     func makeMapOption(key: Settings, completion: @escaping (Option) -> Void) {
         self.settingsStorage.string(key: key) { value in
             guard let value = value else { return }

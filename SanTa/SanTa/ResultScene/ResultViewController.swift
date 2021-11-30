@@ -7,11 +7,11 @@
 
 import UIKit
 
-class ResultViewController: UIViewController {
+final class ResultViewController: UIViewController {
     weak var coordinator: ResultViewCoordinator?
     private var collectionView: UICollectionView?
     private var viewModel: ResultViewModel?
-    
+
     convenience init(viewModel: ResultViewModel) {
         self.init()
         self.viewModel = viewModel
@@ -21,17 +21,17 @@ class ResultViewController: UIViewController {
         super.viewDidLoad()
         self.configureCollectionView()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         self.navigationController?.navigationBar.isHidden = true
-        self.viewModel?.viewWillAppear() { [weak self] in
+        self.viewModel?.viewWillAppear { [weak self] in
             DispatchQueue.main.async {
                 self?.navigationController?.navigationBar.topItem?.title = self?.viewModel?.totalDistance
                 self?.collectionView?.reloadData()
             }
         }
     }
-    
+
     private func configureCollectionView() {
         self.collectionView = UICollectionView(frame: view.bounds, collectionViewLayout: self.createCompositionalLayout())
         guard let collectionView = self.collectionView else { return }
@@ -42,9 +42,9 @@ class ResultViewController: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
     }
-    
+
     private func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
-        return UICollectionViewCompositionalLayout { (sectionNumber, env) -> NSCollectionLayoutSection? in
+        return UICollectionViewCompositionalLayout { (sectionNumber, _) -> NSCollectionLayoutSection? in
             switch sectionNumber {
             case 0: return self.firstLayoutSection()
             default: return self.secondLayoutSection()
@@ -60,7 +60,7 @@ class ResultViewController: UIViewController {
         let section = NSCollectionLayoutSection(group: group)
         return section
     }
-    
+
     private func secondLayoutSection() -> NSCollectionLayoutSection {
         let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1), heightDimension: .fractionalHeight(1))
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
@@ -81,19 +81,19 @@ class ResultViewController: UIViewController {
     }
 }
 
-extension ResultViewController:  UICollectionViewDataSource {
+extension ResultViewController: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         guard let viewModel = self.viewModel else { return 0}
         return viewModel.totalSections + 1
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         switch section {
         case 0: return 1
         default : return self.viewModel?.itemsInSection(section: section - 1) ?? 0
         }
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         switch indexPath.section {
         case 0:
@@ -124,7 +124,7 @@ extension ResultViewController:  UICollectionViewDataSource {
             return cell
         }
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         guard let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: SectionHeaderView.identifier, for: indexPath) as? SectionHeaderView,
               let sectionInfo = self.viewModel?.sectionInfo(section: indexPath.section - 1)
@@ -136,7 +136,7 @@ extension ResultViewController:  UICollectionViewDataSource {
         sectionHeader.configureVoiceOverAccessibility(date: sectionInfo.accessibiltyDate)
         return sectionHeader
     }
-    
+
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let indexPath = IndexPath(item: indexPath.item, section: indexPath.section - 1)
         guard indexPath.section >= 0,

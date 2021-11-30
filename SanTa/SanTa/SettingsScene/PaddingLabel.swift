@@ -7,10 +7,10 @@
 
 import UIKit
 
-class PaddingLabel: UILabel {
-    
+final class PaddingLabel: UILabel {
+
     var insets = UIEdgeInsets.zero
-    
+
     convenience init(insets: UIEdgeInsets) {
         self.init()
         self.padding(top: insets.top, bottom: insets.bottom, left: insets.left, right: insets.right)
@@ -19,7 +19,7 @@ class PaddingLabel: UILabel {
     override func drawText(in rect: CGRect) {
         super.drawText(in: rect.inset(by: self.insets))
     }
-    
+
     override var intrinsicContentSize: CGSize {
         get {
             var contentSize = super.intrinsicContentSize

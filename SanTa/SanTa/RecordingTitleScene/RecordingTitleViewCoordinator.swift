@@ -7,11 +7,11 @@
 
 import UIKit
 
-class RecordingTitleViewCoordinator: Coordinator {
+final class RecordingTitleViewCoordinator: Coordinator {
     weak var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
     var recordingTitleViewController: RecordingTitleViewController
-    
+
     init(delegate: SetTitleDelegate) {
         self.recordingTitleViewController = RecordingTitleViewController()
         self.recordingTitleViewController.delegate = delegate
@@ -22,14 +22,10 @@ class RecordingTitleViewCoordinator: Coordinator {
         guard let viewController = self.recordingTitleViewController.delegate as? UIViewController else { return }
         viewController.present(recordingTitleViewController, animated: true)
     }
-    
+
     func dismiss() {
         guard let viewController = self.recordingTitleViewController.delegate as? UIViewController else { return }
         viewController.dismiss(animated: true, completion: nil)
         self.parentCoordinator?.childCoordinators.removeLast()
-    }
-    
-    deinit {
-        print("😇RecordingTitleViewCoordinator is deinit \(Date())!!😇")
     }
 }

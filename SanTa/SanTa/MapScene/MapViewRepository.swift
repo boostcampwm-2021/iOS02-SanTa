@@ -12,23 +12,23 @@ protocol MapViewRepository {
     func fetchMapOption(key: Settings, completion: @escaping (Result<Map, Error>) -> Void)
 }
 
-class DefaultMapViewRespository {
+final class DefaultMapViewRespository {
     enum JSONDecodeError: Error {
         case decodingFailed
     }
-    
+
     enum userDefaultsError: Error {
         case notExists
     }
-    
+
     enum optionError: Error {
         case notExists
     }
-    
+
     private let mountainExtractor: MountainExtractor
     private let settingsStorage: UserDefaultsStorage
     private let coreDataMountainStorage: CoreDataMountainStorage
-    
+
     init(mountainExtractor: MountainExtractor, userDefaultsStorage: UserDefaultsStorage, coreDataMountainStorage: CoreDataMountainStorage) {
         self.mountainExtractor = mountainExtractor
         self.settingsStorage = userDefaultsStorage
@@ -57,7 +57,7 @@ extension DefaultMapViewRespository: MapViewRepository {
                 group.leave()
             }
         }
-        
+
         self.coreDataMountainStorage.fetch { result in
             switch result {
             case .failure(let error):
@@ -65,7 +65,7 @@ extension DefaultMapViewRespository: MapViewRepository {
                 return completion(.failure(error))
             case .success(let mountainEntityMOs):
                 var mountainEntities: [MountainEntity] = []
-                mountainEntityMOs.forEach{ MO in
+                mountainEntityMOs.forEach { MO in
                     let mountain = MountainEntity.MountainDetail(
                         mountainName: MO.name ?? "",
                         mountainRegion: MO.region ?? "",
@@ -88,7 +88,7 @@ extension DefaultMapViewRespository: MapViewRepository {
             completion(.success(jsonMountains + coreMountains))
         }
     }
-    
+
     func fetchMapOption(key: Settings, completion: @escaping (Result<Map, Error>) -> Void) {
         self.settingsStorage.string(key: key) { value in
             guard let value = value else {

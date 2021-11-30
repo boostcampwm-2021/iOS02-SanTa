@@ -7,9 +7,9 @@
 
 import UIKit
 
-class DetailCell: UICollectionViewCell {
+final class DetailCell: UICollectionViewCell {
     static let identifier = "DetailCell"
-    
+
     let title: UILabel = {
         let label = UILabel()
         label.font = .preferredFont(for: .body, weight: .bold)
@@ -17,19 +17,19 @@ class DetailCell: UICollectionViewCell {
         label.adjustsFontSizeToFitWidth = true
         return label
     }()
-    
+
     let line: UIView = {
         let view = UIView()
         view.backgroundColor = .init(named: "SantaColor")
         return view
     }()
-    
+
     let stack: UIStackView = {
         let stack = UIStackView()
         stack.axis = .vertical
         return stack
     }()
-    
+
     func layout(data: DetailInformationModel) {
         self.addSubview(self.title)
         self.title.text = data.title
@@ -38,22 +38,22 @@ class DetailCell: UICollectionViewCell {
             self.title.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
             self.title.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 10)
         ])
-        
+
         self.addSubview(self.line)
         self.line.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.line.heightAnchor.constraint(equalToConstant: 1),
             self.line.leftAnchor.constraint(equalTo: self.title.rightAnchor, constant: 5),
             self.line.centerYAnchor.constraint(equalTo: self.title.centerYAnchor),
-            self.line.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -15),
+            self.line.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -15)
         ])
-        
-        self.stack.subviews.forEach{ $0.removeFromSuperview() }
+
+        self.stack.subviews.forEach { $0.removeFromSuperview() }
         self.addSubview(self.stack)
         for content in data.contents {
             self.stack.addArrangedSubview(UIStackView(content: content))
         }
-        
+
         self.stack.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
             self.stack.topAnchor.constraint(equalTo: self.title.bottomAnchor, constant: 30),
@@ -78,7 +78,7 @@ extension UIStackView {
         self.init()
         self.axis = .horizontal
         self.distribution = .equalCentering
-        
+
         let contentLabel = UILabel()
         contentLabel.text = content.content
         contentLabel.font = .preferredFont(for: .title1, weight: .bold)
@@ -86,12 +86,11 @@ extension UIStackView {
         let contentTitleLabel = UILabel()
         contentTitleLabel.text = content.contentTitle
         contentTitleLabel.font = .preferredFont(forTextStyle: .body)
-        
+
         self.addArrangedSubview(contentLabel)
         self.addArrangedSubview(contentTitleLabel)
     }
 }
-
 
 // MARK: - Accessibility
 

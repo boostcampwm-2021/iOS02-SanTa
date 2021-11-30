@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-class SettingsViewController: UIViewController {
+final class SettingsViewController: UIViewController {
     weak var coordinator: SettingsViewCoordinator?
 
     private var headerView: UIView = {
@@ -17,7 +17,7 @@ class SettingsViewController: UIViewController {
         headerView.backgroundColor = .systemBackground
         return headerView
     }()
-    
+
     private var headerTitle: UILabel = {
         let headerTitle = UILabel()
         headerTitle.translatesAutoresizingMaskIntoConstraints = false
@@ -35,23 +35,23 @@ class SettingsViewController: UIViewController {
         tableView.backgroundColor = .systemGray5
         return tableView
     }()
-    
+
     private var viewModel: SettingsViewModel?
     private var subscriptions = Set<AnyCancellable>()
-    
+
     convenience init(viewModel: SettingsViewModel) {
         self.init()
         self.viewModel = viewModel
     }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configureTableView()
         self.configureView()
-        self.bind()
+        self.configureBindings()
         self.viewModel?.viewDidLoad()
     }
-    
+
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.viewModel?.viewWillAppear()
@@ -61,36 +61,34 @@ class SettingsViewController: UIViewController {
         self.tableView.dataSource = self
         self.tableView.delegate = self
     }
-    
+
     private func configureView() {
         self.view.backgroundColor = .systemBackground
         self.view.addSubview(self.headerView)
-        let headerViewConstrain = [
+        self.view.addSubview(self.tableView)
+        self.headerView.addSubview(self.headerTitle)
+
+        NSLayoutConstraint.activate([
             self.headerView.topAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.topAnchor),
             self.headerView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
             self.headerView.rightAnchor.constraint(equalTo: self.view.rightAnchor),
-            self.headerView.heightAnchor.constraint(equalToConstant: 50.0),
-        ]
-        NSLayoutConstraint.activate(headerViewConstrain)
-        
-        self.headerView.addSubview(self.headerTitle)
-        let headerTitleConstrain = [
+            self.headerView.heightAnchor.constraint(equalToConstant: 50.0)
+        ])
+
+        NSLayoutConstraint.activate([
             self.headerTitle.centerXAnchor.constraint(equalTo: self.headerView.centerXAnchor),
-            self.headerTitle.centerYAnchor.constraint(equalTo: self.headerView.centerYAnchor),
-        ]
-        NSLayoutConstraint.activate(headerTitleConstrain)
-        
-        self.view.addSubview(self.tableView)
-        let tableViewConstrain = [
+            self.headerTitle.centerYAnchor.constraint(equalTo: self.headerView.centerYAnchor)
+        ])
+
+        NSLayoutConstraint.activate([
             self.tableView.topAnchor.constraint(equalTo: self.headerView.bottomAnchor),
             self.tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             self.tableView.leftAnchor.constraint(equalTo: self.view.leftAnchor),
-            self.tableView.rightAnchor.constraint(equalTo: self.view.rightAnchor),
-        ]
-        NSLayoutConstraint.activate(tableViewConstrain)
+            self.tableView.rightAnchor.constraint(equalTo: self.view.rightAnchor)
+        ])
     }
-    
-    private func bind() {
+
+    private func configureBindings() {
         self.viewModel?.$settings.sink { [weak self] _ in
             self?.tableView.reloadData()
         }.store(in: &self.subscriptions)
@@ -98,7 +96,7 @@ class SettingsViewController: UIViewController {
             self?.configurePhotoPermission(bool)
         }.store(in: &self.subscriptions)
     }
-    
+
     private func configurePhotoPermission(_ bool: Bool) {
         if !bool {
             let alert = UIAlertController(title: "사진 권한 활성화", message: "측정하는 동안 사진을 기록할 수 있도록 위치정보를 활성화해주세요", preferredStyle: .alert)
@@ -114,7 +112,7 @@ class SettingsViewController: UIViewController {
             }
         }
     }
-    
+
     private func showMapActionSheet(cellTitle: String) {
         let alert = UIAlertController(title: Settings.mapFormat.title, message: nil, preferredStyle: .actionSheet)
         Map.allCases.forEach {
@@ -130,16 +128,16 @@ class SettingsViewController: UIViewController {
 }
 
 extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
-    
+
     func numberOfSections(in tableView: UITableView) -> Int {
         guard let itemCount = self.viewModel?.settingsCount else { return 0 }
         return itemCount
     }
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 1
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch self.viewModel?.settings[indexPath.section] {
         case let option as ToggleOption:
@@ -171,13 +169,13 @@ extension SettingsViewController: UITableViewDataSource, UITableViewDelegate {
             guard let cell = tableView.cellForRow(at: indexPath) as? ToggleOptionCell else { return }
             cell.changeSwitch()
         }
-        
+
         guard let cell = tableView.cellForRow(at: indexPath) as? MapOptionCell else { return }
         guard let title = cell.title.text else { return }
         self.showMapActionSheet(cellTitle: title)
         self.tableView.deselectRow(at: indexPath, animated: true)
     }
-    
+
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }

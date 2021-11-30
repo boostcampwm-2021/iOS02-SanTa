@@ -8,15 +8,15 @@
 import UIKit
 import CoreLocation
 
-class MapViewCoordinator: Coordinator {
+final class MapViewCoordinator: Coordinator {
     weak var parentCoordinator: Coordinator?
     var navigationController: UINavigationController = UINavigationController()
     var childCoordinators: [Coordinator] = []
-    
+
     private let userDefaultsStorage: UserDefaultsStorage
     private let mountainExtractor: MountainExtractor
     private let coreDataStorage: CoreDataStorage
-    
+
     init(userDefaultsStorage: UserDefaultsStorage,
          mountainExtractor: MountainExtractor,
          coreDataStorage: CoreDataStorage) {
@@ -24,15 +24,15 @@ class MapViewCoordinator: Coordinator {
         self.mountainExtractor = mountainExtractor
         self.coreDataStorage = coreDataStorage
     }
-    
+
     func start() {
     }
-    
+
     func startPush() -> UINavigationController {
         let mapViewController = MapViewController(viewModel: injectDependencies())
         mapViewController.coordinator = self
         self.navigationController.setViewControllers([mapViewController], animated: false)
-        
+
         return navigationController
     }
 }
@@ -50,15 +50,15 @@ extension MapViewCoordinator {
         }
         childCoordinators.first?.start()
     }
-    
+
     func presentMountainDetailViewController(mountainAnnotation: MountainAnnotation) {
         let mountainDetailViewCoordinator = MountainDetailViewCoordinator(navigationController: self.navigationController, mountainAnnotation: mountainAnnotation)
         mountainDetailViewCoordinator.parentCoordinator = self
         self.childCoordinators.append(mountainDetailViewCoordinator)
-        
+
         mountainDetailViewCoordinator.start()
     }
-    
+
     func presentMountainAddingViewController() {
         let mountainAddingViewCoordinator = MountainAddingViewCoordinator(
             navigationController: self.navigationController,
@@ -66,20 +66,20 @@ extension MapViewCoordinator {
         )
         mountainAddingViewCoordinator.parentCoordinator = self
         self.childCoordinators.append(mountainAddingViewCoordinator)
-        
+
         mountainAddingViewCoordinator.start()
     }
-    
-    func recordingViewDidHide(){
+
+    func recordingViewDidHide() {
         guard let animatableViewController = navigationController.viewControllers.first as? Animatable else { return }
         animatableViewController.shouldAnimate()
     }
-    
-    func recordingViewDidDismiss(){
+
+    func recordingViewDidDismiss() {
         guard let animatableViewController = navigationController.viewControllers.first as? Animatable else { return }
         animatableViewController.shouldStopAnimate()
     }
-    
+
     private func injectDependencies() -> MapViewModel {
         return MapViewModel(
             useCase: MapViewUseCase(

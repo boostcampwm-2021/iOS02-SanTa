@@ -13,7 +13,7 @@ extension UILabel {
         self.text = text
         self.textColor = .label
     }
-    
+
     fileprivate convenience init(boldFontWithSize: CGFloat) {
         self.init()
         self.font = .boldSystemFont(ofSize: boldFontWithSize)
@@ -21,7 +21,7 @@ extension UILabel {
     }
 }
 
-class RecordsViewCell: UICollectionViewCell {
+final class RecordsViewCell: UICollectionViewCell {
     static let identifier = "RecordsViewCell"
     let date: PaddingLabel = {
         let paddingLabel = PaddingLabel(insets: UIEdgeInsets(top: 2, left: 3, bottom: 2, right: 3))
@@ -54,7 +54,7 @@ class RecordsViewCell: UICollectionViewCell {
     let timeStackView = UIStackView()
     let altitudeStackView = UIStackView()
     let stepsStackView = UIStackView()
-    
+
     func configure(date: String, title: String, distance: String, time: String, altitude: String, steps: String) {
         self.date.text = date
         self.title.text = title
@@ -64,11 +64,11 @@ class RecordsViewCell: UICollectionViewCell {
         self.steps.text = steps
         self.backgroundColor = UIColor(named: "RecodingResultCellColor")
         self.title.text?.count == 0 ? (self.title.isHidden = true) : (self.title.isHidden = false)
-        
+
         self.configureSubviews()
         self.configureLayout()
     }
-    
+
     private func configureSubviews() {
         self.addSubview(date)
         self.addSubview(title)
@@ -93,7 +93,7 @@ class RecordsViewCell: UICollectionViewCell {
             $0.spacing = 5
         }
     }
-    
+
     private func configureLayout() {
         self.date.translatesAutoresizingMaskIntoConstraints = false
         self.title.translatesAutoresizingMaskIntoConstraints = false
@@ -115,7 +115,7 @@ class RecordsViewCell: UICollectionViewCell {
 // MARK: - Accessibility
 
 extension RecordsViewCell {
-    
+
     func configureVoiceOverAccessibility() {
         guard let date = self.date.text else { return }
         guard var title = self.title.text else { return }
@@ -126,11 +126,10 @@ extension RecordsViewCell {
         if title.isEmpty {
             title = "없음"
         }
-        
+
         self.isAccessibilityElement = true
         self.accessibilityLabel = "\(date) 등산기록 정보, 제목: \(title), 거리: \(distance)km, 시간: \(time), 고도차: \(altitude), 걸음: \(steps)"
         self.accessibilityTraits = .none
         self.accessibilityHint = "등산기록 상세화면으로 넘어가려면 이중 탭 하십시오"
     }
 }
-

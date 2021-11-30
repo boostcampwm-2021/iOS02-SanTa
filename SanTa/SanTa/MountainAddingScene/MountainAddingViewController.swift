@@ -8,11 +8,11 @@
 import MapKit
 import Combine
 
-class MountainAddingViewController: UIViewController {
+final class MountainAddingViewController: UIViewController {
     weak var coordinator: MountainAddingViewCoordinator?
     private var viewModel: MountainAddingViewModel?
     private var observers: [AnyCancellable] = []
-    
+
     private lazy var mapView: MKMapView = {
         let mapView = MKMapView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height * 2/5))
         mapView.delegate = self
@@ -21,7 +21,7 @@ class MountainAddingViewController: UIViewController {
         mapView.accessibilityElementsHidden = true
         return mapView
     }()
-    
+
     private lazy var backButton: UIButton = {
         let button = UIButton(frame: .zero)
         button.setImage(.init(systemName: "xmark"), for: .normal)
@@ -33,13 +33,13 @@ class MountainAddingViewController: UIViewController {
         button.accessibilityHint = "장소등록을 종료하려면 이중 탭 하십시오"
         return button
     }()
-    
+
     private lazy var mountainAddingView: MountainAddingView = {
         let view = MountainAddingView()
         view.configure()
         return view
     }()
-    
+
     convenience init(viewModel: MountainAddingViewModel) {
         self.init()
         self.viewModel = viewModel
@@ -49,9 +49,9 @@ class MountainAddingViewController: UIViewController {
         super.viewDidLoad()
         self.mountainAddingView.newPlaceDelegate = self
         self.configureViews()
-        self.configureViewModel()
+        self.configureBindings()
     }
-    
+
     private func configureViews() {
         self.view.addSubview(mapView)
         self.view.addSubview(backButton)
@@ -69,8 +69,8 @@ class MountainAddingViewController: UIViewController {
             self.mountainAddingView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
     }
-    
-    private func configureViewModel() {
+
+    private func configureBindings() {
         self.viewModel?.$coordinate
             .sink(receiveValue: { [weak self] coordinate in
                 self?.mapView.showsUserLocation = false
@@ -87,20 +87,20 @@ class MountainAddingViewController: UIViewController {
             .store(in: &observers)
         self.mapView.showsUserLocation = true
     }
-    
+
     private func configureLocation(_ coordinate: CLLocationCoordinate2D?) {
         guard let coordinate = coordinate else { return }
         let span = MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
         let region = MKCoordinateRegion(center: coordinate, span: span)
         self.mapView.setRegion(region, animated: false)
     }
-    
+
     private func configureAnnotation(_ coordinate: CLLocationCoordinate2D?) {
         guard let coordinate = coordinate else { return }
         let mountainAnnotation = MountainAnnotation(latitude: coordinate.latitude, longitude: coordinate.longitude)
         self.mapView.addAnnotation(mountainAnnotation)
     }
-    
+
     private func showResult(_ result: MountainAddingViewModel.AddMountainResult) {
         let alert = UIAlertController(title: "산 추가하기", message: result.rawValue, preferredStyle: .alert)
         let confirm = UIAlertAction(title: "확인", style: .default) { [weak self] _ in
@@ -109,7 +109,7 @@ class MountainAddingViewController: UIViewController {
         alert.addAction(confirm)
         self.present(alert, animated: true)
     }
-    
+
     @objc func dismissViewController() {
         self.coordinator?.dismiss()
     }
@@ -123,7 +123,7 @@ extension MountainAddingViewController: MKMapViewDelegate {
             reuseIdentifier: MountainAnnotationView.ReuseID
         )
     }
-    
+
     func mapView(_ mapView: MKMapView, didUpdate userLocation: MKUserLocation) {
         self.viewModel?.updateUserLocation(coordinate: userLocation.coordinate, altitude: userLocation.location?.altitude)
     }
@@ -136,7 +136,7 @@ extension MountainAddingViewController: NewPlaceAddable {
         alert.addAction(confirm)
         self.present(alert, animated: true)
     }
-    
+
     func newPlaceShouldAdd(title: String, description: String) {
         self.viewModel?.addMountain(title: title, description: description)
     }

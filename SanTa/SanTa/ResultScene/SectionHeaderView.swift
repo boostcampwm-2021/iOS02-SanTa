@@ -13,7 +13,7 @@ extension UILabel {
         self.font = .systemFont(ofSize: normalFontWithSize)
         self.textColor = withTextColor
     }
-    
+
     fileprivate convenience init(boldFontWithSize: CGFloat, withTextColor: UIColor) {
         self.init()
         self.font = .boldSystemFont(ofSize: boldFontWithSize)
@@ -21,31 +21,31 @@ extension UILabel {
     }
 }
 
-class SectionHeaderView: UICollectionReusableView {
+final class SectionHeaderView: UICollectionReusableView {
     static let identifier = "SectionHeaderView"
     let monthLabel = UILabel(boldFontWithSize: 17, withTextColor: .label)
     let countLabel = UILabel(normalFontWithSize: 15, withTextColor: .systemGray)
     let distanceLabel = UILabel(normalFontWithSize: 15, withTextColor: .systemGray)
     let timeLabel = UILabel(normalFontWithSize: 15, withTextColor: .systemGray)
-    
+
     func configure(month: String, count: String, distance: String, time: String) {
         self.backgroundColor = .systemBackground
         self.monthLabel.text = month
         self.countLabel.text = count
         self.distanceLabel.text = distance
         self.timeLabel.text = time
-        
+
         self.configureSubviews()
         self.configureLayout()
     }
-    
-    private func configureSubviews(){
+
+    private func configureSubviews() {
         self.addSubview(self.monthLabel)
         self.addSubview(self.countLabel)
         self.addSubview(self.distanceLabel)
         self.addSubview(self.timeLabel)
     }
-    
+
     private func configureLayout() {
         self.monthLabel.translatesAutoresizingMaskIntoConstraints = false
         self.countLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -66,7 +66,7 @@ class SectionHeaderView: UICollectionReusableView {
 
 // MARK: - Accessibility
 extension SectionHeaderView {
-    
+
     func configureVoiceOverAccessibility(date: String) {
         guard let countLabel = self.countLabel.text else { return }
         guard let distanceLabel = self.distanceLabel.text else { return }

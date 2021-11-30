@@ -7,29 +7,29 @@
 
 import MapKit
 
-class ClusterAnnotationView: MKAnnotationView {
+final class ClusterAnnotationView: MKAnnotationView {
     override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
         collisionMode = .circle
         centerOffset = CGPoint(x: 0, y: -10)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func prepareForDisplay() {
         super.prepareForDisplay()
-        
+
         if let cluster = annotation as? MKClusterAnnotation {
             let count = cluster.memberAnnotations.count
-            
+
             image = UIGraphicsImageRenderer(size: CGSize(width: 30, height: 30)).image { _ in
                 UIColor.white.setFill()
                 UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: 30, height: 30)).fill()
                 UIColor(named: "SantaColor")?.setFill()
                 UIBezierPath(ovalIn: CGRect(x: 3, y: 3, width: 24, height: 24)).fill()
-                
+
                 let attributes = [ NSAttributedString.Key.foregroundColor: UIColor.white,
                                    NSAttributedString.Key.font: UIFont.boldSystemFont(ofSize: 11)]
                 let text = count > 99 ? "99+" : "\(count)"

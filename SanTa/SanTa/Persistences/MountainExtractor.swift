@@ -8,17 +8,17 @@
 import Foundation
 import UIKit
 
-class MountainExtractor {
-    
+final class MountainExtractor {
+
     enum ExtractError: Error {
         case extractionFailed
     }
-    
+
     func extract(completion: @escaping (Result<NSDataAsset, Error>) -> Void) {
         guard let dataAsset = NSDataAsset(name: "MountainsWithLocation") else {
             return completion(.failure(ExtractError.extractionFailed))
         }
-        
+
         completion(.success(dataAsset))
     }
 }

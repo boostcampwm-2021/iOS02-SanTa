@@ -15,13 +15,13 @@ protocol RecordsStorage {
 }
 
 final class CoreDataRecordStorage: RecordsStorage {
-   
+
     private let coreDataStorage: CoreDataStorage
 
     init(coreDataStorage: CoreDataStorage) {
        self.coreDataStorage = coreDataStorage
     }
-    
+
     func save(records: Records, completion: @escaping (Result<Records, Error>) -> Void) {
         self.coreDataStorage.performBackgroundTask { context in
             let recordsObject = NSEntityDescription.insertNewObject(forEntityName: "RecordsEntity",
@@ -30,7 +30,7 @@ final class CoreDataRecordStorage: RecordsStorage {
             recordsObject?.id = records.id
             recordsObject?.secondPerHighestSpeed = Int16(records.secondPerHighestSpeed)
             recordsObject?.secondPerMinimumSpeed = Int16(records.secondPerMinimumSpeed)
-            
+
             do {
                 let assetIdentifiers = try NSKeyedArchiver.archivedData(withRootObject: records.assetIdentifiers, requiringSecureCoding: true)
                 recordsObject?.assetIdentifiers = assetIdentifiers
@@ -45,23 +45,22 @@ final class CoreDataRecordStorage: RecordsStorage {
                 recordObject?.endTime = $0.endTime
                 recordObject?.distance = $0.distance
                 recordObject?.step = Int16($0.step)
-                
+
                 guard let recordObject = recordObject else { return }
                 recordsObject?.addToRecords(recordObject)
-                
-                
+
                 $0.locations.locations.forEach {
                     let locationObject = NSEntityDescription.insertNewObject(forEntityName: "LocationEntity",
                                                                              into: context) as? LocationEntityMO
                     locationObject?.altitude = $0.altitude
                     locationObject?.latitude = $0.latitude
                     locationObject?.longitude = $0.longitude
-                    
+
                     guard let locationObject = locationObject else { return }
                     recordObject.addToLocations(locationObject)
                 }
             }
-            
+
             do {
                 try context.save()
                 completion(.success(records))
@@ -70,7 +69,7 @@ final class CoreDataRecordStorage: RecordsStorage {
             }
         }
     }
-    
+
     func fetch(completion: @escaping (Result<[RecordsEntityMO], Error>) -> Void) {
         self.coreDataStorage.performBackgroundTask { context in
             do {
@@ -82,24 +81,22 @@ final class CoreDataRecordStorage: RecordsStorage {
             }
         }
     }
-    
+
     func delete(id: String, completion: @escaping (Result<Void, Error>) -> Void) {
             let request = NSFetchRequest<RecordsEntityMO>(entityName: "RecordsEntity")
             request.predicate = NSPredicate(format: "id = %@", id)
             self.coreDataStorage.performBackgroundTask { context in
                 do {
                     let result = try context.fetch(request)
-                    print(result)
                     context.delete(result[0])
                     try context.save()
                     completion(.success(Void()))
                 } catch {
-                    print(error)
                     completion(.failure(error))
                 }
             }
         }
-        
+
     func update(title: String, id: String, completion: @escaping (Result<Void, Error>) -> Void) {
             let request = NSFetchRequest<RecordsEntityMO>(entityName: "RecordsEntity")
             request.predicate = NSPredicate(format: "id = %@", id)
