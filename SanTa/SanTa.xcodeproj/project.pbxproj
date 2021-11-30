@@ -93,6 +93,7 @@
 		DA4736F927561C9400841326 /* MountainListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAF4D6B273CE02400780DC8 /* MountainListViewModel.swift */; };
 		DA4736FA27561C9400841326 /* MountainListViewUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAAF4D6D273CE06A00780DC8 /* MountainListViewUseCase.swift */; };
 		DA4736FB27561C9A00841326 /* MountainEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FEEDB82732584000D37CCA /* MountainEntity.swift */; };
+		DA4736FD2756383000841326 /* TestRecordingRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4736FC2756383000841326 /* TestRecordingRepository.swift */; };
 		DA854FD42746270A00E51E4B /* UserDefaultsStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98A913002736844E008AAE39 /* UserDefaultsStorage.swift */; };
 		DA854FDC2746273300E51E4B /* RecordingUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA854FDB2746273300E51E4B /* RecordingUseCaseTests.swift */; };
 		DA854FE02746279F00E51E4B /* RecordingUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984DDEC227325DFC003BE56B /* RecordingUseCase.swift */; };
@@ -225,6 +226,7 @@
 		DA4736D12755E39500841326 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		DA4736F027561C6200841326 /* MountainListSceneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MountainListSceneTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA4736F227561C6200841326 /* MountainListSceneTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainListSceneTests.swift; sourceTree = "<group>"; };
+		DA4736FC2756383000841326 /* TestRecordingRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestRecordingRepository.swift; sourceTree = "<group>"; };
 		DA854FD92746273300E51E4B /* RecordingSceneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RecordingSceneTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA854FDB2746273300E51E4B /* RecordingUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingUseCaseTests.swift; sourceTree = "<group>"; };
 		DA9D7C9C273A433E0018AD45 /* RecordingTitleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingTitleViewController.swift; sourceTree = "<group>"; };
@@ -545,6 +547,7 @@
 			children = (
 				DA854FDB2746273300E51E4B /* RecordingUseCaseTests.swift */,
 				DAB25F1A2754AF2D00F0BE75 /* RecordingViewModelTests.swift */,
+				DA4736FC2756383000841326 /* TestRecordingRepository.swift */,
 			);
 			path = RecordingSceneTests;
 			sourceTree = "<group>";
@@ -909,6 +912,7 @@
 				DA854FE62746282600E51E4B /* RecordingPhotoModel.swift in Sources */,
 				DAB25F1B2754AF2D00F0BE75 /* RecordingViewModelTests.swift in Sources */,
 				DA854FE1274627AA00E51E4B /* RecordingModel.swift in Sources */,
+				DA4736FD2756383000841326 /* TestRecordingRepository.swift in Sources */,
 				DA854FE02746279F00E51E4B /* RecordingUseCase.swift in Sources */,
 				DA854FDC2746273300E51E4B /* RecordingUseCaseTests.swift in Sources */,
 			);

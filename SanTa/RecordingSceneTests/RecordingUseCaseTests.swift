@@ -12,34 +12,7 @@ final class RecordingUseCaseTests: XCTestCase {
     private var useCase: DefaultRecordingUseCase!
     private var repository: RecordRepository!
 
-    enum testError: Error {
-        case StoreError
-    }
-
-    class TestRecordingRepository: RecordRepository {
-        func saveRecordPhotoOption(value: Bool) {
-            return
-        }
-
-        func save(records: Records,
-                  completion: @escaping (Result<Records, Error>) -> Void) {
-
-            completion(.success(records))
-        }
-
-        func fetchRecordOption(key: Settings, completion: @escaping (Result<Bool, Error>) -> Void) {
-            switch key {
-            case .voiceGuidanceEveryOnekm:
-                completion(.success(true))
-            case .recordPhoto:
-                completion(.success(true))
-            default:
-                completion(.success(false))
-            }
-        }
-    }
-
-    override func setUpWithError() throws {
+    override func setUp() {
         repository = TestRecordingRepository()
         useCase = DefaultRecordingUseCase(recordRepository: repository, recordingModel: nil, recordingPhoto: RecordingPhotoModel())
     }
