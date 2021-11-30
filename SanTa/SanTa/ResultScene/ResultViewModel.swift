@@ -84,7 +84,7 @@ class ResultViewModel {
         }
         let dateString = self.cellDateFormatter(records.date)
         let distanceString = self.doubleFormatter(records.distances)
-        let timeString = self.timeFormatter(records.times)
+        let timeString = self.timeFormatter(records.totalTravelTime)
         let altitudeDifferenceString = self.cellAltitudeDifferenceFormatter(records.maxAltitudeDifference)
         let stepsString = self.stepsFormatter(records.steps)
         let title = records.title

@@ -69,9 +69,12 @@ class ResultDetailViewModel {
         let formatter = NumberFormatter()
         formatter.minimumFractionDigits = 2
         formatter.maximumFractionDigits = 2
-        let totalDistance = self.resultDetailData?.distance.total ?? 0
-        let totalTimeSpent = self.resultDetailData?.time.spent ?? 1
-        return formatter.string(from: NSNumber(value: totalDistance * 3600 / totalTimeSpent)) ?? ""
+        guard let distance = self.resultDetailData?.distance.total,
+              let totalTime = self.resultDetailData?.time.spent, totalTime > 0,
+              let speed = formatter.string(from: NSNumber(value: distance * 3600 / totalTime)) else {
+                  return "-"
+              }
+        return speed
     }
     
     lazy var recordDate: String = {
@@ -103,7 +106,7 @@ class ResultDetailViewModel {
         dateFormatter.dateFormat = "a h시 m분"
         return dateFormatter.string(from: endTime)
     }()
-
+    
     func imageVisibilityButtonTouched() {
         self.useCase.toggleImageVisibility { [weak self] bool in
             bool ? (self?.imageVisibilityIconName = "eye") : (self?.imageVisibilityIconName = "eye.slash")
@@ -128,18 +131,18 @@ class DetailInformationModel: Hashable {
     var contents: [CellContentEntity] = []
     
     func hash(into hasher: inout Hasher) {
-      hasher.combine(id)
+        hasher.combine(id)
     }
-
+    
     static func == (lhs: DetailInformationModel, rhs: DetailInformationModel) -> Bool {
-      lhs.id == rhs.id
+        lhs.id == rhs.id
     }
 }
 
 extension ResultDetailViewModel {
     class DistanceViewModel: DetailInformationModel {
-        var totalDistance: String = ""
-        var steps: String = ""
+        var totalDistance: String = "-"
+        var steps: String = "0"
         
         init(distanceData: ResultDistance?) {
             super.init()
@@ -151,15 +154,17 @@ extension ResultDetailViewModel {
             formatter.numberStyle = .decimal
             formatter.minimumFractionDigits = 0
             formatter.maximumFractionDigits = 2
-            guard let total = formatter.string(from: NSNumber(value: distanceData.total)),
-                  let steps = formatter.string(from: NSNumber(value: distanceData.steps)) else {
-                      return
-                  }
-            self.totalDistance = total
-            self.steps = steps
+            if let steps = formatter.string(from: NSNumber(value: distanceData.steps)) {
+                self.steps = steps
+            }
+            
+            if let distance = distanceData.total,
+               let total = formatter.string(from: NSNumber(value: distance)) {
+                self.totalDistance = total
+            }
             self.contents = [
-                CellContentEntity(content: total, contentTitle: "전체"),
-                CellContentEntity(content: steps, contentTitle: "걸음수")
+                CellContentEntity(content: self.totalDistance, contentTitle: "전체"),
+                CellContentEntity(content: self.steps, contentTitle: "걸음수")
             ]
         }
     }
@@ -214,8 +219,8 @@ extension ResultDetailViewModel {
     }
     
     class AltitudeViewModel: DetailInformationModel {
-        var highest: String = ""
-        var lowest: String = ""
+        var highest: String = "-"
+        var lowest: String = "-"
         
         init(altitudeData: ResultAltitude?) {
             super.init()
@@ -223,15 +228,41 @@ extension ResultDetailViewModel {
                 return
             }
             self.title = "고도"
+            var totalString = "-"
+            var highestString = "-"
+            var lowestString = "-"
+            var startingString = "-"
+            var endingString = "-"
+            
+            if let total = altitudeData.total {
+                totalString = String(total)
+            }
+            
+            if let highest = altitudeData.highest {
+                highestString = String(highest)
+                self.highest = highestString
+            }
+            
+            if let lowest = altitudeData.lowest {
+                lowestString = String(lowest)
+                self.lowest = lowestString
+            }
+            
+            if let start = altitudeData.starting {
+                startingString = String(start)
+            }
+            
+            if let end = altitudeData.ending {
+                endingString = String(end)
+            }
+            
             self.contents = [
-                CellContentEntity(content: String(altitudeData.total), contentTitle: "누적"),
-                CellContentEntity(content: String(altitudeData.highest), contentTitle: "최고"),
-                CellContentEntity(content: String(altitudeData.lowest), contentTitle: "최저"),
-                CellContentEntity(content: String(altitudeData.starting), contentTitle: "시작"),
-                CellContentEntity(content: String(altitudeData.ending), contentTitle: "종료"),
+                CellContentEntity(content: totalString, contentTitle: "누적"),
+                CellContentEntity(content: highestString, contentTitle: "최고"),
+                CellContentEntity(content: lowestString, contentTitle: "최저"),
+                CellContentEntity(content: startingString, contentTitle: "시작"),
+                CellContentEntity(content: endingString, contentTitle: "종료"),
             ]
-            self.highest = String(altitudeData.highest)
-            self.lowest = String(altitudeData.lowest)
         }
     }
     
@@ -251,8 +282,8 @@ extension ResultDetailViewModel {
                       return
                   }
             self.contents = [
-                CellContentEntity(content: String(inclineData.average), contentTitle: "평균"),
-                CellContentEntity(content: String(inclineData.highest), contentTitle: "최고"),
+                CellContentEntity(content: String(inclineData.average)+"°", contentTitle: "평균"),
+                CellContentEntity(content: String(inclineData.highest)+"°", contentTitle: "최고"),
                 CellContentEntity(content: uphill, contentTitle: "오르막(km)"),
                 CellContentEntity(content: downhill, contentTitle: "내리막(km)"),
                 CellContentEntity(content: plain, contentTitle: "평지(km)"),

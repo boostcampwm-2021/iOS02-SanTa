@@ -49,7 +49,8 @@ final class CoreDataRecordStorage: RecordsStorage {
                 guard let recordObject = recordObject else { return }
                 recordsObject?.addToRecords(recordObject)
                 
-                $0.locations.forEach {
+                
+                $0.locations.locations.forEach {
                     let locationObject = NSEntityDescription.insertNewObject(forEntityName: "LocationEntity",
                                                                              into: context) as? LocationEntityMO
                     locationObject?.altitude = $0.altitude

@@ -80,7 +80,7 @@ class DateSeperateRecords {
     }
     
     var times: TimeInterval {
-        return dateSeperateRecords.reduce(0) { $0 + $1.times }
+        return dateSeperateRecords.reduce(0) { $0 + $1.totalTravelTime }
     }
     
     var steps: Int {
@@ -111,8 +111,8 @@ struct Records {
         return records.reduce(0) { $0 + $1.distance }
     }
     
-    var times: TimeInterval {
-        return records.reduce(0) { $0 + $1.time }
+    var totalTravelTime: TimeInterval {
+        return records.reduce(0) { $0 + $1.travelTime }
     }
     
     var steps: Int {
@@ -160,18 +160,26 @@ struct Record {
     let endTime: Date
     let step: Int
     let distance: Double
-    let locations: [Location]
+    let locations: Locations
     
-    var time: TimeInterval {
-        return endTime.timeIntervalSinceReferenceDate - startTime.timeIntervalSinceReferenceDate
+    var travelTime: TimeInterval {
+        return endTime.timeIntervalSince(startTime)
     }
     
     var minAltitude: Double? {
-        return locations.map{ $0.altitude }.min()
+        return locations.minAltitude
     }
     
     var maxAltitude: Double? {
-        return locations.map{ $0.altitude }.max()
+        return locations.maxAltitude
+    }
+    
+    init(startTime: Date, endTime: Date, step: Int, distance: Double, locations: [Location]) {
+        self.startTime = startTime
+        self.endTime = endTime
+        self.step = step
+        self.distance = distance
+        self.locations = Locations(locations: locations)
     }
 }
 
@@ -193,6 +201,10 @@ struct Locations {
     
     init(locations: [Location]) {
         self.locations = locations
+    }
+    
+    var coordinates: [CLLocationCoordinate2D] {
+        return locations.map{CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude)}
     }
     
     var maxAltitude: Double {
@@ -221,6 +233,26 @@ struct Locations {
             return 0
         }
         return last
+    }
+    
+    var startLocation: Location? {
+        return locations.first
+    }
+    
+    var endLocation: Location? {
+        return locations.last
+    }
+    
+    func totalDistance() -> Double {
+        var distance: Double = 0
+        var prevLocation: Location? = nil
+        for location in locations {
+            if let prevLocation = prevLocation {
+                distance += location.distance(to: prevLocation)
+            }
+            prevLocation = location
+        }
+        return distance
     }
     
     func totalUphillDistance() -> Double {
@@ -271,8 +303,8 @@ struct Locations {
         return plainDistance
     }
     
-    func totalIncline() -> Double {
-        var incline: Double = 0
+    func totalIncline() -> [Double] {
+        var incline: [Double] = []
         var prevLocation: Location? = nil
         
         for location in locations {
@@ -280,7 +312,7 @@ struct Locations {
                 let distanceDelta = location.distance(to: prevLocation)
                 let altitudeDelta = location.altitude > prevLocation.altitude ? location.altitude - prevLocation.altitude : 0
                 if distanceDelta != 0 {
-                    incline += atan(altitudeDelta / distanceDelta)
+                    incline.append(atan(altitudeDelta / distanceDelta))
                 }
             }
             prevLocation = location

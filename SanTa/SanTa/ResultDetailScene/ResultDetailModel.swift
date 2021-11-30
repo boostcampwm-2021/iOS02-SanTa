@@ -31,7 +31,7 @@ struct ResultDetailData {
         self.title = records.title
         self.assetIdentifiers = records.assetIdentifiers
         var locations: [[CLLocationCoordinate2D]] = []
-        records.records.forEach { locations.append($0.locations.map {CLLocationCoordinate2D(latitude: $0.latitude, longitude: $0.longitude) }) }
+        records.records.forEach{locations.append($0.locations.coordinates)}
         self.coordinates = locations
     }
     
@@ -49,22 +49,18 @@ struct ResultTimeStamp {
     init(records: Records) {
         self.startTime = records.records.first?.startTime ?? Date.distantPast
         self.endTime = records.records.last?.endTime ?? Date.distantFuture
-        self.startLocation = records.records.first?.locations.first
-        self.endLocation = records.records.last?.locations.last
+        self.startLocation = records.records.first?.locations.startLocation
+        self.endLocation = records.records.last?.locations.endLocation
     }
 }
 
 struct ResultDistance {
-    let total: Double
+    var total: Double? = nil
     let steps: Int
     
     init(records: Records) {
         self.steps = records.steps
-        guard let totalDistance = records.records.last?.distance else {
-            self.total = 0
-            return
-        }
-        self.total = totalDistance
+        self.total = records.records.map{$0.locations.totalDistance()}.reduce(0, +) / 1000
     }
 }
 
@@ -75,12 +71,14 @@ struct ResultTime {
     
     init(records: Records) {
         var inactive: TimeInterval = 0
-        for index in 0..<records.records.count - 1 {
-            inactive += records.records[index].endTime.timeIntervalSince(records.records[index+1].startTime)
+        if records.records.count > 1 {
+            for index in 0..<records.records.count - 1 {
+                inactive += records.records[index + 1].startTime.timeIntervalSince(records.records[index].endTime)
+            }
         }
         self.active = records.records.map{$0.endTime.timeIntervalSince($0.startTime)}.reduce(0, +)
         self.inactive = inactive
-        self.spent = records.times
+        self.spent = records.totalTravelTime
     }
 }
 
@@ -90,26 +88,35 @@ struct ResultPace {
     let slowestPace: TimeInterval
     
     init(records: Records) {
-        self.timePerKilometer = records.distances / records.times / 1000
+        self.timePerKilometer = records.distances / records.totalTravelTime / 1000
         self.fastestPace = TimeInterval(records.secondPerHighestSpeed)
         self.slowestPace = TimeInterval(records.secondPerMinimumSpeed)
     }
 }
 
 struct ResultAltitude {
-    let total: Int
-    let highest: Int
-    let lowest: Int
-    let starting: Int
-    let ending: Int
+    let total: Int?
+    let highest: Int?
+    let lowest: Int?
+    let starting: Int?
+    let ending: Int?
     
     init(records: Records) {
         var paths: [Locations] = []
         for record in records.records {
-            paths.append(Locations(locations: record.locations))
+            paths.append(record.locations)
         }
-        var maxAltitude: Int = 0
-        var minAltitude: Int = 0
+        guard !paths.isEmpty else {
+            self.total = nil
+            self.highest = nil
+            self.lowest = nil
+            self.starting = nil
+            self.ending = nil
+            return
+        }
+        
+        var maxAltitude: Int = Int.min
+        var minAltitude: Int = Int.max
         for path in paths {
             maxAltitude = max(Int(round(path.maxAltitude)), Int(maxAltitude))
             minAltitude = min(Int(round(path.minAltitude)), Int(minAltitude))
@@ -131,7 +138,7 @@ struct ResultIncline {
     let plainKilometer: Double
     
     init(records: Records) {
-        var totalIncline: Double = 0
+        var inclines: [Double] = []
         var steepest: Double = 0
         var uphillDistance: Double = 0
         var downHillDistance: Double = 0
@@ -139,22 +146,29 @@ struct ResultIncline {
         
         var paths: [Locations] = []
         for record in records.records {
-            paths.append(Locations(locations: record.locations))
+            paths.append(record.locations)
         }
         
-        for locations in paths {
-            
-            totalIncline += locations.totalIncline()
-            steepest = locations.steepestIncline()
-            uphillDistance += locations.totalUphillDistance()
-            downHillDistance += locations.totalDownhillDistance()
-            plainDistance += locations.totalPlainDistance()
+        for path in paths {
+            inclines.append(contentsOf: path.totalIncline())
+            steepest = max(path.steepestIncline(), steepest)
+            uphillDistance += path.totalUphillDistance()
+            downHillDistance += path.totalDownhillDistance()
+            plainDistance += path.totalPlainDistance()
         }
+        let averageInclineInRadian: Double = inclines.isEmpty ? 0 : inclines.reduce(0, +) / Double(inclines.count)
+        let averageInclineInDegrees: Int = Int(round(averageInclineInRadian.toDegrees()))
         
-        self.average = paths.count > 1 ? Int(totalIncline / Double(paths.count - 1)) : 0
-        self.highest = Int(steepest)
+        self.average = averageInclineInDegrees
+        self.highest = Int(round(steepest.toDegrees()))
         self.uphillKilometer = uphillDistance / 1000
         self.downhillKilometer = downHillDistance / 1000
         self.plainKilometer = plainDistance / 1000
+    }
+}
+
+extension Double {
+    fileprivate func toDegrees() -> Double {
+        return self * 180 / Double.pi
     }
 }

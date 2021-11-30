@@ -39,12 +39,22 @@ class MountainListViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.configureSearchBar()
         self.configureCollectionView()
         self.configureView()
         self.configuareDataSource()
         self.configureBinding()
         self.viewModel?.viewDidLoad()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.configureSearchBar()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.navigationItem.searchController = nil
+        self.view.setNeedsLayout()
     }
     
     private func configureSearchBar() {
