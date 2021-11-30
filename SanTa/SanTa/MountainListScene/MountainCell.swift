@@ -15,6 +15,7 @@ final class MountainCell: UICollectionViewCell {
         let label = UILabel()
         label.font = .preferredFont(forTextStyle: .headline)
         label.adjustsFontForContentSizeCategory = true
+        label.numberOfLines = 0
         return label
     }()
     
@@ -22,6 +23,7 @@ final class MountainCell: UICollectionViewCell {
         let label = UILabel()
         label.font = .preferredFont(forTextStyle: .subheadline)
         label.adjustsFontForContentSizeCategory = true
+        label.numberOfLines = 0
         label.textColor = .systemGray2
         return label
     }()
@@ -31,20 +33,20 @@ final class MountainCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.adjustsFontForContentSizeCategory = true
         label.font = .preferredFont(forTextStyle: .callout)
-        label.numberOfLines = 5
+        label.numberOfLines = 0
         label.textColor = .systemGray2
         return label
     }()
-    
+
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [self.name, self.height])
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .horizontal
         stackView.spacing = 10
-        stackView.distribution = .fillEqually
+        stackView.distribution = .fill
         return stackView
     }()
-    
+
     override init(frame: CGRect) {
         super.init(frame: frame)
 
@@ -60,6 +62,7 @@ final class MountainCell: UICollectionViewCell {
         let stackViewConstrain = [
             self.stackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 20),
             self.stackView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 30),
+            self.stackView.rightAnchor.constraint(lessThanOrEqualTo: self.rightAnchor, constant: -30),
         ]
         NSLayoutConstraint.activate(stackViewConstrain)
         

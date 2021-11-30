@@ -65,7 +65,6 @@ class SectionHeaderView: UICollectionReusableView {
 }
 
 // MARK: - Accessibility
-
 extension SectionHeaderView {
     
     func configureVoiceOverAccessibility(date: String) {
