@@ -1,7 +1,7 @@
 ---
 name: Refactor Request Template
 about: Refactor 작업 필요시 사용하는 기본 템플릿
-title: ''
+title: "[REFACTOR]"
 labels: Refactor
 assignees: ''
 
@@ -14,7 +14,7 @@ assignees: ''
   1. MVC 입니다
 
 - 개선될 구조
-  2. MVVM 입니다
+  1. MVVM 입니다
 
 ## 기대하는 결과
 > 구체적으로 어떤 결과가 나오게 수정해야 하는지 작성합니다.
