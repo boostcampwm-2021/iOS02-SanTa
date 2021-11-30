@@ -15,29 +15,29 @@ protocol UserDefaultsStorage {
 }
 
 final class DefaultUserDefaultsStorage: UserDefaultsStorage {
-    
+
     let userDefaults: UserDefaults
-    
+
     init(useuserDefaults: UserDefaults = UserDefaults.standard) {
         self.userDefaults = useuserDefaults
     }
-    
+
     func save<T: Codable>(value: T, key: Settings) {
         self.userDefaults.set(value, forKey: key.title)
     }
-    
+
     func exist(key: Settings) -> Bool {
         return self.userDefaults.object(forKey: key.title) != nil
     }
-    
+
     func bool(key: Settings, completion: @escaping (Bool) -> Void) {
         completion(self.userDefaults.bool(forKey: key.title))
     }
-    
+
     func string(key: Settings, completion: @escaping (String?) -> Void) {
         completion(self.userDefaults.string(forKey: key.title))
     }
-    
+
     func makeFirstData() {
         if !self.exist(key: .recordPhoto) {
             self.save(value: Settings.recordPhoto.initValue as? Bool,

@@ -15,14 +15,14 @@ class DefaultMountainListViewReposiory {
     enum JSONDecodeError: Error {
         case decodingFailed
     }
-    
+
     enum userDefaultsError: Error {
         case notExists
     }
-    
+
     private let mountainExtractor: MountainExtractor
     private let settingsStorage: UserDefaultsStorage
-    
+
     init(mountainExtractor: MountainExtractor, userDefaultsStorage: UserDefaultsStorage) {
         self.mountainExtractor = mountainExtractor
         self.settingsStorage = userDefaultsStorage

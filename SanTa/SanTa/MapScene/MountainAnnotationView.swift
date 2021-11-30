@@ -10,7 +10,7 @@ import MapKit
 
 class MountainAnnotationView: MKAnnotationView {
     static let ReuseID = "MountainAnnotation"
-    
+
     override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
         self.clusteringIdentifier = "mountain"
@@ -18,11 +18,11 @@ class MountainAnnotationView: MKAnnotationView {
         self.calloutOffset = CGPoint(x: 0, y: 5)
         self.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func prepareForDisplay() {
         super.prepareForDisplay()
         displayPriority = .defaultHigh

@@ -10,15 +10,15 @@ import UIKit
 class SettingsViewCoordinator: Coordinator {
     weak var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
-    
+
     private var userDefaultsStorage: UserDefaultsStorage
-    
+
     init(userDefaultsStorage: UserDefaultsStorage) {
         self.userDefaultsStorage = userDefaultsStorage
     }
-    
+
     func start() {
-        
+
     }
 
     func startPush() -> SettingsViewController {

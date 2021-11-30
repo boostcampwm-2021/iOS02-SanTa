@@ -8,7 +8,7 @@
 import XCTest
 
 class ResultSceneTests: XCTestCase {
-    
+
     class MockRepository: ResultRepository {
         func fetch(completion: @escaping (Result<[Records], Error>) -> Void) {
             let location1 = Location(latitude: 10, longitude: 20, altitude: 30)
@@ -54,25 +54,25 @@ class ResultSceneTests: XCTestCase {
             completion(.success([records1, records2]))
         }
     }
-    
+
     private var viewModel: ResultViewModel!
     private var useCase: ResultUseCase!
-    
+
     override func setUpWithError() throws {
         useCase = ResultUseCase(resultRepository: MockRepository())
         viewModel = ResultViewModel(useCase: useCase)
     }
-    
+
     func test_ViewModel_viewWillAppear시_UseCase에_TotalRecords_세팅() throws {
         viewModel.viewWillAppear { }
         XCTAssertNotNil(useCase.totalRecords)
     }
-    
+
     func test_ViewModel_itemsInSection호출시_section넘버에_따라_Records갯수_반환() {
         viewModel.viewWillAppear { }
         XCTAssertEqual(viewModel.itemsInSection(section: 0), 2)
     }
-    
+
     func test_ViewModel_totalInfo호출시_총_Records를_View에_보여줄_문자열정보로_반환() {
         viewModel.viewWillAppear { }
         let infomation = viewModel.totalInfo()
@@ -81,7 +81,7 @@ class ResultSceneTests: XCTestCase {
         XCTAssertEqual(infomation.time, "01:06")
         XCTAssertEqual(infomation.steps, "100")
     }
-    
+
     func test_ViewModel_sectionInfo호출시_섹션넘버에_맞는_Records를_View에_보여줄_문자열정보로_반환() {
         viewModel.viewWillAppear { }
         let infomation = viewModel.sectionInfo(section: 0)
@@ -91,7 +91,7 @@ class ResultSceneTests: XCTestCase {
         XCTAssertEqual(infomation.distance, "140.00km")
         XCTAssertEqual(infomation.time, "01:06")
     }
-    
+
     func test_ViewModel_cellInfo호출시_IndexPath에_맞는_Records를_View에_보여줄_문자열정보로_반환() {
         viewModel.viewWillAppear { }
         let infomation = viewModel.cellInfo(indexPath: IndexPath(item: 0, section: 0))
@@ -102,11 +102,10 @@ class ResultSceneTests: XCTestCase {
         XCTAssertEqual(infomation.steps, "30")
         XCTAssertEqual(infomation.title, "기록1")
     }
-    
+
     func test_ViewModel_selectedRecords호출시_IndexPath에_맞는_Records반환() {
         viewModel.viewWillAppear { }
         let record = viewModel.selectedRecords(indexPath: IndexPath(item: 0, section: 0))
         XCTAssertEqual(record?.id, "1")
     }
 }
-

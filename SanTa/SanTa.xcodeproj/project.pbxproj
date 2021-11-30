@@ -27,6 +27,7 @@
 		49FC97682744E105008CE73A /* ResultDetailViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FC97672744E105008CE73A /* ResultDetailViewCoordinator.swift */; };
 		49FEEDB7273255DD00D37CCA /* MountainExtractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FEEDB6273255DD00D37CCA /* MountainExtractor.swift */; };
 		49FEEDB92732584000D37CCA /* MountainEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49FEEDB82732584000D37CCA /* MountainEntity.swift */; };
+		540F8EBA2755B8860082FA3B /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = 540F8EB92755B8860082FA3B /* .swiftlint.yml */; };
 		5428FDB4272F894D002F9D40 /* MapViewRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5428FDB3272F894D002F9D40 /* MapViewRepository.swift */; };
 		5428FDBD272F8C5B002F9D40 /* MapViewUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5428FDBC272F8C5B002F9D40 /* MapViewUseCase.swift */; };
 		54296945272FBC6E0070B362 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 54296944272FBC6E0070B362 /* AppCoordinator.swift */; };
@@ -156,6 +157,7 @@
 		49FC97672744E105008CE73A /* ResultDetailViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailViewCoordinator.swift; sourceTree = "<group>"; };
 		49FEEDB6273255DD00D37CCA /* MountainExtractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainExtractor.swift; sourceTree = "<group>"; };
 		49FEEDB82732584000D37CCA /* MountainEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainEntity.swift; sourceTree = "<group>"; };
+		540F8EB92755B8860082FA3B /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		5428FDB3272F894D002F9D40 /* MapViewRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewRepository.swift; sourceTree = "<group>"; };
 		5428FDBC272F8C5B002F9D40 /* MapViewUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewUseCase.swift; sourceTree = "<group>"; };
 		54296944272FBC6E0070B362 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
@@ -425,6 +427,7 @@
 		54851275272A6AD500407F28 = {
 			isa = PBXGroup;
 			children = (
+				540F8EB92755B8860082FA3B /* .swiftlint.yml */,
 				54851280272A6AD500407F28 /* SanTa */,
 				9826F42E273953FB0064FA85 /* SettingsSceneTests */,
 				DA854FDA2746273300E51E4B /* RecordingSceneTests */,
@@ -552,6 +555,7 @@
 				5485127A272A6AD500407F28 /* Sources */,
 				5485127B272A6AD500407F28 /* Frameworks */,
 				5485127C272A6AD500407F28 /* Resources */,
+				540F8EB82755B8080082FA3B /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -667,6 +671,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				540F8EBA2755B8860082FA3B /* .swiftlint.yml in Resources */,
 				54851291272A6AD600407F28 /* LaunchScreen.storyboard in Resources */,
 				5485128E272A6AD600407F28 /* Assets.xcassets in Resources */,
 				547CDD9A27392474007CCA29 /* walkingManAnimation.gif in Resources */,
@@ -695,6 +700,26 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		540F8EB82755B8080082FA3B /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export PATH=\"$PATH:/opt/homebrew/bin\"\n\nif which swiftlint >/dev/null; then\n  swiftlint autocorrect\nelse\n  echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		5485127A272A6AD500407F28 /* Sources */ = {

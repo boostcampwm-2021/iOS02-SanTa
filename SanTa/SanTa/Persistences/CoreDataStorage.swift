@@ -33,7 +33,7 @@ final class CoreDataStorage {
             }
         }
     }
-    
+
     func performBackgroundTask(_ block: @escaping (NSManagedObjectContext) -> Void) {
         self.persistentContainer.performBackgroundTask(block)
     }

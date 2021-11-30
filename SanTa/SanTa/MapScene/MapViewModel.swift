@@ -14,12 +14,12 @@ final class MapViewModel {
     @Published private(set) var map: Map?
     @Published private(set) var initialLocation: CLLocation?
     @Published private(set) var locationPermission: Bool?
-    
+
     init(useCase: MapViewUseCase) {
         self.useCase = useCase
         self.mountains = []
     }
-    
+
     func configureBindings() {
         self.useCase.prepareMountainMarkers { [weak self] mountains in
             self?.mountains = mountains
@@ -33,14 +33,14 @@ final class MapViewModel {
         self.useCase.preparePermission()
         self.useCase.prepareLocacationManager()
     }
-    
+
     func viewWillAppear() {
-        self.useCase.prepareMap{ [weak self] map in
+        self.useCase.prepareMap { [weak self] map in
             guard let map = map else { return }
             self?.map = map
         }
     }
-    
+
     func updateMarker() {
         self.useCase.prepareMountainMarkers { [weak self] mountains in
             self?.mountains = mountains

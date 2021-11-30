@@ -17,7 +17,7 @@ class ResultViewCoordinator: Coordinator {
         self.navigationController = UINavigationController()
         self.coreDataStorage = coreDataStorage
     }
-    
+
     func start() {
     }
 
@@ -41,12 +41,12 @@ extension ResultViewCoordinator {
             )
         )
     }
-    
+
     func presentResultDetailViewController(records: Records) {
         let resultDetailViewCoordinator = ResultDetailViewCoordinator(navigationController: self.navigationController, coreDataStorage: self.coreDataStorage, records: records)
         resultDetailViewCoordinator.parentCoordinator = self
         self.childCoordinators.append(resultDetailViewCoordinator)
-        
+
         resultDetailViewCoordinator.start()
     }
 }

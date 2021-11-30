@@ -14,21 +14,21 @@ class MountainAddingViewModel {
     @Published private(set) var coordinate: CLLocationCoordinate2D?
     private(set) var altitude: CLLocationDistance?
     let addMountainResult = PassthroughSubject<AddMountainResult, Never>()
-    
+
     enum AddMountainResult: String {
         case success = "저장에 성공하였습니다."
         case failure = "저장에 실패하였습니다."
     }
-    
+
     init(useCase: MountainAddingViewUseCase) {
         self.useCase = useCase
     }
-    
+
     func updateUserLocation(coordinate: CLLocationCoordinate2D?, altitude: CLLocationDistance?) {
         self.coordinate = coordinate
         self.altitude = altitude
     }
-    
+
     func addMountain(title: String, description: String) {
         guard let coordinate = coordinate,
               let altitude = altitude

@@ -22,13 +22,13 @@ class MapViewUseCase: NSObject {
             return false
         }
     }
-    
+
     init(repository: MapViewRepository) {
         self.repository = repository
         self.initialLocation = { _ in }
         self.locationPermissionDidChangeTo = { _ in }
     }
-    
+
     func prepareMountainMarkers(completion: @escaping ([MountainEntity]?) -> Void) {
         self.repository.fetchMountains { result in
             switch result {
@@ -40,7 +40,7 @@ class MapViewUseCase: NSObject {
             }
         }
     }
-    
+
     func prepareMap(completion: @escaping (Map?) -> Void) {
         self.repository.fetchMapOption(key: Settings.mapFormat) { result in
             switch result {
@@ -52,11 +52,11 @@ class MapViewUseCase: NSObject {
             }
         }
     }
-    
+
     func preparePermission() {
         self.locationPermissionDidChangeTo(self.locationPermission)
     }
-    
+
     func prepareLocacationManager() {
         self.manager.requestWhenInUseAuthorization()
         self.manager.requestAlwaysAuthorization()
@@ -73,7 +73,7 @@ extension MapViewUseCase: CLLocationManagerDelegate {
             self.initialLocation(location)
         }
     }
-    
+
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         self.locationPermissionDidChangeTo(self.locationPermission)
     }

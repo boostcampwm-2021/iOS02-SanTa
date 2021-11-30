@@ -29,12 +29,12 @@ class ResultDetailViewModel {
     }
     @Published var imageVisibilityIconName: String?
     let imageVisibilityStatus = PassthroughSubject<Bool, Never>()
-    
+
     init(useCase: ResultDetailUseCase) {
         self.useCase = useCase
         self.recordDidFetch = {}
     }
-    
+
     func setUp() {
         self.useCase.transferResultDetailData { [weak self] dataModel in
             self?.resultDetailData = dataModel
@@ -42,21 +42,21 @@ class ResultDetailViewModel {
         }
         self.imageVisibilityIconName = useCase.isImageVisibilityOn ? "eye" : "eye.slash"
     }
-    
+
     func delete(completion: @escaping (Result<Void, Error>) -> Void) {
         guard let id = self.resultDetailData?.id else {
             return
         }
         self.useCase.delete(id: id, completion: completion)
     }
-    
+
     func update(title: String, completion: @escaping (String) -> Void) {
         guard let id = self.resultDetailData?.id else {
             return
         }
         self.useCase.update(title: title, id: id) { result in
             switch result {
-            case .success():
+            case .success:
                 self.resultDetailData?.change(title: title)
                 completion(title)
             case .failure(let error):
@@ -64,7 +64,7 @@ class ResultDetailViewModel {
             }
         }
     }
-    
+
     func averageSpeed() -> String {
         let formatter = NumberFormatter()
         formatter.minimumFractionDigits = 2
@@ -76,7 +76,7 @@ class ResultDetailViewModel {
               }
         return speed
     }
-    
+
     lazy var recordDate: String = {
         guard let endTime = self.resultDetailData?.timeStamp.endTime else {
             return ""
@@ -86,7 +86,7 @@ class ResultDetailViewModel {
         dateFormatter.dateFormat = "yyyy. MM. dd. (E)"
         return dateFormatter.string(from: endTime)
     }()
-    
+
     lazy var startTime: String = {
         guard let startTime = self.resultDetailData?.timeStamp.startTime else {
             return ""
@@ -96,7 +96,7 @@ class ResultDetailViewModel {
         dateFormatter.dateFormat = "a h시 m분"
         return dateFormatter.string(from: startTime)
     }()
-    
+
     lazy var endTime: String = {
         guard let endTime = self.resultDetailData?.timeStamp.endTime else {
             return ""
@@ -106,7 +106,7 @@ class ResultDetailViewModel {
         dateFormatter.dateFormat = "a h시 m분"
         return dateFormatter.string(from: endTime)
     }()
-    
+
     func imageVisibilityButtonTouched() {
         self.useCase.toggleImageVisibility { [weak self] bool in
             bool ? (self?.imageVisibilityIconName = "eye") : (self?.imageVisibilityIconName = "eye.slash")
@@ -129,11 +129,11 @@ class DetailInformationModel: Hashable {
     var id: UUID = UUID()
     var title: String = ""
     var contents: [CellContentEntity] = []
-    
+
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
     }
-    
+
     static func == (lhs: DetailInformationModel, rhs: DetailInformationModel) -> Bool {
         lhs.id == rhs.id
     }
@@ -143,7 +143,7 @@ extension ResultDetailViewModel {
     class DistanceViewModel: DetailInformationModel {
         var totalDistance: String = "-"
         var steps: String = "0"
-        
+
         init(distanceData: ResultDistance?) {
             super.init()
             guard let distanceData = distanceData else {
@@ -157,7 +157,7 @@ extension ResultDetailViewModel {
             if let steps = formatter.string(from: NSNumber(value: distanceData.steps)) {
                 self.steps = steps
             }
-            
+
             if let distance = distanceData.total,
                let total = formatter.string(from: NSNumber(value: distance)) {
                 self.totalDistance = total
@@ -168,10 +168,10 @@ extension ResultDetailViewModel {
             ]
         }
     }
-    
+
     class TimeViewModel: DetailInformationModel {
         var totalTimeSpent: String = ""
-        
+
         init(timeData: ResultTime?) {
             super.init()
             guard let timeData = timeData else {
@@ -190,11 +190,11 @@ extension ResultDetailViewModel {
             self.contents = [
                 CellContentEntity(content: spent, contentTitle: "소요"),
                 CellContentEntity(content: active, contentTitle: "운동"),
-                CellContentEntity(content: inactive, contentTitle: "휴식"),
+                CellContentEntity(content: inactive, contentTitle: "휴식")
             ]
         }
     }
-    
+
     class PaceViewModel: DetailInformationModel {
         init(paceData: ResultPace?) {
             super.init()
@@ -213,15 +213,15 @@ extension ResultDetailViewModel {
             self.contents = [
                 CellContentEntity(content: averagePace, contentTitle: "평균"),
                 CellContentEntity(content: fastest, contentTitle: "최고"),
-                CellContentEntity(content: slowest, contentTitle: "최저"),
+                CellContentEntity(content: slowest, contentTitle: "최저")
             ]
         }
     }
-    
+
     class AltitudeViewModel: DetailInformationModel {
         var highest: String = "-"
         var lowest: String = "-"
-        
+
         init(altitudeData: ResultAltitude?) {
             super.init()
             guard let altitudeData = altitudeData else {
@@ -233,39 +233,39 @@ extension ResultDetailViewModel {
             var lowestString = "-"
             var startingString = "-"
             var endingString = "-"
-            
+
             if let total = altitudeData.total {
                 totalString = String(total)
             }
-            
+
             if let highest = altitudeData.highest {
                 highestString = String(highest)
                 self.highest = highestString
             }
-            
+
             if let lowest = altitudeData.lowest {
                 lowestString = String(lowest)
                 self.lowest = lowestString
             }
-            
+
             if let start = altitudeData.starting {
                 startingString = String(start)
             }
-            
+
             if let end = altitudeData.ending {
                 endingString = String(end)
             }
-            
+
             self.contents = [
                 CellContentEntity(content: totalString, contentTitle: "누적"),
                 CellContentEntity(content: highestString, contentTitle: "최고"),
                 CellContentEntity(content: lowestString, contentTitle: "최저"),
                 CellContentEntity(content: startingString, contentTitle: "시작"),
-                CellContentEntity(content: endingString, contentTitle: "종료"),
+                CellContentEntity(content: endingString, contentTitle: "종료")
             ]
         }
     }
-    
+
     class InclineViewModel: DetailInformationModel {
         init(inclineData: ResultIncline?) {
             super.init()
@@ -286,7 +286,7 @@ extension ResultDetailViewModel {
                 CellContentEntity(content: String(inclineData.highest)+"°", contentTitle: "최고"),
                 CellContentEntity(content: uphill, contentTitle: "오르막(km)"),
                 CellContentEntity(content: downhill, contentTitle: "내리막(km)"),
-                CellContentEntity(content: plain, contentTitle: "평지(km)"),
+                CellContentEntity(content: plain, contentTitle: "평지(km)")
             ]
         }
     }

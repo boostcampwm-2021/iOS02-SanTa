@@ -8,7 +8,7 @@
 import UIKit
 
 class MapOptionCell: UITableViewCell {
-    
+
     static let identifier = "MapOptionCell"
 
     private(set) var title: UILabel = {
@@ -22,7 +22,7 @@ class MapOptionCell: UITableViewCell {
         label.adjustsFontSizeToFitWidth = true
         return label
     }()
-    
+
     private var map: UILabel = {
         let label = PaddingLabel()
         label.padding(top: 5, bottom: 5, left: 10, right: 10)
@@ -38,7 +38,7 @@ class MapOptionCell: UITableViewCell {
         label.setContentCompressionResistancePriority(.init(rawValue: 1000), for: .horizontal)
         return label
     }()
-    
+
     private lazy var stackView: UIStackView = {
         let stackView = UIStackView(arrangedSubviews: [self.title, self.map])
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -47,28 +47,26 @@ class MapOptionCell: UITableViewCell {
         stackView.distribution = .equalCentering
         return stackView
     }()
-    
-    
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.configureView()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
     private func configureView() {
         self.contentView.addSubview(self.stackView)
-        let locationConstrain = [
+        NSLayoutConstraint.activate([
             self.stackView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 15),
             self.stackView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -15),
             self.stackView.leftAnchor.constraint(equalTo: self.contentView.leftAnchor, constant: 30),
-            self.stackView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -30),
-        ]
-        NSLayoutConstraint.activate(locationConstrain)
+            self.stackView.rightAnchor.constraint(equalTo: self.contentView.rightAnchor, constant: -30)
+        ])
     }
-    
+
     func update(option: MapOption) {
         self.title.text = option.text
         self.map.text = option.map.name
@@ -82,13 +80,13 @@ extension MapOptionCell {
         self.configureDynamicTypeAccessibility()
         self.configureVoiceOverAccessibility()
     }
-    
+
     private func configureDynamicTypeAccessibility() {
         self.stackView.axis =
         self.traitCollection.preferredContentSizeCategory < .accessibilityLarge ?
             .horizontal : .vertical
     }
-    
+
     private func configureVoiceOverAccessibility() {
         self.map.isAccessibilityElement = false
         guard let title = title.text, let map = map.text else { return }

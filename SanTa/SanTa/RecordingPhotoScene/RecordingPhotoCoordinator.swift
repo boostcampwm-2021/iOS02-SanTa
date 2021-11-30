@@ -11,7 +11,7 @@ class RecordingPhotoViewCoordinator: Coordinator {
     weak var parentCoordinator: Coordinator?
     var childCoordinators: [Coordinator] = []
     var recordingPhotoViewController: RecordingPhotoViewController
-    
+
     init(delegate: RecordingViewDelegate) {
         self.recordingPhotoViewController = RecordingPhotoViewController()
         self.recordingPhotoViewController.delegate = delegate
@@ -20,18 +20,14 @@ class RecordingPhotoViewCoordinator: Coordinator {
 
     func start() {
         guard let recordingCoordinator = parentCoordinator as? RecordingViewCoordinator else { return }
-        
+
         recordingCoordinator.recordingViewController.present(recordingPhotoViewController, animated: true)
     }
-    
+
     func dismiss() {
         guard let recordingCoordinator = parentCoordinator as? RecordingViewCoordinator else { return }
-        
+
         recordingCoordinator.recordingViewController.dismiss(animated: true)
         self.parentCoordinator?.childCoordinators.removeLast()
-    }
-    
-    deinit {
-        print("😇RecordingPhotoViewCoordinator is deinit \(Date())!!😇")
     }
 }

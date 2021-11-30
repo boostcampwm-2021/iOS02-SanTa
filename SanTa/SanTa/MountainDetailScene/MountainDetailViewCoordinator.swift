@@ -13,12 +13,12 @@ class MountainDetailViewCoordinator: Coordinator {
     var childCoordinators: [Coordinator] = []
     var navigationController: UINavigationController
     var mountainAnnotation: MountainAnnotation
-    
+
     init(navigationController: UINavigationController, mountainAnnotation: MountainAnnotation) {
         self.navigationController = navigationController
         self.mountainAnnotation = mountainAnnotation
     }
-    
+
     func start() {
         let mountainDetailViewController = MountainDetailViewController(viewModel: injectDependencies())
         mountainDetailViewController.coordinator = self
@@ -29,7 +29,7 @@ class MountainDetailViewCoordinator: Coordinator {
             self.navigationController.pushViewController(mountainDetailViewController, animated: true)
         }
     }
-    
+
     func dismiss() {
         if self.parentCoordinator is MapViewCoordinator {
             self.navigationController.dismiss(animated: true)
@@ -49,5 +49,5 @@ extension MountainDetailViewCoordinator {
             )
         )
     }
-    
+
 }

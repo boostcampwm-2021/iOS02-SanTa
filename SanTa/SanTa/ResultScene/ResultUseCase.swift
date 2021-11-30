@@ -15,11 +15,11 @@ protocol ResultRepository {
 final class ResultUseCase {
     private let resultRepository: ResultRepository
     private(set) var totalRecords: TotalRecords?
-    
+
     init(resultRepository: ResultRepository) {
         self.resultRepository = resultRepository
     }
-    
+
     func fetch(completion: @escaping (Void?) -> Void) {
         self.resultRepository.fetch { [weak self] result in
             switch result {
@@ -37,4 +37,3 @@ final class ResultUseCase {
         }
     }
 }
-

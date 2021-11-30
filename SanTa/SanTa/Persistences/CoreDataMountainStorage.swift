@@ -18,13 +18,13 @@ final class CoreDataMountainStorage: MountainStorage {
         case saveError
         case fetchError
     }
-    
+
     private let coreDataStroage: CoreDataStorage
-    
+
     init(coreDataStorage: CoreDataStorage) {
         self.coreDataStroage = coreDataStorage
     }
-    
+
     func save(mountainEntity: MountainEntity, completion: @escaping (Result<Void, Error>) -> Void) {
         self.coreDataStroage.performBackgroundTask { context in
             let object = NSEntityDescription.insertNewObject(forEntityName: "MountainEntity", into: context)
@@ -35,7 +35,7 @@ final class CoreDataMountainStorage: MountainStorage {
             object.setValue(mountainEntity.mountain.mountainRegion, forKey: "region")
             object.setValue(mountainEntity.mountain.mountainHeight, forKey: "altitude")
             object.setValue(mountainEntity.mountain.mountainShortDescription, forKey: "descript")
-            
+
             do {
                 try context.save()
                 completion(.success(Void()))
@@ -44,7 +44,7 @@ final class CoreDataMountainStorage: MountainStorage {
             }
         }
     }
-    
+
     func fetch(completion: @escaping (Result<[MountainEntityMO], Error>) -> Void) {
         self.coreDataStroage.performBackgroundTask { context in
             do {

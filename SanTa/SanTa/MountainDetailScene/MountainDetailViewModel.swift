@@ -10,12 +10,12 @@ import Foundation
 class MountainDetailViewModel {
     private let useCase: MountainDetailUseCase
     var mountainDetail: MountainDetailModel?
-    var mountainInfoReceived: (MountainDetailModel) -> Void = { info in }
-    
+    var mountainInfoReceived: (MountainDetailModel) -> Void = { _ in }
+
     init(useCase: MountainDetailUseCase) {
         self.useCase = useCase
     }
-    
+
     func setUpViewModel() {
         useCase.transferMountainInformation { [weak self] mountainInfo in
             self?.mountainDetail = mountainInfo

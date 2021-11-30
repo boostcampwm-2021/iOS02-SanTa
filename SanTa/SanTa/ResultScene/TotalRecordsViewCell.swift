@@ -12,7 +12,7 @@ extension UILabel {
         self.init()
         self.font = .systemFont(ofSize: normalFontWithSize)
     }
-    
+
     fileprivate convenience init(text: String, normalFontWithSize: CGFloat) {
         self.init()
         self.text = text
@@ -34,19 +34,19 @@ class TotalRecordsViewCell: UICollectionViewCell {
     let countVerticalStackView = UIStackView()
     let timeVerticalStackView = UIStackView()
     let stepsVerticalStackView = UIStackView()
-    
+
     func configure(distance: String, count: String, time: String, steps: String) {
         self.kilometerNumber.text = distance
         self.countNumber.text = count
         self.timeNumber.text = time
         self.stepsNumber.text = steps
         self.backgroundColor = .systemGray6
-        
+
         self.configureSubviews()
         self.configureLayout()
         self.configureShadow()
     }
-    
+
     private func configureSubviews() {
         self.addSubview(self.kilometerNumber)
         self.addSubview(self.kilometer)
@@ -68,7 +68,7 @@ class TotalRecordsViewCell: UICollectionViewCell {
             $0.spacing = 5
         }
     }
-    
+
     private func configureLayout() {
         self.kilometerNumber.translatesAutoresizingMaskIntoConstraints = false
         self.kilometer.translatesAutoresizingMaskIntoConstraints = false
@@ -84,7 +84,7 @@ class TotalRecordsViewCell: UICollectionViewCell {
             self.horizontalStackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -30)
         ])
     }
-    
+
     private func configureShadow() {
         let border = CALayer()
         border.frame = CGRect.init(x: 0, y: self.frame.height, width: self.frame.width, height: -1)
@@ -96,7 +96,7 @@ class TotalRecordsViewCell: UICollectionViewCell {
 // MARK: - Accessibility
 
 extension TotalRecordsViewCell {
-    
+
     func configureVoiceOverAccessibility() {
         guard let kilometerNumber = kilometerNumber.text else { return }
         guard let countNumber = countNumber.text else { return }

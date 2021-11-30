@@ -8,21 +8,20 @@
 import UIKit
 import MapKit
 
-
 class MountainnDetailAnnotationView: MKAnnotationView {
     static let ReuseID = "MountainDetailAnnotationView"
     let imageSideLength: CGFloat = 30
-    
+
     override init(annotation: MKAnnotation?, reuseIdentifier: String?) {
         super.init(annotation: annotation, reuseIdentifier: reuseIdentifier)
         self.canShowCallout = true
         self.calloutOffset = CGPoint(x: imageSideLength / 2, y: -imageSideLength / 4)
     }
-    
+
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     override func prepareForDisplay() {
         super.prepareForDisplay()
         displayPriority = .defaultHigh

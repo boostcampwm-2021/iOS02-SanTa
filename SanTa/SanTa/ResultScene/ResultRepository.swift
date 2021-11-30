@@ -8,13 +8,13 @@
 import Foundation
 
 final class DefaultResultRepository: ResultRepository {
-    
+
     private let recordStorage: CoreDataRecordStorage
-    
+
     init(recordStorage: CoreDataRecordStorage) {
         self.recordStorage = recordStorage
     }
-    
+
     func fetch(completion: @escaping (Result<[Records], Error>) -> Void) {
         self.recordStorage.fetch { result in
             switch result {
@@ -30,7 +30,7 @@ final class DefaultResultRepository: ResultRepository {
             }
         }
     }
-    
+
     private func makeRecords(recordsEntityMO: RecordsEntityMO) -> Records? {
         guard let title = recordsEntityMO.title,
               let archiveAssetIdentifiers = recordsEntityMO.assetIdentifiers,
@@ -48,15 +48,15 @@ final class DefaultResultRepository: ResultRepository {
         return Records(title: title, records: records, assetIdentifiers: assetIdentifiers, secondPerHighestSpeed: secondPerHighestSpeed, secondPerMinimumSpeed: secondPerMinimumSpeed, id: id)
 
     }
-    
+
     private func makeRecord(recordEntityMO: RecordEntityMO) -> Record? {
         guard let startTime = recordEntityMO.startTime else { return nil }
         guard let endTime = recordEntityMO.endTime else { return nil }
         let step = Int(recordEntityMO.step)
         let distance = recordEntityMO.distance
-        
+
         var locations: [Location] = []
-        recordEntityMO.locations?.forEach{
+        recordEntityMO.locations?.forEach {
             guard let locationEntityMO = $0 as? LocationEntityMO else { return }
             let location = Location(latitude: locationEntityMO.latitude,
                                     longitude: locationEntityMO.longitude,
@@ -69,5 +69,5 @@ final class DefaultResultRepository: ResultRepository {
                       distance: distance,
                       locations: locations)
     }
-    
+
 }

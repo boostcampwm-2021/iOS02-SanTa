@@ -18,7 +18,7 @@ class ResultViewModel {
         guard let totalRecords = self.useCase.totalRecords else { return 0 }
         return totalRecords.sectionCount
     }
-    
+
     init(useCase: ResultUseCase) {
         self.useCase = useCase
         self.cellShouldUpdate = {}
@@ -31,11 +31,11 @@ class ResultViewModel {
             completion()
         }
     }
-    
+
     func itemsInSection(section: Int) -> Int {
         self.useCase.totalRecords?[section]?.count ?? 0
     }
-    
+
     func totalInfo() -> (distance: String, count: String, time: String, steps: String) {
         guard let totalRecords = self.useCase.totalRecords else {
             return ("", "", "", "")
@@ -46,7 +46,7 @@ class ResultViewModel {
         let stepsString = self.stepsFormatter(totalRecords.totalSteps)
         return (distanceString, countString, timeString, stepsString)
     }
-    
+
     func sectionInfo(section: Int) -> (date: String,
                                        accessibiltyDate: String,
                                        count: String,
@@ -70,7 +70,7 @@ class ResultViewModel {
         let timeString = self.timeFormatter(dateSeperateRecords.times)
         return (dateString, accessibiltyDateString, countString, distanceString, timeString)
     }
-    
+
     func cellInfo(indexPath: IndexPath) -> (date: String,
                                             distance: String,
                                             time: String,
@@ -90,7 +90,7 @@ class ResultViewModel {
         let title = records.title
         return (dateString, distanceString, timeString, altitudeDifferenceString, stepsString, title)
     }
-    
+
     func selectedRecords(indexPath: IndexPath) -> Records? {
         return self.useCase.totalRecords?[indexPath.section]?[indexPath.item]
     }
@@ -100,18 +100,18 @@ extension ResultViewModel {
     private func headerDateFormatter(year: Int, month: Int) -> String {
         return "\(year). \(month)."
     }
-    
+
     private func headerAccessibiltyDateFormatter(year: Int, month: Int) -> String {
         return "\(year)년 \(month)월"
     }
-    
+
     private func cellDateFormatter(_ date: Date?) -> String {
         guard let date = date,
               let yesterday = Calendar.current.date(byAdding: .day, value: -1, to: .now)
         else { return "알 수 없는 날짜" }
         let calender = Calendar.current
         let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier:"ko_KR")
+        dateFormatter.locale = Locale(identifier: "ko_KR")
         if calender.compare(date, to: .now, toGranularity: .day) == .orderedSame {
             dateFormatter.dateFormat = "오늘(E) a h시 m분"
         } else if calender.compare(date, to: yesterday, toGranularity: .day) == .orderedSame {
@@ -119,22 +119,22 @@ extension ResultViewModel {
         } else {
             dateFormatter.dateFormat = "M. d. (E) a h시 m분"
         }
-        return dateFormatter.string(from:date)
+        return dateFormatter.string(from: date)
     }
-    
+
     private func timeFormatter(_ time: TimeInterval) -> String {
         let formatter = DateComponentsFormatter()
         formatter.allowedUnits = [.hour, .minute]
         formatter.zeroFormattingBehavior = .pad
         return formatter.string(from: time) ?? "00:00"
     }
-    
+
     private func cellAltitudeDifferenceFormatter(_ number: Double) -> String {
         guard number < 10000 else { return "9,999+" }
         guard number > 1 else { return "-" }
         return self.intFormatter(Int(number))
     }
-    
+
     private func stepsFormatter(_ number: Int) -> String {
         if number < 10000 {
             return self.intFormatter(number)
@@ -143,13 +143,13 @@ extension ResultViewModel {
             return self.doubleFormatter(number) + "만"
         }
     }
-    
+
     private func intFormatter(_ number: Int) -> String {
         let numberFormatter = NumberFormatter()
         numberFormatter.numberStyle = .decimal
         return numberFormatter.string(from: NSNumber(value: number)) ?? "Error"
     }
-    
+
     private func doubleFormatter(_ number: Double) -> String {
         let numberFormatter = NumberFormatter()
         numberFormatter.minimumFractionDigits = 2

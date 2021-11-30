@@ -15,13 +15,13 @@ class MountainListViewCoordinator: Coordinator {
 
     private let userDefaultsStorage: UserDefaultsStorage
     private let mountainExtractor: MountainExtractor
-    
+
     init(userDefaultsStorage: UserDefaultsStorage,
          mountainExtractor: MountainExtractor) {
         self.userDefaultsStorage = userDefaultsStorage
         self.mountainExtractor = mountainExtractor
     }
-    
+
     func start() {
     }
 
@@ -45,7 +45,7 @@ extension MountainListViewCoordinator {
                     userDefaultsStorage: self.userDefaultsStorage)))
 
     }
-    
+
     func pushMountainDetailViewController(mountainAnnotation: MountainAnnotation) {
         let mountainDetailViewCoordinator = MountainDetailViewCoordinator(navigationController: self.navigationController, mountainAnnotation: mountainAnnotation)
         mountainDetailViewCoordinator.parentCoordinator = self
@@ -53,4 +53,3 @@ extension MountainListViewCoordinator {
         mountainDetailViewCoordinator.start()
     }
 }
-

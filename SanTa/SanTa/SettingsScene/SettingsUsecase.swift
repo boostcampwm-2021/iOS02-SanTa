@@ -10,15 +10,15 @@ import Photos
 
 final class SettingsUsecase {
     private let settingsRepository: SettingsRepository
-    
+
     init(settingsRepository: SettingsRepository) {
         self.settingsRepository = settingsRepository
     }
-    
+
     func save<T: Codable>(value: T, key: Settings) {
         self.settingsRepository.save(value: value, key: key)
     }
-    
+
     func photoPermission(completion: @escaping (Bool) -> Void) {
         let photoPermission = PHPhotoLibrary.authorizationStatus(for: .readWrite)
         switch photoPermission {
@@ -28,10 +28,10 @@ final class SettingsUsecase {
             completion(false)
         }
     }
-    
+
     func makeSettings() -> [Option] {
         var options: [Option] = []
-        
+
         self.settingsRepository.makeToggleOption(key: Settings.recordPhoto) { value in
             options.append(value)
         }
@@ -41,8 +41,7 @@ final class SettingsUsecase {
         self.settingsRepository.makeMapOption(key: Settings.mapFormat) { value in
             options.append(value)
         }
-        
+
         return options
     }
 }
-
