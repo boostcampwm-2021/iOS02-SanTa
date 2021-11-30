@@ -39,7 +39,6 @@ class ResultSceneTests: XCTestCase {
                                  step: 40,
                                  distance: 50,
                                  locations: [location7, location8])
-            
             let records1 = Records(title: "기록1",
                                    records: [record1, record2],
                                    assetIdentifiers: ["1", "11"],
