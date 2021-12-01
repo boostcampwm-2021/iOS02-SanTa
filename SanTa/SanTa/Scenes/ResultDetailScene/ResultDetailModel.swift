@@ -104,6 +104,9 @@ struct ResultAltitude {
     init(records: Records) {
         var paths: [Locations] = []
         for record in records.records {
+            if record.locations.locations.count == 0 {
+                continue
+            }
             paths.append(record.locations)
         }
         guard !paths.isEmpty else {

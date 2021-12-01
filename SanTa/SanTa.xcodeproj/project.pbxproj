@@ -13,6 +13,16 @@
 		493178B627439D0000B5FB88 /* ResultDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493178B527439D0000B5FB88 /* ResultDetailModel.swift */; };
 		494803822743748D002854B1 /* ResultDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494803812743748D002854B1 /* ResultDetailViewModel.swift */; };
 		4948038427437499002854B1 /* ResultDetailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4948038327437499002854B1 /* ResultDetailUseCase.swift */; };
+		4953CB822757092D00A0106F /* ResultDetailAltitudeTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4953CB812757092D00A0106F /* ResultDetailAltitudeTest.swift */; };
+		4953CB882757095C00A0106F /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984DDEC027325D67003BE56B /* Record.swift */; };
+		4953CB892757096000A0106F /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4736D12755E39500841326 /* Location.swift */; };
+		4953CB8A2757096500A0106F /* CoreDataRecordStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984DDEC627327064003BE56B /* CoreDataRecordStorage.swift */; };
+		4953CB8B2757097700A0106F /* ResultDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 494803812743748D002854B1 /* ResultDetailViewModel.swift */; };
+		4953CB8C2757098900A0106F /* ResultDetailModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 493178B527439D0000B5FB88 /* ResultDetailModel.swift */; };
+		4953CB8D275709D700A0106F /* ResultDetailUseCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4948038327437499002854B1 /* ResultDetailUseCase.swift */; };
+		4953CB8E27570A1300A0106F /* ResultDetailRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49921D88274B3B440091112C /* ResultDetailRepository.swift */; };
+		4953CB8F27570A1E00A0106F /* SanTa.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5485128A272A6AD500407F28 /* SanTa.xcdatamodeld */; };
+		4953CB9027570A3000A0106F /* CoreDataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984DDEC8273271EC003BE56B /* CoreDataStorage.swift */; };
 		4955B8EB2742A65D00D90F94 /* MountainDetailAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4955B8EA2742A65D00D90F94 /* MountainDetailAnnotationView.swift */; };
 		49742D562740E1A0008F7DC2 /* ResultDetailLargerInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49742D552740E1A0008F7DC2 /* ResultDetailLargerInfoView.swift */; };
 		49921D89274B3B440091112C /* ResultDetailRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 49921D88274B3B440091112C /* ResultDetailRepository.swift */; };
@@ -146,6 +156,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		4953CB832757092D00A0106F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 54851276272A6AD500407F28 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5485127D272A6AD500407F28;
+			remoteInfo = SanTa;
+		};
 		5423CD672755FA4A00BAB338 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 54851276272A6AD500407F28 /* Project object */;
@@ -190,6 +207,8 @@
 		493178B527439D0000B5FB88 /* ResultDetailModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailModel.swift; sourceTree = "<group>"; };
 		494803812743748D002854B1 /* ResultDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailViewModel.swift; sourceTree = "<group>"; };
 		4948038327437499002854B1 /* ResultDetailUseCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailUseCase.swift; sourceTree = "<group>"; };
+		4953CB7F2757092D00A0106F /* ResultDetailAltitudeTest.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ResultDetailAltitudeTest.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4953CB812757092D00A0106F /* ResultDetailAltitudeTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailAltitudeTest.swift; sourceTree = "<group>"; };
 		4955B8EA2742A65D00D90F94 /* MountainDetailAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainDetailAnnotationView.swift; sourceTree = "<group>"; };
 		49742D552740E1A0008F7DC2 /* ResultDetailLargerInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailLargerInfoView.swift; sourceTree = "<group>"; };
 		49921D88274B3B440091112C /* ResultDetailRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultDetailRepository.swift; sourceTree = "<group>"; };
@@ -293,6 +312,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		4953CB7C2757092D00A0106F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5423CD602755FA4A00BAB338 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -345,6 +371,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4953CB802757092D00A0106F /* ResultDetailAltitudeTest */ = {
+			isa = PBXGroup;
+			children = (
+				4953CB812757092D00A0106F /* ResultDetailAltitudeTest.swift */,
+			);
+			path = ResultDetailAltitudeTest;
+			sourceTree = "<group>";
+		};
 		5423CD642755FA4A00BAB338 /* MapSceneTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -523,6 +557,7 @@
 				DA4736F127561C6200841326 /* MountainListSceneTests */,
 				5423CD642755FA4A00BAB338 /* MapSceneTests */,
 				5423CD802755FCEF00BAB338 /* MountainAddingSceneTests */,
+				4953CB802757092D00A0106F /* ResultDetailAltitudeTest */,
 				5485127F272A6AD500407F28 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -537,6 +572,7 @@
 				DA4736F027561C6200841326 /* MountainListSceneTests.xctest */,
 				5423CD632755FA4A00BAB338 /* MapSceneTests.xctest */,
 				5423CD7F2755FCEF00BAB338 /* MountainAddingSceneTests.xctest */,
+				4953CB7F2757092D00A0106F /* ResultDetailAltitudeTest.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -668,6 +704,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		4953CB7E2757092D00A0106F /* ResultDetailAltitudeTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4953CB872757092D00A0106F /* Build configuration list for PBXNativeTarget "ResultDetailAltitudeTest" */;
+			buildPhases = (
+				4953CB7B2757092D00A0106F /* Sources */,
+				4953CB7C2757092D00A0106F /* Frameworks */,
+				4953CB7D2757092D00A0106F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4953CB842757092D00A0106F /* PBXTargetDependency */,
+			);
+			name = ResultDetailAltitudeTest;
+			productName = ResultDetailAltitudeTest;
+			productReference = 4953CB7F2757092D00A0106F /* ResultDetailAltitudeTest.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		5423CD622755FA4A00BAB338 /* MapSceneTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5423CD6B2755FA4A00BAB338 /* Build configuration list for PBXNativeTarget "MapSceneTests" */;
@@ -799,9 +853,13 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1300;
+				LastSwiftUpdateCheck = 1310;
 				LastUpgradeCheck = 1300;
 				TargetAttributes = {
+					4953CB7E2757092D00A0106F = {
+						CreatedOnToolsVersion = 13.1;
+						TestTargetID = 5485127D272A6AD500407F28;
+					};
 					5423CD622755FA4A00BAB338 = {
 						CreatedOnToolsVersion = 13.0;
 						TestTargetID = 5485127D272A6AD500407F28;
@@ -850,11 +908,19 @@
 				DA4736EF27561C6200841326 /* MountainListSceneTests */,
 				5423CD622755FA4A00BAB338 /* MapSceneTests */,
 				5423CD7E2755FCEF00BAB338 /* MountainAddingSceneTests */,
+				4953CB7E2757092D00A0106F /* ResultDetailAltitudeTest */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		4953CB7D2757092D00A0106F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5423CD612755FA4A00BAB338 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -910,6 +976,23 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		4953CB7B2757092D00A0106F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4953CB9027570A3000A0106F /* CoreDataStorage.swift in Sources */,
+				4953CB882757095C00A0106F /* Record.swift in Sources */,
+				4953CB8E27570A1300A0106F /* ResultDetailRepository.swift in Sources */,
+				4953CB8A2757096500A0106F /* CoreDataRecordStorage.swift in Sources */,
+				4953CB892757096000A0106F /* Location.swift in Sources */,
+				4953CB8B2757097700A0106F /* ResultDetailViewModel.swift in Sources */,
+				4953CB822757092D00A0106F /* ResultDetailAltitudeTest.swift in Sources */,
+				4953CB8D275709D700A0106F /* ResultDetailUseCase.swift in Sources */,
+				4953CB8C2757098900A0106F /* ResultDetailModel.swift in Sources */,
+				4953CB8F27570A1E00A0106F /* SanTa.xcdatamodeld in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5423CD5F2755FA4A00BAB338 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1095,6 +1178,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		4953CB842757092D00A0106F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5485127D272A6AD500407F28 /* SanTa */;
+			targetProxy = 4953CB832757092D00A0106F /* PBXContainerItemProxy */;
+		};
 		5423CD682755FA4A00BAB338 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 5485127D272A6AD500407F28 /* SanTa */;
@@ -1134,6 +1222,52 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		4953CB852757092D00A0106F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = B3PWYBKFUK;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = jw.ResultDetailAltitudeTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SanTa.app/SanTa";
+			};
+			name = Debug;
+		};
+		4953CB862757092D00A0106F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = B3PWYBKFUK;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = jw.ResultDetailAltitudeTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SanTa.app/SanTa";
+			};
+			name = Release;
+		};
 		5423CD692755FA4A00BAB338 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1587,6 +1721,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		4953CB872757092D00A0106F /* Build configuration list for PBXNativeTarget "ResultDetailAltitudeTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4953CB852757092D00A0106F /* Debug */,
+				4953CB862757092D00A0106F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		5423CD6B2755FA4A00BAB338 /* Build configuration list for PBXNativeTarget "MapSceneTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
