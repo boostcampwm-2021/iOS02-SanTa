@@ -119,6 +119,8 @@
 		98BCF4F52737A3480073E6FB /* SettingsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BCF4F42737A3480073E6FB /* SettingsRepository.swift */; };
 		98BCF4F72737A66E0073E6FB /* SettingsUsecase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BCF4F62737A66E0073E6FB /* SettingsUsecase.swift */; };
 		98BCF4F92737A7120073E6FB /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98BCF4F82737A7120073E6FB /* SettingsViewModel.swift */; };
+		98C954A52757532B0058DD22 /* SanTaUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C954A42757532B0058DD22 /* SanTaUITests.swift */; };
+		98C954A72757532B0058DD22 /* SanTaUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 98C954A62757532B0058DD22 /* SanTaUITestsLaunchTests.swift */; };
 		DA4736D22755E39500841326 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA4736D12755E39500841326 /* Location.swift */; };
 		DA4736E6275610EE00841326 /* Settings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9826F3DE273904010064FA85 /* Settings.swift */; };
 		DA4736E7275610F600841326 /* Record.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984DDEC027325D67003BE56B /* Record.swift */; };
@@ -185,6 +187,13 @@
 			remoteInfo = SanTa;
 		};
 		98BAABB5275479B0004505BB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 54851276272A6AD500407F28 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5485127D272A6AD500407F28;
+			remoteInfo = SanTa;
+		};
+		98C954A82757532B0058DD22 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 54851276272A6AD500407F28 /* Project object */;
 			proxyType = 1;
@@ -284,6 +293,9 @@
 		98BCF4F42737A3480073E6FB /* SettingsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRepository.swift; sourceTree = "<group>"; };
 		98BCF4F62737A66E0073E6FB /* SettingsUsecase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsUsecase.swift; sourceTree = "<group>"; };
 		98BCF4F82737A7120073E6FB /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
+		98C954A22757532B0058DD22 /* SanTaUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SanTaUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		98C954A42757532B0058DD22 /* SanTaUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SanTaUITests.swift; sourceTree = "<group>"; };
+		98C954A62757532B0058DD22 /* SanTaUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SanTaUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		DA4736D12755E39500841326 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		DA4736F027561C6200841326 /* MountainListSceneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MountainListSceneTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		DA4736F227561C6200841326 /* MountainListSceneTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MountainListSceneTests.swift; sourceTree = "<group>"; };
@@ -348,6 +360,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		98BAABAE275479B0004505BB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		98C9549F2757532B0058DD22 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -558,6 +577,7 @@
 				5423CD642755FA4A00BAB338 /* MapSceneTests */,
 				5423CD802755FCEF00BAB338 /* MountainAddingSceneTests */,
 				4953CB802757092D00A0106F /* ResultDetailAltitudeTest */,
+				98C954A32757532B0058DD22 /* SanTaUITests */,
 				5485127F272A6AD500407F28 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -573,6 +593,7 @@
 				5423CD632755FA4A00BAB338 /* MapSceneTests.xctest */,
 				5423CD7F2755FCEF00BAB338 /* MountainAddingSceneTests.xctest */,
 				4953CB7F2757092D00A0106F /* ResultDetailAltitudeTest.xctest */,
+				98C954A22757532B0058DD22 /* SanTaUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -617,6 +638,15 @@
 				98BAABB3275479B0004505BB /* ResultSceneTests.swift */,
 			);
 			path = ResultSceneTests;
+			sourceTree = "<group>";
+		};
+		98C954A32757532B0058DD22 /* SanTaUITests */ = {
+			isa = PBXGroup;
+			children = (
+				98C954A42757532B0058DD22 /* SanTaUITests.swift */,
+				98C954A62757532B0058DD22 /* SanTaUITestsLaunchTests.swift */,
+			);
+			path = SanTaUITests;
 			sourceTree = "<group>";
 		};
 		DA4736D32755E46800841326 /* Utility */ = {
@@ -811,6 +841,24 @@
 			productReference = 98BAABB1275479B0004505BB /* ResultSceneTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		98C954A12757532B0058DD22 /* SanTaUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 98C954AC2757532B0058DD22 /* Build configuration list for PBXNativeTarget "SanTaUITests" */;
+			buildPhases = (
+				98C9549E2757532B0058DD22 /* Sources */,
+				98C9549F2757532B0058DD22 /* Frameworks */,
+				98C954A02757532B0058DD22 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				98C954A92757532B0058DD22 /* PBXTargetDependency */,
+			);
+			name = SanTaUITests;
+			productName = SanTaUITests;
+			productReference = 98C954A22757532B0058DD22 /* SanTaUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		DA4736EF27561C6200841326 /* MountainListSceneTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = DA4736F627561C6200841326 /* Build configuration list for PBXNativeTarget "MountainListSceneTests" */;
@@ -853,7 +901,7 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1310;
+				LastSwiftUpdateCheck = 1300;
 				LastUpgradeCheck = 1300;
 				TargetAttributes = {
 					4953CB7E2757092D00A0106F = {
@@ -876,6 +924,10 @@
 						TestTargetID = 5485127D272A6AD500407F28;
 					};
 					98BAABB0275479B0004505BB = {
+						CreatedOnToolsVersion = 13.0;
+						TestTargetID = 5485127D272A6AD500407F28;
+					};
+					98C954A12757532B0058DD22 = {
 						CreatedOnToolsVersion = 13.0;
 						TestTargetID = 5485127D272A6AD500407F28;
 					};
@@ -909,6 +961,7 @@
 				5423CD622755FA4A00BAB338 /* MapSceneTests */,
 				5423CD7E2755FCEF00BAB338 /* MountainAddingSceneTests */,
 				4953CB7E2757092D00A0106F /* ResultDetailAltitudeTest */,
+				98C954A12757532B0058DD22 /* SanTaUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -953,6 +1006,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		98BAABAF275479B0004505BB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		98C954A02757532B0058DD22 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1147,6 +1207,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		98C9549E2757532B0058DD22 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				98C954A72757532B0058DD22 /* SanTaUITestsLaunchTests.swift in Sources */,
+				98C954A52757532B0058DD22 /* SanTaUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		DA4736EC27561C6200841326 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1202,6 +1271,11 @@
 			isa = PBXTargetDependency;
 			target = 5485127D272A6AD500407F28 /* SanTa */;
 			targetProxy = 98BAABB5275479B0004505BB /* PBXContainerItemProxy */;
+		};
+		98C954A92757532B0058DD22 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5485127D272A6AD500407F28 /* SanTa */;
+			targetProxy = 98C954A82757532B0058DD22 /* PBXContainerItemProxy */;
 		};
 		DA4736F527561C6200841326 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -1630,6 +1704,50 @@
 			};
 			name = Release;
 		};
+		98C954AA2757532B0058DD22 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = B3PWYBKFUK;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ohchangmin.SanTaUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = SanTa;
+			};
+			name = Debug;
+		};
+		98C954AB2757532B0058DD22 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = B3PWYBKFUK;
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ohchangmin.SanTaUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = SanTa;
+			};
+			name = Release;
+		};
 		DA4736F727561C6200841326 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1780,6 +1898,15 @@
 			buildConfigurations = (
 				98BAABB7275479B0004505BB /* Debug */,
 				98BAABB8275479B0004505BB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		98C954AC2757532B0058DD22 /* Build configuration list for PBXNativeTarget "SanTaUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				98C954AA2757532B0058DD22 /* Debug */,
+				98C954AB2757532B0058DD22 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
