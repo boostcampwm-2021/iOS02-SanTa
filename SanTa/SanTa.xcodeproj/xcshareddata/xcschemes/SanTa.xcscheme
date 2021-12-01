@@ -67,7 +67,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "DA4736EF27561C6200841326"
-               BuildableName = "MountainListSceneTestss.xctest"
+               BuildableName = "MountainListSceneTests.xctest"
                BlueprintName = "MountainListSceneTests"
                ReferencedContainer = "container:SanTa.xcodeproj">
             </BuildableReference>

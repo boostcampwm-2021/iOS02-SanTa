@@ -11,8 +11,6 @@ import MapKit
 final class MountainDetailViewController: UIViewController {
     weak var coordinator: MountainDetailViewCoordinator?
     private var viewModel: MountainDetailViewModel?
-    private var mutatingTopConstraint: NSLayoutConstraint?
-    private let maxRollUpDistance: CGFloat = 50
 
     private lazy var backButton: UIButton = {
         let button = UIButton(frame: .zero)
@@ -76,18 +74,12 @@ extension MountainDetailViewController {
             mapSnapShot.heightAnchor.constraint(equalTo: headerView.heightAnchor, multiplier: 0.85)
         ])
 
-        self.mutatingTopConstraint = titleView.topAnchor.constraint(equalTo: mapSnapShot.bottomAnchor)
         NSLayoutConstraint.activate([
+            titleView.topAnchor.constraint(equalTo: mapSnapShot.bottomAnchor),
             titleView.leftAnchor.constraint(equalTo: headerView.leftAnchor),
             titleView.rightAnchor.constraint(equalTo: headerView.rightAnchor),
             titleView.heightAnchor.constraint(equalToConstant: self.view.bounds.height * 0.07)
         ])
-
-        if let upperConstraint = self.mutatingTopConstraint {
-            NSLayoutConstraint.activate([
-                upperConstraint
-            ])
-        }
 
         NSLayoutConstraint.activate([
             tableView.topAnchor.constraint(equalTo: titleView.bottomAnchor),
@@ -211,16 +203,6 @@ extension MountainDetailViewController: UITableViewDelegate, UITableViewDataSour
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return MountainDetailCategories.allCases.count
-    }
-}
-
-extension MountainDetailViewController: UIScrollViewDelegate {
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let isBottom = scrollView.contentSize.height <= scrollView.bounds.height + scrollView.contentOffset.y
-        guard !isBottom else { return }
-        if scrollView.contentOffset.y > 0 && scrollView.contentOffset.y < self.maxRollUpDistance {
-            self.mutatingTopConstraint?.constant = -scrollView.contentOffset.y
-        }
     }
 }
 
