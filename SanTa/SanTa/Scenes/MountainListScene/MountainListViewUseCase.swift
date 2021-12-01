@@ -8,6 +8,10 @@
 import Foundation
 import OSLog
 
+protocol MountainListViewRepository {
+    func fetchMountains(completion: @escaping (Result<[MountainEntity], Error>) -> Void)
+}
+
 final class MountainListUseCase {
     private let repository: MountainListViewRepository
     private var entireMountains: [MountainEntity]?

@@ -13,10 +13,10 @@ final class RecordingViewModelTests: XCTestCase {
     private let recordingUseCase: RecordingUseCase? = nil
     private var subscriptions = Set<AnyCancellable>()
     private var recordingViewModel = RecordingViewModel(recordingUseCase: nil)
-
-    override func setUpWithError() throws {
+    
+    override func setUp() {
     }
-
+    
     func test_시간_받기_성공() {
 
         var result = ""

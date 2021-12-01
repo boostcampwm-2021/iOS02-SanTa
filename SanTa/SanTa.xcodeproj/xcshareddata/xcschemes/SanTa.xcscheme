@@ -56,9 +56,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "DA854FC22746176A00E51E4B"
-               BuildableName = "RecordingSceneTest.xctest"
-               BlueprintName = "RecordingSceneTest"
+               BlueprintIdentifier = "98BAABB0275479B0004505BB"
+               BuildableName = "ResultSceneTests.xctest"
+               BlueprintName = "ResultSceneTests"
                ReferencedContainer = "container:SanTa.xcodeproj">
             </BuildableReference>
          </TestableReference>
@@ -66,9 +66,9 @@
             skipped = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "98BAABB0275479B0004505BB"
-               BuildableName = "ResultSceneTests.xctest"
-               BlueprintName = "ResultSceneTests"
+               BlueprintIdentifier = "DA4736EF27561C6200841326"
+               BuildableName = "MountainListSceneTestss.xctest"
+               BlueprintName = "MountainListSceneTests"
                ReferencedContainer = "container:SanTa.xcodeproj">
             </BuildableReference>
          </TestableReference>
