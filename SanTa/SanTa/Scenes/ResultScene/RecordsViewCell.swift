@@ -116,7 +116,7 @@ final class RecordsViewCell: UICollectionViewCell {
 
 extension RecordsViewCell {
 
-    func configureVoiceOverAccessibility() {
+    func configureVoiceOverAccessibility(indexPath: IndexPath) {
         guard let date = self.date.text else { return }
         guard var title = self.title.text else { return }
         guard let distance = self.distance.text else { return }
@@ -131,5 +131,6 @@ extension RecordsViewCell {
         self.accessibilityLabel = "\(date) 등산기록 정보, 제목: \(title), 거리: \(distance)km, 시간: \(time), 고도차: \(altitude), 걸음: \(steps)"
         self.accessibilityTraits = .none
         self.accessibilityHint = "등산기록 상세화면으로 넘어가려면 이중 탭 하십시오"
+        self.accessibilityIdentifier = "RecordsViewCell \(indexPath.section) \(indexPath.item)"
     }
 }
