@@ -159,19 +159,18 @@ final class RecordingModel: NSObject, ObservableObject {
             if elapsedTimeMinutes > self.maxOneKiloTime {
                 self.maxOneKiloTime = elapsedTimeMinutes
                 self.oneKiloDate = self.currentTime
-                self.sliceDistance += 1
             }
 
             if elapsedTimeMinutes < self.minOneKiloTime {
                 self.minOneKiloTime = elapsedTimeMinutes
                 self.oneKiloDate = self.currentTime
-                self.sliceDistance += 1
             }
+            self.sliceDistance += 1
         }
     }
 
     private func willSpeechCurrentStatus() {
-        let speech = "현재 총 거리는 \(self.kilometer)킬로미터 소요 시간은 \(self.time)초 현재 고도는 \(self.altitude)입니다."
+        let speech = "현재 총 거리는 \(self.sliceDistance)킬로미터 소요 시간은 \(self.time)초 현재 고도는 \(self.altitude)입니다."
         let utterance = AVSpeechUtterance(string: speech)
         utterance.voice = AVSpeechSynthesisVoice(language: "ko-KR")
         utterance.rate = 0.4
