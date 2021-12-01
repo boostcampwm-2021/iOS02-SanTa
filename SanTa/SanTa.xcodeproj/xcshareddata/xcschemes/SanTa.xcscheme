@@ -67,7 +67,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "DA4736EF27561C6200841326"
-               BuildableName = "MountainListSceneTestss.xctest"
+               BuildableName = "MountainListSceneTests.xctest"
                BlueprintName = "MountainListSceneTests"
                ReferencedContainer = "container:SanTa.xcodeproj">
             </BuildableReference>
@@ -89,6 +89,16 @@
                BlueprintIdentifier = "5423CD7E2755FCEF00BAB338"
                BuildableName = "MountainAddingSceneTests.xctest"
                BlueprintName = "MountainAddingSceneTests"
+               ReferencedContainer = "container:SanTa.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "4953CB7E2757092D00A0106F"
+               BuildableName = "ResultDetailAltitudeTest.xctest"
+               BlueprintName = "ResultDetailAltitudeTest"
                ReferencedContainer = "container:SanTa.xcodeproj">
             </BuildableReference>
          </TestableReference>
