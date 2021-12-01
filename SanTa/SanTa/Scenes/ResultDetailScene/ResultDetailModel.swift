@@ -60,7 +60,7 @@ struct ResultDistance {
 
     init(records: Records) {
         self.steps = records.steps
-        self.total = records.records.map {$0.locations.totalDistance()}.reduce(0, +) / 1000
+        self.total = records.distances
     }
 }
 
