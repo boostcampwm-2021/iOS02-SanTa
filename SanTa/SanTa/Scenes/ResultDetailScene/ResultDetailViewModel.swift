@@ -72,8 +72,9 @@ final class ResultDetailViewModel {
         guard let distance = self.resultDetailData?.distance.total,
               let totalTime = self.resultDetailData?.time.spent, totalTime > 0,
               let speed = formatter.string(from: NSNumber(value: distance * 3600 / totalTime)) else {
-                  return "-"
+                  return "알 수 없음"
               }
+        if distance == 0 { return "-" }
         return speed
     }
 

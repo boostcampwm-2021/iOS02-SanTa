@@ -88,7 +88,11 @@ struct ResultPace {
     let slowestPace: TimeInterval
 
     init(records: Records) {
-        self.timePerKilometer = records.totalTravelTime / records.distances
+        if records.distances == 0 {
+            self.timePerKilometer = 0
+        } else {
+            self.timePerKilometer = records.totalTravelTime / records.distances
+        }
         self.fastestPace = TimeInterval(records.secondPerHighestSpeed)
         self.slowestPace = TimeInterval(records.secondPerMinimumSpeed)
     }
