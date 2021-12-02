@@ -101,11 +101,12 @@ extension DetailCell {
         var label = "\(title)정보. "
         self.stack.arrangedSubviews.forEach {
             let stackView = $0 as? UIStackView
-            guard let contentLabel = (stackView?.arrangedSubviews[0] as? UILabel)?.text,
+            guard var contentLabel = (stackView?.arrangedSubviews[0] as? UILabel)?.text,
                   let contentTitleLabel = (stackView?.arrangedSubviews[1] as? UILabel)?.text
             else {
                 return
             }
+            contentLabel = contentLabel == "-" ? "없음" : contentLabel
             label += "\(contentTitleLabel): \(contentLabel), "
         }
         self.accessibilityLabel = label

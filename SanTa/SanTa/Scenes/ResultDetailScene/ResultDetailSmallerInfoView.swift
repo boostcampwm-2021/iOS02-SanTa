@@ -81,7 +81,6 @@ final class ResultDetailSmallerInfoView: UIView {
         stackView.axis = .vertical
         stackView.alignment = .center
         stackView.spacing = 5
-//        stackView.distribution = .fillEqually
         return stackView
     }()
 
@@ -90,7 +89,6 @@ final class ResultDetailSmallerInfoView: UIView {
         stackView.axis = .vertical
         stackView.alignment = .center
         stackView.spacing = 5
-//        stackView.distribution = .fillEqually
         return stackView
     }()
 
@@ -99,7 +97,6 @@ final class ResultDetailSmallerInfoView: UIView {
         stackView.axis = .vertical
         stackView.alignment = .center
         stackView.spacing = 5
-//        stackView.distribution = .fillEqually
         return stackView
     }()
 
@@ -108,7 +105,6 @@ final class ResultDetailSmallerInfoView: UIView {
         stackView.axis = .vertical
         stackView.alignment = .center
         stackView.spacing = 5
-//        stackView.distribution = .fillEqually
         return stackView
     }()
 
@@ -117,7 +113,6 @@ final class ResultDetailSmallerInfoView: UIView {
         stackView.axis = .vertical
         stackView.alignment = .center
         stackView.spacing = 5
-//        stackView.distribution = .fillEqually
         return stackView
     }()
 
@@ -126,7 +121,6 @@ final class ResultDetailSmallerInfoView: UIView {
         stackView.axis = .vertical
         stackView.alignment = .center
         stackView.spacing = 5
-//        stackView.distribution = .fillEqually
         return stackView
     }()
 
@@ -198,12 +192,15 @@ extension ResultDetailSmallerInfoView {
         guard let distance = self.distance.text,
               let time = self.time.text,
               let steps = self.steps.text,
-              let maxAltitude = self.maxAltitude.text,
-              let minAltitude = self.minAltitude.text,
-              let averageSpeed = self.averageSpeed.text
+              var maxAltitude = self.maxAltitude.text,
+              var minAltitude = self.minAltitude.text,
+              var averageSpeed = self.averageSpeed.text
         else {
             return
         }
+        maxAltitude = maxAltitude == "-" ? " 없음" : maxAltitude
+        minAltitude = minAltitude == "-" ? " 없음" : minAltitude
+        averageSpeed = averageSpeed == "-" ? " 없음" : averageSpeed
         self.accessibilityLabel =
         "기록 정보 거리: \(distance)km, 시간: \(time), 걸음: \(steps), 최고고도: \(maxAltitude), 최저고도: \(minAltitude), 평균속도: \(averageSpeed)"
     }
