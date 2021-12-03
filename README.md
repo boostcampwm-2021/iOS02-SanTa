@@ -19,7 +19,7 @@
 [![GitHub Closed PR](https://img.shields.io/github/issues-pr-closed-raw/boostcampwm-2021/iOS02-SanTa?color=red)](https://github.com/boostcampwm-2021/iOS02-SanTa/pulls?q=is%3Apr+is%3Aclosed)
 
 
-[[배포주소]]()
+[[배포주소]](https://appho.st/d/UE8O6Cui) [[데모영상]](https://www.youtube.com/watch?v=Y6Lspfrv8Rw)
     
 </div>
 
