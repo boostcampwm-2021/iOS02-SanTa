@@ -27,6 +27,6 @@ final class MountainAnnotationView: MKAnnotationView {
         super.prepareForDisplay()
         displayPriority = .defaultHigh
         self.image = UIImage(named: "SantaImage")
-        self.frame = CGRect(x: 30, y: 30, width: 30, height: 30)
+        self.frame.size = CGSize(width: 30, height: 30)
     }
 }
