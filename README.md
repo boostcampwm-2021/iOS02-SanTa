@@ -29,7 +29,7 @@
 
 |S009 | S026 | S030 | S035 |
 |:-:|:-:|:-:|:-:|
-|<img width=120 src="https://i.imgur.com/dmEpnrI.jpg">|<img width=120 src="https://i.imgur.com/U79BYAq.jpg">|<img width=120 src="https://i.imgur.com/QuUEEB7.jpg">|<img width=120 src="https://user-images.githubusercontent.com/87363980/144178853-20c2e38e-7979-4e4d-83e6-e2f34186b8d5.png">|
+|<img width=120 src="https://i.imgur.com/dmEpnrI.jpg">|<img width=120 src="https://i.imgur.com/U79BYAq.jpg">|<img width=120 src="">|<img width=120 src="https://user-images.githubusercontent.com/87363980/144178853-20c2e38e-7979-4e4d-83e6-e2f34186b8d5.png">|
 |[김민창](https://github.com/MINRYUL)|[신재웅](https://github.com/sustainable-git)|[오창민](https://github.com/lou0124)|[윤지원](https://github.com/yjwyjwyjw)|
     
 </div>
