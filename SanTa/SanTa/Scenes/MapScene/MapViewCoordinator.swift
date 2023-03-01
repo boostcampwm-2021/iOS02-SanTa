@@ -39,7 +39,9 @@ final class MapViewCoordinator: Coordinator {
 
 extension MapViewCoordinator {
     func presentRecordingViewController() {
-        if self.childCoordinators.isEmpty {
+        if let recordingViewCoordinator = self.childCoordinators.first(where: { $0 is RecordingViewCoordinator }) {
+            recordingViewCoordinator.start()
+        } else {
             let recordingViewCoordinator = RecordingViewCoordinator(
                 navigationController: self.navigationController,
                 userDefaultsStorage: self.userDefaultsStorage,
@@ -47,8 +49,8 @@ extension MapViewCoordinator {
             )
             self.childCoordinators.append(recordingViewCoordinator)
             recordingViewCoordinator.parentCoordinator = self
+            recordingViewCoordinator.start()
         }
-        childCoordinators.first?.start()
     }
 
     func presentMountainDetailViewController(mountainAnnotation: MountainAnnotation) {

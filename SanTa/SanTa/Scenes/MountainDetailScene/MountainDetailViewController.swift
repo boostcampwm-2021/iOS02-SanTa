@@ -33,6 +33,10 @@ final class MountainDetailViewController: UIViewController {
         super.viewDidLoad()
         self.configureViewModel()
     }
+    
+    deinit {
+        coordinator?.viewControllerDidDeinit()
+    }
 
     private func configureViewModel() {
         self.viewModel?.mountainInfoReceived = { [weak self] mountainDetail in

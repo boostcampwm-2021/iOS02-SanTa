@@ -37,7 +37,12 @@ final class MountainDetailViewCoordinator: Coordinator {
             self.navigationController.setNavigationBarHidden(false, animated: true)
             self.navigationController.popViewController(animated: true)
         }
-        self.parentCoordinator?.childCoordinators.removeLast()
+    }
+    
+    func viewControllerDidDeinit() {
+        if let index = parentCoordinator?.childCoordinators.firstIndex(where: { $0 === self }) {
+            self.parentCoordinator?.childCoordinators.remove(at: index)
+        }
     }
 }
 
